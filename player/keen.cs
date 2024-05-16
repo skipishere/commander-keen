@@ -3,8 +3,8 @@ using System;
 
 public partial class keen : CharacterBody2D
 {
-	public const float Speed = 300.0f;
-	public const float JumpVelocity = -400.0f;
+	public const float Speed = 180.0f;
+	public const float JumpVelocity = -315.0f;
 	private AnimationPlayer animation;
 
 	// Get the gravity from the project settings to be synced with RigidBody nodes.
@@ -26,6 +26,11 @@ public partial class keen : CharacterBody2D
 		// Handle Jump.
 		if (Input.IsActionJustPressed("ui_accept") && IsOnFloor())
 			velocity.Y = JumpVelocity;
+
+		if (Input.IsMouseButtonPressed(MouseButton.Right))
+		{
+			GetTree().Paused = !GetTree().Paused;
+		}
 
 		// Get the input direction and handle the movement/deceleration.
 		// As good practice, you should replace UI actions with custom gameplay actions.
@@ -49,7 +54,6 @@ public partial class keen : CharacterBody2D
 		}
 		else
 		{
-			//animation.Play("idle");
 			animation.Stop();
 		}
 
