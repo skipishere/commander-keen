@@ -32,6 +32,9 @@ public partial class keen : CharacterBody2D
 			GetTree().Paused = !GetTree().Paused;
 		}
 
+		// TODO add state machine to handle the player states.
+		// eg animation.Play("dead");
+
 		// Get the input direction and handle the movement/deceleration.
 		// As good practice, you should replace UI actions with custom gameplay actions.
 		Vector2 direction = Input.GetVector("ui_left", "ui_right", "ui_up", "ui_down");
@@ -54,6 +57,7 @@ public partial class keen : CharacterBody2D
 		}
 		else
 		{
+			
 			animation.Stop();
 		}
 

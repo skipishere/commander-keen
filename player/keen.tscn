@@ -1,10 +1,18 @@
-[gd_scene load_steps=17 format=3 uid="uid://dqlj2tioeqgqw"]
+[gd_scene load_steps=20 format=3 uid="uid://dqlj2tioeqgqw"]
 
 [ext_resource type="Texture2D" uid="uid://bbkmbo2fxi6fu" path="res://sprites/keen.png" id="1_fyf0i"]
 [ext_resource type="Script" path="res://player/keen.cs" id="1_othw7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hjwyw"]
 size = Vector2(13, 23)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7ugtj"]
+atlas = ExtResource("1_fyf0i")
+region = Rect2(273, 1, 16, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y633r"]
+atlas = ExtResource("1_fyf0i")
+region = Rect2(290, 1, 16, 24)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_038yd"]
 atlas = ExtResource("1_fyf0i")
@@ -40,6 +48,17 @@ region = Rect2(52, 1, 16, 24)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_irtpi"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7ugtj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y633r")
+}],
+"loop": true,
+"name": &"dead",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_038yd")
@@ -100,6 +119,35 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [&"walk_right"]
+}
+
+[sub_resource type="Animation" id="Animation_81lsd"]
+resource_name = "dead"
+length = 0.2
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"dead"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
 }
 
 [sub_resource type="Animation" id="Animation_hrnt4"]
@@ -163,6 +211,7 @@ tracks/1/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_el04f"]
 _data = {
 "RESET": SubResource("Animation_uybu3"),
+"dead": SubResource("Animation_81lsd"),
 "walk_left": SubResource("Animation_hrnt4"),
 "walk_right": SubResource("Animation_jt3yl")
 }
