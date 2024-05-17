@@ -1,9 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://bq77lad6b0om7"]
+[gd_scene load_steps=4 format=3 uid="uid://bq77lad6b0om7"]
 
 [ext_resource type="TileSet" uid="uid://w7k5amqxc3ac" path="res://scenes/tile_platform.tres" id="1_pda10"]
 [ext_resource type="PackedScene" uid="uid://dqlj2tioeqgqw" path="res://player/keen.tscn" id="2_g6dg5"]
+[ext_resource type="AudioStream" uid="uid://17m8kx07pnvb" path="res://music/AlexBouncyMaster.ogg" id="3_pd4ci"]
 
 [node name="Node2D" type="Node2D"]
+metadata/_edit_vertical_guides_ = [1825.0]
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = ExtResource("1_pda10")
@@ -12,3 +14,11 @@ layer_0/tile_data = PackedInt32Array(65597, 458752, 1, 65596, 458752, 1, 65595, 
 
 [node name="Keen" parent="." instance=ExtResource("2_g6dg5")]
 position = Vector2(8, -12)
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+position = Vector2(950, -80)
+stream = ExtResource("3_pd4ci")
+pitch_scale = 0.91
+autoplay = true
+max_distance = 1000.0
+attenuation = 0.450626
