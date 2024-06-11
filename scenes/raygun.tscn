@@ -1,0 +1,51 @@
+[gd_scene load_steps=10 format=3 uid="uid://c1ejkq43c2j4t"]
+
+[ext_resource type="Texture2D" uid="uid://bxqongktwvy1n" path="res://sprites/laser.png" id="1_hxljc"]
+
+[sub_resource type="CanvasItemMaterial" id="1"]
+blend_mode = 1
+
+[sub_resource type="Curve" id="2"]
+min_value = -360.0
+max_value = 360.0
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 85.0781), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="3"]
+curve = SubResource("2")
+
+[sub_resource type="Gradient" id="Gradient_wdtkk"]
+offsets = PackedFloat32Array(0, 0.142857, 0.506494, 0.961039)
+colors = PackedColorArray(0, 0, 0.803922, 1, 0.0823529, 0.988235, 0.847059, 1, 0.916603, 0.743003, 0.990503, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_fv41j"]
+gradient = SubResource("Gradient_wdtkk")
+
+[sub_resource type="Curve" id="4"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.11, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="5"]
+curve = SubResource("4")
+
+[sub_resource type="ParticleProcessMaterial" id="6"]
+emission_shape = 6
+emission_ring_axis = Vector3(0, 0, 1)
+emission_ring_height = 1.0
+emission_ring_radius = 1.0
+emission_ring_inner_radius = 0.0
+angular_velocity_curve = SubResource("3")
+gravity = Vector3(-100, 0, 0)
+attractor_interaction_enabled = false
+scale_min = 0.8
+scale_curve = SubResource("5")
+color_ramp = SubResource("GradientTexture1D_fv41j")
+hue_variation_max = 0.2
+
+[node name="Fire" type="GPUParticles2D" groups=["trailable_particles"]]
+texture_filter = 4
+material = SubResource("1")
+amount = 16
+process_material = SubResource("6")
+texture = ExtResource("1_hxljc")
+lifetime = 0.7
