@@ -9,7 +9,7 @@ public partial class Camera : Camera2D
 	{
 		Debug.Print("Camera ready");
 		
-		var tileMap = GetParent().GetParent().GetNode<TileMap>("TileMap");
+		var tileMap = Owner.GetParent().GetNode<TileMap>("TileMap");
 		var tileMapRange = tileMap.GetUsedRect();
 		var tileMapCellSize = tileMap.TileSet.TileSize;
 

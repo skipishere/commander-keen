@@ -6,6 +6,9 @@ public partial class keen : CharacterBody2D
 	public const float Speed = 180.0f;
 	public const float JumpVelocity = -315.0f;
 	private AnimationPlayer animation;
+	private Camera2D camera;
+	private int width;
+	private int height;
 
 	// Get the gravity from the project settings to be synced with RigidBody nodes.
 	public float gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
@@ -13,12 +16,17 @@ public partial class keen : CharacterBody2D
 	public override void _Ready()
 	{
 	 	animation = GetNode<AnimationPlayer>("AnimationPlayer");
+		camera = GetNode<Camera2D>("Camera2D");
+		
+		var collisionShape = GetNode<CollisionShape2D>("CollisionShape2D").Shape.GetRect().Size;
+		width = (int)collisionShape.X/2;
+		height = (int)collisionShape.Y;
 	}
 
 	public override void _PhysicsProcess(double delta)
 	{
 		Vector2 velocity = Velocity;
-
+		
 		// Add the gravity.
 		if (!IsOnFloor())
 		{
@@ -70,8 +78,16 @@ public partial class keen : CharacterBody2D
 		{
 			animation.Stop();
 		}
-
+		
 		Velocity = velocity;
 		MoveAndSlide();
+
+		// Clamp the player position to the camera limits.
+		
+		var xLimit = Mathf.Clamp(this.GlobalPosition.X, camera.LimitLeft+width, camera.LimitRight-width);
+		var yLimit = Mathf.Clamp(this.GlobalPosition.Y, camera.LimitTop, camera.LimitBottom-height);
+		
+		var position = new Vector2(xLimit, yLimit);
+		this.GlobalPosition = position;
 	}
 }
