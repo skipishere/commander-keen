@@ -1,0 +1,48 @@
+[gd_resource type="VisualShader" load_steps=3 format=3 uid="uid://bqsw4gr0xv4s0"]
+
+[sub_resource type="VisualShaderNodeVectorRefract" id="VisualShaderNodeVectorRefract_bc3js"]
+output_port_for_preview = 0
+default_input_values = [0, Vector3(0, 1, 0), 1, Vector3(0, 0, 0), 2, 0.0]
+
+[sub_resource type="VisualShaderNodeRandomRange" id="VisualShaderNodeRandomRange_nrnta"]
+
+[resource]
+code = "shader_type fog;
+
+
+
+
+// 3D Noise with friendly permission by Inigo Quilez
+vec3 hash_noise_range( vec3 p ) {
+	p *= mat3(vec3(127.1, 311.7, -53.7), vec3(269.5, 183.3, 77.1), vec3(-301.7, 27.3, 215.3));
+	return 2.0 * fract(fract(p)*4375.55) -1.;
+}
+
+
+void fog() {
+// RandomRange:3
+	vec3 n_in3p0 = vec3(1.00000, 1.00000, 1.00000);
+	float n_in3p1 = 0.00000;
+	float n_in3p2 = 1.00000;
+	float n_out3p0 = mix(n_in3p1, n_in3p2, hash_noise_range(n_in3p0).x);
+
+
+// Refract:2
+	vec3 n_in2p1 = vec3(0.00000, 0.00000, 0.00000);
+	float n_in2p2 = 0.00000;
+	vec3 n_out2p0 = refract(vec3(n_out3p0), n_in2p1, n_in2p2);
+
+
+// Output:0
+	ALBEDO = n_out2p0;
+
+
+}
+"
+mode = 4
+nodes/fog/0/position = Vector2(920, 260)
+nodes/fog/2/node = SubResource("VisualShaderNodeVectorRefract_bc3js")
+nodes/fog/2/position = Vector2(625.471, 262.539)
+nodes/fog/3/node = SubResource("VisualShaderNodeRandomRange_nrnta")
+nodes/fog/3/position = Vector2(400.636, 380.678)
+nodes/fog/connections = PackedInt32Array(3, 0, 2, 0, 2, 0, 0, 1)
