@@ -1,8 +1,9 @@
-[gd_resource type="TileSet" load_steps=37 format=3 uid="uid://w7k5amqxc3ac"]
+[gd_resource type="TileSet" load_steps=39 format=3 uid="uid://w7k5amqxc3ac"]
 
 [ext_resource type="Texture2D" uid="uid://65y75605vmla" path="res://sprites/platforms.png" id="1_r57yh"]
 [ext_resource type="Texture2D" uid="uid://de6hjukimt53d" path="res://sprites/hazards.png" id="2_1lutc"]
 [ext_resource type="Texture2D" uid="uid://cg287h7d6g0s0" path="res://sprites/background.png" id="3_pkihh"]
+[ext_resource type="PackedScene" uid="uid://un6axmoir2v6" path="res://scenes/fire.tscn" id="4_klbfa"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_0vjdx"]
 
@@ -337,7 +338,7 @@ texture = ExtResource("1_r57yh")
 3:4/0 = 0
 3:4/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 3:4/0/physics_layer_0/angular_velocity = 0.0
-3:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, -4, -8, -4)
+3:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, -5.33333, -8, -5.33333)
 4:4/0 = 0
 4:4/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 4:4/0/physics_layer_0/angular_velocity = 0.0
@@ -657,6 +658,9 @@ texture = ExtResource("3_pkihh")
 3:3/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 3:3/0/physics_layer_0/angular_velocity = 0.0
 
+[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_oqsdh"]
+scenes/1/scene = ExtResource("4_klbfa")
+
 [resource]
 occlusion_layer_0/light_mask = 1
 physics_layer_0/collision_layer = 3
@@ -669,3 +673,4 @@ terrain_set_0/terrain_1/color = Color(0.5, 0.4375, 0.25, 1)
 sources/0 = SubResource("TileSetAtlasSource_yxqls")
 sources/1 = SubResource("TileSetAtlasSource_xn30c")
 sources/2 = SubResource("TileSetAtlasSource_4lecx")
+sources/3 = SubResource("TileSetScenesCollectionSource_oqsdh")
