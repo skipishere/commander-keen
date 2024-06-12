@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Diagnostics;
 
 public partial class keen : CharacterBody2D
 {
@@ -86,6 +87,12 @@ public partial class keen : CharacterBody2D
 		
 		var xLimit = Mathf.Clamp(this.GlobalPosition.X, camera.LimitLeft+width, camera.LimitRight-width);
 		var yLimit = Mathf.Clamp(this.GlobalPosition.Y, camera.LimitTop, camera.LimitBottom-height);
+		if (this.GlobalPosition.Y <= camera.LimitTop && velocity.Y < 0)
+		{
+			Debug.Print("Hit the camera top limit");
+			velocity.Y = 0;
+			Velocity = velocity;
+		}
 		
 		var position = new Vector2(xLimit, yLimit);
 		this.GlobalPosition = position;
