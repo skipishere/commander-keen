@@ -44,8 +44,8 @@ follow_viewport_enabled = true
 scroll_limit_end = Vector2(400, 400)
 
 [node name="MarsLandscape" type="Sprite2D" parent="ParallaxBackground"]
-position = Vector2(557, -84)
-scale = Vector2(0.1, 0.1)
+position = Vector2(147.7, -97.05)
+scale = Vector2(0.315039, 0.259863)
 texture = ExtResource("5_mbc5j")
 
 [node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
