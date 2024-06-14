@@ -1,7 +1,8 @@
-[gd_scene load_steps=21 format=3 uid="uid://dqlj2tioeqgqw"]
+[gd_scene load_steps=22 format=3 uid="uid://dqlj2tioeqgqw"]
 
 [ext_resource type="Texture2D" uid="uid://bbkmbo2fxi6fu" path="res://sprites/keen.png" id="1_fyf0i"]
 [ext_resource type="Script" path="res://player/keen.cs" id="1_othw7"]
+[ext_resource type="PackedScene" uid="uid://bgl2fe5um74f0" path="res://scenes/raygunShot.tscn" id="2_eenmn"]
 [ext_resource type="Script" path="res://player/Camera.cs" id="3_6odgb"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hjwyw"]
@@ -220,6 +221,7 @@ _data = {
 [node name="Keen" type="CharacterBody2D"]
 collision_mask = 3
 script = ExtResource("1_othw7")
+raygun = ExtResource("2_eenmn")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0.5, 0.5)

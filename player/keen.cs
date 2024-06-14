@@ -4,12 +4,16 @@ using System.Diagnostics;
 
 public partial class keen : CharacterBody2D
 {
+	[Export]
+	private PackedScene raygun;
+
 	public const float Speed = 180.0f;
 	public const float JumpVelocity = -315.0f;
 	private AnimationPlayer animation;
 	private Camera2D camera;
 	private int width;
 	private int height;
+	private bool isFacingRight = true;
 
 	// Get the gravity from the project settings to be synced with RigidBody nodes.
 	public float gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
@@ -32,6 +36,19 @@ public partial class keen : CharacterBody2D
 		if (!IsOnFloor())
 		{
 			velocity.Y += gravity * (float)delta;
+		}
+
+		if (Input.IsActionJustPressed("move_shoot"))
+		{
+			var raygunInstance = raygun.Instantiate() as raygunShot;
+			
+			raygunInstance.GlobalPosition = this.GlobalPosition with 
+			{
+				X = isFacingRight ? this.GlobalPosition.X + 10 : this.GlobalPosition.X - 10,
+				Y = this.GlobalPosition.Y 
+			};
+			raygunInstance.RotationDegrees = isFacingRight ? 0 : 180;
+			GetTree().Root.AddChild(raygunInstance);
 		}
 		
 		// Handle Jump.
@@ -70,10 +87,12 @@ public partial class keen : CharacterBody2D
 		if (velocity.X > 0)
 		{
 			animation.Play("walk_right");
+			isFacingRight = true;
 		}
 		else if (velocity.X < 0)
 		{
 			animation.Play("walk_left");
+			isFacingRight = false;
 		}
 		else
 		{
@@ -90,11 +109,9 @@ public partial class keen : CharacterBody2D
 		if (this.GlobalPosition.Y <= camera.LimitTop && velocity.Y < 0)
 		{
 			Debug.Print("Hit the camera top limit");
-			velocity.Y = 0;
-			Velocity = velocity;
+			Velocity = Velocity with { Y = 0 };
 		}
 		
-		var position = new Vector2(xLimit, yLimit);
-		this.GlobalPosition = position;
+		this.GlobalPosition = this.GlobalPosition with { X = xLimit, Y = yLimit};
 	}
 }

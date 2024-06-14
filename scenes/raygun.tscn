@@ -45,6 +45,7 @@ hue_variation_max = 0.2
 [node name="Fire" type="GPUParticles2D" groups=["trailable_particles"]]
 texture_filter = 4
 material = SubResource("1")
+position = Vector2(1, -1)
 amount = 16
 process_material = SubResource("6")
 texture = ExtResource("1_hxljc")
