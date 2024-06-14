@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://bgl2fe5um74f0"]
+[gd_scene load_steps=5 format=3 uid="uid://bgl2fe5um74f0"]
 
 [ext_resource type="Script" path="res://scenes/raygunShot.cs" id="1_3kfvr"]
 [ext_resource type="PackedScene" uid="uid://c1ejkq43c2j4t" path="res://scenes/raygun.tscn" id="2_c8nn3"]
+[ext_resource type="AudioStream" uid="uid://c3hy7x0tffyqb" path="res://sfx/28912__junggle__btn102.wav" id="3_ejal4"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_umtd2"]
 radius = 2.0
@@ -23,5 +24,11 @@ one_way_collision = true
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 position = Vector2(0.999999, -1)
 scale = Vector2(0.8, 0.4)
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_ejal4")
+volume_db = -12.0
+autoplay = true
+bus = &"Sound Effects"
 
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="ScreenExited"]
