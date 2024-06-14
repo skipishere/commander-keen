@@ -1,10 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://bq77lad6b0om7"]
+[gd_scene load_steps=5 format=3 uid="uid://bq77lad6b0om7"]
 
 [ext_resource type="TileSet" uid="uid://w7k5amqxc3ac" path="res://scenes/tile_platform.tres" id="1_pda10"]
 [ext_resource type="PackedScene" uid="uid://dqlj2tioeqgqw" path="res://player/keen.tscn" id="2_g6dg5"]
 [ext_resource type="AudioStream" uid="uid://17m8kx07pnvb" path="res://music/AlexBouncyMaster.ogg" id="3_pd4ci"]
-[ext_resource type="PackedScene" uid="uid://c1ejkq43c2j4t" path="res://scenes/raygun.tscn" id="4_k8358"]
-[ext_resource type="Texture2D" uid="uid://cptunmhloince" path="res://backgrounds/mars landscape.jpeg" id="5_mbc5j"]
+[ext_resource type="Texture2D" uid="uid://o53lb5qe7dyc" path="res://backgrounds/stars.png" id="5_reml6"]
 
 [node name="Node2D" type="Node2D"]
 metadata/_edit_vertical_guides_ = [1825.0, 409.0]
@@ -36,16 +35,15 @@ shadow_color = Color(0, 0.129412, 0.6, 0)
 shadow_filter = 2
 shadow_filter_smooth = 4.3
 
-[node name="Fire" parent="." instance=ExtResource("4_k8358")]
-position = Vector2(160, -12)
-
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
-follow_viewport_enabled = true
-scroll_limit_end = Vector2(400, 400)
-
-[node name="MarsLandscape" type="Sprite2D" parent="ParallaxBackground"]
-position = Vector2(147.7, -97.05)
-scale = Vector2(0.315039, 0.259863)
-texture = ExtResource("5_mbc5j")
 
 [node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+texture_repeat = 2
+scale = Vector2(0.25, 0.25)
+motion_scale = Vector2(0, 0)
+motion_mirroring = Vector2(500, 500)
+
+[node name="Stars" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+texture_filter = 1
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("5_reml6")
