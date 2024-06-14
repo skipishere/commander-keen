@@ -42,9 +42,10 @@ public partial class keen : CharacterBody2D
 		{
 			var raygunInstance = raygun.Instantiate() as raygunShot;
 			
+			var shotOffset = 6 * (isFacingRight ? 1 : -1);
 			raygunInstance.GlobalPosition = this.GlobalPosition with 
 			{
-				X = isFacingRight ? this.GlobalPosition.X + 10 : this.GlobalPosition.X - 10,
+				X = this.GlobalPosition.X + shotOffset,
 				Y = this.GlobalPosition.Y 
 			};
 			raygunInstance.RotationDegrees = isFacingRight ? 0 : 180;

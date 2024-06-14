@@ -6,7 +6,7 @@
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_umtd2"]
 radius = 2.0
-height = 10.0
+height = 6.0
 
 [node name="RaygunShot" type="StaticBody2D"]
 script = ExtResource("1_3kfvr")
@@ -16,7 +16,7 @@ amount = 64
 lifetime = 0.1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(1, -1)
+position = Vector2(5, -1)
 rotation = -1.5708
 shape = SubResource("CapsuleShape2D_umtd2")
 one_way_collision = true
