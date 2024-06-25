@@ -38,8 +38,9 @@ public partial class keen : CharacterBody2D
 			velocity.Y += gravity * (float)delta;
 		}
 
-		if (Input.IsActionJustPressed("move_shoot"))
+		if (Input.IsActionJustPressed("move_shoot") && game_stats.Charges > 0)
 		{
+			game_stats.Charges--;
 			var raygunInstance = raygun.Instantiate() as raygunShot;
 			
 			var shotOffset = 6 * (isFacingRight ? 1 : -1);
@@ -63,6 +64,7 @@ public partial class keen : CharacterBody2D
 		{
 			//velocity.Y = JumpVelocity*1.2f;
 			animation.Play("dead");
+			game_stats.Charges+=10;
 		}
 
 		if (Input.IsMouseButtonPressed(MouseButton.Right))

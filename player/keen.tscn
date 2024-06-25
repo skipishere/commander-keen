@@ -219,7 +219,8 @@ _data = {
 }
 
 [node name="Keen" type="CharacterBody2D"]
-collision_mask = 3
+collision_layer = 2
+collision_mask = 13
 script = ExtResource("1_othw7")
 raygun = ExtResource("2_eenmn")
 

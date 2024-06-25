@@ -19,6 +19,9 @@ public partial class raygunShot : StaticBody2D
 		if (shot != null)
 		{
 			Debug.WriteLine("Shot collided");
+			var collidedWith = shot.GetCollider();
+			collidedWith.Call("TakeDamage");
+			
 			QueueFree();
 		}
 	}
