@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://cypixfvrm0b4t"
+path="res://.godot/imported/2012_november_fakeAwake04 back to A minor.ogg-d10812238e67fe68902858d92b16e0ea.oggvorbisstr"
+
+[deps]
+
+source_file="res://music/2012_november_fakeAwake04 back to A minor.ogg"
+dest_files=["res://.godot/imported/2012_november_fakeAwake04 back to A minor.ogg-d10812238e67fe68902858d92b16e0ea.oggvorbisstr"]
+
+[params]
+
+loop=true
+loop_offset=2.0
+bpm=0
+beat_count=0
+bar_beats=4
