@@ -60,6 +60,12 @@ public partial class keen : CharacterBody2D
 			animation.Stop();
 		}
 
+		// Handle Jump height, work in progress.
+		if (Input.IsActionJustReleased("move_jump") && velocity.Y < 0)
+		{
+			velocity.Y = 0;
+		}
+
 		if (Input.IsActionJustPressed("move_pogo") && IsOnFloor())
 		{
 			//velocity.Y = JumpVelocity*1.2f;
@@ -104,17 +110,39 @@ public partial class keen : CharacterBody2D
 		
 		Velocity = velocity;
 		MoveAndSlide();
+		HandleColliosion();
 
-		// Clamp the player position to the camera limits.
-		
+		// Clamp the player position to the camera limits.		
 		var xLimit = Mathf.Clamp(this.GlobalPosition.X, camera.LimitLeft+width, camera.LimitRight-width);
 		var yLimit = Mathf.Clamp(this.GlobalPosition.Y, camera.LimitTop, camera.LimitBottom-height);
 		if (this.GlobalPosition.Y <= camera.LimitTop && velocity.Y < 0)
 		{
+			// This is needed for maps where there is no 'roof' tiles
 			Debug.Print("Hit the camera top limit");
 			Velocity = Velocity with { Y = 0 };
 		}
 		
 		this.GlobalPosition = this.GlobalPosition with { X = xLimit, Y = yLimit};
+	}
+
+	private void HandleColliosion()
+	{
+		for (int i = 0; i < GetSlideCollisionCount(); i++)
+		{
+			var collision = GetSlideCollision(i);
+			var collider = collision.GetCollider();
+			if (collider is vorticon_guard)
+			{
+				Debug.WriteLine("Vorticon collision detected!");
+				TakeDamage();
+			}
+		}
+	}
+
+	public void TakeDamage()
+	{
+		Debug.WriteLine("Keen defeated!");
+		animation.Play("dead");
+		this.SetCollisionLayerValue(1, false);
 	}
 }
