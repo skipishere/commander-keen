@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://c1xr11xrj5b7u"
+path="res://.godot/imported/Kim Lightyear - Whistle.wav-f416a5353769f1dddb16d2bf4184b79a.sample"
+
+[deps]
+
+source_file="res://sfx/Kim Lightyear - Whistle.wav"
+dest_files=["res://.godot/imported/Kim Lightyear - Whistle.wav-f416a5353769f1dddb16d2bf4184b79a.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0
