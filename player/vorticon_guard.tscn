@@ -4,8 +4,7 @@
 [ext_resource type="Script" path="res://player/vorticon_guard.cs" id="1_c61b3"]
 [ext_resource type="AudioStream" uid="uid://cypixfvrm0b4t" path="res://music/2012_november_fakeAwake04 back to A minor.ogg" id="2_16nxu"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_xqhtb"]
-size = Vector2(22, 30)
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_llcbj"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qhrh6"]
 atlas = ExtResource("1_6l41r")
@@ -172,14 +171,15 @@ script = ExtResource("1_c61b3")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 1)
-shape = SubResource("RectangleShape2D_xqhtb")
+shape = SubResource("CapsuleShape2D_llcbj")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_an0h4")
-animation = &"walk_left"
-frame_progress = 0.940095
+animation = &"walk_right"
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+scale = Vector2(2, 2.176)
+rect = Rect2(-40, -40, 80, 80)
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("2_16nxu")
@@ -187,3 +187,6 @@ pitch_scale = 1.25
 autoplay = true
 max_distance = 950.0
 attenuation = 1.31951
+
+[connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_screen_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="OnScreenExited"]

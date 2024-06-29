@@ -10,6 +10,7 @@ public partial class vorticon_guard : CharacterBody2D
 	public float gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
 	public const float Speed = 180.0f;
 	public const float JumpVelocity = -315.0f;
+	private bool isActivated = false;
 
 	private AnimatedSprite2D animation;
 	private CollisionShape2D collisionShape;
@@ -24,6 +25,11 @@ public partial class vorticon_guard : CharacterBody2D
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
+		if (!isActivated)
+		{
+			return;
+		}
+
 		var velocity = Velocity;
 
 		if (Health <= 0)
@@ -56,10 +62,30 @@ public partial class vorticon_guard : CharacterBody2D
 		{
 			Debug.WriteLine("Vorticon Guard defeated!");
 			animation.Play("die");
-			Debug.WriteLine("Layer 4: " + this.GetCollisionLayerValue(4));
 			this.SetCollisionLayerValue(4, false);
-			Debug.WriteLine("Layer 4: " + this.GetCollisionLayerValue(4));
 
+		}
+	}
+
+	public void _on_screen_entered()
+	{
+		Debug.WriteLine("Vorticon Guard on screen!");
+		isActivated = true;
+	}
+
+	public void OnScreenExited()
+	{
+		Debug.WriteLine("Vorticon Guard off screen!");
+		isActivated = false;		
+	}
+
+	private void _on_Area2D_body_entered(object body)
+	{
+		Debug.WriteLine("Vorticon collision detected!");
+		if (body is raygunShot)
+		{
+			Debug.WriteLine("Raygun shot collided with Vorticon Guard!");
+			TakeDamage();
 		}
 	}
 }
