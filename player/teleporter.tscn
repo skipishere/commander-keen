@@ -1,0 +1,76 @@
+[gd_scene load_steps=10 format=3 uid="uid://c7m6wb1coorjg"]
+
+[ext_resource type="Script" path="res://player/teleporter.cs" id="1_aosxc"]
+[ext_resource type="Texture2D" uid="uid://cqgyahlpnxrxl" path="res://sprites/mars.png" id="2_iabtc"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0hc4b"]
+atlas = ExtResource("2_iabtc")
+region = Rect2(128, 208, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_javxy"]
+atlas = ExtResource("2_iabtc")
+region = Rect2(144, 208, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ui23x"]
+atlas = ExtResource("2_iabtc")
+region = Rect2(160, 208, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6i7xa"]
+atlas = ExtResource("2_iabtc")
+region = Rect2(176, 208, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5lvvs"]
+atlas = ExtResource("2_iabtc")
+region = Rect2(192, 208, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_v0rqf"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0hc4b")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_javxy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ui23x")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6i7xa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5lvvs")
+}],
+"loop": true,
+"name": &"transport",
+"speed": 10.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j4xad"]
+size = Vector2(24, 24)
+
+[node name="Teleporter" type="Area2D"]
+disable_mode = 1
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("1_aosxc")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_v0rqf")
+animation = &"idle"
+frame_progress = 0.665408
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_j4xad")
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]
+[connection signal="timeout" from="Timer" to="." method="MovePlayer"]
