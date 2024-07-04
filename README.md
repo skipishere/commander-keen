@@ -18,3 +18,10 @@ Shaders
 Wiki
 - https://keenwiki.shikadi.net/wiki/Keen_1:_Marooned_on_Mars
   
+Sprite sheets:
+- https://www.spriters-resource.com/pc_computer/commanderkeen1/
+- https://www.spriters-resource.com/fullview/24970/
+
+Playable online hosted original game:
+- https://www.playdosgames.com/play/commander-keen-1
+- https://archive.org/details/msdos_Commander_Keen_1_-_Marooned_on_Mars_1990
