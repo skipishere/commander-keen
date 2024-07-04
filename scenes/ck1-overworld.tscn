@@ -524,3 +524,10 @@ Target = NodePath("../Teleporter2")
 [node name="Keen-map" parent="." instance=ExtResource("3_7pysq")]
 position = Vector2(-394, 8)
 collision_layer = 2
+
+[connection signal="TeleportComplete" from="Teleporter" to="Keen-map" method="OnTeleportComplete"]
+[connection signal="TeleportStart" from="Teleporter" to="Keen-map" method="OnTeleportStart"]
+[connection signal="TeleportComplete" from="Teleporter2" to="Keen-map" method="OnTeleportComplete"]
+[connection signal="TeleportStart" from="Teleporter2" to="Keen-map" method="OnTeleportStart"]
+[connection signal="TeleportComplete" from="Teleporter3" to="Keen-map" method="OnTeleportComplete"]
+[connection signal="TeleportStart" from="Teleporter3" to="Keen-map" method="OnTeleportStart"]

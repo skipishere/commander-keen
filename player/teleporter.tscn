@@ -1,7 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://c7m6wb1coorjg"]
+[gd_scene load_steps=11 format=3 uid="uid://c7m6wb1coorjg"]
 
 [ext_resource type="Script" path="res://player/teleporter.cs" id="1_aosxc"]
 [ext_resource type="Texture2D" uid="uid://cqgyahlpnxrxl" path="res://sprites/mars.png" id="2_iabtc"]
+[ext_resource type="AudioStream" uid="uid://cifxpc3mumaes" path="res://sfx/wave2.wav" id="3_owll0"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0hc4b"]
 atlas = ExtResource("2_iabtc")
@@ -71,6 +72,12 @@ shape = SubResource("RectangleShape2D_j4xad")
 [node name="Timer" type="Timer" parent="."]
 one_shot = true
 
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_owll0")
+pitch_scale = 1.25
+max_distance = 200.0
+bus = &"Sound Effects"
+
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_body_exited"]
-[connection signal="timeout" from="Timer" to="." method="MovePlayer"]
+[connection signal="timeout" from="Timer" to="." method="Idle"]

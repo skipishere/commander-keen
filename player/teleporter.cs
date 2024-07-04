@@ -5,15 +5,24 @@ using System.Diagnostics;
 public partial class teleporter : Area2D
 {
 	[Export]
-	public Area2D Target;
+	public teleporter Target;
 	private AnimatedSprite2D animatedSprite;
+	private AudioStreamPlayer2D audioStreamPlayer;
 	private Timer timer;
 	private OverworldKeen player;
+	private bool isTeleporting = false;
+
+	[Signal]
+	public delegate void TeleportStartEventHandler();
+
+	[Signal]
+	public delegate void TeleportCompleteEventHandler();
 	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		animatedSprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
+		audioStreamPlayer = GetNode<AudioStreamPlayer2D>("AudioStreamPlayer2D");
 		timer = GetNode<Timer>("Timer");
 	}
 
@@ -22,18 +31,32 @@ public partial class teleporter : Area2D
 	{
 		if (player != null && Input.IsActionJustPressed("move_jump"))
 		{
-			animatedSprite.Play("transport");
-			Debug.Print("Teleporting player");
-			timer.Start();
-			player.Visible = false;
+			isTeleporting = true;
+			Animate();
 		}
 	}
 
-	public void MovePlayer()
+	public void Animate()
+	{
+		EmitSignal(SignalName.TeleportStart);
+		audioStreamPlayer.Play();
+		animatedSprite.Play("transport");
+		timer.Start();
+	}
+
+	public void Idle()
 	{
 		animatedSprite.Play("idle");
-		player.Position = Target.Position;
-		player.Visible = true;
+		if (isTeleporting)
+		{
+			Target.Animate();
+			player.Position = Target.Position;
+			isTeleporting = false;
+		}
+		else
+		{
+			EmitSignal(SignalName.TeleportComplete);
+		}
 	}
 
 	public void _on_body_entered(Node2D body)

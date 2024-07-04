@@ -10,6 +10,7 @@ public partial class OverworldKeen : CharacterBody2D
 	private int height;
 
 	private int animationLoopOut;
+	private bool isTeleporting = false;
 	private readonly int animationLoopOutSet = 5;
 
 	private AnimatedSprite2D animatedSprite;
@@ -24,8 +25,27 @@ public partial class OverworldKeen : CharacterBody2D
 		height = (int)collisionShape.Y;
 	}
 
+	private void OnTeleportStart()
+	{
+		// TODO State machine
+		this.Visible = false;
+		this.isTeleporting = true;
+	}
+
+	private void OnTeleportComplete()
+	{
+		// TODO State machine
+		this.Visible = true;
+		this.isTeleporting = false;
+	}
+
 	public override void _PhysicsProcess(double delta)
 	{
+		if (isTeleporting)
+		{
+			return;
+		}
+
 		Vector2 velocity = Velocity;
 
 		Vector2 direction = Input.GetVector("move_left", "move_right", "map_up", "map_down");
