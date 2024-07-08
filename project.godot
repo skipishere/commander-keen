@@ -16,9 +16,13 @@ run/main_scene="res://scenes/ck1lv01.tscn"
 config/features=PackedStringArray("4.2", "C#", "Mobile")
 config/icon="res://icon.svg"
 
+[autoload]
+
+SignalManager="*res://shared/SignalManager.cs"
+
 [display]
 
-window/size/viewport_width=304
+window/size/viewport_width=320
 window/size/viewport_height=200
 window/size/window_width_override=1280
 window/size/window_height_override=720
