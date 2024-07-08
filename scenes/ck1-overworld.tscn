@@ -1,9 +1,17 @@
-[gd_scene load_steps=8 format=3 uid="uid://c85ufn8742tq3"]
+[gd_scene load_steps=16 format=3 uid="uid://c85ufn8742tq3"]
 
 [ext_resource type="Texture2D" uid="uid://cqgyahlpnxrxl" path="res://sprites/mars.png" id="1_chxqg"]
+[ext_resource type="Script" path="res://scenes/Overworld.cs" id="1_ne1bf"]
 [ext_resource type="PackedScene" uid="uid://c7m6wb1coorjg" path="res://player/teleporter.tscn" id="2_4ct4t"]
 [ext_resource type="PackedScene" uid="uid://b0du0mvfg8ov3" path="res://player/keen-map.tscn" id="3_7pysq"]
 [ext_resource type="AudioStream" uid="uid://ru73lgw8vtph" path="res://music/Reverse-Time-Loop-isaiah658.ogg" id="4_eb3sn"]
+[ext_resource type="PackedScene" uid="uid://c7pqcg8qktvrv" path="res://scenes/LevelPortal.tscn" id="6_o67p0"]
+[ext_resource type="PackedScene" uid="uid://bq77lad6b0om7" path="res://scenes/ck1lv01.tscn" id="7_l00kp"]
+[ext_resource type="PackedScene" uid="uid://bn8vq8xewxhfp" path="res://scenes/debug.tscn" id="8_jptl0"]
+[ext_resource type="PackedScene" uid="uid://v4cjtldpjka" path="res://scenes/ck1lv02.tscn" id="8_r6peh"]
+[ext_resource type="PackedScene" uid="uid://declpwg68bt56" path="res://scenes/ck1lv03.tscn" id="9_cidit"]
+[ext_resource type="PackedScene" uid="uid://db4e3oa7n70em" path="res://scenes/ck1lv04.tscn" id="10_jxgis"]
+[ext_resource type="PackedScene" uid="uid://6eyvaskh04ap" path="res://scenes/ck1lv05.tscn" id="11_21wk7"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_txjfx"]
 texture = ExtResource("1_chxqg")
@@ -495,6 +503,7 @@ sources/0 = SubResource("TileSetAtlasSource_txjfx")
 sources/1 = SubResource("TileSetScenesCollectionSource_bqmmw")
 
 [node name="Node2D" type="Node2D"]
+script = ExtResource("1_ne1bf")
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_wwp2b")
@@ -508,6 +517,7 @@ layer_1/tile_data = PackedInt32Array(-720886, 458752, 11, -917503, 786432, 4, -1
 stream = ExtResource("4_eb3sn")
 volume_db = -10.0
 autoplay = true
+bus = &"Music"
 
 [node name="Teleporter" parent="." node_paths=PackedStringArray("Target") instance=ExtResource("2_4ct4t")]
 position = Vector2(-136, -489)
@@ -521,13 +531,35 @@ Target = NodePath("../Teleporter")
 position = Vector2(408, 8)
 Target = NodePath("../Teleporter2")
 
+[node name="Levels" type="Node2D" parent="."]
+
+[node name="LevelDebug" parent="Levels" instance=ExtResource("6_o67p0")]
+position = Vector2(-402, 42)
+Target = ExtResource("8_jptl0")
+
+[node name="LevelPortal" parent="Levels" instance=ExtResource("6_o67p0")]
+position = Vector2(-241, 49)
+scale = Vector2(1.6, 1.6)
+Target = ExtResource("7_l00kp")
+
+[node name="LevelPortal2" parent="Levels" instance=ExtResource("6_o67p0")]
+position = Vector2(-200, -104)
+Target = ExtResource("8_r6peh")
+
+[node name="LevelPortal3" parent="Levels" instance=ExtResource("6_o67p0")]
+position = Vector2(-399, -208)
+scale = Vector2(1.6, 1.6)
+Target = ExtResource("9_cidit")
+
+[node name="LevelPortal4" parent="Levels" instance=ExtResource("6_o67p0")]
+position = Vector2(-192, -177)
+scale = Vector2(1.6, 1.6)
+Target = ExtResource("10_jxgis")
+
+[node name="LevelPortal5" parent="Levels" instance=ExtResource("6_o67p0")]
+position = Vector2(-297, -376)
+Target = ExtResource("11_21wk7")
+
 [node name="Keen-map" parent="." instance=ExtResource("3_7pysq")]
 position = Vector2(-394, 8)
 collision_layer = 2
-
-[connection signal="TeleportComplete" from="Teleporter" to="Keen-map" method="OnTeleportComplete"]
-[connection signal="TeleportStart" from="Teleporter" to="Keen-map" method="OnTeleportStart"]
-[connection signal="TeleportComplete" from="Teleporter2" to="Keen-map" method="OnTeleportComplete"]
-[connection signal="TeleportStart" from="Teleporter2" to="Keen-map" method="OnTeleportStart"]
-[connection signal="TeleportComplete" from="Teleporter3" to="Keen-map" method="OnTeleportComplete"]
-[connection signal="TeleportStart" from="Teleporter3" to="Keen-map" method="OnTeleportStart"]

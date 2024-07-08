@@ -9,4 +9,6 @@ public partial class game_stats : Resource
 
     [Export]
     public static int Charges = 5;
+
+    public static Vector2? KeenMapPosition;
 }

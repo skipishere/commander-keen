@@ -1,0 +1,40 @@
+[gd_scene load_steps=4 format=3 uid="uid://c7pqcg8qktvrv"]
+
+[ext_resource type="Script" path="res://scenes/LevelPortal.cs" id="1_jj3c4"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4s343"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_mwnla"]
+line_spacing = 0.0
+font_size = 7
+
+[node name="LevelPortal" type="Area2D"]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_jj3c4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_4s343")
+
+[node name="Node2D" type="Node2D" parent="."]
+visible = false
+
+[node name="ColorRect" type="ColorRect" parent="Node2D"]
+offset_left = -10.0
+offset_top = -10.0
+offset_right = 10.0
+offset_bottom = 10.0
+color = Color(0.329412, 0.329412, 0.988235, 1)
+
+[node name="Label" type="Label" parent="Node2D"]
+offset_left = -10.0
+offset_top = -10.0
+offset_right = 11.0
+offset_bottom = 10.0
+text = "Done"
+label_settings = SubResource("LabelSettings_mwnla")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="body_entered" from="." to="." method="OnBodyEntered"]
+[connection signal="body_exited" from="." to="." method="OnBodyExited"]

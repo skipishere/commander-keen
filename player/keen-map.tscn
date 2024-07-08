@@ -156,4 +156,6 @@ script = ExtResource("1_uheac")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_iowta")
 animation = &"down"
-frame_progress = 0.0307166
+
+[connection signal="tree_exited" from="." to="." method="_on_animated_sprite_2d_tree_exited"]
+[connection signal="tree_entered" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_tree_entered"]

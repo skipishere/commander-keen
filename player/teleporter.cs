@@ -9,14 +9,9 @@ public partial class teleporter : Area2D
 	private AnimatedSprite2D animatedSprite;
 	private AudioStreamPlayer2D audioStreamPlayer;
 	private Timer timer;
-	private OverworldKeen player;
+	private bool inRange = false;
 	private bool isTeleporting = false;
-
-	[Signal]
-	public delegate void TeleportStartEventHandler();
-
-	[Signal]
-	public delegate void TeleportCompleteEventHandler();
+	private SignalManager signalManager;
 	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -24,12 +19,13 @@ public partial class teleporter : Area2D
 		animatedSprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
 		audioStreamPlayer = GetNode<AudioStreamPlayer2D>("AudioStreamPlayer2D");
 		timer = GetNode<Timer>("Timer");
+		signalManager = GetNode<SignalManager>("/root/SignalManager");
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-		if (player != null && Input.IsActionJustPressed("move_jump"))
+		if (inRange && Input.IsActionJustPressed("move_jump"))
 		{
 			isTeleporting = true;
 			Animate();
@@ -38,7 +34,8 @@ public partial class teleporter : Area2D
 
 	public void Animate()
 	{
-		EmitSignal(SignalName.TeleportStart);
+		signalManager.EmitSignal(nameof(SignalManager.TeleportStart));
+		
 		audioStreamPlayer.Play();
 		animatedSprite.Play("transport");
 		timer.Start();
@@ -50,12 +47,12 @@ public partial class teleporter : Area2D
 		if (isTeleporting)
 		{
 			Target.Animate();
-			player.Position = Target.Position;
 			isTeleporting = false;
+			signalManager.EmitSignal(nameof(SignalManager.TeleportComplete), Target.Position, false);
 		}
 		else
 		{
-			EmitSignal(SignalName.TeleportComplete);
+			signalManager.EmitSignal(nameof(SignalManager.TeleportComplete), this.Position, true);
 		}
 	}
 
@@ -63,8 +60,7 @@ public partial class teleporter : Area2D
 	{
 		if (body is OverworldKeen)
 		{
-			Debug.Print("In range of teleporter");
-			player = body as OverworldKeen;			
+			inRange = true;
 		}
 	}
 
@@ -72,8 +68,7 @@ public partial class teleporter : Area2D
 	{
 		if (body is OverworldKeen)
 		{
-			Debug.Print("Out of range of teleporter");
-			player = null;
+			inRange = false;
 		}
 	}
 }
