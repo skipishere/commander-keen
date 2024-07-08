@@ -1,0 +1,120 @@
+[gd_scene load_steps=16 format=3 uid="uid://bckllpjewggoc"]
+
+[ext_resource type="Script" path="res://player/ButlerRobot.cs" id="1_8yhg0"]
+[ext_resource type="Shader" path="res://player/flash.gdshader" id="2_cebvp"]
+[ext_resource type="Texture2D" uid="uid://fvyl6rb58534" path="res://sprites/butler-robot.png" id="2_tqqox"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_b8rg5"]
+shader = ExtResource("2_cebvp")
+shader_parameter/line_color = Color(1, 0, 1, 0.611765)
+shader_parameter/line_thickness = 0.783
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ehtxp"]
+atlas = ExtResource("2_tqqox")
+region = Rect2(102, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sog1e"]
+atlas = ExtResource("2_tqqox")
+region = Rect2(119, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1d53l"]
+atlas = ExtResource("2_tqqox")
+region = Rect2(136, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b53f0"]
+atlas = ExtResource("2_tqqox")
+region = Rect2(153, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m6f3t"]
+atlas = ExtResource("2_tqqox")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2iou0"]
+atlas = ExtResource("2_tqqox")
+region = Rect2(17, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2skno"]
+atlas = ExtResource("2_tqqox")
+region = Rect2(34, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sgn2k"]
+atlas = ExtResource("2_tqqox")
+region = Rect2(51, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0ccda"]
+atlas = ExtResource("2_tqqox")
+region = Rect2(68, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2tjbi"]
+atlas = ExtResource("2_tqqox")
+region = Rect2(85, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_2w6hr"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ehtxp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sog1e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1d53l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b53f0")
+}],
+"loop": true,
+"name": &"left",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m6f3t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2iou0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2skno")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sgn2k")
+}],
+"loop": true,
+"name": &"right",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0ccda")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2tjbi")
+}],
+"loop": false,
+"name": &"turn",
+"speed": 8.0
+}]
+
+[node name="ButlerRobot" type="CharacterBody2D"]
+position = Vector2(0, -8)
+collision_layer = 2
+collision_mask = 3
+script = ExtResource("1_8yhg0")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+material = SubResource("ShaderMaterial_b8rg5")
+sprite_frames = SubResource("SpriteFrames_2w6hr")
+animation = &"left"
+
+[node name="RayCastRight" type="RayCast2D" parent="."]
+position = Vector2(-5, 0)
+target_position = Vector2(0, 16)
+
+[node name="RayCastLeft" type="RayCast2D" parent="."]
+position = Vector2(5, 0)
+target_position = Vector2(0, 16)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(0, -5, 5, 2, 5, 8, -5, 8, -5, 2)
