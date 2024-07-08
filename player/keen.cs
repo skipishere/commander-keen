@@ -15,6 +15,8 @@ public partial class keen : CharacterBody2D
 	private int height;
 	private bool isFacingRight = true;
 
+	private SignalManager signalManager;
+
 	// Get the gravity from the project settings to be synced with RigidBody nodes.
 	public float gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
 
@@ -26,6 +28,9 @@ public partial class keen : CharacterBody2D
 		var collisionShape = GetNode<CollisionShape2D>("CollisionShape2D").Shape.GetRect().Size;
 		width = (int)collisionShape.X/2;
 		height = (int)collisionShape.Y;
+
+		signalManager = GetNode<SignalManager>("/root/SignalManager");
+		signalManager.KeenDead += TakeDamage;
 	}
 
 	public override void _PhysicsProcess(double delta)
