@@ -183,7 +183,7 @@ shape = SubResource("CapsuleShape2D_llcbj")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 material = SubResource("ShaderMaterial_dljt4")
 sprite_frames = SubResource("SpriteFrames_an0h4")
-animation = &"die"
+animation = &"idle"
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 scale = Vector2(2, 2.176)
@@ -195,6 +195,7 @@ pitch_scale = 1.25
 autoplay = true
 max_distance = 950.0
 attenuation = 1.31951
+bus = &"Music"
 
 [node name="HitTimer" type="Timer" parent="."]
 one_shot = true
