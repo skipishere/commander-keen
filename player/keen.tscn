@@ -5,8 +5,9 @@
 [ext_resource type="PackedScene" uid="uid://bgl2fe5um74f0" path="res://scenes/raygunShot.tscn" id="2_eenmn"]
 [ext_resource type="Script" path="res://player/Camera.cs" id="3_6odgb"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_hjwyw"]
-size = Vector2(13, 23)
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1a8jn"]
+radius = 6.5
+height = 23.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7ugtj"]
 atlas = ExtResource("1_fyf0i")
@@ -228,7 +229,7 @@ raygun = ExtResource("2_eenmn")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0.5, 0.5)
-shape = SubResource("RectangleShape2D_hjwyw")
+shape = SubResource("CapsuleShape2D_1a8jn")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_irtpi")
@@ -248,3 +249,5 @@ visible = false
 texture = ExtResource("1_fyf0i")
 hframes = 19
 vframes = 12
+
+[connection signal="tree_exited" from="." to="." method="OnTreeExited"]

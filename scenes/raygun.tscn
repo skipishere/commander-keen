@@ -41,6 +41,8 @@ scale_min = 0.8
 scale_curve = SubResource("5")
 color_ramp = SubResource("GradientTexture1D_fv41j")
 hue_variation_max = 0.2
+sub_emitter_mode = 3
+sub_emitter_amount_at_collision = 1
 
 [node name="Fire" type="GPUParticles2D" groups=["trailable_particles"]]
 texture_filter = 4

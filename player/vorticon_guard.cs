@@ -2,7 +2,7 @@ using Godot;
 using System;
 using System.Diagnostics;
 
-public partial class vorticon_guard : CharacterBody2D
+public partial class vorticon_guard : CharacterBody2D, ITakeDamage
 {
 	[Export]
 	private int Health = 3;
@@ -17,6 +17,7 @@ public partial class vorticon_guard : CharacterBody2D
 	private CollisionShape2D collisionShape;
 
 	private Timer hitTimer;
+	private SignalManager signalManager;
 	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -24,6 +25,7 @@ public partial class vorticon_guard : CharacterBody2D
 		animation = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
 		collisionShape = GetNode<CollisionShape2D>("CollisionShape2D");
 		hitTimer = GetNode<Timer>("HitTimer");
+		signalManager = GetNode<SignalManager>("/root/SignalManager");
 	}
 
     private void HitTimeout()
@@ -60,7 +62,24 @@ public partial class vorticon_guard : CharacterBody2D
 		}
 
 		Velocity = velocity;
-		MoveAndSlide();
+		if (MoveAndSlide())
+		{
+			HandleCollision();
+		}
+	}
+
+	private void HandleCollision()
+	{
+		for (int i = 0; i < GetSlideCollisionCount(); i++)
+		{
+			var collision = GetSlideCollision(i);
+			var collider = collision.GetCollider();
+						
+			if (collider is keen)
+			{
+				signalManager.EmitSignal(nameof(SignalManager.KeenDead));
+			}
+		}
 	}
 
 	public void TakeDamage()
@@ -75,29 +94,27 @@ public partial class vorticon_guard : CharacterBody2D
 			Debug.WriteLine("Vorticon Guard defeated!");
 			animation.Play("die");
 			this.SetCollisionLayerValue(4, false);
-
+			this.SetCollisionMaskValue(2, false);
 		}
 	}
 
 	public void _on_screen_entered()
 	{
-		Debug.WriteLine("Vorticon Guard on screen!");
+		Debug.WriteLine("Vorticon Guard on screen");
 		isActivated = true;
 	}
 
 	public void OnScreenExited()
 	{
-		Debug.WriteLine("Vorticon Guard off screen!");
+		Debug.WriteLine("Vorticon Guard off screen");
 		isActivated = false;		
 	}
 
-	private void _on_Area2D_body_entered(object body)
-	{
-		Debug.WriteLine("Vorticon collision detected!");
-		if (body is raygunShot)
-		{
-			Debug.WriteLine("Raygun shot collided with Vorticon Guard!");
-			TakeDamage();
-		}
-	}
+	// private void _on_Area2D_body_entered(object body)
+	// {
+	// 	if (body is keen)
+	// 	{
+	// 		signalManager.EmitSignal(nameof(SignalManager.KeenDead));
+	// 	}
+	// }
 }

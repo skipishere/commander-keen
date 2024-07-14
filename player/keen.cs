@@ -2,7 +2,7 @@ using Godot;
 using System;
 using System.Diagnostics;
 
-public partial class keen : CharacterBody2D
+public partial class keen : CharacterBody2D, ITakeDamage
 {
 	[Export]
 	private PackedScene raygun;
@@ -33,6 +33,11 @@ public partial class keen : CharacterBody2D
 		signalManager.KeenDead += TakeDamage;
 	}
 
+	public void OnTreeExited()
+	{
+		signalManager.KeenDead -= TakeDamage;
+	}
+
 	public override void _PhysicsProcess(double delta)
 	{
 		Vector2 velocity = Velocity;
@@ -47,14 +52,7 @@ public partial class keen : CharacterBody2D
 		{
 			game_stats.Charges--;
 			var raygunInstance = raygun.Instantiate() as raygunShot;
-			
-			var shotOffset = 6 * (isFacingRight ? 1 : -1);
-			raygunInstance.GlobalPosition = this.GlobalPosition with 
-			{
-				X = this.GlobalPosition.X + shotOffset,
-				Y = this.GlobalPosition.Y 
-			};
-			raygunInstance.RotationDegrees = isFacingRight ? 0 : 180;
+			raygunInstance.SetDirection(this.GlobalPosition, new Vector2(isFacingRight ? 1 : -1, 0), 8);
 			GetTree().Root.AddChild(raygunInstance);
 		}
 		
@@ -114,8 +112,10 @@ public partial class keen : CharacterBody2D
 		}
 		
 		Velocity = velocity;
-		MoveAndSlide();
-		HandleColliosion();
+		if (MoveAndSlide())
+		{
+			HandleCollision();
+		}
 
 		// Clamp the player position to the camera limits.		
 		var xLimit = Mathf.Clamp(this.GlobalPosition.X, camera.LimitLeft+width, camera.LimitRight-width);
@@ -130,17 +130,19 @@ public partial class keen : CharacterBody2D
 		this.GlobalPosition = this.GlobalPosition with { X = xLimit, Y = yLimit};
 	}
 
-	private void HandleColliosion()
+	private void HandleCollision()
 	{
 		for (int i = 0; i < GetSlideCollisionCount(); i++)
 		{
 			var collision = GetSlideCollision(i);
 			var collider = collision.GetCollider();
-			if (collider is vorticon_guard)
-			{
-				Debug.WriteLine("Vorticon collision detected!");
-				TakeDamage();
-			}
+			//Debug.WriteLine($"Collided with {collider.GetType()}");
+			
+			// if (collider is vorticon_guard)
+			// {
+			// 	Debug.WriteLine("Vorticon collision detected!");
+			// 	TakeDamage();
+			// }
 		}
 	}
 
@@ -148,6 +150,6 @@ public partial class keen : CharacterBody2D
 	{
 		Debug.WriteLine("Keen defeated!");
 		animation.Play("dead");
-		this.SetCollisionLayerValue(1, false);
+		//this.SetCollisionMaskValue(1, false);
 	}
 }

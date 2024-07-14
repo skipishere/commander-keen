@@ -1,14 +1,16 @@
-[gd_scene load_steps=5 format=3 uid="uid://bgl2fe5um74f0"]
+[gd_scene load_steps=6 format=3 uid="uid://bgl2fe5um74f0"]
 
 [ext_resource type="Script" path="res://scenes/raygunShot.cs" id="1_3kfvr"]
 [ext_resource type="PackedScene" uid="uid://c1ejkq43c2j4t" path="res://scenes/raygun.tscn" id="2_c8nn3"]
+[ext_resource type="Texture2D" uid="uid://bjomncvydxqbc" path="res://sprites/zap.png" id="3_73o7a"]
 [ext_resource type="AudioStream" uid="uid://c3hy7x0tffyqb" path="res://sfx/28912__junggle__btn102.wav" id="3_ejal4"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_umtd2"]
 radius = 2.0
-height = 6.0
+height = 4.0
 
 [node name="RaygunShot" type="StaticBody2D"]
+position = Vector2(-1, 1)
 collision_layer = 0
 collision_mask = 11
 script = ExtResource("1_3kfvr")
@@ -18,7 +20,7 @@ amount = 64
 lifetime = 0.1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(5, -1)
+position = Vector2(7, -1)
 rotation = -1.5708
 shape = SubResource("CapsuleShape2D_umtd2")
 one_way_collision = true
@@ -32,5 +34,9 @@ stream = ExtResource("3_ejal4")
 volume_db = -12.0
 autoplay = true
 bus = &"Sound Effects"
+
+[node name="Zap" type="Sprite2D" parent="."]
+visible = false
+texture = ExtResource("3_73o7a")
 
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="ScreenExited"]
