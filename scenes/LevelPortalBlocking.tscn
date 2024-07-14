@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://bq6nvssx3qu3q"]
+
+[ext_resource type="PackedScene" uid="uid://c7pqcg8qktvrv" path="res://scenes/LevelPortal.tscn" id="2_ab1l4"]
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_ggyao"]
+resource_local_to_scene = true
+a = Vector2(-20, -8.12497)
+b = Vector2(23.125, -8.12497)
+
+[node name="LevelPortal" instance=ExtResource("2_ab1l4")]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." index="2"]
+
+[node name="CollisionPolygon2D" type="CollisionShape2D" parent="StaticBody2D" index="0"]
+shape = SubResource("SegmentShape2D_ggyao")
+debug_color = Color(0.878034, 0.000388511, 0.828509, 0.42)

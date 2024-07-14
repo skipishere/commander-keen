@@ -9,17 +9,31 @@ public partial class LevelPortal : Area2D
 
 	private bool inRange = false;
 	private SignalManager signalManager;
+	private Node2D doneMessage;
 
 	public override void _Ready()
 	{
+		doneMessage = GetNode<Node2D>("DoneMessage");
 		signalManager = GetNode<SignalManager>("/root/SignalManager");
+		
+		if (!game_stats.Levels.TryGetValue(this.Target.ResourcePath, out var levelFinished))
+		{
+			game_stats.Levels.Add(this.Target.ResourcePath, false);
+		}
+
+		doneMessage.Visible = levelFinished;
+		this.Monitoring = !levelFinished;
+
+		if (levelFinished && this.GetNodeOrNull<StaticBody2D>("StaticBody2D") != null)
+		{
+			this.GetNode<StaticBody2D>("StaticBody2D").QueueFree();
+		}
 	}
 
 	public override void _Process(double delta)
 	{
 		if (inRange && Input.IsActionJustPressed("move_jump"))
 		{
-			Debug.Print($"Level Portal activated - {Target.ResourcePath}");
 			signalManager.EmitSignal(nameof(SignalManager.EnteringLevel));
 			GetTree().ChangeSceneToPacked(Target);
 		}
@@ -30,6 +44,7 @@ public partial class LevelPortal : Area2D
 		Debug.Print("Level Portal reached");
 		if (body is OverworldKeen)
 		{
+			Debug.Print($"Level Portal activated - {Target.ResourcePath}");
 			inRange = true;
 		}
 	}

@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
 [GlobalClass]
 public partial class game_stats : Resource
@@ -11,4 +12,6 @@ public partial class game_stats : Resource
     public static int Charges = 5;
 
     public static Vector2? KeenMapPosition;
+
+    public static Dictionary<string, bool> Levels = new();
 }

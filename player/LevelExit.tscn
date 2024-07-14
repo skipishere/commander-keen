@@ -5,7 +5,7 @@
 [ext_resource type="AudioStream" uid="uid://cyty8pl76d7vp" path="res://sfx/Rise05.ogg" id="3_m42mm"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2ulyt"]
-size = Vector2(28, 31)
+size = Vector2(21, 31)
 
 [node name="LevelExit" type="Area2D"]
 z_index = -1
@@ -19,7 +19,7 @@ format = 2
 layer_0/tile_data = PackedInt32Array(-1, 458752, 4, -65536, 524288, 4, -65535, 589824, 4, -65537, 458752, 4, -131072, 524288, 4, -131071, 589824, 4, -131073, 458752, 3, -196608, 524288, 3, -196607, 589824, 3, -65538, 524288, 10)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(3, -15.5)
+position = Vector2(2.5, -16.5)
 shape = SubResource("RectangleShape2D_2ulyt")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]

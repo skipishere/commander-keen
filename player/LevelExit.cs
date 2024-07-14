@@ -19,7 +19,11 @@ public partial class LevelExit : Area2D
 	{
 		if (inRange && !audioStreamPlayer.Playing)
 		{
+			this.SetDeferred("monitoring", false);
+			
 			inRange = false;
+			Debug.Print($"Current scene name: {GetTree().CurrentScene.SceneFilePath}");
+			game_stats.Levels[GetTree().CurrentScene.SceneFilePath] = true;
 			audioStreamPlayer.Play();
 		}
 	}

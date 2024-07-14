@@ -7,6 +7,9 @@
 [sub_resource type="LabelSettings" id="LabelSettings_mwnla"]
 line_spacing = 0.0
 font_size = 7
+outline_size = 1
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 4
 
 [node name="LevelPortal" type="Area2D"]
 collision_layer = 0
@@ -16,17 +19,17 @@ script = ExtResource("1_jj3c4")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_4s343")
 
-[node name="Node2D" type="Node2D" parent="."]
+[node name="DoneMessage" type="Node2D" parent="."]
 visible = false
 
-[node name="ColorRect" type="ColorRect" parent="Node2D"]
+[node name="ColorRect" type="ColorRect" parent="DoneMessage"]
 offset_left = -10.0
 offset_top = -10.0
 offset_right = 10.0
 offset_bottom = 10.0
-color = Color(0.329412, 0.329412, 0.988235, 1)
+color = Color(0.329412, 0.329412, 0.988235, 0.494118)
 
-[node name="Label" type="Label" parent="Node2D"]
+[node name="Label" type="Label" parent="DoneMessage"]
 offset_left = -10.0
 offset_top = -10.0
 offset_right = 11.0

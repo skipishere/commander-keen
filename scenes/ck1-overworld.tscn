@@ -1,10 +1,11 @@
-[gd_scene load_steps=16 format=3 uid="uid://c85ufn8742tq3"]
+[gd_scene load_steps=20 format=3 uid="uid://c85ufn8742tq3"]
 
 [ext_resource type="Texture2D" uid="uid://cqgyahlpnxrxl" path="res://sprites/mars.png" id="1_chxqg"]
 [ext_resource type="Script" path="res://scenes/Overworld.cs" id="1_ne1bf"]
 [ext_resource type="PackedScene" uid="uid://c7m6wb1coorjg" path="res://player/teleporter.tscn" id="2_4ct4t"]
 [ext_resource type="PackedScene" uid="uid://b0du0mvfg8ov3" path="res://player/keen-map.tscn" id="3_7pysq"]
 [ext_resource type="AudioStream" uid="uid://ru73lgw8vtph" path="res://music/Reverse-Time-Loop-isaiah658.ogg" id="4_eb3sn"]
+[ext_resource type="PackedScene" uid="uid://bq6nvssx3qu3q" path="res://scenes/LevelPortalBlocking.tscn" id="5_qyudg"]
 [ext_resource type="PackedScene" uid="uid://c7pqcg8qktvrv" path="res://scenes/LevelPortal.tscn" id="6_o67p0"]
 [ext_resource type="PackedScene" uid="uid://bq77lad6b0om7" path="res://scenes/ck1lv01.tscn" id="7_l00kp"]
 [ext_resource type="PackedScene" uid="uid://bn8vq8xewxhfp" path="res://scenes/debug.tscn" id="8_jptl0"]
@@ -12,6 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://declpwg68bt56" path="res://scenes/ck1lv03.tscn" id="9_cidit"]
 [ext_resource type="PackedScene" uid="uid://db4e3oa7n70em" path="res://scenes/ck1lv04.tscn" id="10_jxgis"]
 [ext_resource type="PackedScene" uid="uid://6eyvaskh04ap" path="res://scenes/ck1lv05.tscn" id="11_21wk7"]
+[ext_resource type="PackedScene" uid="uid://d2us288ab8vt" path="res://scenes/ck1lv07.tscn" id="12_g375p"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_txjfx"]
 texture = ExtResource("1_chxqg")
@@ -502,8 +504,25 @@ physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_txjfx")
 sources/1 = SubResource("TileSetScenesCollectionSource_bqmmw")
 
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_wp6a7"]
+resource_local_to_scene = true
+a = Vector2(-1.8, -16)
+b = Vector2(-1.8, 14)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_k40in"]
+resource_local_to_scene = true
+a = Vector2(-20, -8.12497)
+b = Vector2(23.125, -8.12497)
+
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_ne1bf")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = -609.0
+offset_top = -650.0
+offset_right = 666.0
+offset_bottom = 577.0
+color = Color(0, 0, 0, 1)
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_wwp2b")
@@ -537,10 +556,14 @@ Target = NodePath("../Teleporter2")
 position = Vector2(-402, 42)
 Target = ExtResource("8_jptl0")
 
-[node name="LevelPortal" parent="Levels" instance=ExtResource("6_o67p0")]
+[node name="LevelPortal1" parent="Levels" instance=ExtResource("5_qyudg")]
 position = Vector2(-241, 49)
 scale = Vector2(1.6, 1.6)
 Target = ExtResource("7_l00kp")
+
+[node name="CollisionPolygon2D" parent="Levels/LevelPortal1/StaticBody2D" index="0"]
+position = Vector2(6.25, 0)
+shape = SubResource("SegmentShape2D_wp6a7")
 
 [node name="LevelPortal2" parent="Levels" instance=ExtResource("6_o67p0")]
 position = Vector2(-200, -104)
@@ -560,6 +583,21 @@ Target = ExtResource("10_jxgis")
 position = Vector2(-297, -376)
 Target = ExtResource("11_21wk7")
 
+[node name="LevelPortal6" parent="Levels" instance=ExtResource("6_o67p0")]
+position = Vector2(-345, -296)
+Target = ExtResource("12_g375p")
+
+[node name="LevelPortal7" parent="Levels" instance=ExtResource("5_qyudg")]
+position = Vector2(-142, -415)
+scale = Vector2(1.6, 1.6)
+Target = ExtResource("12_g375p")
+
+[node name="CollisionPolygon2D" parent="Levels/LevelPortal7/StaticBody2D" index="0"]
+shape = SubResource("SegmentShape2D_k40in")
+
 [node name="Keen-map" parent="." instance=ExtResource("3_7pysq")]
 position = Vector2(-394, 8)
 collision_layer = 2
+
+[editable path="Levels/LevelPortal1"]
+[editable path="Levels/LevelPortal7"]
