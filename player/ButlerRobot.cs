@@ -2,7 +2,7 @@ using Godot;
 using System;
 using System.Diagnostics;
 
-public partial class ButlerRobot : CharacterBody2D
+public partial class ButlerRobot : RigidBody2D
 {
 	public const float Speed = 0.842f;
 
@@ -20,7 +20,6 @@ public partial class ButlerRobot : CharacterBody2D
 
 	public override void _PhysicsProcess(double delta)
 	{
-		Vector2 velocity = Velocity;
 		if (animatedSprite2D.IsPlaying() && animatedSprite2D.Animation == "turn")
 		{
 			return;
@@ -31,23 +30,21 @@ public partial class ButlerRobot : CharacterBody2D
 			direction *= -1;
 			animatedSprite2D.Play("turn");
 		}
-		else
+		else if (!animatedSprite2D.IsPlaying())
 		{
-			if (!animatedSprite2D.IsPlaying())
-			{
-				animatedSprite2D.Play(direction > 0 ? "right": "left");
-			}
+			animatedSprite2D.Play(direction > 0 ? "right": "left");
 		}
 
-		velocity.X = direction * Speed;
-		
-		Velocity = velocity;
+		var velocity = new Vector2 (direction * Speed, 0);
 		
 		var result = MoveAndCollide(velocity);
 		if (result?.GetCollider() is keen player)
 		{
+			
+			//this.ApplyForce(Vector2.Right * 1000);
 			// Todo push keen
-			//Debug.Print("Player hit");
+			Debug.Print("Player hit");
+			
 		}
 		else if (result?.GetCollider() is TileMap wall)
 		{
