@@ -36,6 +36,10 @@ project/assembly_name="Commander-keen"
 
 movie_writer/movie_file="C:/code/skipishere/commander-keen/movie/demo.avi"
 
+[filesystem]
+
+import/blender/enabled=false
+
 [input]
 
 move_right={
@@ -86,4 +90,3 @@ map_down={
 
 textures/canvas_textures/default_texture_filter=0
 renderer/rendering_method="mobile"
-environment/defaults/default_clear_color=Color(0, 0, 0, 1)
