@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://dr65easu08yxl"]
+
+[ext_resource type="PackedScene" uid="uid://bruadtk11tldf" path="res://scenes/keycards/KeyCardA.tscn" id="1_07pkb"]
+
+[node name="Keycard" instance=ExtResource("1_07pkb")]
+Card = 2
+
+[node name="Sprite2D" parent="." index="1"]
+region_rect = Rect2(96, 0, 16, 16)
