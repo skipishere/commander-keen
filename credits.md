@@ -8,6 +8,7 @@ Music:
     - Mysterious Ambience song21.mp3 - https://opengameart.org/content/mysterious-ambience-song21
     - Reverse-Time-Loop-isaiah658.ogg - https://opengameart.org/content/reversing-time-stuck-in-time
     - 2012_november_fakeAwake04 back to A minor.wav - https://opengameart.org/content/hyperflight-racing
+    - beauty_of_chaos.ogg - https://opengameart.org/content/beauty-of-chaos
 Sound Effects:
     - Rise01.aif - https://opengameart.org/content/level-up-power-up-coin-get-13-sounds
     - Rise05.aif - https://opengameart.org/content/level-up-power-up-coin-get-13-sounds
@@ -16,3 +17,4 @@ Sound Effects:
     - Kim Lightyear - Whistle.wav - https://opengameart.org/content/whistle
     - shrinkray.ogg - https://opengameart.org/content/generic-shrink-ray
     - 138410__cameronmusic__item-collect-2.wav - https://freesound.org/people/cameronmusic/sounds/138410/
+    - doorbell.wav - https://opengameart.org/content/doorbell-1
