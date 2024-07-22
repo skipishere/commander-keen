@@ -99,6 +99,7 @@ _data = {
 
 [node name="DoorA" type="Node2D"]
 clip_children = 2
+z_index = -1
 position = Vector2(0, -8)
 script = ExtResource("1_dyqf2")
 
