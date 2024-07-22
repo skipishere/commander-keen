@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://sx1koyrggqtd"]
+
+[ext_resource type="PackedScene" uid="uid://t7mowemw43uw" path="res://scenes/doors/DoorA.tscn" id="1_3r4e2"]
+
+[node name="DoorA" instance=ExtResource("1_3r4e2")]
+Card = 2
+
+[node name="Sprite2D" parent="Area2D/CollisionShape2D" index="0"]
+region_rect = Rect2(16, 0, 16, 32)
