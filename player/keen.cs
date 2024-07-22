@@ -15,6 +15,10 @@ public partial class keen : CharacterBody2D, ITakeDamage
 	private int height;
 	private bool isFacingRight = true;
 
+	private bool hasPogo = false;
+
+	private game_stats.KeyCards keyCards = 0;
+
 	private SignalManager signalManager;
 
 	// Get the gravity from the project settings to be synced with RigidBody nodes.
@@ -53,9 +57,16 @@ public partial class keen : CharacterBody2D, ITakeDamage
 			game_stats.Charges--;
 			var raygunInstance = raygun.Instantiate() as raygunShot;
 			raygunInstance.SetDirection(this.GlobalPosition, new Vector2(isFacingRight ? 1 : -1, 0), 8);
+			raygunInstance.SetDirection(this.GlobalPosition, new Vector2(isFacingRight ? 1 : -1, 0), new Vector2(isFacingRight ? 16 : -16, 0), this);
 			GetTree().Root.AddChild(raygunInstance);
 		}
 		
+		if (Input.IsActionJustPressed("move_pogo") && IsOnFloor())
+		{
+			velocity.Y = JumpVelocity * (float)1.45;
+			animation.Stop();
+		}
+
 		// Handle Jump.
 		if (Input.IsActionJustPressed("move_jump") && IsOnFloor())
 		{
@@ -118,6 +129,7 @@ public partial class keen : CharacterBody2D, ITakeDamage
 		}
 
 		// Clamp the player position to the camera limits.		
+		// Clamp the player position to the camera limits.
 		var xLimit = Mathf.Clamp(this.GlobalPosition.X, camera.LimitLeft+width, camera.LimitRight-width);
 		var yLimit = Mathf.Clamp(this.GlobalPosition.Y, camera.LimitTop, camera.LimitBottom-height);
 		if (this.GlobalPosition.Y <= camera.LimitTop && velocity.Y < 0)
@@ -151,5 +163,16 @@ public partial class keen : CharacterBody2D, ITakeDamage
 		Debug.WriteLine("Keen defeated!");
 		animation.Play("dead");
 		//this.SetCollisionMaskValue(1, false);
+	}
+
+	public void GiveKey(game_stats.KeyCards key)
+	{
+		keyCards |= key;
+		Debug.WriteLine($"Keen has key {key}");
+	}
+
+	public bool HasKey(game_stats.KeyCards key)
+	{
+		return keyCards.HasFlag(key);
 	}
 }
