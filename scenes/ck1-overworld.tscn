@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://c85ufn8742tq3"]
+[gd_scene load_steps=25 format=3 uid="uid://c85ufn8742tq3"]
 
 [ext_resource type="Texture2D" uid="uid://cqgyahlpnxrxl" path="res://sprites/mars.png" id="1_chxqg"]
 [ext_resource type="Script" path="res://scenes/Overworld.cs" id="1_ne1bf"]
@@ -14,6 +14,11 @@
 [ext_resource type="PackedScene" uid="uid://db4e3oa7n70em" path="res://scenes/ck1lv04.tscn" id="10_jxgis"]
 [ext_resource type="PackedScene" uid="uid://6eyvaskh04ap" path="res://scenes/ck1lv05.tscn" id="11_21wk7"]
 [ext_resource type="PackedScene" uid="uid://d2us288ab8vt" path="res://scenes/ck1lv07.tscn" id="12_g375p"]
+[ext_resource type="PackedScene" uid="uid://rek7qiqwxh78" path="res://scenes/ck1lv06.tscn" id="12_xw1kk"]
+[ext_resource type="PackedScene" uid="uid://cdeop7s030h42" path="res://scenes/ck1lv15.tscn" id="15_6dsvt"]
+[ext_resource type="PackedScene" uid="uid://7xyf6o3ouwj8" path="res://scenes/ck1lv09.tscn" id="15_tvqpk"]
+[ext_resource type="PackedScene" uid="uid://d3mtvkri0xg7k" path="res://scenes/ck1lv14.tscn" id="16_7hpdi"]
+[ext_resource type="PackedScene" uid="uid://l2rhg3uga7kg" path="res://scenes/ck1lv13.tscn" id="16_pafoe"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_txjfx"]
 texture = ExtResource("1_chxqg")
@@ -546,7 +551,7 @@ Target = NodePath("../Teleporter2")
 position = Vector2(-8, -504)
 Target = NodePath("../Teleporter")
 
-[node name="Teleporter3" parent="." node_paths=PackedStringArray("Target") instance=ExtResource("2_4ct4t")]
+[node name="TeleporterSecret" parent="." node_paths=PackedStringArray("Target") instance=ExtResource("2_4ct4t")]
 position = Vector2(408, 8)
 Target = NodePath("../Teleporter2")
 
@@ -581,11 +586,11 @@ Target = ExtResource("10_jxgis")
 
 [node name="LevelPortal5" parent="Levels" instance=ExtResource("6_o67p0")]
 position = Vector2(-297, -376)
-Target = ExtResource("11_21wk7")
+Target = ExtResource("12_xw1kk")
 
 [node name="LevelPortal6" parent="Levels" instance=ExtResource("6_o67p0")]
 position = Vector2(-345, -296)
-Target = ExtResource("12_g375p")
+Target = ExtResource("11_21wk7")
 
 [node name="LevelPortal7" parent="Levels" instance=ExtResource("5_qyudg")]
 position = Vector2(-142, -415)
@@ -594,6 +599,28 @@ Target = ExtResource("12_g375p")
 
 [node name="CollisionPolygon2D" parent="Levels/LevelPortal7/StaticBody2D" index="0"]
 shape = SubResource("SegmentShape2D_k40in")
+
+[node name="LevelPortal9" parent="Levels" instance=ExtResource("6_o67p0")]
+position = Vector2(25, -345)
+Target = ExtResource("15_tvqpk")
+
+[node name="LevelPortal11" parent="Levels" instance=ExtResource("6_o67p0")]
+position = Vector2(280, -297)
+Target = ExtResource("15_tvqpk")
+
+[node name="LevelPortal13" parent="Levels" instance=ExtResource("6_o67p0")]
+position = Vector2(161, -160)
+scale = Vector2(1.6, 1.6)
+Target = ExtResource("16_pafoe")
+
+[node name="LevelPortal14" parent="Levels" instance=ExtResource("6_o67p0")]
+position = Vector2(416, -95)
+scale = Vector2(1.6, 1.6)
+Target = ExtResource("16_7hpdi")
+
+[node name="LevelPortal15" parent="Levels" instance=ExtResource("6_o67p0")]
+position = Vector2(56, 408)
+Target = ExtResource("15_6dsvt")
 
 [node name="Keen-map" parent="." instance=ExtResource("3_7pysq")]
 position = Vector2(-394, 8)

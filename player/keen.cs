@@ -56,7 +56,6 @@ public partial class keen : CharacterBody2D, ITakeDamage
 		{
 			game_stats.Charges--;
 			var raygunInstance = raygun.Instantiate() as raygunShot;
-			raygunInstance.SetDirection(this.GlobalPosition, new Vector2(isFacingRight ? 1 : -1, 0), 8);
 			raygunInstance.SetDirection(this.GlobalPosition, new Vector2(isFacingRight ? 1 : -1, 0), new Vector2(isFacingRight ? 16 : -16, 0), this);
 			GetTree().Root.AddChild(raygunInstance);
 		}
@@ -96,7 +95,6 @@ public partial class keen : CharacterBody2D, ITakeDamage
 		// eg animation.Play("dead");
 
 		// Get the input direction and handle the movement/deceleration.
-		// As good practice, you should replace UI actions with custom gameplay actions.
 		Vector2 direction = Input.GetVector("move_left", "move_right", "ui_up", "ui_down");
 		if (direction != Vector2.Zero)
 		{
@@ -128,7 +126,6 @@ public partial class keen : CharacterBody2D, ITakeDamage
 			HandleCollision();
 		}
 
-		// Clamp the player position to the camera limits.		
 		// Clamp the player position to the camera limits.
 		var xLimit = Mathf.Clamp(this.GlobalPosition.X, camera.LimitLeft+width, camera.LimitRight-width);
 		var yLimit = Mathf.Clamp(this.GlobalPosition.Y, camera.LimitTop, camera.LimitBottom-height);
@@ -150,11 +147,23 @@ public partial class keen : CharacterBody2D, ITakeDamage
 			var collider = collision.GetCollider();
 			//Debug.WriteLine($"Collided with {collider.GetType()}");
 			
-			// if (collider is vorticon_guard)
-			// {
-			// 	Debug.WriteLine("Vorticon collision detected!");
-			// 	TakeDamage();
-			// }
+			if (collider is TileMap tileMap)
+			{
+				// Handle the tilemap collision.
+				//Debug.WriteLine($"Collided with {tileMap.Name}");
+				var l2 = tileMap.ToLocal(collision.GetPosition());
+				tileMap.LocalToMap(l2);
+				var location = tileMap.LocalToMap(l2);
+				//Debug.WriteLine($"Collided with tilemap at {location}");
+				//tileMap.layer
+				var foo = tileMap.GetCellTileData(1, location);
+				if (foo != null)
+				{
+					Debug.WriteLine($"Collided with tilemap - death?");
+				}
+			}
+			
+			
 		}
 	}
 

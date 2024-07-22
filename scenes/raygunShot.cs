@@ -10,6 +10,7 @@ public partial class raygunShot : StaticBody2D
 	private GpuParticles2D fireParticles;
 
 	private CollisionShape2D collisionShape;
+	private GodotObject origin;
 	
 	public override void _Ready()
 	{
@@ -19,28 +20,29 @@ public partial class raygunShot : StaticBody2D
 		collisionShape = GetNode<CollisionShape2D>("CollisionShape2D");
 	}
 
-	public void SetDirection(Vector2 globalPosition, Vector2 direction, int shotOffset)
+	public void SetDirection(Vector2 globalPosition, Vector2 direction, Vector2 offset, GodotObject origin)
 	{
-		this.GlobalPosition = globalPosition with 
-		{
-			X = globalPosition.X + (direction.X * shotOffset),
-		};
+		this.GlobalPosition = globalPosition + direction + offset;
+		// {
+		// 	X = globalPosition.X + (direction.X);// * shotOffset),
+		// };
 
 		this.direction = direction;
-		
 		this.Transform  = this.Transform with { X = this.Transform.X * (direction.X > 0 ? 1 : -1) };
+		this.origin = origin;
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-		var shot = MoveAndCollide(direction * SPEED * (float)delta);
-		if (shot != null)
+		var modifier = this.zap.Visible ? 0.1f : 1.0f;
+		var shot = MoveAndCollide(direction * SPEED * modifier * (float)delta);
+
+		if (shot != null && shot.GetCollider() != origin)
 		{	
-			
-			zap.FlipH = shot.GetTravel().X < 0;
+			zap.FlipH = direction.X < 0;
 			collisionShape.Disabled = true;
-			direction = shot.GetTravel() with { X = (float)(shot.GetTravel().X * 0.25)};
+			//direction = shot.GetTravel() with { X = (float)(shot.GetTravel().X * 0.25)};
 			
 			if (shot.GetCollider() is ITakeDamage creature)
 			{
