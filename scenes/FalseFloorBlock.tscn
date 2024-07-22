@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://bjbehw7hjpmri"]
+
+[ext_resource type="Texture2D" uid="uid://65y75605vmla" path="res://sprites/platforms.png" id="1_gmfry"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_s48nq"]
+size = Vector2(16, 16)
+
+[node name="Node2D" type="StaticBody2D"]
+z_index = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_gmfry")
+region_enabled = true
+region_rect = Rect2(144, 0, 16, 16)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = -3.14159
+shape = SubResource("RectangleShape2D_s48nq")
+one_way_collision = true
+debug_color = Color(1, 0.631373, 0.980392, 0.419608)
