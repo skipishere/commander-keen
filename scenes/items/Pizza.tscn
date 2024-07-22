@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://c8huaqpckkon8"]
+
+[ext_resource type="PackedScene" uid="uid://cfcdvelrrvi5u" path="res://scenes/items/ItemBase.tscn" id="1_u0h3y"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_qhy58"]
+resource_local_to_scene = true
+font_size = 8
+font_color = Color(0.988235, 0.988235, 0.329412, 1)
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+
+[node name="Item" instance=ExtResource("1_u0h3y")]
+Points = 500
+
+[node name="Sprite2D" parent="." index="0"]
+region_rect = Rect2(32, 0, 16, 16)
+
+[node name="Label" parent="." index="3"]
+label_settings = SubResource("LabelSettings_qhy58")
