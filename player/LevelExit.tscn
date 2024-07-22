@@ -1,25 +1,24 @@
 [gd_scene load_steps=5 format=3 uid="uid://bacl3fbjkgx8e"]
 
 [ext_resource type="Script" path="res://player/LevelExit.cs" id="1_51t3q"]
-[ext_resource type="TileSet" uid="uid://w7k5amqxc3ac" path="res://scenes/tile_platform.tres" id="1_nbs4t"]
+[ext_resource type="Texture2D" uid="uid://bu88vy4djst64" path="res://sprites/Door.png" id="2_n4jso"]
 [ext_resource type="AudioStream" uid="uid://cyty8pl76d7vp" path="res://sfx/Rise05.ogg" id="3_m42mm"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2ulyt"]
-size = Vector2(21, 31)
+size = Vector2(26, 33)
 
 [node name="LevelExit" type="Area2D"]
 z_index = -1
-position = Vector2(-8, 8)
+position = Vector2(-13, -3)
 collision_mask = 2
 script = ExtResource("1_51t3q")
 
-[node name="TileMap" type="TileMap" parent="."]
-tile_set = ExtResource("1_nbs4t")
-format = 2
-layer_0/tile_data = PackedInt32Array(-1, 458752, 4, -65536, 524288, 4, -65535, 589824, 4, -65537, 458752, 4, -131072, 524288, 4, -131071, 589824, 4, -131073, 458752, 3, -196608, 524288, 3, -196607, 589824, 3, -65538, 524288, 10)
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(8, -8)
+texture = ExtResource("2_n4jso")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(2.5, -16.5)
+position = Vector2(8, -5.5)
 shape = SubResource("RectangleShape2D_2ulyt")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
