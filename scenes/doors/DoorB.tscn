@@ -5,5 +5,5 @@
 [node name="DoorA" instance=ExtResource("1_3r4e2")]
 Card = 2
 
-[node name="Sprite2D" parent="Area2D/CollisionShape2D" index="0"]
+[node name="Sprite2D" parent="Polygon2D/Area2D/CollisionShape2D" index="0"]
 region_rect = Rect2(16, 0, 16, 32)
