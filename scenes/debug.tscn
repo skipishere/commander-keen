@@ -35,16 +35,3 @@ position = Vector2(378, -24)
 
 [node name="Keen" parent="." instance=ExtResource("2_wndbe")]
 position = Vector2(-105, -28)
-
-[connection signal="body_entered" from="TileMap/Raygun-item" to="TileMap/Raygun-item" method="OnBodyEntered"]
-[connection signal="body_entered" from="TileMap/LevelExit" to="TileMap/LevelExit" method="OnBodyEntered"]
-[connection signal="body_entered" from="TileMap/Keycard" to="TileMap/Keycard" method="OnBodyEntered"]
-[connection signal="body_entered" from="TileMap/@Area2D@218012" to="TileMap/@Area2D@218012" method="OnBodyEntered"]
-[connection signal="body_entered" from="TileMap/@Area2D@218013" to="TileMap/@Area2D@218013" method="OnBodyEntered"]
-[connection signal="body_entered" from="TileMap/@Area2D@218014" to="TileMap/@Area2D@218014" method="OnBodyEntered"]
-[connection signal="body_entered" from="TileMap/@Area2D@218016" to="TileMap/@Area2D@218016" method="OnBodyEntered"]
-[connection signal="body_entered" from="TileMap/Item" to="TileMap/Item" method="OnBodyEntered"]
-[connection signal="body_entered" from="TileMap/@Area2D@218017" to="TileMap/@Area2D@218017" method="OnBodyEntered"]
-[connection signal="body_entered" from="TileMap/@Area2D@218018" to="TileMap/@Area2D@218018" method="OnBodyEntered"]
-[connection signal="body_entered" from="TileMap/@Area2D@218019" to="TileMap/@Area2D@218019" method="OnBodyEntered"]
-[connection signal="body_entered" from="TileMap/@Area2D@218020" to="TileMap/@Area2D@218020" method="OnBodyEntered"]
