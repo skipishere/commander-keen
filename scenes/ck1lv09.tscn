@@ -56,21 +56,3 @@ bus = &"Music"
 [node name="LightOccluder2D" type="LightOccluder2D" parent="."]
 position = Vector2(36, -103)
 occluder = SubResource("OccluderPolygon2D_jhabg")
-
-[connection signal="body_entered" from="TileMap/LevelExit" to="TileMap/LevelExit" method="OnBodyEntered"]
-[connection signal="body_entered" from="TileMap/Item" to="TileMap/Item" method="OnBodyEntered"]
-[connection signal="body_entered" from="TileMap/@Area2D@205263" to="TileMap/@Area2D@205263" method="OnBodyEntered"]
-[connection signal="body_entered" from="TileMap/@Area2D@205264" to="TileMap/@Area2D@205264" method="OnBodyEntered"]
-[connection signal="body_entered" from="TileMap/@Area2D@205265" to="TileMap/@Area2D@205265" method="OnBodyEntered"]
-[connection signal="body_entered" from="TileMap/@Area2D@205266" to="TileMap/@Area2D@205266" method="OnBodyEntered"]
-[connection signal="body_entered" from="TileMap/@Area2D@205267" to="TileMap/@Area2D@205267" method="OnBodyEntered"]
-[connection signal="body_entered" from="TileMap/@Area2D@205268" to="TileMap/@Area2D@205268" method="OnBodyEntered"]
-[connection signal="body_entered" from="TileMap/@Area2D@205269" to="TileMap/@Area2D@205269" method="OnBodyEntered"]
-[connection signal="body_entered" from="TileMap/@Area2D@205270" to="TileMap/@Area2D@205270" method="OnBodyEntered"]
-[connection signal="body_entered" from="TileMap/@Area2D@205271" to="TileMap/@Area2D@205271" method="OnBodyEntered"]
-[connection signal="body_entered" from="TileMap/@Area2D@205272" to="TileMap/@Area2D@205272" method="OnBodyEntered"]
-[connection signal="body_entered" from="TileMap/@Area2D@205273" to="TileMap/@Area2D@205273" method="OnBodyEntered"]
-[connection signal="body_entered" from="TileMap/@Area2D@205274" to="TileMap/@Area2D@205274" method="OnBodyEntered"]
-[connection signal="body_entered" from="TileMap/@Area2D@205275" to="TileMap/@Area2D@205275" method="OnBodyEntered"]
-[connection signal="body_entered" from="TileMap/@Area2D@205276" to="TileMap/@Area2D@205276" method="OnBodyEntered"]
-[connection signal="body_entered" from="TileMap/Keycard" to="TileMap/Keycard" method="OnBodyEntered"]
