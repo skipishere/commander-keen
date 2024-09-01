@@ -31,7 +31,7 @@ public partial class keen : CharacterBody2D, ITakeDamage
 		
 		var collisionShape = GetNode<CollisionShape2D>("CollisionShape2D").Shape.GetRect().Size;
 		width = (int)collisionShape.X/2;
-		height = (int)collisionShape.Y;
+		height = (int)collisionShape.Y/2;
 
 		signalManager = GetNode<SignalManager>("/root/SignalManager");
 		signalManager.KeenDead += TakeDamage;
@@ -127,12 +127,12 @@ public partial class keen : CharacterBody2D, ITakeDamage
 		}
 
 		// Clamp the player position to the camera limits.
-		var xLimit = Mathf.Clamp(this.GlobalPosition.X, camera.LimitLeft+width, camera.LimitRight-width);
-		var yLimit = Mathf.Clamp(this.GlobalPosition.Y, camera.LimitTop, camera.LimitBottom-height);
-		if (this.GlobalPosition.Y <= camera.LimitTop && velocity.Y < 0)
+		var xLimit = Mathf.Clamp(this.GlobalPosition.X, camera.LimitLeft + width, camera.LimitRight - width);
+		var yLimit = Mathf.Clamp(this.GlobalPosition.Y, camera.LimitTop - height, camera.LimitBottom - height);
+		if (this.GlobalPosition.Y <= camera.LimitTop - height && velocity.Y < 0)
 		{
 			// This is needed for maps where there is no 'roof' tiles
-			Debug.Print("Hit the camera top limit");
+			Debug.Print($"Hit the camera top limit - {yLimit}");
 			Velocity = Velocity with { Y = 0 };
 		}
 		
