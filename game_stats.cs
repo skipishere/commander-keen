@@ -5,10 +5,8 @@ using System.Collections.Generic;
 [GlobalClass]
 public partial class game_stats : Resource
 {
-    [Export]
     public static int Score = 0;
 
-    [Export]
     public static int Charges = 0;
 
     public static Vector2? KeenMapPosition;
