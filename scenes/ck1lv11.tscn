@@ -63,7 +63,3 @@ bus = &"Music"
 [node name="LightOccluder2D" type="LightOccluder2D" parent="."]
 position = Vector2(41, -111)
 occluder = SubResource("OccluderPolygon2D_jhabg")
-
-[connection signal="body_entered" from="TileMap/Foreground/@Area2D@78218" to="TileMap/Foreground/@Area2D@78218" method="OnBodyEntered"]
-[connection signal="body_entered" from="TileMap/Items/@Area2D@78227" to="TileMap/Items/@Area2D@78227" method="OnBodyEntered"]
-[connection signal="body_entered" from="TileMap/Items/@Area2D@78228" to="TileMap/Items/@Area2D@78228" method="OnBodyEntered"]
