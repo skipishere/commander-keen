@@ -46,7 +46,7 @@ public partial class ButlerRobot : RigidBody2D
 			Debug.Print("Player hit");
 			
 		}
-		else if (result?.GetCollider() is TileMap wall)
+		else if (result?.GetCollider() is TileMapLayer wall)
 		{
 			direction *= -1;
 			animatedSprite2D.Play("turn");
