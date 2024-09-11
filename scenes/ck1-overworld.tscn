@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=4 uid="uid://c85ufn8742tq3"]
+[gd_scene load_steps=30 format=4 uid="uid://c85ufn8742tq3"]
 
 [ext_resource type="Texture2D" uid="uid://cqgyahlpnxrxl" path="res://sprites/mars.png" id="1_chxqg"]
 [ext_resource type="Script" path="res://scenes/Overworld.cs" id="1_ne1bf"]
@@ -22,6 +22,8 @@
 [ext_resource type="PackedScene" uid="uid://l2rhg3uga7kg" path="res://scenes/ck1lv13.tscn" id="16_pafoe"]
 [ext_resource type="PackedScene" uid="uid://r07u80sx2ff8" path="res://scenes/ck1lv10.tscn" id="17_0ba7l"]
 [ext_resource type="PackedScene" uid="uid://bm1rcmcsg81hd" path="res://scenes/ck1lv12.tscn" id="18_142nk"]
+[ext_resource type="PackedScene" uid="uid://cq03fgefgugms" path="res://scenes/ck1lv11.tscn" id="18_ociiy"]
+[ext_resource type="PackedScene" uid="uid://7prtjrk6vid2" path="res://scenes/ck1lv16.tscn" id="23_qd5am"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_txjfx"]
 texture = ExtResource("1_chxqg")
@@ -340,7 +342,7 @@ Target = ExtResource("17_0ba7l")
 
 [node name="LevelPortal11" parent="Levels" instance=ExtResource("6_o67p0")]
 position = Vector2(280, -297)
-Target = ExtResource("15_tvqpk")
+Target = ExtResource("18_ociiy")
 
 [node name="LevelPortal12" parent="Levels" instance=ExtResource("6_o67p0")]
 position = Vector2(24, -217)
@@ -359,6 +361,11 @@ Target = ExtResource("16_7hpdi")
 [node name="LevelPortal15" parent="Levels" instance=ExtResource("6_o67p0")]
 position = Vector2(56, 408)
 Target = ExtResource("15_6dsvt")
+
+[node name="LevelPortal16" parent="Levels" instance=ExtResource("6_o67p0")]
+position = Vector2(-80, 396)
+scale = Vector2(1.6, 1.6)
+Target = ExtResource("23_qd5am")
 
 [node name="Keen-map" parent="." instance=ExtResource("3_7pysq")]
 position = Vector2(-394, 8)
