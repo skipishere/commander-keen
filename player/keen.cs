@@ -139,6 +139,24 @@ public partial class keen : CharacterBody2D, ITakeDamage
 		this.GlobalPosition = this.GlobalPosition with { X = xLimit, Y = yLimit};
 	}
 
+	public void Shove(float direction, float delta)
+	{
+		// Apply a force to the player.
+		var velocity = Velocity;
+		if (!IsOnFloor())
+		{
+			velocity.Y += gravity * delta;
+		}
+		velocity.X = direction * Speed;
+		
+		Velocity = velocity;
+		MoveAndSlide();
+		if (IsOnWall())
+		{
+			Debug.WriteLine("Shove hit wall");
+		}
+	}
+
 	// private void HandleCollision()
 	// {
 	// 	for (int i = 0; i < GetSlideCollisionCount(); i++)
