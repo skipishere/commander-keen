@@ -4,10 +4,12 @@ using System.Diagnostics;
 
 public partial class Camera : Camera2D
 {
+    public static Rect2 CameraRect { get; private set; }
+
 	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
-	{
-		var layers = GetTree().GetNodesInGroup("LevelLayers");
+    public override void _Ready()
+    {
+        var layers = GetTree().GetNodesInGroup("LevelLayers");
         if (layers == null)
         {
             Debug.Print("Failed to set camera limits, no layers found.");
@@ -46,12 +48,8 @@ public partial class Camera : Camera2D
             this.LimitRight = end.X;
             this.LimitTop = start.Y;
             this.LimitBottom = end.Y;
-            Debug.Print("Camera ready");
+            Debug.Print("Camera ready - Limits: " + this.LimitLeft + ", " + this.LimitRight + ", " + this.LimitTop + ", " + this.LimitBottom);
+            CameraRect = new Rect2(start, end - start);
         }
     }
-	
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
-	}
 }

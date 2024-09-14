@@ -287,10 +287,10 @@ region_enabled = true
 region_rect = Rect2(0, 0, 204, 24)
 region_filter_clip_enabled = true
 
-[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+[node name="VisibleOnScreen" type="VisibleOnScreenNotifier2D" parent="."]
 position = Vector2(-1.43051e-06, 1)
 scale = Vector2(2.6, 2.3)
 
 [connection signal="body_entered" from="Area2D" to="." method="KnockedOut"]
 [connection signal="timeout" from="KnockedOutTimer" to="." method="KnockedOutTimeout"]
-[connection signal="screen_exited" from="VisibleOnScreenEnabler2D" to="." method="ScreenExited"]
+[connection signal="screen_exited" from="VisibleOnScreen" to="." method="ScreenExited"]

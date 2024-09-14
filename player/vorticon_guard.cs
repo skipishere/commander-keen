@@ -107,7 +107,13 @@ public partial class vorticon_guard : CharacterBody2D, ITakeDamage
 	public void OnScreenExited()
 	{
 		Debug.WriteLine("Vorticon Guard off screen");
-		isActivated = false;		
+		isActivated = false;
+
+		if (!Camera.CameraRect.HasPoint(this.GlobalPosition))
+		{
+			Debug.Print($"Vorticon Guard is out of camera bounds: {this.GlobalPosition}");
+			QueueFree();
+		}
 	}
 
 	// private void _on_Area2D_body_entered(object body)

@@ -30,6 +30,7 @@ public partial class Yorp : CharacterBody2D, ITakeDamage
 
 	private AnimationPlayer animationPlayer;
 	private Timer knockedOutTimer;
+	private VisibleOnScreenNotifier2D visibleOnScreen;
 
 	// Get the gravity from the project settings to be synced with RigidBody nodes.
 	public float gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
@@ -39,11 +40,17 @@ public partial class Yorp : CharacterBody2D, ITakeDamage
 	{
 		animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
 		knockedOutTimer = GetNode<Timer>("KnockedOutTimer");
+		visibleOnScreen = GetNode<VisibleOnScreenNotifier2D>("VisibleOnScreen");
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
+		if (!visibleOnScreen.IsOnScreen())
+		{
+			return;
+		}
+
 		Vector2 velocity = Velocity;
 		
 		// Add the gravity.
@@ -54,7 +61,6 @@ public partial class Yorp : CharacterBody2D, ITakeDamage
 		}
 		else
 		{
-			UpdateState(state);
 			switch (state)
 			{
 				case YorpState.Idle:
@@ -132,8 +138,11 @@ public partial class Yorp : CharacterBody2D, ITakeDamage
 
 	public void ScreenExited()
 	{
-		// TODO find camera bounds and remove the node if it's outside the bounds.
-		//QueueFree();
+		if (!Camera.CameraRect.HasPoint(this.GlobalPosition))
+		{
+			Debug.Print($"Yorp is out of camera bounds: {this.GlobalPosition}");
+			QueueFree();
+		}
 	}
 
 	private void UpdateState(YorpState newState)
