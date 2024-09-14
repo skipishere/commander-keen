@@ -1,13 +1,10 @@
 using Godot;
-using System;
-using System.Diagnostics;
 
 public partial class ButlerRobot : CharacterBody2D, ITakeDamage
 {
 	public const float Speed = 0.842f;
 
-	[Export]
-	public float ShovePower = 2.0f;
+	public const float ShovePower = 2.0f;
 
 	private int direction = 1;
 	private AnimatedSprite2D animatedSprite2D;
