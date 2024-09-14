@@ -24,7 +24,6 @@ SignalManager="*res://shared/SignalManager.cs"
 
 window/size/viewport_width=320
 window/size/viewport_height=200
-window/size/mode=3
 window/size/window_width_override=1280
 window/size/window_height_override=720
 window/energy_saving/keep_screen_on=false
@@ -98,3 +97,4 @@ map_down={
 
 textures/canvas_textures/default_texture_filter=0
 renderer/rendering_method="mobile"
+2d/snap/snap_2d_vertices_to_pixel=true
