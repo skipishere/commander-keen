@@ -38,7 +38,7 @@ public partial class LevelTeleporterExit : Area2D
 		if (body is keen keen)
 		{
 			inRange = true;
-			keen.Visible = false;
+			keen.Hide();
 		}
 	}
 }

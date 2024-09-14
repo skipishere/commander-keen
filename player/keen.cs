@@ -44,6 +44,12 @@ public partial class keen : CharacterBody2D, ITakeDamage
 
 	public override void _PhysicsProcess(double delta)
 	{
+		if (this.Visible == false)
+		{
+			// Exiting the level either by door or teleporter.
+			return;
+		}
+
 		Vector2 velocity = Velocity;
 		
 		// Add the gravity.
