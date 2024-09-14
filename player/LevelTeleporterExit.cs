@@ -29,7 +29,7 @@ public partial class LevelTeleporterExit : Area2D
 
     private void OnAudioStreamPlayerFinished()
     {
-        GetTree().ChangeSceneToFile("res://scenes/ck1-overworld.tscn");
+        GetTree().ChangeSceneToFile("res://scenes/levels/ck1-overworld.tscn");
     }
 
     public void OnBodyEntered(Node2D body)

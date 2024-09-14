@@ -43,8 +43,3 @@ position = Vector2(190, 61)
 [node name="Yorp" parent="." instance=ExtResource("5_7rct4")]
 position = Vector2(215, 66)
 Speed = 12.0
-
-[connection signal="body_entered" from="TileMap/Background/Raygun-item" to="TileMap/Background/Raygun-item" method="OnBodyEntered"]
-[connection signal="body_entered" from="TileMap/Background/Keycard" to="TileMap/Background/Keycard" method="OnBodyEntered"]
-[connection signal="body_entered" from="TileMap/Background/LevelExit" to="TileMap/Background/LevelExit" method="OnBodyEntered"]
-[connection signal="body_entered" from="TileMap/Background/@Area2D@19448" to="TileMap/Background/@Area2D@19448" method="OnBodyEntered"]
