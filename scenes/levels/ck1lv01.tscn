@@ -1,9 +1,93 @@
-[gd_scene load_steps=5 format=4 uid="uid://bq77lad6b0om7"]
+[gd_scene load_steps=9 format=4 uid="uid://bq77lad6b0om7"]
 
 [ext_resource type="TileSet" uid="uid://w7k5amqxc3ac" path="res://scenes/tile_platform.tres" id="1_pda10"]
 [ext_resource type="PackedScene" uid="uid://dqlj2tioeqgqw" path="res://player/keen.tscn" id="2_g6dg5"]
 [ext_resource type="AudioStream" uid="uid://17m8kx07pnvb" path="res://music/AlexBouncyMaster.ogg" id="3_pd4ci"]
+[ext_resource type="PackedScene" uid="uid://cxi7xre6i724l" path="res://player/Yorp.tscn" id="5_1tjj1"]
 [ext_resource type="Texture2D" uid="uid://o53lb5qe7dyc" path="res://backgrounds/stars.png" id="5_reml6"]
+
+[sub_resource type="Animation" id="Animation_2toxg"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DirectionalLight2D:energy")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CanvasModulate:color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.625597, 0.625597, 0.625597, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AudioStreamPlayer2D:volume_db")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_c4r02"]
+resource_name = "level_exit"
+length = 2.2
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DirectionalLight2D:energy")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 1.2)
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CanvasModulate:color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 2.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.625597, 0.625597, 0.625597, 1), Color(0, 0, 0, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AudioStreamPlayer2D:volume_db")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.566667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, -80.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_n6xnt"]
+_data = {
+"RESET": SubResource("Animation_2toxg"),
+"level_exit": SubResource("Animation_c4r02")
+}
 
 [node name="Node2D" type="Node2D"]
 metadata/_edit_vertical_guides_ = [1825.0, 409.0]
@@ -57,3 +141,63 @@ shadow_enabled = true
 shadow_color = Color(0, 0.129412, 0.6, 0)
 shadow_filter = 2
 shadow_filter_smooth = 4.3
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_n6xnt")
+}
+
+[node name="Yorps" type="Node2D" parent="."]
+
+[node name="Yorp" parent="Yorps" instance=ExtResource("5_1tjj1")]
+position = Vector2(327, -12)
+
+[node name="Yorp2" parent="Yorps" instance=ExtResource("5_1tjj1")]
+position = Vector2(674, -156)
+
+[node name="Yorp3" parent="Yorps" instance=ExtResource("5_1tjj1")]
+position = Vector2(857, -156)
+
+[node name="Yorp4" parent="Yorps" instance=ExtResource("5_1tjj1")]
+position = Vector2(1094, -12)
+
+[node name="Yorp5" parent="Yorps" instance=ExtResource("5_1tjj1")]
+position = Vector2(1317, -156)
+
+[node name="Yorp6" parent="Yorps" instance=ExtResource("5_1tjj1")]
+position = Vector2(1462, -156)
+
+[node name="Yorp7" parent="Yorps" instance=ExtResource("5_1tjj1")]
+position = Vector2(1490, -12)
+
+[node name="Yorp8" parent="Yorps" instance=ExtResource("5_1tjj1")]
+position = Vector2(1689, -92)
+
+[connection signal="body_entered" from="TileMapLayers/Platform/Raygun-item" to="TileMapLayers/Platform/Raygun-item" method="OnBodyEntered"]
+[connection signal="body_entered" from="TileMapLayers/Platform/LevelExit" to="TileMapLayers/Platform/LevelExit" method="OnBodyEntered"]
+[connection signal="body_entered" from="TileMapLayers/Points/Item" to="TileMapLayers/Points/Item" method="OnBodyEntered"]
+[connection signal="body_entered" from="TileMapLayers/Points/@Area2D@92970" to="TileMapLayers/Points/@Area2D@92970" method="OnBodyEntered"]
+[connection signal="body_entered" from="TileMapLayers/Points/@Area2D@92971" to="TileMapLayers/Points/@Area2D@92971" method="OnBodyEntered"]
+[connection signal="body_entered" from="TileMapLayers/Points/@Area2D@92972" to="TileMapLayers/Points/@Area2D@92972" method="OnBodyEntered"]
+[connection signal="body_entered" from="TileMapLayers/Points/@Area2D@92973" to="TileMapLayers/Points/@Area2D@92973" method="OnBodyEntered"]
+[connection signal="body_entered" from="TileMapLayers/Points/@Area2D@92974" to="TileMapLayers/Points/@Area2D@92974" method="OnBodyEntered"]
+[connection signal="body_entered" from="TileMapLayers/Points/@Area2D@92975" to="TileMapLayers/Points/@Area2D@92975" method="OnBodyEntered"]
+[connection signal="body_entered" from="TileMapLayers/Points/@Area2D@92976" to="TileMapLayers/Points/@Area2D@92976" method="OnBodyEntered"]
+[connection signal="body_entered" from="TileMapLayers/Points/@Area2D@92977" to="TileMapLayers/Points/@Area2D@92977" method="OnBodyEntered"]
+[connection signal="body_entered" from="TileMapLayers/Points/@Area2D@92978" to="TileMapLayers/Points/@Area2D@92978" method="OnBodyEntered"]
+[connection signal="body_entered" from="TileMapLayers/Points/@Area2D@92979" to="TileMapLayers/Points/@Area2D@92979" method="OnBodyEntered"]
+[connection signal="body_entered" from="TileMapLayers/Points/@Area2D@92980" to="TileMapLayers/Points/@Area2D@92980" method="OnBodyEntered"]
+[connection signal="body_entered" from="TileMapLayers/Points/@Area2D@92981" to="TileMapLayers/Points/@Area2D@92981" method="OnBodyEntered"]
+[connection signal="body_entered" from="TileMapLayers/Points/@Area2D@92982" to="TileMapLayers/Points/@Area2D@92982" method="OnBodyEntered"]
+[connection signal="body_entered" from="TileMapLayers/Points/@Area2D@92983" to="TileMapLayers/Points/@Area2D@92983" method="OnBodyEntered"]
+[connection signal="body_entered" from="TileMapLayers/Points/@Area2D@92984" to="TileMapLayers/Points/@Area2D@92984" method="OnBodyEntered"]
+[connection signal="body_entered" from="TileMapLayers/Points/@Area2D@92985" to="TileMapLayers/Points/@Area2D@92985" method="OnBodyEntered"]
+[connection signal="body_entered" from="TileMapLayers/Points/@Area2D@92986" to="TileMapLayers/Points/@Area2D@92986" method="OnBodyEntered"]
+[connection signal="body_entered" from="TileMapLayers/Points/@Area2D@92987" to="TileMapLayers/Points/@Area2D@92987" method="OnBodyEntered"]
+[connection signal="body_entered" from="TileMapLayers/Points/@Area2D@92988" to="TileMapLayers/Points/@Area2D@92988" method="OnBodyEntered"]
+[connection signal="body_entered" from="TileMapLayers/Points/@Area2D@92989" to="TileMapLayers/Points/@Area2D@92989" method="OnBodyEntered"]
+[connection signal="body_entered" from="TileMapLayers/Points/@Area2D@92990" to="TileMapLayers/Points/@Area2D@92990" method="OnBodyEntered"]
+[connection signal="body_entered" from="TileMapLayers/Points/@Area2D@92991" to="TileMapLayers/Points/@Area2D@92991" method="OnBodyEntered"]
+[connection signal="body_entered" from="TileMapLayers/Points/@Area2D@92992" to="TileMapLayers/Points/@Area2D@92992" method="OnBodyEntered"]
+[connection signal="body_entered" from="TileMapLayers/Points/@Area2D@92993" to="TileMapLayers/Points/@Area2D@92993" method="OnBodyEntered"]
+[connection signal="body_entered" from="TileMapLayers/Points/@Area2D@92994" to="TileMapLayers/Points/@Area2D@92994" method="OnBodyEntered"]
