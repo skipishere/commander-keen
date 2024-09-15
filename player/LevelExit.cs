@@ -1,5 +1,4 @@
 using Godot;
-using System.Diagnostics;
 
 public partial class LevelExit : Area2D
 {
@@ -24,7 +23,6 @@ public partial class LevelExit : Area2D
 
     public void OnBodyEntered(Node2D body)
 	{
-		Debug.Print("Level Exit reached");
 		if (body is keen player)
 		{
 			animationPlayer.Play("exiting");
