@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=4 uid="uid://v4cjtldpjka"]
+[gd_scene load_steps=8 format=4 uid="uid://v4cjtldpjka"]
 
 [ext_resource type="PackedScene" uid="uid://dqlj2tioeqgqw" path="res://player/keen.tscn" id="1_rffyp"]
 [ext_resource type="TileSet" uid="uid://w7k5amqxc3ac" path="res://scenes/tile_platform.tres" id="2_hh2lp"]
@@ -6,6 +6,139 @@
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_jhabg"]
 polygon = PackedVector2Array(-215, -471, 44, -471, 42, -442, -215, -442)
+
+[sub_resource type="Animation" id="Animation_1jsb1"]
+resource_name = "level_exit"
+length = 2.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TileMap/Foreground:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.76667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(0, 0, 0, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("DirectionalLight2D:energy")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1.76667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.89, 0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("TileMap/Background:self_modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1.76667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(0, 0, 0, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CanvasModulate:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 1.76667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(0, 0, 0, 1)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("TileMap/Background:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.933333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.164706), Color(0, 0, 0, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_0pnw4"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TileMap/Foreground:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("DirectionalLight2D:energy")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.89]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("TileMap/Background:self_modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CanvasModulate:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("TileMap/Background:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.164706)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_5uve5"]
+_data = {
+"RESET": SubResource("Animation_0pnw4"),
+"level_exit": SubResource("Animation_1jsb1")
+}
 
 [node name="Node2D" type="Node2D"]
 metadata/_edit_vertical_guides_ = [-647.0]
@@ -41,9 +174,6 @@ shadow_color = Color(0, 0.129412, 0.6, 0)
 shadow_filter = 2
 shadow_filter_smooth = 4.3
 
-[node name="CanvasModulate" type="CanvasModulate" parent="."]
-color = Color(0.0242276, 0.0370273, 0.0761815, 1)
-
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_08btk")
 pitch_scale = 0.6
@@ -57,3 +187,11 @@ occluder = SubResource("OccluderPolygon2D_jhabg")
 [node name="LightOccluder2D2" type="LightOccluder2D" parent="."]
 position = Vector2(323, -10)
 occluder = SubResource("OccluderPolygon2D_jhabg")
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+color = Color(0.0242276, 0.0370273, 0.0761815, 1)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_5uve5")
+}
