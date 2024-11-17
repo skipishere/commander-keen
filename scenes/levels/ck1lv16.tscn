@@ -1,6 +1,5 @@
-[gd_scene load_steps=6 format=4 uid="uid://7prtjrk6vid2"]
+[gd_scene load_steps=5 format=4 uid="uid://7prtjrk6vid2"]
 
-[ext_resource type="Texture2D" uid="uid://b3anklpprsfq2" path="res://backgrounds/Ck1lv16.png" id="1_muyob"]
 [ext_resource type="TileSet" uid="uid://w7k5amqxc3ac" path="res://scenes/tile_platform.tres" id="1_vri8o"]
 [ext_resource type="PackedScene" uid="uid://dqlj2tioeqgqw" path="res://player/keen.tscn" id="2_vktoe"]
 [ext_resource type="PackedScene" uid="uid://dkpwgxsjkybvs" path="res://player/vorticon_guard.tscn" id="4_k5rx6"]
@@ -9,13 +8,6 @@
 [node name="Node2D" type="Node2D"]
 metadata/_edit_vertical_guides_ = [-647.0]
 metadata/_edit_horizontal_guides_ = [-390.0]
-
-[node name="Sprite2D" type="Sprite2D" parent="."]
-visible = false
-modulate = Color(0.497474, 0.497474, 0.497474, 1)
-self_modulate = Color(1, 1, 1, 0.27451)
-position = Vector2(848, -512)
-texture = ExtResource("1_muyob")
 
 [node name="TileMap" type="Node2D" parent="."]
 
