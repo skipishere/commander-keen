@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=70 format=3 uid="uid://w7k5amqxc3ac"]
+[gd_resource type="TileSet" load_steps=74 format=3 uid="uid://w7k5amqxc3ac"]
 
 [ext_resource type="Texture2D" uid="uid://65y75605vmla" path="res://sprites/platforms.png" id="1_r57yh"]
 [ext_resource type="Texture2D" uid="uid://de6hjukimt53d" path="res://sprites/hazards.png" id="2_1lutc"]
@@ -18,7 +18,11 @@
 [ext_resource type="PackedScene" uid="uid://c8huaqpckkon8" path="res://scenes/items/Pizza.tscn" id="10_1aama"]
 [ext_resource type="PackedScene" uid="uid://dddde45ri82vx" path="res://scenes/keycards/KeyCardD.tscn" id="10_ivk4y"]
 [ext_resource type="PackedScene" uid="uid://c4emhhih0bnta" path="res://scenes/items/Book.tscn" id="11_l7500"]
+[ext_resource type="PackedScene" uid="uid://ctvb3cr2qiei7" path="res://scenes/items/Battery.tscn" id="11_rm2rr"]
 [ext_resource type="PackedScene" uid="uid://b14h602kmsk3c" path="res://scenes/items/Teddy.tscn" id="12_vkenq"]
+[ext_resource type="PackedScene" uid="uid://iyr5hadqp8u5" path="res://scenes/items/JoyStick.tscn" id="12_w11gx"]
+[ext_resource type="PackedScene" uid="uid://ccdl0orvkg7op" path="res://scenes/items/Everclear.tscn" id="13_ghx3y"]
+[ext_resource type="PackedScene" uid="uid://ce5om205rrhye" path="res://scenes/items/Vaccum.tscn" id="14_o787x"]
 [ext_resource type="PackedScene" uid="uid://t7mowemw43uw" path="res://scenes/doors/DoorA.tscn" id="20_62ska"]
 [ext_resource type="PackedScene" uid="uid://sx1koyrggqtd" path="res://scenes/doors/DoorB.tscn" id="21_bouc3"]
 [ext_resource type="PackedScene" uid="uid://ckti8nr4pxbkb" path="res://scenes/doors/DoorC.tscn" id="22_rj8ou"]
@@ -648,6 +652,10 @@ scenes/12/scene = ExtResource("7_yfvgj")
 scenes/13/scene = ExtResource("8_5mkgh")
 scenes/14/scene = ExtResource("9_notgb")
 scenes/15/scene = ExtResource("10_ivk4y")
+scenes/16/scene = ExtResource("11_rm2rr")
+scenes/17/scene = ExtResource("12_w11gx")
+scenes/18/scene = ExtResource("13_ghx3y")
+scenes/19/scene = ExtResource("14_o787x")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_aaikf"]
 texture = ExtResource("6_jbogi")

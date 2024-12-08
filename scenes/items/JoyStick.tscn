@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://iyr5hadqp8u5"]
+
+[ext_resource type="PackedScene" uid="uid://ctvb3cr2qiei7" path="res://scenes/items/Battery.tscn" id="1_cfv42"]
+
+[node name="Item" instance=ExtResource("1_cfv42")]
+ShipPart = 1
+
+[node name="Sprite2D" parent="." index="0"]
+region_rect = Rect2(64, 32, 64, 16)
