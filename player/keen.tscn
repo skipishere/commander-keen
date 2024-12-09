@@ -252,4 +252,7 @@ texture = ExtResource("1_fyf0i")
 hframes = 19
 vframes = 12
 
+[node name="RayCast2D" type="RayCast2D" parent="."]
+target_position = Vector2(0, 16)
+
 [connection signal="tree_exited" from="." to="." method="OnTreeExited"]

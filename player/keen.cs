@@ -20,6 +20,21 @@ public partial class keen : CharacterBody2D, ITakeDamage
 	private game_stats.KeyCards keyCards = 0;
 
 	private SignalManager signalManager;
+	private RayCast2D rayCast;
+
+
+	private enum GroundType
+	{
+		Normal,
+		
+		// Can change direction but there is a delay before stopping.
+		Slippery,
+		
+		// Can't change direction, keep on moving in given direction unless you jump and change direction.
+		Ice,
+	}
+
+	private GroundType groundType = GroundType.Normal;
 
 	// Get the gravity from the project settings to be synced with RigidBody nodes.
 	public float gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
@@ -35,6 +50,7 @@ public partial class keen : CharacterBody2D, ITakeDamage
 
 		signalManager = GetNode<SignalManager>("/root/SignalManager");
 		signalManager.KeenDead += TakeDamage;
+		rayCast = GetNode<RayCast2D>("RayCast2D");
 	}
 
 	public void OnTreeExited()
@@ -56,6 +72,25 @@ public partial class keen : CharacterBody2D, ITakeDamage
 		if (!IsOnFloor())
 		{
 			velocity.Y += gravity * (float)delta;
+			//groundType = GroundType.Normal;
+		}
+		else if (rayCast.IsColliding())
+		{
+			var collider = rayCast.GetCollider();
+			if (collider is TileMapLayer tileMapLayer)
+			{
+				 var local_col_point = tileMapLayer.ToLocal(rayCast.GetCollisionPoint());
+				 var cell_coords = tileMapLayer.LocalToMap(local_col_point);
+				
+				 var cellData = tileMapLayer.GetCellTileData(cell_coords);
+				 var slide = cellData.GetCustomData("Slide").ToString();
+				 groundType = slide switch
+				 {
+					 "1" => GroundType.Slippery,
+					 "2" => GroundType.Ice,
+					 _ => GroundType.Normal
+				 };
+			}
 		}
 
 		if (Input.IsActionJustPressed("move_shoot") && game_stats.Charges > 0)
@@ -102,21 +137,44 @@ public partial class keen : CharacterBody2D, ITakeDamage
 
 		// Get the input direction and handle the movement/deceleration.
 		Vector2 direction = Input.GetVector("move_left", "move_right", "ui_up", "ui_down");
-		if (direction != Vector2.Zero)
+		if (direction != Vector2.Zero && (groundType != GroundType.Slippery || !IsOnFloor()))
 		{
-			velocity.X = direction.X * Speed;
+			if (groundType != GroundType.Ice || !IsOnFloor())
+			{
+				velocity.X = direction.X * Speed;
+			}
 		}
 		else
 		{
-			velocity.X = Mathf.MoveToward(Velocity.X, 0, Speed);
+			var toSpeed = 0f;
+			if (groundType == GroundType.Ice && IsOnFloor())
+			{
+				toSpeed = (isFacingRight ? 1 : -1) * Speed;
+			}
+			else if (groundType == GroundType.Slippery && IsOnFloor())
+			{
+				// TODO deal with falling from an ice ledge onto ice, as the velocity should not just hit 0.
+				if ( direction.X == 0)
+				{
+					// With no player input, the player will slow down to 1/2 max speed or slower.
+					toSpeed = Mathf.Clamp(Velocity.X, -Speed / 2, Speed / 2);
+				}
+				else
+				{
+					// this is a bit more interesting, changing direction can additively slow the player down to 0.
+					toSpeed = Mathf.Clamp(Velocity.X + (direction.X * Speed * 0.05f), -Speed, Speed);
+				}
+			}
+			
+			velocity.X = Mathf.MoveToward(Velocity.X, toSpeed, Speed);
 		}
 
-		if (velocity.X > 0)
+		if (velocity.X > 0 && (groundType != GroundType.Ice || !IsOnFloor()))
 		{
 			animation.Play("walk_right");
 			isFacingRight = true;
 		}
-		else if (velocity.X < 0)
+		else if (velocity.X < 0 && (groundType != GroundType.Ice || !IsOnFloor()))
 		{
 			animation.Play("walk_left");
 			isFacingRight = false;
