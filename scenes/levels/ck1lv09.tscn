@@ -11,11 +11,6 @@ polygon = PackedVector2Array(-215, -471, 281, -471, 281, -442, -215, -442)
 metadata/_edit_vertical_guides_ = [-647.0]
 metadata/_edit_horizontal_guides_ = [-390.0]
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-visible = false
-modulate = Color(1, 1, 1, 0.309804)
-position = Vector2(288, -256)
-
 [node name="TileMap" type="Node2D" parent="."]
 
 [node name="Background" type="TileMapLayer" parent="TileMap"]

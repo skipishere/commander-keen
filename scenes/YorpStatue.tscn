@@ -1,0 +1,86 @@
+[gd_scene load_steps=11 format=3 uid="uid://cqkfb4objin22"]
+
+[ext_resource type="Script" path="res://scenes/YorpStatue.cs" id="1_gc501"]
+[ext_resource type="Texture2D" uid="uid://65y75605vmla" path="res://sprites/platforms.png" id="2_can3g"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qxnld"]
+atlas = ExtResource("2_can3g")
+region = Rect2(160, 128, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wv2g0"]
+atlas = ExtResource("2_can3g")
+region = Rect2(32, 208, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7mwlv"]
+atlas = ExtResource("2_can3g")
+region = Rect2(48, 208, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rhqrj"]
+atlas = ExtResource("2_can3g")
+region = Rect2(64, 208, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1imf2"]
+atlas = ExtResource("2_can3g")
+region = Rect2(80, 208, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_kv5bx"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qxnld")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wv2g0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7mwlv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rhqrj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1imf2")
+}],
+"loop": true,
+"name": &"flash",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qq0l7"]
+atlas = ExtResource("2_can3g")
+region = Rect2(160, 128, 16, 32)
+filter_clip = true
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_yegte"]
+radius = 8.0
+height = 32.0
+
+[node name="YorpStatue" type="Node2D"]
+position = Vector2(0, -8)
+script = ExtResource("1_gc501")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -8)
+sprite_frames = SubResource("SpriteFrames_kv5bx")
+autoplay = "flash"
+frame_progress = 0.940647
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("AtlasTexture_qq0l7")
+
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2(0, -8)
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, 8)
+shape = SubResource("CapsuleShape2D_yegte")
+debug_color = Color(0, 0.6, 0, 0.419608)
+
+[connection signal="body_entered" from="Area2D" to="." method="OnBodyEntered"]

@@ -8,10 +8,6 @@
 metadata/_edit_vertical_guides_ = [-647.0]
 metadata/_edit_horizontal_guides_ = [-390.0]
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-self_modulate = Color(1, 1, 1, 0.25098)
-position = Vector2(608, -576)
-
 [node name="TileMap" type="Node2D" parent="."]
 
 [node name="Background" type="TileMapLayer" parent="TileMap"]
