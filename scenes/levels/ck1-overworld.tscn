@@ -242,7 +242,7 @@ resource_local_to_scene = true
 a = Vector2(-20, -8.12497)
 b = Vector2(23.125, -8.12497)
 
-[node name="Node2D" type="Node2D"]
+[node name="Map" type="Node2D"]
 script = ExtResource("1_8i8x4")
 
 [node name="SpaceBackground" type="ColorRect" parent="."]

@@ -63,7 +63,7 @@ public partial class OverworldKeen : CharacterBody2D
 		this.isTeleporting = !finished;
 	}
 
-	private void OnEnteringLevel()
+	private void OnEnteringLevel(string levelResource)
 	{
 		Debug.Print($"Coords x {Position.X} y {Position.Y}");
 		mapPosition = Position;

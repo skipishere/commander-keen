@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://dqlj2tioeqgqw" path="res://player/keen.tscn" id="3_gn5p7"]
 [ext_resource type="AudioStream" uid="uid://dm3c3hdecibfd" path="res://music/enchanted tiki 86.mp3" id="5_ldof7"]
 
-[node name="Node2D" type="Node2D"]
+[node name="Level" type="Node2D"]
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 modulate = Color(1, 1, 1, 0.270588)

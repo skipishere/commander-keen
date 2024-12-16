@@ -5,7 +5,7 @@
 [ext_resource type="AudioStream" uid="uid://du4dvuk7gjjbq" path="res://music/music_jewels.ogg" id="4_6ar5l"]
 [ext_resource type="PackedScene" uid="uid://dkpwgxsjkybvs" path="res://player/vorticon_guard.tscn" id="5_fducg"]
 
-[node name="Node2D" type="Node2D"]
+[node name="Level" type="Node2D"]
 metadata/_edit_vertical_guides_ = [-647.0]
 metadata/_edit_horizontal_guides_ = [-390.0]
 

@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Diagnostics;
+using System.Linq;
 
 public partial class Camera : Camera2D
 {
@@ -9,6 +10,7 @@ public partial class Camera : Camera2D
 	// Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
+        Debug.Print("Camera setup started.");
         var layers = GetTree().GetNodesInGroup("LevelLayers");
         if (layers == null)
         {
@@ -16,10 +18,13 @@ public partial class Camera : Camera2D
         }
         else
         {
+            var filter = this.Owner.Name == "Keen-map" ? "Map" : "Level";
             (Vector2I start, Vector2I end) = (new Vector2I(), new Vector2I());
-            foreach (var layer in layers)
+            Debug.Print($"Camera: {this.Owner.Name}");
+            foreach (TileMapLayer tileMapLayer in layers.Where(l => l is TileMapLayer))
             {
-                if (layer is TileMapLayer tileMapLayer)
+                // Filter out the other tilemaps that are still being unloaded.
+                if (tileMapLayer.Owner.Name == filter)
                 {
                     var tileMapRange = tileMapLayer.GetUsedRect();
                     var tileMapCellSize = tileMapLayer.TileSet.TileSize;

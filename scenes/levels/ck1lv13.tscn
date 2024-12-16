@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://dqlj2tioeqgqw" path="res://player/keen.tscn" id="3_wmev5"]
 [ext_resource type="AudioStream" uid="uid://bhu5r11kw3md4" path="res://music/beauty_of_chaos.ogg" id="4_yi3i3"]
 
-[node name="Node2D" type="Node2D"]
+[node name="Level" type="Node2D"]
 metadata/_edit_vertical_guides_ = [-647.0]
 metadata/_edit_horizontal_guides_ = [-390.0]
 

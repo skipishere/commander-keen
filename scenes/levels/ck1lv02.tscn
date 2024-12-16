@@ -140,7 +140,7 @@ _data = {
 "level_exit": SubResource("Animation_1jsb1")
 }
 
-[node name="Node2D" type="Node2D"]
+[node name="Level" type="Node2D"]
 metadata/_edit_vertical_guides_ = [-647.0]
 metadata/_edit_horizontal_guides_ = [-390.0]
 

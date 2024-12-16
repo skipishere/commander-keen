@@ -7,7 +7,7 @@
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_jhabg"]
 polygon = PackedVector2Array(-215, -471, 44, -471, 42, -442, -215, -442)
 
-[node name="Node2D" type="Node2D"]
+[node name="Level" type="Node2D"]
 metadata/_edit_vertical_guides_ = [-647.0]
 metadata/_edit_horizontal_guides_ = [-390.0]
 

@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://dqlj2tioeqgqw" path="res://player/keen.tscn" id="3_5tb73"]
 [ext_resource type="AudioStream" uid="uid://b86d3x50rh5x3" path="res://music/awake10_megaWall.mp3" id="4_fd84n"]
 
-[node name="Node2D" type="Node2D"]
+[node name="Level" type="Node2D"]
 metadata/_edit_vertical_guides_ = [-647.0]
 metadata/_edit_horizontal_guides_ = [-390.0]
 

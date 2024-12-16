@@ -10,7 +10,7 @@
 invert = true
 noise = SubResource("FastNoiseLite_7fa7e")
 
-[node name="Node2D" type="Node2D"]
+[node name="Level" type="Node2D"]
 
 [node name="TileMap" type="Node2D" parent="."]
 
@@ -56,5 +56,5 @@ energy = 0.5
 texture = SubResource("NoiseTexture2D_h8lxe")
 texture_scale = 0.7
 
-[connection signal="body_entered" from="TileMap/Foreground/@Area2D@53094" to="TileMap/Foreground/@Area2D@53094" method="OnBodyEntered"]
-[connection signal="body_entered" from="TileMap/Items/@Area2D@53095" to="TileMap/Items/@Area2D@53095" method="OnBodyEntered"]
+[connection signal="body_entered" from="TileMap/Foreground/LevelExit" to="TileMap/Foreground/LevelExit" method="OnBodyEntered"]
+[connection signal="body_entered" from="TileMap/Items/Item" to="TileMap/Items/Item" method="OnBodyEntered"]

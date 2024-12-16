@@ -34,14 +34,12 @@ public partial class LevelPortal : Area2D
 	{
 		if (inRange && Input.IsActionJustPressed("move_jump"))
 		{
-			signalManager.EmitSignal(nameof(SignalManager.EnteringLevel));
-			GetTree().ChangeSceneToPacked(Target);
+			signalManager.EmitSignal(nameof(SignalManager.EnteringLevel), this.Target.ResourcePath);
 		}
 	}
 
 	public void OnBodyEntered(Node2D body)
 	{
-		Debug.Print("Level Portal reached");
 		if (body is OverworldKeen)
 		{
 			Debug.Print($"Level Portal activated - {Target.ResourcePath}");
@@ -51,9 +49,9 @@ public partial class LevelPortal : Area2D
 
 	public void OnBodyExited(Node2D body)
 	{
-		Debug.Print("Level Portal exited");
 		if (body is OverworldKeen)
 		{
+			Debug.Print("Level Portal exited");
 			inRange = false;
 		}
 	}

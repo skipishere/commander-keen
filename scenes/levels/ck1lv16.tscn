@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://dkpwgxsjkybvs" path="res://player/vorticon_guard.tscn" id="4_k5rx6"]
 [ext_resource type="AudioStream" uid="uid://1jeyehjl5pnt" path="res://music/019_seven_and_eight_7-8_combined.mp3" id="5_xd5u4"]
 
-[node name="Node2D" type="Node2D"]
+[node name="Level" type="Node2D"]
 metadata/_edit_vertical_guides_ = [-647.0]
 metadata/_edit_horizontal_guides_ = [-390.0]
 

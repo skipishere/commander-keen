@@ -1,17 +1,18 @@
 using Godot;
-using System;
 using System.Diagnostics;
 
 public partial class LevelTeleporterExit : Area2D
 {
 	private bool inRange = false;
 	private AudioStreamPlayer audioStreamPlayer;
+	private SignalManager signalManager;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		audioStreamPlayer = GetNode<AudioStreamPlayer>("AudioStreamPlayer");
 		audioStreamPlayer.Finished += OnAudioStreamPlayerFinished;
+		signalManager = GetNode<SignalManager>("/root/SignalManager");
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -29,7 +30,7 @@ public partial class LevelTeleporterExit : Area2D
 
     private void OnAudioStreamPlayerFinished()
     {
-        GetTree().ChangeSceneToFile("res://scenes/levels/ck1-overworld.tscn");
+		signalManager.EmitSignal(nameof(SignalManager.ExitingLevel));
     }
 
     public void OnBodyEntered(Node2D body)

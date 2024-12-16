@@ -92,7 +92,7 @@ _data = {
 "level_exit": SubResource("Animation_5e6ey")
 }
 
-[node name="Node2D" type="Node2D"]
+[node name="Level" type="Node2D"]
 
 [node name="Parallax2D" type="Parallax2D" parent="."]
 scroll_scale = Vector2(0.01, 0.2)
