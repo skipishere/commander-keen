@@ -1,10 +1,9 @@
-[gd_scene load_steps=23 format=3 uid="uid://dqlj2tioeqgqw"]
+[gd_scene load_steps=22 format=3 uid="uid://dqlj2tioeqgqw"]
 
 [ext_resource type="Texture2D" uid="uid://bbkmbo2fxi6fu" path="res://sprites/keen.png" id="1_fyf0i"]
 [ext_resource type="Script" path="res://player/keen.cs" id="1_othw7"]
 [ext_resource type="PackedScene" uid="uid://bgl2fe5um74f0" path="res://scenes/raygunShot.tscn" id="2_eenmn"]
 [ext_resource type="Script" path="res://player/Camera.cs" id="3_6odgb"]
-[ext_resource type="PackedScene" uid="uid://cqp6j43kt378q" path="res://scenes/hud.tscn" id="5_g86rw"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1a8jn"]
 radius = 6.5
@@ -246,16 +245,6 @@ libraries = {
 offset = Vector2(0, -16)
 position_smoothing_speed = 10.0
 script = ExtResource("3_6odgb")
-
-[node name="CanvasLayer" parent="Camera2D" instance=ExtResource("5_g86rw")]
-visible = false
-
-[node name="Sprite2D" type="Sprite2D" parent="."]
-visible = false
-texture = ExtResource("1_fyf0i")
-hframes = 19
-vframes = 12
-region_filter_clip_enabled = true
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
 target_position = Vector2(0, 16)
