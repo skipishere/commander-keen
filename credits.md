@@ -19,3 +19,7 @@ Sound Effects:
     - shrinkray.ogg - https://opengameart.org/content/generic-shrink-ray
     - 138410__cameronmusic__item-collect-2.wav - https://freesound.org/people/cameronmusic/sounds/138410/
     - doorbell.wav - https://opengameart.org/content/doorbell-1
+
+Fonts:
+    - "Press Start 2P" - https://fonts.google.com/specimen/Press+Start+2P
+    - "VT323" - https://fonts.google.com/specimen/VT323
