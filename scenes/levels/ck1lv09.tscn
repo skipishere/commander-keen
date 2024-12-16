@@ -58,21 +58,3 @@ bus = &"Music"
 [node name="LightOccluder2D" type="LightOccluder2D" parent="."]
 position = Vector2(36, -103)
 occluder = SubResource("OccluderPolygon2D_jhabg")
-
-[connection signal="body_entered" from="TileMap/Foreground/@Area2D@71456" to="TileMap/Foreground/@Area2D@71456" method="OnBodyEntered"]
-[connection signal="body_entered" from="TileMap/Items/@Area2D@71458" to="TileMap/Items/@Area2D@71458" method="OnBodyEntered"]
-[connection signal="body_entered" from="TileMap/Items/@Area2D@71459" to="TileMap/Items/@Area2D@71459" method="OnBodyEntered"]
-[connection signal="body_entered" from="TileMap/Items/@Area2D@71460" to="TileMap/Items/@Area2D@71460" method="OnBodyEntered"]
-[connection signal="body_entered" from="TileMap/Items/@Area2D@71461" to="TileMap/Items/@Area2D@71461" method="OnBodyEntered"]
-[connection signal="body_entered" from="TileMap/Items/@Area2D@71462" to="TileMap/Items/@Area2D@71462" method="OnBodyEntered"]
-[connection signal="body_entered" from="TileMap/Items/@Area2D@71463" to="TileMap/Items/@Area2D@71463" method="OnBodyEntered"]
-[connection signal="body_entered" from="TileMap/Items/@Area2D@71464" to="TileMap/Items/@Area2D@71464" method="OnBodyEntered"]
-[connection signal="body_entered" from="TileMap/Items/@Area2D@71465" to="TileMap/Items/@Area2D@71465" method="OnBodyEntered"]
-[connection signal="body_entered" from="TileMap/Items/@Area2D@71466" to="TileMap/Items/@Area2D@71466" method="OnBodyEntered"]
-[connection signal="body_entered" from="TileMap/Items/@Area2D@71467" to="TileMap/Items/@Area2D@71467" method="OnBodyEntered"]
-[connection signal="body_entered" from="TileMap/Items/@Area2D@71468" to="TileMap/Items/@Area2D@71468" method="OnBodyEntered"]
-[connection signal="body_entered" from="TileMap/Items/@Area2D@71469" to="TileMap/Items/@Area2D@71469" method="OnBodyEntered"]
-[connection signal="body_entered" from="TileMap/Items/@Area2D@71470" to="TileMap/Items/@Area2D@71470" method="OnBodyEntered"]
-[connection signal="body_entered" from="TileMap/Items/@Area2D@71471" to="TileMap/Items/@Area2D@71471" method="OnBodyEntered"]
-[connection signal="body_entered" from="TileMap/Items/@Area2D@71472" to="TileMap/Items/@Area2D@71472" method="OnBodyEntered"]
-[connection signal="body_entered" from="TileMap/Items/@Area2D@71473" to="TileMap/Items/@Area2D@71473" method="OnBodyEntered"]
