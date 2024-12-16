@@ -68,7 +68,6 @@ script = ExtResource("1_gc501")
 position = Vector2(0, -8)
 sprite_frames = SubResource("SpriteFrames_kv5bx")
 autoplay = "flash"
-frame_progress = 0.940647
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = SubResource("AtlasTexture_qq0l7")
