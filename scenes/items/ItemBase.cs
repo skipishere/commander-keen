@@ -10,13 +10,15 @@ public partial class ItemBase : Area2D
 	private AudioStreamPlayer2D audioStreamPlayer;
 	private Label label;
 
-	// Called when the node enters the scene tree for the first time.
+	private SignalManager signalManager;
+
 	public override void _Ready()
 	{
 		audioStreamPlayer = GetNode<AudioStreamPlayer2D>("AudioStreamPlayer2D");
 		label = GetNode<Label>("Label");
 		label.Visible = false;
 		label.Text = Points.ToString();
+		signalManager = GetNode<SignalManager>("/root/SignalManager");
 	}
 
 	public void OnBodyEntered(Node2D body)
@@ -26,7 +28,7 @@ public partial class ItemBase : Area2D
 			label.Visible = true;
 			this.SetDeferred("monitoring", false);
 			game_stats.Score += Points;
-			Debug.Print($"Current score {game_stats.Score}");
+			signalManager.EmitSignal(nameof(SignalManager.ScoreChanged));
 			audioStreamPlayer.Play();
 			
 			var tween = GetTree().CreateTween();

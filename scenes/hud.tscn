@@ -1,0 +1,57 @@
+[gd_scene load_steps=6 format=3 uid="uid://cqp6j43kt378q"]
+
+[ext_resource type="Texture2D" uid="uid://b6gffs3oj4f4t" path="res://sprites/items.png" id="1_npxpm"]
+[ext_resource type="Shader" path="res://shaders/palettSwap2D.gdshader" id="1_vjv3g"]
+
+[sub_resource type="SystemFont" id="SystemFont_ecgwv"]
+subpixel_positioning = 0
+
+[sub_resource type="LabelSettings" id="LabelSettings_8mxe0"]
+font = SubResource("SystemFont_ecgwv")
+font_size = 10
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kybct"]
+shader = ExtResource("1_vjv3g")
+shader_parameter/enable = true
+
+[node name="CanvasLayer" type="CanvasLayer"]
+
+[node name="Label" type="Label" parent="."]
+offset_left = 257.0
+offset_top = -1.0
+offset_right = 321.0
+offset_bottom = 14.0
+text = "Score: 00000"
+label_settings = SubResource("LabelSettings_8mxe0")
+
+[node name="CardA" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_kybct")
+position = Vector2(266, 19)
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("1_npxpm")
+region_enabled = true
+region_rect = Rect2(80, 0, 16, 16)
+
+[node name="CardB" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_kybct")
+position = Vector2(281, 19)
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("1_npxpm")
+region_enabled = true
+region_rect = Rect2(96, 0, 16, 16)
+
+[node name="CardC" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_kybct")
+position = Vector2(296, 19)
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("1_npxpm")
+region_enabled = true
+region_rect = Rect2(112, 0, 16, 16)
+
+[node name="CardD" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_kybct")
+position = Vector2(311, 19)
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("1_npxpm")
+region_enabled = true
+region_rect = Rect2(128, 0, 16, 16)
