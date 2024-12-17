@@ -32,6 +32,7 @@ public partial class ShipItem : Area2D
 			
 			var tween = GetTree().CreateTween();
 			tween.Parallel().TweenProperty(this, "position", Position - new Vector2(0, 16), 1f);
+			tween.Parallel().TweenProperty(this, "scale", new Vector2(4, 4), 1f);
 			tween.Parallel().TweenProperty(this, "modulate:a", 0, 1f);
 			tween.TweenCallback(Callable.From(QueueFree));
 		}
