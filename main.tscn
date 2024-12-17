@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://c8br7khwthjke"]
+[gd_scene load_steps=38 format=3 uid="uid://c8br7khwthjke"]
 
 [ext_resource type="Script" path="res://Main.cs" id="1_fj1c2"]
 [ext_resource type="Theme" uid="uid://c5qb3k1thqbgm" path="res://textures/game_stats_ui_theme.tres" id="2_hh658"]
@@ -10,6 +10,7 @@
 [ext_resource type="Shader" path="res://shaders/greyscale.gdshader" id="7_w6eim"]
 [ext_resource type="Texture2D" uid="uid://dfoof0uonkses" path="res://textures/item_textures.tres" id="8_lnkyx"]
 [ext_resource type="Script" path="res://scripts/RaygunUI.cs" id="8_xvy0x"]
+[ext_resource type="Script" path="res://scripts/PogoUI.cs" id="10_mj6s3"]
 [ext_resource type="Script" path="res://scripts/ScoreUI.cs" id="10_u2dbf"]
 [ext_resource type="PackedScene" uid="uid://c85ufn8742tq3" path="res://scenes/levels/ck1-overworld.tscn" id="12_4f0w2"]
 [ext_resource type="PackedScene" uid="uid://cawbouv50vedq" path="res://ui/Dialog.tscn" id="13_rgeja"]
@@ -61,6 +62,14 @@ region = Rect2(0, 0, 17, 16)
 line_spacing = 0.0
 font_size = 7
 font_color = Color(1, 0.462745, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_y8jiy"]
+shader = ExtResource("7_w6eim")
+shader_parameter/enable = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x0q74"]
+atlas = ExtResource("8_lnkyx")
+region = Rect2(144, 0, 16, 16)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_i5ea2"]
 shader = ExtResource("7_w6eim")
@@ -190,6 +199,17 @@ label_settings = SubResource("LabelSettings_oj4mh")
 horizontal_alignment = 2
 vertical_alignment = 1
 
+[node name="Pogo" type="HBoxContainer" parent="UI/UiPanel/HBoxContainer"]
+layout_mode = 2
+script = ExtResource("10_mj6s3")
+
+[node name="Pogo" type="TextureRect" parent="UI/UiPanel/HBoxContainer/Pogo"]
+material = SubResource("ShaderMaterial_y8jiy")
+layout_mode = 2
+texture = SubResource("AtlasTexture_x0q74")
+expand_mode = 2
+stretch_mode = 3
+
 [node name="Ship parts" type="HBoxContainer" parent="UI/UiPanel/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
@@ -232,7 +252,7 @@ size_flags_horizontal = 8
 script = ExtResource("10_u2dbf")
 
 [node name="Value" type="Label" parent="UI/UiPanel/HBoxContainer/Score"]
-custom_minimum_size = Vector2(85, 0)
+custom_minimum_size = Vector2(60, 0)
 layout_mode = 2
 text = "0,000,000"
 label_settings = SubResource("LabelSettings_xwr53")

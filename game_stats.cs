@@ -40,12 +40,15 @@ public partial class game_stats : Resource
 
     public static bool UsedSecretExit = false;
 
+    public static bool HasPogoStick = false;
+
     public static void Reset()
     {
         Charges = 0;
         CollectedParts = 0;
         KeenMapPosition = null;
         Score = 0;
+        HasPogoStick = false;
         Levels.Clear();
     }
 

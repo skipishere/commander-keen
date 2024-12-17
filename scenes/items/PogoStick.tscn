@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://cr1yntpct72je"]
+
+[ext_resource type="Script" path="res://scenes/items/PogoStick.cs" id="1_f1w6r"]
+[ext_resource type="Texture2D" uid="uid://b6gffs3oj4f4t" path="res://sprites/items.png" id="2_3o70d"]
+[ext_resource type="AudioStream" uid="uid://ceetvqwu7dbiu" path="res://sfx/138410__cameronmusic__item-collect-2.wav" id="3_v25hk"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_r2fvd"]
+size = Vector2(12, 16)
+
+[node name="PogoStick" type="Area2D"]
+collision_layer = 4
+collision_mask = 2
+script = ExtResource("1_f1w6r")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_3o70d")
+region_enabled = true
+region_rect = Rect2(144, 0, 16, 16)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_r2fvd")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_v25hk")
+pitch_scale = 1.5
+bus = &"Sound Effects"
+
+[connection signal="body_entered" from="." to="." method="OnBodyEntered"]

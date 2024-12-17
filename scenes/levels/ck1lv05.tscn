@@ -27,7 +27,7 @@ tile_set = ExtResource("1_hwj0a")
 
 [node name="Items" type="TileMapLayer" parent="TileMap" groups=["LevelLayers"]]
 use_parent_material = true
-tile_map_data = PackedByteArray("AAACAOT/AwAAAAAACQA=")
+tile_map_data = PackedByteArray("AAACAOT/AwAAAAAACQAGAPn/AwAAAAAAFgA=")
 tile_set = ExtResource("1_hwj0a")
 
 [node name="Keen" parent="." instance=ExtResource("2_750jm")]
@@ -55,6 +55,3 @@ color = Color(1, 0, 0, 1)
 energy = 0.5
 texture = SubResource("NoiseTexture2D_h8lxe")
 texture_scale = 0.7
-
-[connection signal="body_entered" from="TileMap/Foreground/LevelExit" to="TileMap/Foreground/LevelExit" method="OnBodyEntered"]
-[connection signal="body_entered" from="TileMap/Items/Item" to="TileMap/Items/Item" method="OnBodyEntered"]

@@ -32,4 +32,7 @@ public partial class SignalManager : Node
 
 	[Signal]
 	public delegate void ShowUiEventHandler(string title, string message);
+
+	[Signal]
+	public delegate void PogoStickEventHandler();
 }
