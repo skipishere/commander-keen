@@ -60,5 +60,3 @@ occluder = SubResource("OccluderPolygon2D_jhabg")
 visible = false
 position = Vector2(376, -133)
 occluder = SubResource("OccluderPolygon2D_jhabg")
-
-[connection signal="body_entered" from="TileMap/Foreground/LevelExit" to="TileMap/Foreground/LevelExit" method="OnBodyEntered"]
