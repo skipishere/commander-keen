@@ -9,19 +9,25 @@ public partial class keen : CharacterBody2D, ITakeDamage
 
 	public const float Speed = 180.0f;
 	public const float JumpVelocity = -315.0f;
-	private AnimationPlayer animation;
+
+	public bool IsJumping { get; set; }
+	public bool IsShooting { get; set; }
+	public bool IsPogoing { get; set; }
+	public bool IsOnGround => IsOnFloor();
+	public bool IsOnIce => groundType == GroundType.Ice;
+
+	//private AnimationPlayer animation;
+	private AnimationTree animationTree;
 	private Camera2D camera;
 	private int width;
 	private int height;
-	private bool isFacingRight = true;
-
-	private bool hasPogo = false;
 
 	private game_stats.KeyCards keyCards = 0;
 
 	private SignalManager signalManager;
 	private RayCast2D rayCast;
 
+	private float lastMovementX = Vector2.Right.X;
 
 	private enum GroundType
 	{
@@ -41,9 +47,10 @@ public partial class keen : CharacterBody2D, ITakeDamage
 
 	public override void _Ready()
 	{
-	 	animation = GetNode<AnimationPlayer>("AnimationPlayer");
+	 	//animation = GetNode<AnimationPlayer>("AnimationPlayer");
 		camera = GetNode<Camera2D>("Camera2D");
-		
+		animationTree = GetNode<AnimationTree>("AnimationTree");
+
 		var collisionShape = GetNode<CollisionShape2D>("CollisionShape2D").Shape.GetRect().Size;
 		width = (int)collisionShape.X/2;
 		height = (int)collisionShape.Y/2;
@@ -60,6 +67,18 @@ public partial class keen : CharacterBody2D, ITakeDamage
 
 	public override void _PhysicsProcess(double delta)
 	{
+		var idle = this.Velocity == Vector2.Zero;
+		if (this.Velocity.Normalized().X != 0)
+		{
+			lastMovementX = this.Velocity.Normalized().X;
+		}
+
+		animationTree.Set("parameters/Idle/blend_position", lastMovementX);
+		animationTree.Set("parameters/Fall/blend_position", lastMovementX);
+		animationTree.Set("parameters/Walk/blend_position", lastMovementX);
+		animationTree.Set("parameters/Jump/blend_position", lastMovementX);
+		animationTree.Set("parameters/Shoot/blend_position", lastMovementX);
+
 		if (this.Visible == false)
 		{
 			// Exiting the level either by door or teleporter.
@@ -83,35 +102,56 @@ public partial class keen : CharacterBody2D, ITakeDamage
 				 var cell_coords = tileMapLayer.LocalToMap(local_col_point);
 				
 				 var cellData = tileMapLayer.GetCellTileData(cell_coords);
-				 var slide = cellData.GetCustomData("Slide").ToString();
-				 groundType = slide switch
+				 try
 				 {
-					 "1" => GroundType.Slippery,
-					 "2" => GroundType.Ice,
-					 _ => GroundType.Normal
-				 };
+				 	// We sometimes get null on the line below, possibly due to tilemaplayer issues the camera has had to deal with?
+				 	var slide = cellData.GetCustomData("Slide");
+					groundType = slide.ToString() switch
+					{
+						"1" => GroundType.Slippery,
+						"2" => GroundType.Ice,
+						_ => GroundType.Normal
+					};
+				 }
+				 catch (Exception e)
+				 {
+					 Debug.WriteLine($"Error: {e.Message}");
+					 groundType = GroundType.Normal;
+				 }
 			}
 		}
 
 		if (Input.IsActionJustPressed("move_shoot") && game_stats.Charges > 0)
 		{
+			this.IsShooting = true;
+			this.IsJumping = false;
+			this.IsPogoing = false;
+
 			game_stats.Charges--;
 			var raygunInstance = raygun.Instantiate() as raygunShot;
-			raygunInstance.SetDirection(this.GlobalPosition, new Vector2(isFacingRight ? 1 : -1, 0), new Vector2(isFacingRight ? 16 : -16, 0), this);
+			raygunInstance.SetDirection(this.GlobalPosition, new Vector2(lastMovementX, 0), new Vector2(lastMovementX > 0 ? 16 : -16, 0), this);
 			GetTree().Root.AddChild(raygunInstance);
 		}
+		else if (Input.IsActionJustReleased("move_shoot"))
+		{
+			this.IsShooting = false;
+		}
+
+		if (Input.IsActionJustPressed("move_pogo") && game_stats.HasPogoStick)
+		{
+			this.IsPogoing = !this.IsPogoing;
+		}
 		
-		if (Input.IsActionJustPressed("move_pogo") && IsOnFloor())
+		if (this.IsPogoing && IsOnFloor())
 		{
 			velocity.Y = JumpVelocity * (float)1.45;
-			animation.Stop();
 		}
 
 		// Handle Jump.
 		if (Input.IsActionJustPressed("move_jump") && IsOnFloor())
 		{
+			this.IsJumping = true;
 			velocity.Y = JumpVelocity;
-			animation.Stop();
 		}
 
 		// Handle Jump height, work in progress.
@@ -123,13 +163,13 @@ public partial class keen : CharacterBody2D, ITakeDamage
 		if (Input.IsActionJustPressed("move_pogo") && IsOnFloor())
 		{
 			//velocity.Y = JumpVelocity*1.2f;
-			animation.Play("dead");
-			game_stats.Charges+=10;
+			
 		}
 
 		if (Input.IsMouseButtonPressed(MouseButton.Right))
 		{
 			GetTree().Paused = !GetTree().Paused;
+			game_stats.Charges+=10;
 		}
 
 		// TODO add state machine to handle the player states.
@@ -149,7 +189,7 @@ public partial class keen : CharacterBody2D, ITakeDamage
 			var toSpeed = 0f;
 			if (groundType == GroundType.Ice && IsOnFloor())
 			{
-				toSpeed = (isFacingRight ? 1 : -1) * Speed;
+				toSpeed = lastMovementX * Speed;
 			}
 			else if (groundType == GroundType.Slippery && IsOnFloor())
 			{
@@ -169,21 +209,6 @@ public partial class keen : CharacterBody2D, ITakeDamage
 			velocity.X = Mathf.MoveToward(Velocity.X, toSpeed, Speed);
 		}
 
-		if (velocity.X > 0 && (groundType != GroundType.Ice || !IsOnFloor()))
-		{
-			animation.Play("walk_right");
-			isFacingRight = true;
-		}
-		else if (velocity.X < 0 && (groundType != GroundType.Ice || !IsOnFloor()))
-		{
-			animation.Play("walk_left");
-			isFacingRight = false;
-		}
-		else
-		{
-			animation.Stop();
-		}
-		
 		Velocity = velocity;
 		if (MoveAndSlide())
 		{
@@ -252,7 +277,7 @@ public partial class keen : CharacterBody2D, ITakeDamage
 	public void TakeDamage()
 	{
 		Debug.WriteLine("Keen defeated!");
-		animation.Play("dead");
+		//animation.Play("dead");
 		//this.SetCollisionMaskValue(1, false);
 	}
 
@@ -265,5 +290,10 @@ public partial class keen : CharacterBody2D, ITakeDamage
 	public bool HasKey(game_stats.KeyCards key)
 	{
 		return keyCards.HasFlag(key);
+	}
+
+	public void StoppedJumping()
+	{
+		this.IsJumping = false;
 	}
 }
