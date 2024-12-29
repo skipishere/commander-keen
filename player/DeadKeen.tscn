@@ -1,0 +1,110 @@
+[gd_scene load_steps=10 format=3 uid="uid://b0mxidil3h22p"]
+
+[ext_resource type="Script" path="res://player/DeadKeen.cs" id="1_4nim1"]
+[ext_resource type="Texture2D" uid="uid://daoeamcib3t14" path="res://sprites/keen-level.png" id="1_istpd"]
+[ext_resource type="AudioStream" uid="uid://d0uyi8vbko82t" path="res://sfx/game_over_bad_chest.wav" id="3_nra4a"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5twu0"]
+atlas = ExtResource("1_istpd")
+region = Rect2(476, 0, 16, 25)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ai4t1"]
+atlas = ExtResource("1_istpd")
+region = Rect2(493, 0, 16, 25)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_4qfap"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5twu0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ai4t1")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[sub_resource type="Animation" id="Animation_rl8nl"]
+resource_name = "Ghost"
+length = 0.2
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [28, 29]
+}
+
+[sub_resource type="Animation" id="Animation_72bgf"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [28]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_0r2qb"]
+_data = {
+"Ghost": SubResource("Animation_rl8nl"),
+"RESET": SubResource("Animation_72bgf")
+}
+
+[node name="DeadKeen" type="CharacterBody2D"]
+z_index = 1
+motion_mode = 1
+script = ExtResource("1_4nim1")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+visible = false
+position = Vector2(0, -13)
+sprite_frames = SubResource("SpriteFrames_4qfap")
+autoplay = "default"
+frame_progress = 0.324208
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(-0.5, -7.5)
+scale = Vector2(0.95, 0.75)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -13)
+texture = ExtResource("1_istpd")
+hframes = 31
+frame = 28
+region_enabled = true
+region_rect = Rect2(0, 0, 526, 25)
+region_filter_clip_enabled = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_0r2qb")
+}
+autoplay = "Ghost"
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
+autostart = true
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_nra4a")
+volume_db = 4.0
+pitch_scale = 2.0
+autoplay = true
+bus = &"Sound Effects"
+
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="OffScreen"]
+[connection signal="timeout" from="Timer" to="." method="OnWaitTimeout"]

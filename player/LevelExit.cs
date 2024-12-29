@@ -25,10 +25,10 @@ public partial class LevelExit : Area2D
 
     public void OnBodyEntered(Node2D body)
 	{
-		if (body is keen player)
+		if (body is keen)
 		{
+			signalManager.EmitSignal(nameof(SignalManager.HidePlayer));
 			animationPlayer.Play("exiting");
-			player.Hide();
 			game_stats.Levels[game_stats.CurrentLevel] = true;
 		}
 	}

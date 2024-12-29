@@ -35,4 +35,7 @@ public partial class SignalManager : Node
 
 	[Signal]
 	public delegate void PogoStickEventHandler();
+
+	[Signal]
+	public delegate void HidePlayerEventHandler();
 }
