@@ -32,7 +32,7 @@ public partial class LevelPortal : Area2D
 
 	public override void _Process(double delta)
 	{
-		if (inRange && Input.IsActionJustPressed("move_jump"))
+		if (inRange && Input.IsActionJustReleased("move_jump"))
 		{
 			signalManager.EmitSignal(nameof(SignalManager.EnteringLevel), this.Target.ResourcePath);
 		}
