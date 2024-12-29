@@ -55,5 +55,5 @@ autowrap_mode = 3
 [node name="ToLeave" type="Label" parent="PannelContainer/VBoxContainer"]
 visibility_layer = 16
 layout_mode = 2
-text = "Press Esc"
+text = "Press Enter"
 horizontal_alignment = 1
