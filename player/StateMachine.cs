@@ -73,6 +73,11 @@ public partial class StateMachine : Node
 
 	private void ChangeState(KeenStates newState)
 	{
+		if (Current.StateType == newState)
+		{
+			return;
+		}
+		
 		Current.Exit();
 		Current = states[newState];
 		Current.Enter();
