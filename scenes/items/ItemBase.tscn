@@ -9,7 +9,7 @@ size = Vector2(16, 16)
 
 [sub_resource type="LabelSettings" id="LabelSettings_pm2sq"]
 resource_local_to_scene = true
-font_size = 8
+font_size = 5
 font_color = Color(0.988235, 0.329412, 0.329412, 1)
 outline_size = 4
 outline_color = Color(0, 0, 0, 1)

@@ -4,7 +4,7 @@
 
 [sub_resource type="LabelSettings" id="LabelSettings_faxaj"]
 resource_local_to_scene = true
-font_size = 8
+font_size = 5
 font_color = Color(0.658824, 0.329412, 0, 1)
 outline_size = 4
 outline_color = Color(0, 0, 0, 1)
