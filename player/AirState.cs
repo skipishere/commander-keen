@@ -27,9 +27,9 @@ public partial class AirState : State
 		AnimationTree.Set("parameters/Jump/blend_position", lastMovementX);
 		
 		var movement = Input.GetAxis("move_left", "move_right");
-		player.Velocity = player.Velocity with { X = movement * Speed};
-		
-		player.Velocity = player.Velocity with { Y = player.Velocity.Y + gravity * (float)delta };
+		player.Velocity = new Vector2(
+			movement * Speed,
+			player.Velocity.Y + gravity * (float)delta);
 	}
 
 	public override void Enter()

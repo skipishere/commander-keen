@@ -1,5 +1,3 @@
-using System;
-using System.Diagnostics;
 using Godot;
 
 public partial class DeadKeen : CharacterBody2D
@@ -14,9 +12,6 @@ public partial class DeadKeen : CharacterBody2D
 	public override void _Ready()
 	{
 		signalManager = GetNode<SignalManager>("/root/SignalManager");
-		Debug.WriteLine($"Position: {Position}");
-		
-		//Debug.WriteLine($"End Position: {endPosition}");
 	}
 
 	private void OnWaitTimeout()
@@ -29,15 +24,9 @@ public partial class DeadKeen : CharacterBody2D
 
     public override void _PhysicsProcess(double delta)
     {
-        //base._PhysicsProcess(delta);
-		Debug.WriteLine($"End Position: {endPosition}");
 		this.Velocity = this.Velocity.MoveToward(endPosition, (float)delta * Speed);
 		MoveAndSlide();
-		//Debug.WriteLine($"Position: {Position}");
     }
-    public override void _Process(double delta)
-	{
-	}
 
 	public void OffScreen()
 	{
