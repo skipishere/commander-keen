@@ -1,0 +1,62 @@
+[gd_scene load_steps=8 format=3 uid="uid://7n6867ngavnr"]
+
+[ext_resource type="Texture2D" uid="uid://de6hjukimt53d" path="res://sprites/hazards.png" id="1_0cmio"]
+[ext_resource type="Script" path="res://scenes/hazards/HazardBase.cs" id="2_5ox0n"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uyar2"]
+atlas = ExtResource("1_0cmio")
+region = Rect2(128, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v1djy"]
+atlas = ExtResource("1_0cmio")
+region = Rect2(144, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8sw0h"]
+atlas = ExtResource("1_0cmio")
+region = Rect2(160, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lovsr"]
+atlas = ExtResource("1_0cmio")
+region = Rect2(176, 16, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_8iveq"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uyar2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v1djy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8sw0h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lovsr")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[node name="Strangling Vines" type="StaticBody2D"]
+collision_mask = 2
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_8iveq")
+autoplay = "default"
+frame_progress = 0.703223
+
+[node name="Area2D" type="Area2D" parent="." node_paths=PackedStringArray("AnimatedSprite2D")]
+collision_layer = 8
+collision_mask = 2
+script = ExtResource("2_5ox0n")
+AnimatedSprite2D = NodePath("../AnimatedSprite2D")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D"]
+polygon = PackedVector2Array(-8, -5, -8, 6, 5, 7, 2, -5)
+
+[node name="CollisionShape2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(7, 8, 8, 8, 8, -8, -8, -8, -8, -5, 2, -5)
+
+[connection signal="body_entered" from="Area2D" to="Area2D" method="OnBodyEntered"]
