@@ -10,9 +10,9 @@ public partial class YorpStatue : Node2D
 	private AnimatedSprite2D animatedSprite2D;
 	private Area2D area2D;
 
-	private Dictionary<string, (string title, string message)> statueMessages = new()
+	private readonly Dictionary<string, (string title, string message)> statueMessages = new()
     {
-		{ "res://scenes/debug.tscn", ("Odd text appears on screen:", "Insert something clever here...")},
+		{ "res://scenes/debug.tscn", ("Odd text appears on screen above:", "Insert something clever here, make sure it's long text to test out the...")},
 		{ "res://scenes/levels/ck1lv02.tscn", ("You hear in your mind:", "It is too bad that you cannot read the Standard Galactic Alphabet, Human.") },
 		{ "res://scenes/levels/ck1lv06.tscn", ("A message echoes in your head:", "The teleporter in the ice will send you to the dark side of Mars.")},
 		{ "res://scenes/levels/ck1lv09.tscn", ("A voice buzzes in your mind:", "There is a hidden city. Look in the dark area of the city to the south.")},
