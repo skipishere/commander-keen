@@ -1,0 +1,26 @@
+[gd_scene load_steps=3 format=3 uid="uid://bvwajod42taho"]
+
+[ext_resource type="Script" path="res://scenes/hazards/HazardBase.cs" id="1_360km"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_hd7ny"]
+resource_local_to_scene = true
+animations = [{
+"frames": [],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[node name="HazardBase" type="Area2D" node_paths=PackedStringArray("AnimatedSprite2D")]
+collision_layer = 8
+collision_mask = 2
+script = ExtResource("1_360km")
+AnimatedSprite2D = NodePath("AnimatedSprite2D")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_hd7ny")
+frame_progress = 0.0694444
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+
+[connection signal="body_entered" from="." to="." method="OnBodyEntered"]

@@ -1,0 +1,32 @@
+[gd_scene load_steps=6 format=3 uid="uid://y6kehn2rg2jv"]
+
+[ext_resource type="PackedScene" uid="uid://bvwajod42taho" path="res://scenes/hazards/HazardBase.tscn" id="1_4mrrg"]
+[ext_resource type="Texture2D" uid="uid://de6hjukimt53d" path="res://sprites/hazards.png" id="2_xoaxj"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pq26y"]
+atlas = ExtResource("2_xoaxj")
+region = Rect2(0, 32, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_h6fe5"]
+resource_local_to_scene = true
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pq26y")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[sub_resource type="ConvexPolygonShape2D" id="ConvexPolygonShape2D_cqwlu"]
+points = PackedVector2Array(8, -8, 6, 3, -3, 5, -5, -8)
+
+[node name="Icicles" instance=ExtResource("1_4mrrg")]
+RandomStartFrame = false
+
+[node name="AnimatedSprite2D" parent="." index="0"]
+sprite_frames = SubResource("SpriteFrames_h6fe5")
+
+[node name="CollisionShape2D" parent="." index="1"]
+shape = SubResource("ConvexPolygonShape2D_cqwlu")

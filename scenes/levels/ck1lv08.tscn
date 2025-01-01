@@ -1,9 +1,13 @@
-[gd_scene load_steps=5 format=4 uid="uid://clgf3nyfs2x58"]
+[gd_scene load_steps=7 format=4 uid="uid://clgf3nyfs2x58"]
 
 [ext_resource type="TileSet" uid="uid://w7k5amqxc3ac" path="res://scenes/tile_platform.tres" id="2_2ewsd"]
 [ext_resource type="PackedScene" uid="uid://dqlj2tioeqgqw" path="res://player/keen.tscn" id="3_uks6n"]
 [ext_resource type="AudioStream" uid="uid://du4dvuk7gjjbq" path="res://music/music_jewels.ogg" id="4_6ar5l"]
 [ext_resource type="PackedScene" uid="uid://dkpwgxsjkybvs" path="res://player/vorticon_guard.tscn" id="5_fducg"]
+[ext_resource type="Script" path="res://scripts/DeathZone.cs" id="5_kvpuw"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_dnq4n"]
+distance = -9.0
 
 [node name="Level" type="Node2D"]
 metadata/_edit_vertical_guides_ = [-647.0]
@@ -28,7 +32,7 @@ tile_set = ExtResource("2_2ewsd")
 
 [node name="Hazards" type="TileMapLayer" parent="TileMap" groups=["LevelLayers"]]
 use_parent_material = true
-tile_map_data = PackedByteArray("AAADAOv/AQAAAAIAAAAsAPX/AQAAAAIAAAAuAO3/AQAAAAIAAABJANj/AQAAAAIAAABKANj/AQAAAAIAAAA=")
+tile_map_data = PackedByteArray("AAADAOv/BgAAAAAABgAsAPX/BgAAAAAABgAuAO3/BgAAAAAABgBJANj/BgAAAAAABgBKANj/BgAAAAAABgA=")
 tile_set = ExtResource("2_2ewsd")
 
 [node name="Keen" parent="." instance=ExtResource("3_uks6n")]
@@ -58,3 +62,13 @@ bus = &"Music"
 [node name="Vorticon Guard" parent="." instance=ExtResource("5_fducg")]
 position = Vector2(910, -672)
 
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("5_kvpuw")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(988, -8)
+shape = SubResource("WorldBoundaryShape2D_dnq4n")
+
+[connection signal="body_entered" from="Area2D" to="Area2D" method="OnDeathZoneBodyEntered"]

@@ -1,0 +1,71 @@
+[gd_scene load_steps=10 format=3 uid="uid://bvxbcswnf5r57"]
+
+[ext_resource type="Texture2D" uid="uid://de6hjukimt53d" path="res://sprites/hazards.png" id="1_brexu"]
+[ext_resource type="Script" path="res://scenes/hazards/HazardBase.cs" id="2_lcw2m"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yco2g"]
+atlas = ExtResource("1_brexu")
+region = Rect2(64, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jk78b"]
+atlas = ExtResource("1_brexu")
+region = Rect2(80, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e8rnx"]
+atlas = ExtResource("1_brexu")
+region = Rect2(96, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gjhsj"]
+atlas = ExtResource("1_brexu")
+region = Rect2(112, 16, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_8iveq"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yco2g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jk78b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e8rnx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gjhsj")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5etwf"]
+size = Vector2(16, 13)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dyyau"]
+size = Vector2(16, 3)
+
+[node name="Strangling Vines" type="StaticBody2D"]
+collision_mask = 2
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_8iveq")
+autoplay = "default"
+frame_progress = 0.318361
+
+[node name="Area2D" type="Area2D" parent="." node_paths=PackedStringArray("AnimatedSprite2D")]
+collision_layer = 8
+collision_mask = 2
+script = ExtResource("2_lcw2m")
+AnimatedSprite2D = NodePath("../AnimatedSprite2D")
+
+[node name="CollisionPolygon2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, 1.5)
+shape = SubResource("RectangleShape2D_5etwf")
+debug_color = Color(0.973852, 0, 0.431018, 0.42)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -6.5)
+shape = SubResource("RectangleShape2D_dyyau")
+
+[connection signal="body_entered" from="Area2D" to="Area2D" method="OnBodyEntered"]
