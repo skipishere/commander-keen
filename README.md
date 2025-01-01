@@ -2,7 +2,7 @@
 An early attempt to recreate the original Command Keen (Episode 1) using the Godot engine. What better way to learn to make a game then to try and recreate an old one.
 
 Things that need to be worked on:
- - [ ] Hazards - currently Keen can't die
+ - [x] Hazards - ~currently Keen can't die~ (added in https://github.com/skipishere/commander-keen/pull/2 and https://github.com/skipishere/commander-keen/pull/4)
  - [ ] Enemies/Creatures
    - [ ] Vorticons
    - [ ] Gargs
