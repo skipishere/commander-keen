@@ -22,8 +22,8 @@ public partial class DeadKeen : CharacterBody2D
 	private void OnWaitTimeout()
 	{
 		endPosition = new Vector2(
-			Position.X + 100 * new RandomNumberGenerator().RandfRange(-1, 1),
-			Position.Y - 300
+			100 * new RandomNumberGenerator().RandfRange(-1, 1),
+			-300
 		);
 	}
 

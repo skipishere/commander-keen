@@ -23,7 +23,6 @@ public partial class DeadState : State
 
 	public override void Enter()
 	{
-
 		var deadInstance = deadKeen.Instantiate() as DeadKeen;
 		deadInstance.Position = new Vector2(player.Position.X, player.Position.Y + 4);
 		playback.Travel("Hidden");
