@@ -1,6 +1,7 @@
-[gd_scene load_steps=10 format=3 uid="uid://un6axmoir2v6"]
+[gd_scene load_steps=12 format=3 uid="uid://un6axmoir2v6"]
 
 [ext_resource type="Texture2D" uid="uid://53qawylv4smy" path="res://textures/fire_particle.png" id="1_3yae8"]
+[ext_resource type="Script" path="res://scenes/Fire.cs" id="1_p3xh0"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_pjvg2"]
 blend_mode = 1
@@ -36,8 +37,12 @@ gravity = Vector3(0, -250, 0)
 scale_curve = SubResource("CurveTexture_sl562")
 color_ramp = SubResource("GradientTexture1D_vyoos")
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bvg7s"]
+size = Vector2(17, 16)
+
 [node name="Node2D" type="Node2D"]
 z_index = 1
+script = ExtResource("1_p3xh0")
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
 material = SubResource("CanvasItemMaterial_pjvg2")
@@ -57,3 +62,13 @@ shadow_color = Color(0.521569, 0, 0, 0.764706)
 shadow_item_cull_mask = 2
 texture = ExtResource("1_3yae8")
 texture_scale = 3.0
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0.5, 1)
+shape = SubResource("RectangleShape2D_bvg7s")
+
+[connection signal="body_entered" from="Area2D" to="." method="OnBodyEntered"]
