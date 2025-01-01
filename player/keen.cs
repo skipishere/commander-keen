@@ -89,34 +89,6 @@ public partial class keen : CharacterBody2D, ITakeDamage
 			Debug.WriteLine("Shove hit wall");
 		}
 	}
-
-	// private void HandleCollision()
-	// {
-	// 	for (int i = 0; i < GetSlideCollisionCount(); i++)
-	// 	{
-	// 		var collision = GetSlideCollision(i);
-	// 		var collider = collision.GetCollider();
-	// 		//Debug.WriteLine($"Collided with {collider.GetType()}");
-			
-	// 		if (collider is TileMap tileMap)
-	// 		{
-	// 			// Handle the tilemap collision.
-	// 			//Debug.WriteLine($"Collided with {tileMap.Name}");
-	// 			var l2 = tileMap.ToLocal(collision.GetPosition());
-	// 			tileMap.LocalToMap(l2);
-	// 			var location = tileMap.LocalToMap(l2);
-	// 			//Debug.WriteLine($"Collided with tilemap at {location}");
-	// 			//tileMap.layer
-	// 			var foo = tileMap.GetCellTileData(1, location);
-	// 			if (foo != null)
-	// 			{
-	// 				Debug.WriteLine($"Collided with tilemap - death?");
-	// 			}
-	// 		}
-			
-			
-	// 	}
-	// }
 	
 	public void TakeDamage()
 	{
