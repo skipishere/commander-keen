@@ -41,6 +41,7 @@ layout_mode = 2
 visibility_layer = 16
 layout_mode = 2
 text = "You hear in your mind:"
+autowrap_mode = 2
 
 [node name="Message" type="Label" parent="PannelContainer/VBoxContainer"]
 visibility_layer = 16
