@@ -1,10 +1,84 @@
-[gd_scene load_steps=4 format=4 uid="uid://db4e3oa7n70em"]
+[gd_scene load_steps=10 format=4 uid="uid://db4e3oa7n70em"]
 
+[ext_resource type="Texture2D" uid="uid://ce0d4ee2x7x5e" path="res://backgrounds/treasure.png" id="1_je5wq"]
 [ext_resource type="TileSet" uid="uid://w7k5amqxc3ac" path="res://scenes/tile_platform.tres" id="1_mjeqg"]
 [ext_resource type="PackedScene" uid="uid://dqlj2tioeqgqw" path="res://player/keen.tscn" id="2_unm3g"]
 [ext_resource type="PackedScene" uid="uid://dkpwgxsjkybvs" path="res://player/vorticon_guard.tscn" id="3_ppkar"]
+[ext_resource type="PackedScene" uid="uid://l3fxye0kbuqx" path="res://scenes/creatures/Garg.tscn" id="5_yoxxb"]
+[ext_resource type="PackedScene" uid="uid://cxi7xre6i724l" path="res://player/Yorp.tscn" id="6_085rh"]
+
+[sub_resource type="Animation" id="Animation_nlisc"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasModulate:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("DirectionalLight2D:energy")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.25]
+}
+
+[sub_resource type="Animation" id="Animation_cuqfu"]
+resource_name = "level_exit"
+length = 2.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasModulate:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.0666667, 1.9),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(0, 0, 0, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("DirectionalLight2D:energy")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1.9),
+"transitions": PackedFloat32Array(0.0824693, 1),
+"update": 0,
+"values": [0.25, 0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_emtx4"]
+_data = {
+"RESET": SubResource("Animation_nlisc"),
+"level_exit": SubResource("Animation_cuqfu")
+}
 
 [node name="Level" type="Node2D"]
+
+[node name="Parallax2D" type="Parallax2D" parent="."]
+scroll_scale = Vector2(0.1, 1)
+
+[node name="Sprite2D" type="Sprite2D" parent="Parallax2D"]
+modulate = Color(1, 0.645551, 0.617093, 1)
+z_index = -1
+position = Vector2(256, -136)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_je5wq")
 
 [node name="TileMap" type="Node2D" parent="."]
 
@@ -30,10 +104,43 @@ position = Vector2(20, -12)
 [node name="Vorticon Guard" parent="." instance=ExtResource("3_ppkar")]
 position = Vector2(1598, -208)
 
-[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
 
-[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_emtx4")
+}
 
-[node name="Ck1Lv04" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
-modulate = Color(1, 1, 1, 0.352941)
-position = Vector2(928, -128)
+[node name="DirectionalLight2D" type="DirectionalLight2D" parent="."]
+energy = 0.25
+blend_mode = 2
+shadow_enabled = true
+
+[node name="Garg" parent="." instance=ExtResource("5_yoxxb")]
+position = Vector2(1011, -16)
+
+[node name="Yorps" type="Node2D" parent="."]
+
+[node name="Yorp" parent="Yorps" instance=ExtResource("6_085rh")]
+position = Vector2(287, -11)
+
+[node name="Yorp2" parent="Yorps" instance=ExtResource("6_085rh")]
+position = Vector2(537, -12)
+
+[node name="Yorp3" parent="Yorps" instance=ExtResource("6_085rh")]
+position = Vector2(696, -156)
+
+[node name="Yorp4" parent="Yorps" instance=ExtResource("6_085rh")]
+position = Vector2(296, -156)
+
+[node name="Yorp5" parent="Yorps" instance=ExtResource("6_085rh")]
+position = Vector2(312, -220)
+
+[node name="Yorp6" parent="Yorps" instance=ExtResource("6_085rh")]
+position = Vector2(521, -220)
+
+[node name="Yorp7" parent="Yorps" instance=ExtResource("6_085rh")]
+position = Vector2(1641, -12)
+
+[node name="Yorp8" parent="Yorps" instance=ExtResource("6_085rh")]
+position = Vector2(1641, -108)
