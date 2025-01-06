@@ -3,6 +3,9 @@ using Godot;
 
 public partial class OverworldKeen : CharacterBody2D
 {
+	private bool GodModeEnabled = false;
+	private bool ignoreKeys = false;
+	
 	public const float Speed = 100.0f;
 	
 	public static Vector2? mapPosition;
@@ -71,6 +74,23 @@ public partial class OverworldKeen : CharacterBody2D
 
 	public override void _PhysicsProcess(double delta)
 	{
+		if (Input.IsKeyPressed(Key.G) 
+			&& Input.IsKeyPressed(Key.O) 
+			&& Input.IsKeyPressed(Key.D))
+		{
+			if (!ignoreKeys)
+			{
+				GodModeEnabled = !GodModeEnabled;
+				this.SetCollisionMaskValue(1, !GodModeEnabled);
+				Debug.Print($"God mode is {GodModeEnabled}");
+				ignoreKeys = true;
+			}
+		}
+		else 
+		{
+			ignoreKeys = false;
+		}
+
 		if (isTeleporting)
 		{
 			return;
