@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=4 uid="uid://declpwg68bt56"]
+[gd_scene load_steps=13 format=4 uid="uid://declpwg68bt56"]
 
 [ext_resource type="TileSet" uid="uid://w7k5amqxc3ac" path="res://scenes/tile_platform.tres" id="1_7ace5"]
 [ext_resource type="Texture2D" uid="uid://d376knn7iw6q6" path="res://backgrounds/city.png" id="1_pjfv3"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://dkpwgxsjkybvs" path="res://player/vorticon_guard.tscn" id="3_guhvo"]
 [ext_resource type="PackedScene" uid="uid://cxi7xre6i724l" path="res://player/Yorp.tscn" id="5_p7fjb"]
 [ext_resource type="Script" path="res://scripts/DeathZone.cs" id="7_yg8ti"]
+[ext_resource type="PackedScene" uid="uid://l3fxye0kbuqx" path="res://scenes/creatures/Garg.tscn" id="8_l0acv"]
 
 [sub_resource type="Animation" id="Animation_yxesp"]
 length = 0.001
@@ -192,5 +193,11 @@ script = ExtResource("7_yg8ti")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 position = Vector2(148, 24)
 shape = SubResource("WorldBoundaryShape2D_667ot")
+
+[node name="Garg" parent="." instance=ExtResource("8_l0acv")]
+position = Vector2(829, -256)
+
+[node name="Garg2" parent="." instance=ExtResource("8_l0acv")]
+position = Vector2(1042, -16)
 
 [connection signal="body_entered" from="Area2D" to="Area2D" method="OnDeathZoneBodyEntered"]
