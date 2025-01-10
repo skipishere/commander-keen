@@ -34,7 +34,7 @@ tile_set = ExtResource("2_0fxow")
 
 [node name="Hazards" type="TileMapLayer" parent="TileMap" groups=["LevelLayers"]]
 use_parent_material = true
-tile_map_data = PackedByteArray("AAAjAPj/AwAAAAAAAQAkAPj/AwAAAAAAAQAlAPj/AwAAAAAAAQAmAPj/AwAAAAAAAQA=")
+tile_map_data = PackedByteArray("AAAjAPj/AwAAAAAAAQAkAPj/AwAAAAAAAQAlAPj/AwAAAAAAAQAmAPj/AwAAAAAAAQANAPL/BwAAAAAAAQAVAPL/BwAAAAAAAQA=")
 tile_set = ExtResource("2_0fxow")
 
 [node name="Keen" parent="." instance=ExtResource("3_0v8xa")]
@@ -74,5 +74,7 @@ script = ExtResource("4_dltah")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 position = Vector2(172, 25)
 shape = SubResource("WorldBoundaryShape2D_gvmf3")
+
+[node name="Creatures" type="Node" parent="."]
 
 [connection signal="body_entered" from="Area2D" to="Area2D" method="OnDeathZoneBodyEntered"]
