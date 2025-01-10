@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://l3fxye0kbuqx"]
+[gd_scene load_steps=25 format=3 uid="uid://l3fxye0kbuqx"]
 
 [ext_resource type="Texture2D" uid="uid://tuk22x5t53fw" path="res://sprites/garg.png" id="1_74ann"]
 [ext_resource type="Script" path="res://scenes/creatures/Garg.cs" id="1_q1igm"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://scenes/creatures/ThinkingState.cs" id="4_3i2uo"]
 [ext_resource type="Script" path="res://scenes/creatures/WalkState.cs" id="4_cj2lk"]
 [ext_resource type="Script" path="res://scenes/creatures/AgroState.cs" id="5_ghshb"]
+[ext_resource type="Script" path="res://scenes/creatures/DeathState.cs" id="7_onamg"]
 
 [sub_resource type="Animation" id="Animation_q1qt8"]
 length = 0.001
@@ -44,6 +45,66 @@ tracks/2/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [8]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("RayCastWall:target_position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-15, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("RayCastLeft:enabled")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("RayCastRight:enabled")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("RayCastCheckRight:enabled")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("RayCastCheckLeft:enabled")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
 }
 
 [sub_resource type="Animation" id="Animation_rcubb"]
@@ -120,6 +181,18 @@ tracks/0/keys = {
 "update": 1,
 "values": [0, 1]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("RayCastWall:target_position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2(15, 0)]
+}
 
 [sub_resource type="Animation" id="Animation_ht1gw"]
 resource_name = "thinking"
@@ -150,6 +223,54 @@ tracks/1/keys = {
 "method": &"ThinkingFinished"
 }]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("RayCastLeft:enabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("RayCastRight:enabled")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("RayCastCheckRight:enabled")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("RayCastCheckLeft:enabled")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_flmgh"]
 _data = {
@@ -161,6 +282,10 @@ _data = {
 }
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_61t28"]
+radius = 11.0
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_8fk1p"]
+animation = &"die"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_7aokg"]
 animation = &"thinking"
@@ -171,15 +296,17 @@ animation = &"left"
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_v1swk"]
 animation = &"right"
 
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_5nf8v"]
+animation = &"right"
+
 [sub_resource type="AnimationNodeBlendSpace1D" id="AnimationNodeBlendSpace1D_en3jq"]
 blend_point_0/node = SubResource("AnimationNodeAnimation_je3sb")
 blend_point_0/pos = -1.0
 blend_point_1/node = SubResource("AnimationNodeAnimation_v1swk")
 blend_point_1/pos = 1.0
+blend_point_2/node = SubResource("AnimationNodeAnimation_5nf8v")
+blend_point_2/pos = 1.0
 blend_mode = 1
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_8fk1p"]
-animation = &"die"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_msupj"]
 advance_mode = 2
@@ -189,12 +316,12 @@ advance_mode = 2
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_bsrhg"]
 
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_syip4"]
+states/Die/node = SubResource("AnimationNodeAnimation_8fk1p")
+states/Die/position = Vector2(779, 100)
 states/Thinking/node = SubResource("AnimationNodeAnimation_7aokg")
 states/Thinking/position = Vector2(360, 93)
 states/Walk/node = SubResource("AnimationNodeBlendSpace1D_en3jq")
 states/Walk/position = Vector2(589, 57)
-states/die/node = SubResource("AnimationNodeAnimation_8fk1p")
-states/die/position = Vector2(779, 100)
 transitions = ["Start", "Thinking", SubResource("AnimationNodeStateMachineTransition_msupj"), "Thinking", "Walk", SubResource("AnimationNodeStateMachineTransition_hhh2w"), "Walk", "Thinking", SubResource("AnimationNodeStateMachineTransition_bsrhg")]
 
 [node name="Garg" type="CharacterBody2D"]
@@ -231,18 +358,55 @@ script = ExtResource("3_wfv53")
 character = NodePath("..")
 animationTree = NodePath("../AnimationTree")
 
-[node name="Thinking" type="Node" parent="StateMachine"]
+[node name="Thinking" type="Node" parent="StateMachine" node_paths=PackedStringArray("left", "right", "leftCheck", "rightCheck")]
 script = ExtResource("4_3i2uo")
+left = NodePath("../../RayCastLeft")
+right = NodePath("../../RayCastRight")
+leftCheck = NodePath("../../RayCastCheckLeft")
+rightCheck = NodePath("../../RayCastCheckRight")
 
-[node name="Walk" type="Node" parent="StateMachine"]
+[node name="Walk" type="Node" parent="StateMachine" node_paths=PackedStringArray("wallCheck")]
 script = ExtResource("4_cj2lk")
+wallCheck = NodePath("../../RayCastWall")
 
 [node name="Timer" type="Timer" parent="StateMachine/Walk"]
 process_callback = 0
 one_shot = true
 
-[node name="Agro" type="Node" parent="StateMachine"]
+[node name="Agro" type="Node" parent="StateMachine" node_paths=PackedStringArray("wallCheck")]
 script = ExtResource("5_ghshb")
+wallCheck = NodePath("../../RayCastWall")
+
+[node name="Death" type="Node" parent="StateMachine"]
+script = ExtResource("7_onamg")
+
+[node name="RayCastLeft" type="RayCast2D" parent="."]
+position = Vector2(0, -7)
+enabled = false
+target_position = Vector2(-150, 0)
+collision_mask = 2
+
+[node name="RayCastRight" type="RayCast2D" parent="."]
+position = Vector2(0, -7)
+enabled = false
+target_position = Vector2(150, 0)
+collision_mask = 2
+
+[node name="RayCastCheckLeft" type="RayCast2D" parent="."]
+position = Vector2(0, 7)
+enabled = false
+target_position = Vector2(-150, 0)
+collision_mask = 2
+
+[node name="RayCastCheckRight" type="RayCast2D" parent="."]
+position = Vector2(0, 7)
+enabled = false
+target_position = Vector2(150, 0)
+collision_mask = 2
+
+[node name="RayCastWall" type="RayCast2D" parent="."]
+position = Vector2(0, 7)
+target_position = Vector2(-15, 0)
 
 [connection signal="screen_entered" from="VisibleOnScreen" to="." method="OnScreenEntered"]
 [connection signal="screen_exited" from="VisibleOnScreen" to="." method="OnScreenExited"]

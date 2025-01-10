@@ -1,18 +1,23 @@
 using Godot;
-using System;
-using System.Diagnostics;
-using System.Linq;
 
 public partial class ThinkingState : GargBaseState
 {
 	public override GargStateMachine.GargStates StateType => GargStateMachine.GargStates.Thinking;
+	
+	[Export]
+	private RayCast2D left;
+	
+	[Export]
+	private RayCast2D right;
 
-	private CharacterBody2D playerKeen;
+	[Export]
+	private RayCast2D leftCheck;
 
-	// Called when the node enters the scene tree for the first time.
+	[Export]
+	private RayCast2D rightCheck;
+
 	public override void _Ready()
 	{
-		playerKeen = GetTree().GetNodesInGroup("Player").OfType<CharacterBody2D>().First();
 	}
 
 	public override void StateInput(InputEvent inputEvent)
@@ -21,21 +26,24 @@ public partial class ThinkingState : GargBaseState
 
 	public override void PhysicsProcess(double delta, float lastMovementX)
 	{
-		// Decide which direction keen is in and walk
-		// if in line of sight -> agro run
 	}
 
 	public void ThinkingFinished()
 	{
-		// If keen in line of sight -> agro
-		// else walk
-		Debug.WriteLine("ThinkingFinished");
-		NextState = GargStateMachine.GargStates.Walk;
-	}
+		NextState = CanSeeKeen() 
+		? GargStateMachine.GargStates.Agro
+		: GargStateMachine.GargStates.Walk;
+    }
 
 	public override void Enter()
 	{
-		Debug.WriteLine("GargThinkingState Enter");
 		playback.Travel("Thinking");
+		player.Velocity = Vector2.Zero;
 	}
+
+	private bool CanSeeKeen()
+	{
+        return (left.IsColliding() && leftCheck.IsColliding())
+			|| (right.IsColliding() && rightCheck.IsColliding());
+    }
 }

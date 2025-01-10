@@ -18,7 +18,6 @@ public partial class Garg : CharacterBody2D, ITakeDamage
 
 	public float lastMovementX = Vector2.Left.X;
 
-	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		signalManager = GetNode<SignalManager>("/root/SignalManager");
@@ -34,14 +33,15 @@ public partial class Garg : CharacterBody2D, ITakeDamage
 		}
 		
 		stateMachine.PhysicsProcess(delta, lastMovementX);
-	}
-	
-	public override void _Process(double delta)
-	{
+		
 		if (MoveAndSlide())
 		{
 			HandleCollision();
 		}
+	}
+	
+	public override void _Process(double delta)
+	{
 	}
 
 	private void HandleCollision()
@@ -60,9 +60,8 @@ public partial class Garg : CharacterBody2D, ITakeDamage
 
     public void TakeDamage()
     {
-        // Temp until statemachine is implemented
-		Debug.WriteLine("Garg is shot");
-		((AnimationNodeStateMachinePlayback)animationTree.Get("parameters/playback")).Travel("die");
+		stateMachine.TakeDamage();
+		
     }
 
 	public void OnScreenEntered()

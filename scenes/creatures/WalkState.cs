@@ -1,11 +1,13 @@
 using System;
-using System.Diagnostics;
 using Godot;
 
 public partial class WalkState : GargBaseState
 {
 	private const float Speed = 90.0f;
     public override GargStateMachine.GargStates StateType => GargStateMachine.GargStates.Walk;
+
+	[Export]
+    public RayCast2D wallCheck;
 
 	private Timer timer;
 
@@ -16,7 +18,6 @@ public partial class WalkState : GargBaseState
 
     private void OnTimerTimeout()
     {
-		Debug.WriteLine("WalkState OnTimerTimeout");
         this.NextState = GargStateMachine.GargStates.Thinking;
     }
 
@@ -27,26 +28,29 @@ public partial class WalkState : GargBaseState
     public override void PhysicsProcess(double delta, float lastMovementX)
 	{
 		AnimationTree.Set("parameters/Walk/blend_position", lastMovementX);
-		
-		//if (//keen in sight)
-		//{
-			//NextState = GargStateMachine.GargStates.Agro;
-			//return;
-		//}
 
-		// If colide with wall then reverse direction
-        //var toSpeed = movement * Speed;
-        //player.Velocity = player.Velocity with { X = Mathf.MoveToward(player.Velocity.X, toSpeed, Speed)};
+		if (wallCheck.IsColliding())
+		{
+			lastMovementX *=-1;
+		}
+
+        player.Velocity = player.Velocity with { X = lastMovementX * Speed };
 	}
 
 	public override void Enter()
 	{
-		Debug.WriteLine("GargWalkState Enter");
 		playback.Travel("Walk");
 
 		// Walk time is around 1-5 seconds
 		var random = new Random().Next(1, 5);
 		timer.WaitTime = random;
 		timer.Start();
+
+		// Look up Keen direction
+		var keen = GetTree().GetNodesInGroup("Player")[0] as keen;
+		var direction = keen.GlobalPosition.X < player.GlobalPosition.X ? Vector2.Left.X : Vector2.Right.X;
+		AnimationTree.Set("parameters/Walk/blend_position", direction);
+		player.Velocity = player.Velocity with { X = direction };
 	}
+
 }

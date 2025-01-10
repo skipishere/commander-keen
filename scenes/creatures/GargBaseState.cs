@@ -29,5 +29,4 @@ public abstract partial class GargBaseState : Node, IState<GargStateMachine.Garg
     {
         NextState = null;
     }
-
 }
