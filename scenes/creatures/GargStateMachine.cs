@@ -42,8 +42,14 @@ public partial class GargStateMachine : Node
 		Debug.Print("Garg Default state: " + Current.StateType);
 	}
 
-    public void PhysicsProcess(double delta, float lastMovementX)
+    public void PhysicsProcess(double delta, float lastMovementX, bool isActivated)
 	{
+		if (!isActivated 
+			&& Current.StateType != GargStates.Agro)
+		{
+			return;
+		}
+		
 		Current.PhysicsProcess(delta, lastMovementX);
 
 		if (isDead)

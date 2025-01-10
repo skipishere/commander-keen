@@ -6,7 +6,10 @@ public partial class AgroState : GargBaseState
     private float direction = Vector2.Left.X;
     
     [Export]
-    public RayCast2D wallCheck;
+    public RayCast2D wallCheckLeft;
+
+    [Export]
+    public RayCast2D wallCheckRight;
 
     public override GargStateMachine.GargStates StateType => GargStateMachine.GargStates.Agro;
 
@@ -16,7 +19,8 @@ public partial class AgroState : GargBaseState
 
     public override void PhysicsProcess(double delta, float lastMovementX)
     {
-        if (wallCheck.IsColliding())
+        if ((wallCheckLeft.IsColliding() && direction == Vector2.Left.X)
+            || (wallCheckRight.IsColliding() && direction == Vector2.Right.X))
         {
             NextState = GargStateMachine.GargStates.Walk;
         }

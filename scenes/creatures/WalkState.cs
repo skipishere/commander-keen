@@ -3,11 +3,14 @@ using Godot;
 
 public partial class WalkState : GargBaseState
 {
-	private const float Speed = 90.0f;
+	private const float Speed = 45.0f;
     public override GargStateMachine.GargStates StateType => GargStateMachine.GargStates.Walk;
 
 	[Export]
-    public RayCast2D wallCheck;
+    public RayCast2D wallCheckLeft;
+
+	[Export]
+    public RayCast2D wallCheckRight;
 
 	private Timer timer;
 
@@ -27,14 +30,20 @@ public partial class WalkState : GargBaseState
 
     public override void PhysicsProcess(double delta, float lastMovementX)
 	{
-		AnimationTree.Set("parameters/Walk/blend_position", lastMovementX);
-
-		if (wallCheck.IsColliding())
+		if (player.IsOnFloor())
 		{
-			lastMovementX *=-1;
+			if (wallCheckLeft.IsColliding())
+			{
+				lastMovementX = Vector2.Right.X;
+			}
+			else if (wallCheckRight.IsColliding())
+			{
+				lastMovementX = Vector2.Left.X;
+			}
 		}
 
-        player.Velocity = player.Velocity with { X = lastMovementX * Speed };
+		AnimationTree.Set("parameters/Walk/blend_position", lastMovementX);
+		player.Velocity = new Vector2(lastMovementX * Speed, player.Velocity.Y + gravity * (float)delta);
 	}
 
 	public override void Enter()

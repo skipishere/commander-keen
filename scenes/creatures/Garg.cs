@@ -32,7 +32,7 @@ public partial class Garg : CharacterBody2D, ITakeDamage
 			lastMovementX = this.Velocity.Normalized().X;
 		}
 		
-		stateMachine.PhysicsProcess(delta, lastMovementX);
+		stateMachine.PhysicsProcess(delta, lastMovementX, isActivated);
 		
 		if (MoveAndSlide())
 		{
