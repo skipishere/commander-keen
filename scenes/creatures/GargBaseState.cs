@@ -13,7 +13,7 @@ public abstract partial class GargBaseState : Node, IState<GargStateMachine.Garg
 
     internal AnimationNodeStateMachinePlayback playback { get => (AnimationNodeStateMachinePlayback)AnimationTree.Get("parameters/playback"); }
 
-    internal float gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
+    internal float gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle() / 2;
 
     public virtual void StateInput(InputEvent inputEvent)
     {
