@@ -1,7 +1,7 @@
 [gd_scene load_steps=12 format=3 uid="uid://un6axmoir2v6"]
 
 [ext_resource type="Texture2D" uid="uid://53qawylv4smy" path="res://textures/fire_particle.png" id="1_3yae8"]
-[ext_resource type="Script" path="res://scenes/Fire.cs" id="1_p3xh0"]
+[ext_resource type="Script" path="res://scenes/hazards/Fire.cs" id="1_p3xh0"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_pjvg2"]
 blend_mode = 1

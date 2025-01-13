@@ -16,7 +16,7 @@ public partial class Doors : Node2D
 
 	public void OnArea2dBodyEntered(Node body)
 	{
-		if (body is keen keen)
+		if (body is Keen keen)
 		{
 			if (keen.HasKey(Card))
 			{

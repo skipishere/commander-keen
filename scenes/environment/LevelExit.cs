@@ -25,7 +25,7 @@ public partial class LevelExit : Area2D
 
     public void OnBodyEntered(Node2D body)
 	{
-		if (body is keen)
+		if (body is Keen)
 		{
 			signalManager.EmitSignal(nameof(SignalManager.HidePlayer));
 			animationPlayer.Play("exiting");

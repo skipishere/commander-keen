@@ -31,7 +31,7 @@ public partial class YorpStatue : Node2D
 
 	public void OnBodyEntered(Node2D body)
 	{
-		if (body is keen)
+		if (body is Keen)
 		{
 			var (title, message) = statueMessages[game_stats.CurrentLevel];
 			

@@ -3,7 +3,7 @@
 [ext_resource type="TileSet" uid="uid://w7k5amqxc3ac" path="res://scenes/tile_platform.tres" id="2_2ewsd"]
 [ext_resource type="PackedScene" uid="uid://dqlj2tioeqgqw" path="res://player/keen.tscn" id="3_uks6n"]
 [ext_resource type="AudioStream" uid="uid://du4dvuk7gjjbq" path="res://music/music_jewels.ogg" id="4_6ar5l"]
-[ext_resource type="PackedScene" uid="uid://dkpwgxsjkybvs" path="res://player/vorticon_guard.tscn" id="5_fducg"]
+[ext_resource type="PackedScene" uid="uid://dkpwgxsjkybvs" path="res://scenes/creatures/VorticonGuard/vorticon_guard.tscn" id="5_fducg"]
 [ext_resource type="Script" path="res://scripts/DeathZone.cs" id="5_kvpuw"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_dnq4n"]

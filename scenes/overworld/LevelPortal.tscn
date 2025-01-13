@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://c7pqcg8qktvrv"]
 
-[ext_resource type="Script" path="res://scenes/LevelPortal.cs" id="1_jj3c4"]
+[ext_resource type="Script" path="res://scenes/overworld/LevelPortal.cs" id="1_jj3c4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4s343"]
 

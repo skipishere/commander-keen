@@ -1,7 +1,7 @@
 [gd_scene load_steps=12 format=3 uid="uid://cxi7xre6i724l"]
 
 [ext_resource type="Texture2D" uid="uid://dagrrjfqo4cv0" path="res://sprites/yorp.png" id="1_bhl5i"]
-[ext_resource type="Script" path="res://player/Yorp.cs" id="1_wx8nb"]
+[ext_resource type="Script" path="res://scenes/creatures/Yorp/Yorp.cs" id="1_wx8nb"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jgn1p"]
 radius = 7.0

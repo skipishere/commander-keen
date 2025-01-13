@@ -11,7 +11,7 @@ public partial class Fire : Node2D
 
 	public void OnBodyEntered(Node2D body)
 	{
-		if (body is keen)
+		if (body is Keen)
 		{
 			signalManager.EmitSignal(nameof(SignalManager.KeenDead));
 		}

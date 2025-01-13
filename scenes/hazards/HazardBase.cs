@@ -25,7 +25,7 @@ public partial class HazardBase : Area2D
 
 	public void OnBodyEntered(Node2D body)
 	{
-		if (body is keen)
+		if (body is Keen)
 		{
 			Debug.WriteLine($"Keen hit a hazard - {this.Name}");
 			signalManager.EmitSignal(nameof(SignalManager.KeenDead));

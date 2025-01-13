@@ -103,7 +103,7 @@ public partial class Yorp : CharacterBody2D, ITakeDamage
 	private void KnockedOut(Node body)
 	{
 		Debug.Print("Yorp eye is sore");
-		if (body is keen keen)
+		if (body is Keen keen)
 		{
 			Debug.Print("Yorp knocked out");
 			//animationPlayer.Play("dazed");

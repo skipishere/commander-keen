@@ -36,7 +36,7 @@ public partial class LevelTeleporterExit : Area2D
     public void OnBodyEntered(Node2D body)
 	{
 		Debug.Print("Teleporter exit reached");
-		if (body is keen)
+		if (body is Keen)
 		{
 			inRange = true;
 			signalManager.EmitSignal(nameof(SignalManager.HidePlayer));

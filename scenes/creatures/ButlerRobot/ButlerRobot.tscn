@@ -1,6 +1,6 @@
 [gd_scene load_steps=16 format=3 uid="uid://bckllpjewggoc"]
 
-[ext_resource type="Script" path="res://player/ButlerRobot.cs" id="1_8yhg0"]
+[ext_resource type="Script" path="res://scenes/creatures/ButlerRobot/ButlerRobot.cs" id="1_8yhg0"]
 [ext_resource type="Shader" path="res://player/flash.gdshader" id="2_cebvp"]
 [ext_resource type="Texture2D" uid="uid://fvyl6rb58534" path="res://sprites/butler-robot.png" id="2_tqqox"]
 

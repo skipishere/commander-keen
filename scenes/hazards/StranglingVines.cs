@@ -14,7 +14,7 @@ public partial class StranglingVines : Area2D
 	public void OnBodyEntered(Node2D body)
 	{
 		Debug.WriteLine($"Keen hit a hazard - {this.Name}");
-		if (body is keen)
+		if (body is Keen)
 		{
 			signalManager.EmitSignal(nameof(SignalManager.KeenDead));
 		}

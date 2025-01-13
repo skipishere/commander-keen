@@ -22,7 +22,7 @@ public partial class StateMachine : Node
 	private IState<KeenStates> Current { get; set; }
 
 	[Export]
-	private keen character;
+	private Keen character;
 
 	[Export]
 	private AnimationTree animationTree;

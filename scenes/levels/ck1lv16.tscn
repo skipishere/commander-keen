@@ -2,7 +2,7 @@
 
 [ext_resource type="TileSet" uid="uid://w7k5amqxc3ac" path="res://scenes/tile_platform.tres" id="1_vri8o"]
 [ext_resource type="PackedScene" uid="uid://dqlj2tioeqgqw" path="res://player/keen.tscn" id="2_vktoe"]
-[ext_resource type="PackedScene" uid="uid://dkpwgxsjkybvs" path="res://player/vorticon_guard.tscn" id="4_k5rx6"]
+[ext_resource type="PackedScene" uid="uid://dkpwgxsjkybvs" path="res://scenes/creatures/VorticonGuard/vorticon_guard.tscn" id="4_k5rx6"]
 [ext_resource type="AudioStream" uid="uid://1jeyehjl5pnt" path="res://music/019_seven_and_eight_7-8_combined.mp3" id="5_xd5u4"]
 
 [node name="Level" type="Node2D"]

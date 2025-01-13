@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=3 uid="uid://doxlbjo63iuvi"]
 
-[ext_resource type="Script" path="res://player/LevelTeleporterExit.cs" id="1_24ir7"]
+[ext_resource type="Script" path="res://scenes/environment/LevelTeleporterExit.cs" id="1_24ir7"]
 [ext_resource type="Texture2D" uid="uid://v1qqiswiyr87" path="res://sprites/level-transporter.png" id="2_3mufu"]
 [ext_resource type="AudioStream" uid="uid://cifxpc3mumaes" path="res://sfx/wave2.wav" id="3_55wdo"]
 

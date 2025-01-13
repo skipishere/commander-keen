@@ -56,7 +56,7 @@ public partial class AgroState : GargBaseState
         playback.Travel("Walk");
         hasjumped = false;
 
-        var keen = GetTree().GetNodesInGroup("Player")[0] as keen;
+        var keen = GetTree().GetNodesInGroup("Player")[0] as Keen;
 		direction = keen.GlobalPosition.X < player.GlobalPosition.X ? Vector2.Left.X : Vector2.Right.X;
 		AnimationTree.Set("parameters/Walk/blend_position", direction);
     }

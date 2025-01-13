@@ -42,7 +42,7 @@ public partial class ButlerRobot : CharacterBody2D, ITakeDamage
 		var velocity = new Vector2 (direction * Speed, 0);
 		
 		var result = MoveAndCollide(velocity);
-		if (result?.GetCollider() is keen player)
+		if (result?.GetCollider() is Keen player)
 		{
 			player.Shove(ShovePower * direction, (float)delta);
 		}

@@ -1,12 +1,12 @@
 [gd_scene load_steps=26 format=3 uid="uid://l3fxye0kbuqx"]
 
 [ext_resource type="Texture2D" uid="uid://tuk22x5t53fw" path="res://sprites/garg.png" id="1_74ann"]
-[ext_resource type="Script" path="res://scenes/creatures/Garg.cs" id="1_q1igm"]
-[ext_resource type="Script" path="res://scenes/creatures/GargStateMachine.cs" id="3_wfv53"]
-[ext_resource type="Script" path="res://scenes/creatures/ThinkingState.cs" id="4_3i2uo"]
-[ext_resource type="Script" path="res://scenes/creatures/WalkState.cs" id="4_cj2lk"]
-[ext_resource type="Script" path="res://scenes/creatures/AgroState.cs" id="5_ghshb"]
-[ext_resource type="Script" path="res://scenes/creatures/DeathState.cs" id="7_onamg"]
+[ext_resource type="Script" path="res://scenes/creatures/Garg/Garg.cs" id="1_q1igm"]
+[ext_resource type="Script" path="res://scenes/creatures/Garg/GargStateMachine.cs" id="3_wfv53"]
+[ext_resource type="Script" path="res://scenes/creatures/Garg/ThinkingState.cs" id="4_3i2uo"]
+[ext_resource type="Script" path="res://scenes/creatures/Garg/WalkState.cs" id="4_cj2lk"]
+[ext_resource type="Script" path="res://scenes/creatures/Garg/AgroState.cs" id="5_ghshb"]
+[ext_resource type="Script" path="res://scenes/creatures/Garg/DeathState.cs" id="7_onamg"]
 [ext_resource type="Texture2D" uid="uid://53qawylv4smy" path="res://textures/fire_particle.png" id="8_gk5mj"]
 
 [sub_resource type="Animation" id="Animation_q1qt8"]

@@ -60,7 +60,7 @@ public partial class WalkState : GargBaseState
 		timer.Start();
 
 		// Look up Keen direction
-		var keen = GetTree().GetNodesInGroup("Player")[0] as keen;
+		var keen = GetTree().GetNodesInGroup("Player")[0] as Keen;
 		var direction = keen.GlobalPosition.X < player.GlobalPosition.X ? Vector2.Left.X : Vector2.Right.X;
 		AnimationTree.Set("parameters/Walk/blend_position", direction);
 		player.Velocity = player.Velocity with { X = direction };

@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://bacl3fbjkgx8e"]
 
-[ext_resource type="Script" path="res://player/LevelExit.cs" id="1_51t3q"]
+[ext_resource type="Script" path="res://scenes/environment/LevelExit.cs" id="1_51t3q"]
 [ext_resource type="Texture2D" uid="uid://bu88vy4djst64" path="res://sprites/Door.png" id="2_n4jso"]
 [ext_resource type="AudioStream" uid="uid://cyty8pl76d7vp" path="res://sfx/Rise05.ogg" id="3_m42mm"]
 [ext_resource type="Texture2D" uid="uid://bbkmbo2fxi6fu" path="res://sprites/keen.png" id="4_g5lts"]

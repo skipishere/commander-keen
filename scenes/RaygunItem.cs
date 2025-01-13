@@ -21,7 +21,7 @@ public partial class RaygunItem : Area2D
 	public void OnBodyEntered(Node2D body)
 	{
 		Debug.Print($"Collided with {body.GetType()}");
-		if (body is keen)
+		if (body is Keen)
 		{
 			this.SetDeferred("monitoring", false);
 			game_stats.Charges+=5;

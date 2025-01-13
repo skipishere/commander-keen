@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://bq6nvssx3qu3q"]
 
-[ext_resource type="PackedScene" uid="uid://c7pqcg8qktvrv" path="res://scenes/LevelPortal.tscn" id="2_ab1l4"]
+[ext_resource type="PackedScene" uid="uid://c7pqcg8qktvrv" path="res://scenes/overworld/LevelPortal.tscn" id="2_ab1l4"]
 
 [sub_resource type="SegmentShape2D" id="SegmentShape2D_ggyao"]
 resource_local_to_scene = true

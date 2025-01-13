@@ -75,7 +75,7 @@ public partial class vorticon_guard : CharacterBody2D, ITakeDamage
 			var collision = GetSlideCollision(i);
 			var collider = collision.GetCollider();
 						
-			if (collider is keen)
+			if (collider is Keen)
 			{
 				signalManager.EmitSignal(nameof(SignalManager.KeenDead));
 			}

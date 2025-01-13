@@ -42,7 +42,7 @@ public partial class Garg : CharacterBody2D, ITakeDamage
 
 	public void BodyEntered(Node2D body)
 	{
-		if (body is keen)
+		if (body is Keen)
 		{
 			signalManager.EmitSignal(nameof(SignalManager.KeenDead));
 		}
@@ -55,7 +55,7 @@ public partial class Garg : CharacterBody2D, ITakeDamage
 			var collision = GetSlideCollision(i);
 			var collider = collision.GetCollider();
 						
-			if (collider is keen)
+			if (collider is Keen)
 			{
 				signalManager.EmitSignal(nameof(SignalManager.KeenDead));
 			}

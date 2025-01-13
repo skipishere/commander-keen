@@ -14,7 +14,7 @@ public partial class PogoStick : Area2D
 
 	public void OnBodyEntered(Node2D body)
 	{
-		if (body is keen)
+		if (body is Keen)
 		{
 			this.SetDeferred("monitoring", false);
 			signalManager.EmitSignal(nameof(SignalManager.PogoStick));
