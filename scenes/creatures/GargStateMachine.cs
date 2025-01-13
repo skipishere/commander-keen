@@ -26,8 +26,6 @@ public partial class GargStateMachine : Node
 
     private CharacterBody2D player;
 
-	private bool isDead = false;
-
     public override void _Ready()
 	{
 		foreach (GargBaseState state in GetChildren().OfType<GargBaseState>())
@@ -52,11 +50,7 @@ public partial class GargStateMachine : Node
 		
 		Current.PhysicsProcess(delta, lastMovementX);
 
-		if (isDead)
-		{
-			ChangeState(GargStates.Dead);
-		}
-		else if (Current.NextState.HasValue)
+		if (Current.NextState.HasValue)
 		{
 			Debug.Print($"Garg State change - old: {Current.StateType}, New: {Current.NextState}");
 			ChangeState(Current.NextState.Value);
@@ -77,6 +71,6 @@ public partial class GargStateMachine : Node
 
 	public void TakeDamage()
 	{
-		isDead = true;
+		CallDeferred(nameof(ChangeState), (int)GargStates.Dead);
 	}
 }
