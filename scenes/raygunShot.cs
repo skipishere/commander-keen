@@ -65,6 +65,11 @@ public partial class raygunShot : StaticBody2D
 		}
 	}
 
+	public void ShotHit()
+	{
+		QueueFree();
+	}
+
 	private void ScreenExited()
 	{
 		QueueFree();
