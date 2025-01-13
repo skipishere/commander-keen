@@ -30,7 +30,7 @@ tile_set = ExtResource("2_5opx1")
 
 [node name="Hazards" type="TileMapLayer" parent="TileMap" groups=["LevelLayers"]]
 use_parent_material = true
-tile_map_data = PackedByteArray("AAAbAPH/AwAAAAAAAQAcAPH/AwAAAAAAAQAdAPH/AwAAAAAAAQAeAPH/AwAAAAAAAQAaAPH/AwAAAAAAAQA=")
+tile_map_data = PackedByteArray("AAAbAPH/AwAAAAAAAQAcAPH/AwAAAAAAAQAdAPH/AwAAAAAAAQAeAPH/AwAAAAAAAQAaAPH/AwAAAAAAAQAgAP//BwAAAAAAAQA=")
 tile_set = ExtResource("2_5opx1")
 
 [node name="Keen" parent="." instance=ExtResource("3_5jwyc")]
@@ -61,3 +61,5 @@ bus = &"Music"
 [node name="LightOccluder2D" type="LightOccluder2D" parent="."]
 position = Vector2(36, -103)
 occluder = SubResource("OccluderPolygon2D_jhabg")
+
+[node name="Creatures" type="Node" parent="."]

@@ -1,0 +1,615 @@
+[gd_scene load_steps=26 format=3 uid="uid://l3fxye0kbuqx"]
+
+[ext_resource type="Texture2D" uid="uid://tuk22x5t53fw" path="res://sprites/garg.png" id="1_74ann"]
+[ext_resource type="Script" path="res://scenes/creatures/Garg.cs" id="1_q1igm"]
+[ext_resource type="Script" path="res://scenes/creatures/GargStateMachine.cs" id="3_wfv53"]
+[ext_resource type="Script" path="res://scenes/creatures/ThinkingState.cs" id="4_3i2uo"]
+[ext_resource type="Script" path="res://scenes/creatures/WalkState.cs" id="4_cj2lk"]
+[ext_resource type="Script" path="res://scenes/creatures/AgroState.cs" id="5_ghshb"]
+[ext_resource type="Script" path="res://scenes/creatures/DeathState.cs" id="7_onamg"]
+[ext_resource type="Texture2D" uid="uid://53qawylv4smy" path="res://textures/fire_particle.png" id="8_gk5mj"]
+
+[sub_resource type="Animation" id="Animation_q1qt8"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [2]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:collision_mask")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [51]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:collision_layer")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [8]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("RayCastLeft:enabled")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("RayCastRight:enabled")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("RayCastCheckRight:enabled")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("RayCastCheckLeft:enabled")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("PointLight2D:position")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(6, -12.4375)]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("PointLight2D2:position")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-4, -7)]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("PointLight2D:energy")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [2.0]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("PointLight2D2:energy")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [2.0]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("Area2D:monitoring")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_rcubb"]
+resource_name = "die"
+length = 5.0
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [6, 7]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:collision_mask")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [17]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:collision_layer")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("PointLight2D:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [Vector2(8, -13), Vector2(7, 5)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("PointLight2D2:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [Vector2(-8, -12), Vector2(-9, 3)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("PointLight2D:energy")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0.3, 5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [2.0, 0.2]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("PointLight2D2:energy")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0.3, 5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [2.0, 0.2]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Area2D:monitoring")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_78mbt"]
+resource_name = "left"
+length = 0.24
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.12),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [8, 9]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("PointLight2D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2(-3, -6)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("PointLight2D2:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2(-10, -9)]
+}
+
+[sub_resource type="Animation" id="Animation_oce1e"]
+resource_name = "right"
+length = 0.24
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.12),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("PointLight2D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(9, -9)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("PointLight2D2:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(2, -6)]
+}
+
+[sub_resource type="Animation" id="Animation_ht1gw"]
+resource_name = "thinking"
+length = 0.4
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [3, 4, 5, 2]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("StateMachine/Thinking")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.4),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"ThinkingFinished"
+}]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("RayCastLeft:enabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("RayCastRight:enabled")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("RayCastCheckRight:enabled")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("RayCastCheckLeft:enabled")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("PointLight2D:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [Vector2(8, -9), Vector2(6, -5), Vector2(4, -7), Vector2(5, -12)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("PointLight2D2:position")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [Vector2(-7, -9), Vector2(-4, -11), Vector2(-1, -6), Vector2(-4, -7)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_flmgh"]
+_data = {
+"RESET": SubResource("Animation_q1qt8"),
+"die": SubResource("Animation_rcubb"),
+"left": SubResource("Animation_78mbt"),
+"right": SubResource("Animation_oce1e"),
+"thinking": SubResource("Animation_ht1gw")
+}
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ducee"]
+radius = 6.0
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_8fk1p"]
+animation = &"die"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_7aokg"]
+animation = &"thinking"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_je3sb"]
+animation = &"left"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_v1swk"]
+animation = &"right"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_5nf8v"]
+animation = &"right"
+
+[sub_resource type="AnimationNodeBlendSpace1D" id="AnimationNodeBlendSpace1D_en3jq"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_je3sb")
+blend_point_0/pos = -1.0
+blend_point_1/node = SubResource("AnimationNodeAnimation_v1swk")
+blend_point_1/pos = 1.0
+blend_point_2/node = SubResource("AnimationNodeAnimation_5nf8v")
+blend_point_2/pos = 1.0
+blend_mode = 1
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_msupj"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_hhh2w"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_bsrhg"]
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_syip4"]
+states/Die/node = SubResource("AnimationNodeAnimation_8fk1p")
+states/Die/position = Vector2(779, 100)
+states/Thinking/node = SubResource("AnimationNodeAnimation_7aokg")
+states/Thinking/position = Vector2(360, 93)
+states/Walk/node = SubResource("AnimationNodeBlendSpace1D_en3jq")
+states/Walk/position = Vector2(589, 57)
+transitions = ["Start", "Thinking", SubResource("AnimationNodeStateMachineTransition_msupj"), "Thinking", "Walk", SubResource("AnimationNodeStateMachineTransition_hhh2w"), "Walk", "Thinking", SubResource("AnimationNodeStateMachineTransition_bsrhg")]
+
+[node name="Garg" type="CharacterBody2D"]
+position = Vector2(0, -8)
+collision_layer = 8
+collision_mask = 51
+script = ExtResource("1_q1igm")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_74ann")
+hframes = 10
+frame = 2
+region_enabled = true
+region_rect = Rect2(0, 0, 250, 32)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_flmgh")
+}
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 18
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D"]
+polygon = PackedVector2Array(-12, 5, -12, 16, 12, 16, 12, 5, 5, -15, -5, -15)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1)
+shape = SubResource("CapsuleShape2D_ducee")
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+tree_root = SubResource("AnimationNodeStateMachine_syip4")
+anim_player = NodePath("../AnimationPlayer")
+parameters/Walk/blend_position = -0.992874
+
+[node name="VisibleOnScreen" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(-1.43051e-06, 1)
+scale = Vector2(2.6, 2.3)
+rect = Rect2(-50, -25, 100, 50)
+metadata/_edit_lock_ = true
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("character", "animationTree")]
+script = ExtResource("3_wfv53")
+character = NodePath("..")
+animationTree = NodePath("../AnimationTree")
+
+[node name="Thinking" type="Node" parent="StateMachine" node_paths=PackedStringArray("left", "right", "leftCheck", "rightCheck")]
+script = ExtResource("4_3i2uo")
+left = NodePath("../../RayCastLeft")
+right = NodePath("../../RayCastRight")
+leftCheck = NodePath("../../RayCastCheckLeft")
+rightCheck = NodePath("../../RayCastCheckRight")
+
+[node name="Walk" type="Node" parent="StateMachine" node_paths=PackedStringArray("wallCheckLeft", "wallCheckRight")]
+script = ExtResource("4_cj2lk")
+wallCheckLeft = NodePath("../../RayCastLeftWall")
+wallCheckRight = NodePath("../../RayCastRightWall")
+
+[node name="Timer" type="Timer" parent="StateMachine/Walk"]
+process_callback = 0
+one_shot = true
+
+[node name="Agro" type="Node" parent="StateMachine" node_paths=PackedStringArray("wallCheckLeft", "wallCheckRight")]
+script = ExtResource("5_ghshb")
+wallCheckLeft = NodePath("../../RayCastLeftWall")
+wallCheckRight = NodePath("../../RayCastRightWall")
+
+[node name="Death" type="Node" parent="StateMachine"]
+script = ExtResource("7_onamg")
+
+[node name="RayCastLeft" type="RayCast2D" parent="."]
+position = Vector2(0, -5)
+enabled = false
+target_position = Vector2(-150, 0)
+collision_mask = 2
+
+[node name="RayCastRight" type="RayCast2D" parent="."]
+position = Vector2(0, -5)
+enabled = false
+target_position = Vector2(150, 0)
+collision_mask = 2
+
+[node name="RayCastCheckLeft" type="RayCast2D" parent="."]
+position = Vector2(0, 7)
+enabled = false
+target_position = Vector2(-150, 0)
+collision_mask = 2
+
+[node name="RayCastCheckRight" type="RayCast2D" parent="."]
+position = Vector2(0, 7)
+enabled = false
+target_position = Vector2(150, 0)
+collision_mask = 2
+
+[node name="RayCastLeftWall" type="RayCast2D" parent="."]
+position = Vector2(0, 7)
+target_position = Vector2(-10, 0)
+
+[node name="RayCastRightWall" type="RayCast2D" parent="."]
+position = Vector2(0, 7)
+target_position = Vector2(10, 0)
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+position = Vector2(6, -12.4375)
+scale = Vector2(0.0625, 0.0761719)
+color = Color(1, 0, 0, 1)
+energy = 2.0
+texture = ExtResource("8_gk5mj")
+
+[node name="PointLight2D2" type="PointLight2D" parent="."]
+position = Vector2(-4, -7)
+scale = Vector2(0.0625, 0.0761719)
+color = Color(1, 0, 0, 1)
+energy = 2.0
+texture = ExtResource("8_gk5mj")
+
+[connection signal="body_entered" from="Area2D" to="." method="BodyEntered" flags=6]
+[connection signal="screen_entered" from="VisibleOnScreen" to="." method="OnScreenEntered"]
+[connection signal="screen_exited" from="VisibleOnScreen" to="." method="OnScreenExited"]
+[connection signal="timeout" from="StateMachine/Walk/Timer" to="StateMachine/Walk" method="OnTimerTimeout"]
