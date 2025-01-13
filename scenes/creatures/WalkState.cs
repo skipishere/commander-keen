@@ -41,6 +41,10 @@ public partial class WalkState : GargBaseState
 				lastMovementX = Vector2.Left.X;
 			}
 		}
+		else
+		{
+			lastMovementX = player.Velocity.X > 0 ? Vector2.Right.X : Vector2.Left.X;
+		}
 
 		AnimationTree.Set("parameters/Walk/blend_position", lastMovementX);
 		player.Velocity = new Vector2(lastMovementX * Speed, player.Velocity.Y + gravity * (float)delta);
@@ -61,5 +65,4 @@ public partial class WalkState : GargBaseState
 		AnimationTree.Set("parameters/Walk/blend_position", direction);
 		player.Velocity = player.Velocity with { X = direction };
 	}
-
 }
