@@ -1,13 +1,9 @@
 using Godot;
-using System;
-using System.Diagnostics;
 
 public partial class Garg : CharacterBody2D, ITakeDamage
 {
 	[Export]
 	private int Health = 1;
-
-	public float gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
 	public const float Speed = 180.0f;
 	public const float JumpVelocity = -315.0f;
 	private bool isActivated = false;
@@ -44,6 +40,14 @@ public partial class Garg : CharacterBody2D, ITakeDamage
 	{
 	}
 
+	public void BodyEntered(Node2D body)
+	{
+		if (body is keen)
+		{
+			signalManager.EmitSignal(nameof(SignalManager.KeenDead));
+		}
+	}
+
 	private void HandleCollision()
 	{
 		for (int i = 0; i < GetSlideCollisionCount(); i++)
@@ -61,23 +65,19 @@ public partial class Garg : CharacterBody2D, ITakeDamage
     public void TakeDamage()
     {
 		stateMachine.TakeDamage();
-		
     }
 
 	public void OnScreenEntered()
 	{
-		Debug.WriteLine("Garg on screen");
 		isActivated = true;
 	}
 
 	public void OnScreenExited()
 	{
-		Debug.WriteLine("Garg off screen");
 		isActivated = false;
 
 		if (!Camera.CameraRect.HasPoint(this.GlobalPosition))
 		{
-			Debug.Print($"Garg is out of camera bounds: {this.GlobalPosition}");
 			QueueFree();
 		}
 	}

@@ -33,7 +33,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [19]
+"values": [51]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -143,6 +143,18 @@ tracks/10/keys = {
 "update": 0,
 "values": [2.0]
 }
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("Area2D:monitoring")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
 
 [sub_resource type="Animation" id="Animation_rcubb"]
 resource_name = "die"
@@ -231,6 +243,18 @@ tracks/6/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [2.0, 0.2]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Area2D:monitoring")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
 }
 
 [sub_resource type="Animation" id="Animation_78mbt"]
@@ -427,8 +451,8 @@ _data = {
 "thinking": SubResource("Animation_ht1gw")
 }
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_61t28"]
-radius = 7.0
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ducee"]
+radius = 6.0
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_8fk1p"]
 animation = &"die"
@@ -473,7 +497,7 @@ transitions = ["Start", "Thinking", SubResource("AnimationNodeStateMachineTransi
 [node name="Garg" type="CharacterBody2D"]
 position = Vector2(0, -8)
 collision_layer = 8
-collision_mask = 19
+collision_mask = 51
 script = ExtResource("1_q1igm")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -488,8 +512,16 @@ libraries = {
 "": SubResource("AnimationLibrary_flmgh")
 }
 
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 18
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D"]
+polygon = PackedVector2Array(-12, 5, -12, 16, 12, 16, 12, 5, 5, -15, -5, -15)
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CapsuleShape2D_61t28")
+position = Vector2(0, 1)
+shape = SubResource("CapsuleShape2D_ducee")
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
 tree_root = SubResource("AnimationNodeStateMachine_syip4")
@@ -500,6 +532,7 @@ parameters/Walk/blend_position = -0.992874
 position = Vector2(-1.43051e-06, 1)
 scale = Vector2(2.6, 2.3)
 rect = Rect2(-50, -25, 100, 50)
+metadata/_edit_lock_ = true
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("character", "animationTree")]
 script = ExtResource("3_wfv53")
@@ -531,13 +564,13 @@ wallCheckRight = NodePath("../../RayCastRightWall")
 script = ExtResource("7_onamg")
 
 [node name="RayCastLeft" type="RayCast2D" parent="."]
-position = Vector2(0, -7)
+position = Vector2(0, -5)
 enabled = false
 target_position = Vector2(-150, 0)
 collision_mask = 2
 
 [node name="RayCastRight" type="RayCast2D" parent="."]
-position = Vector2(0, -7)
+position = Vector2(0, -5)
 enabled = false
 target_position = Vector2(150, 0)
 collision_mask = 2
@@ -576,6 +609,7 @@ color = Color(1, 0, 0, 1)
 energy = 2.0
 texture = ExtResource("8_gk5mj")
 
+[connection signal="body_entered" from="Area2D" to="." method="BodyEntered" flags=6]
 [connection signal="screen_entered" from="VisibleOnScreen" to="." method="OnScreenEntered"]
 [connection signal="screen_exited" from="VisibleOnScreen" to="." method="OnScreenExited"]
 [connection signal="timeout" from="StateMachine/Walk/Timer" to="StateMachine/Walk" method="OnTimerTimeout"]
