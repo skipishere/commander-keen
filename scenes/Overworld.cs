@@ -9,7 +9,7 @@ public partial class Overworld : Node2D
 		{
 			game_stats.UsedSecretExit = false;
 			var signalManager = GetNode<SignalManager>("/root/SignalManager");
-			var secretTeleporter = GetNode<teleporter>("TeleporterSecret");
+			var secretTeleporter = GetNode<Teleporter>("TeleporterSecret");
 			signalManager.EmitSignal(nameof(SignalManager.TeleportComplete), secretTeleporter.Position, false);
 			secretTeleporter.Animate();
 		}
@@ -20,14 +20,4 @@ public partial class Overworld : Node2D
 	{
 
 	}
-
-	// public void OnArea2dBodyEntered(Node2D body)
-	// {
-	// 	if (body is OverworldKeen)
-	// 	{
-	// 		keenPosition =  body.Position;
-	// 		GetTree().ChangeSceneToFile("res://scenes/ck1lv01.tscn");
-	// 	}
-	// }
-
 }
