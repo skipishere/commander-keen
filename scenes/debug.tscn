@@ -32,7 +32,7 @@ tile_set = ExtResource("1_ptcg5")
 [node name="Hazards" type="TileMapLayer" parent="TileMap" groups=["LevelLayers"]]
 z_index = 1
 use_parent_material = true
-tile_map_data = PackedByteArray("AAAKAP7/AwAAAAAAAQAGAAMAAQAAAAAAAAAAAA0AAQAEAAAAAAAXAAkABgAAAAAAAwAYAAkABgAAAAAABAAZAAkABgAAAAAABAAaAAkABgAAAAAABAAbAAkABgAAAAAABQAdAAoABgAAAAAABgA=")
+tile_map_data = PackedByteArray("AAAKAP7/AwAAAAAAAQAGAAMAAQAAAAAAAAAAAA0AAQAEAAAAAAAXAAkABgAAAAAAAwAYAAkABgAAAAAABAAZAAkABgAAAAAABAAaAAkABgAAAAAABAAbAAkABgAAAAAABQAdAAoABgAAAAAABgAVAP7/AQAEAAAAAAA=")
 tile_set = ExtResource("1_ptcg5")
 navigation_enabled = false
 
