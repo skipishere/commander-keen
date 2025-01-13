@@ -2,10 +2,10 @@ using Godot;
 using System;
 using System.Diagnostics;
 
-public partial class teleporter : Area2D
+public partial class Teleporter : Area2D
 {
 	[Export]
-	public teleporter Target;
+	public Teleporter Target;
 	private AnimatedSprite2D animatedSprite;
 	private AudioStreamPlayer2D audioStreamPlayer;
 	private Timer timer;
