@@ -5,7 +5,7 @@ Things that need to be worked on:
  - [x] Hazards - ~currently Keen can't die~ (added in https://github.com/skipishere/commander-keen/pull/2 and https://github.com/skipishere/commander-keen/pull/4)
  - [ ] Enemies/Creatures
    - [ ] Vorticons
-   - [ ] Gargs
+   - [x] Gargs (https://github.com/skipishere/commander-keen/pull/11)
    - [ ] Tank Robot
    - [ ] Butler robot
    - [ ] Yorp
