@@ -1,6 +1,6 @@
 [gd_scene load_steps=11 format=3 uid="uid://c7m6wb1coorjg"]
 
-[ext_resource type="Script" path="res://scenes/environment/teleporter.cs" id="1_aosxc"]
+[ext_resource type="Script" path="res://scenes/environment/Teleporter.cs" id="1_aosxc"]
 [ext_resource type="Texture2D" uid="uid://cqgyahlpnxrxl" path="res://sprites/mars.png" id="2_iabtc"]
 [ext_resource type="AudioStream" uid="uid://cifxpc3mumaes" path="res://sfx/wave2.wav" id="3_owll0"]
 
