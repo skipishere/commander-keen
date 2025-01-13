@@ -1,7 +1,7 @@
 using Godot;
 using System.Diagnostics;
 
-public partial class keen : CharacterBody2D, ITakeDamage
+public partial class Keen : CharacterBody2D, ITakeDamage
 {
 	public const float Speed = 180.0f;
 		
