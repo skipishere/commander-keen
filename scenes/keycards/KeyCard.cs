@@ -19,7 +19,7 @@ public partial class KeyCard : Area2D
 
 	public void OnBodyEntered(Node2D body)
 	{
-		if (body is keen keen)
+		if (body is Keen keen)
 		{
 			this.SetDeferred("monitoring", false);
 			keen.GiveKey(Card);

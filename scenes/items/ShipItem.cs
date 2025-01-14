@@ -21,7 +21,7 @@ public partial class ShipItem : Area2D
 
 	public void OnBodyEntered(Node2D body)
 	{
-		if (body is keen)
+		if (body is Keen)
 		{
 			this.SetDeferred("monitoring", false);
 			game_stats.Score += Points;

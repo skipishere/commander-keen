@@ -1,0 +1,175 @@
+[gd_scene load_steps=9 format=3 uid="uid://bacl3fbjkgx8e"]
+
+[ext_resource type="Script" path="res://scenes/environment/LevelExit.cs" id="1_51t3q"]
+[ext_resource type="Texture2D" uid="uid://bu88vy4djst64" path="res://sprites/Door.png" id="2_n4jso"]
+[ext_resource type="AudioStream" uid="uid://cyty8pl76d7vp" path="res://sfx/Rise05.ogg" id="3_m42mm"]
+[ext_resource type="Texture2D" uid="uid://bbkmbo2fxi6fu" path="res://sprites/keen.png" id="4_g5lts"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2ulyt"]
+size = Vector2(27, 34)
+
+[sub_resource type="Animation" id="Animation_bdhv0"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Polygon2D/ExitingKeen:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AudioStreamPlayer:playing")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Polygon2D/ExitingKeen:offset")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Polygon2D/ExitingKeen:frame")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+
+[sub_resource type="Animation" id="Animation_m03n0"]
+resource_name = "exiting"
+length = 3.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Polygon2D/ExitingKeen:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AudioStreamPlayer:playing")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Polygon2D/ExitingKeen:offset")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-5, 0), Vector2(30, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Polygon2D/ExitingKeen:frame")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [2, 1, 2, 1, 0]
+}
+tracks/4/type = "method"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(1, 3.2),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"ExitStart"
+}, {
+"args": [],
+"method": &"ExitFinished"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ooaop"]
+_data = {
+"RESET": SubResource("Animation_bdhv0"),
+"exiting": SubResource("Animation_m03n0")
+}
+
+[node name="LevelExit" type="Area2D"]
+z_index = -1
+position = Vector2(-13, -3)
+collision_mask = 2
+script = ExtResource("1_51t3q")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(8, -8)
+texture = ExtResource("2_n4jso")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(7.5, -5)
+shape = SubResource("RectangleShape2D_2ulyt")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_m42mm")
+pitch_scale = 0.85
+bus = &"Music"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_ooaop")
+}
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+clip_children = 1
+color = Color(1, 0, 0, 1)
+polygon = PackedVector2Array(-11, 12, -11, -21, 21, -21, 21, 12)
+
+[node name="ExitingKeen" type="Sprite2D" parent="Polygon2D"]
+visible = false
+position = Vector2(-1, 0)
+texture = ExtResource("4_g5lts")
+hframes = 3
+frame = 1
+region_enabled = true
+region_rect = Rect2(17, 1, 51, 24)
+
+[connection signal="body_entered" from="." to="." method="OnBodyEntered"]

@@ -1,21 +1,19 @@
 using Godot;
 
-public abstract partial class State : Node, IState<StateMachine.KeenStates>
+public abstract partial class GargBaseState : Node, IState<GargStateMachine.GargStates>
 {
-    public const float Speed = 180.0f;
-
     public CharacterBody2D Character { get; set; }
 
     public AnimationTree AnimationTree { get; set; }
 
-    public abstract StateMachine.KeenStates StateType { get; }
+    public abstract GargStateMachine.GargStates StateType { get; }
 
     public virtual bool CanMove => true;
-    public StateMachine.KeenStates? NextState { get; set; }
+    public GargStateMachine.GargStates? NextState { get; set; }
 
     internal AnimationNodeStateMachinePlayback playback { get => (AnimationNodeStateMachinePlayback)AnimationTree.Get("parameters/playback"); }
 
-    internal float gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
+    internal float gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle() / 2;
 
     public virtual void StateInput(InputEvent inputEvent)
     {
@@ -31,5 +29,4 @@ public abstract partial class State : Node, IState<StateMachine.KeenStates>
     {
         NextState = null;
     }
-
 }

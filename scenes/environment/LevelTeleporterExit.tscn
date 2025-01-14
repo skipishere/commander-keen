@@ -1,0 +1,67 @@
+[gd_scene load_steps=10 format=3 uid="uid://doxlbjo63iuvi"]
+
+[ext_resource type="Script" path="res://scenes/environment/LevelTeleporterExit.cs" id="1_24ir7"]
+[ext_resource type="Texture2D" uid="uid://v1qqiswiyr87" path="res://sprites/level-transporter.png" id="2_3mufu"]
+[ext_resource type="AudioStream" uid="uid://cifxpc3mumaes" path="res://sfx/wave2.wav" id="3_55wdo"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_os2dc"]
+atlas = ExtResource("2_3mufu")
+region = Rect2(0, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4nk0a"]
+atlas = ExtResource("2_3mufu")
+region = Rect2(16, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gss1b"]
+atlas = ExtResource("2_3mufu")
+region = Rect2(32, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dvvo3"]
+atlas = ExtResource("2_3mufu")
+region = Rect2(48, 0, 16, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_w7uec"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_os2dc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4nk0a")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gss1b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dvvo3")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2ulyt"]
+size = Vector2(16, 33)
+
+[node name="LevelExit" type="Area2D"]
+z_index = -1
+position = Vector2(-13, 5)
+collision_mask = 2
+script = ExtResource("1_24ir7")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(13, -13)
+sprite_frames = SubResource("SpriteFrames_w7uec")
+autoplay = "default"
+frame_progress = 0.481277
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(13, -13)
+shape = SubResource("RectangleShape2D_2ulyt")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_55wdo")
+pitch_scale = 1.25
+bus = &"Sound Effects"
+
+[connection signal="body_entered" from="." to="." method="OnBodyEntered"]

@@ -31,7 +31,7 @@ public partial class GroundState : State
 		AnimationTree.Set("parameters/Idle/blend_position", lastMovementX);
 		AnimationTree.Set("parameters/Walk/blend_position", lastMovementX);
 
-		if (Input.IsActionJustPressed("move_jump") || !player.IsOnFloor())
+		if (Input.IsActionJustPressed("move_jump") || !Character.IsOnFloor())
 		{
 			NextState = StateMachine.KeenStates.Air;
 			return;
@@ -47,7 +47,7 @@ public partial class GroundState : State
 		 	if (groundType != GroundType.Ice)
 		 	{
 				var toSpeed = movement * Speed;
-				player.Velocity = player.Velocity with { X = Mathf.MoveToward(player.Velocity.X, toSpeed, Speed)};
+				Character.Velocity = Character.Velocity with { X = Mathf.MoveToward(Character.Velocity.X, toSpeed, Speed)};
 			}
 		}
 		else
@@ -63,24 +63,24 @@ public partial class GroundState : State
 				if (movement == 0)
 				{
 					// With no player input, the player will slow down to 1/2 max speed or slower.
-					toSpeed = Mathf.Clamp(player.Velocity.X, -Speed / 2, Speed / 2);
+					toSpeed = Mathf.Clamp(Character.Velocity.X, -Speed / 2, Speed / 2);
 				}
 				else
 				{
 					// this is a bit more interesting, changing direction can additively slow the player down to 0.
-					toSpeed = Mathf.Clamp(player.Velocity.X + (movement * Speed * 0.05f), -Speed, Speed);
+					toSpeed = Mathf.Clamp(Character.Velocity.X + (movement * Speed * 0.05f), -Speed, Speed);
 				}
 			}
 			
-			player.Velocity = player.Velocity with { X = Mathf.MoveToward(player.Velocity.X, toSpeed, Speed)};
+			Character.Velocity = Character.Velocity with { X = Mathf.MoveToward(Character.Velocity.X, toSpeed, Speed)};
 		}
 
-		if (player.Velocity.X != 0 && wasIdle)
+		if (Character.Velocity.X != 0 && wasIdle)
 		{
 			playback.Travel("Walk");
 			wasIdle = false;
 		}
-		else if ((player.Velocity.X == 0 && !wasIdle) || groundType == GroundType.Ice)
+		else if ((Character.Velocity.X == 0 && !wasIdle) || groundType == GroundType.Ice)
 		{
 			playback.Travel("Idle");
 			wasIdle = true;
@@ -101,28 +101,25 @@ public partial class GroundState : State
             return GroundType.Normal;
         }
 
-        //if (collider is TileMapLayer tileMapLayer)
-        //{
         var local_col_point = tileMapLayer.ToLocal(rayCast.GetCollisionPoint());
-			var cell_coords = tileMapLayer.LocalToMap(local_col_point);
+		var cell_coords = tileMapLayer.LocalToMap(local_col_point);	
+		var cellData = tileMapLayer.GetCellTileData(cell_coords);
 		
-			var cellData = tileMapLayer.GetCellTileData(cell_coords);
-			try
+		try
+		{
+			// We sometimes get null on the line below, possibly due to tilemaplayer issues the camera has had to deal with?
+			var slide = cellData.GetCustomData("Slide");
+			return slide.ToString() switch
 			{
-				// We sometimes get null on the line below, possibly due to tilemaplayer issues the camera has had to deal with?
-				var slide = cellData.GetCustomData("Slide");
-				return slide.ToString() switch
-				{
-					"1" => GroundType.Slippery,
-					"2" => GroundType.Ice,
-					_ => GroundType.Normal
-				};
-			}
-			catch (Exception e)
-			{
-				Debug.WriteLine($"Error: {e.Message}");
-				return GroundType.Normal;
-			}
-		//}
+				"1" => GroundType.Slippery,
+				"2" => GroundType.Ice,
+				_ => GroundType.Normal
+			};
+		}
+		catch (Exception e)
+		{
+			Debug.WriteLine($"Error: {e.Message}");
+			return GroundType.Normal;
+		}
 	}
 }

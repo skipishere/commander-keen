@@ -17,7 +17,7 @@ public partial class DeathZone : Area2D
 
 	public void OnDeathZoneBodyEntered(Node2D body)
 	{
-		if (body is keen)
+		if (body is Keen)
 		{
 			signalManager.EmitSignal(nameof(SignalManager.KeenDead));
 		}

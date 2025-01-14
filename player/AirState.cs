@@ -12,12 +12,12 @@ public partial class AirState : State
 
 	public override void PhysicsProcess(double delta, float lastMovementX)
 	{
-		if (Input.IsActionJustReleased("move_jump") && player.Velocity.Y < 0)
+		if (Input.IsActionJustReleased("move_jump") && Character.Velocity.Y < 0)
 		{
-			player.Velocity = player.Velocity with { Y = 0 };
+			Character.Velocity = Character.Velocity with { Y = 0 };
 		}
 
-		if (player.IsOnFloor())
+		if (Character.IsOnFloor())
 		{
 			NextState = StateMachine.KeenStates.Ground;
 			return;
@@ -27,22 +27,22 @@ public partial class AirState : State
 		AnimationTree.Set("parameters/Jump/blend_position", lastMovementX);
 		
 		var movement = Input.GetAxis("move_left", "move_right");
-		player.Velocity = new Vector2(
+		Character.Velocity = new Vector2(
 			movement * Speed,
-			player.Velocity.Y + gravity * (float)delta);
+			Character.Velocity.Y + gravity * (float)delta);
 	}
 
 	public override void Enter()
 	{
-		if (Input.IsActionPressed("move_jump") && player.IsOnFloor())
+		if (Input.IsActionPressed("move_jump") && Character.IsOnFloor())
 		{
 			playback.Travel("Jump");
-			player.Velocity = player.Velocity with { Y = JumpVelocity };
+			Character.Velocity = Character.Velocity with { Y = JumpVelocity };
 		}
 		else
 		{
 			playback.Travel("Fall");
-			player.Velocity = player.Velocity with { Y = 40 };
+			Character.Velocity = Character.Velocity with { Y = 40 };
 		}
 	}
 }

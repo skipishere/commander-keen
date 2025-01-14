@@ -23,7 +23,7 @@ public partial class ItemBase : Area2D
 
 	public void OnBodyEntered(Node2D body)
 	{
-		if (body is keen)
+		if (body is Keen)
 		{
 			label.Visible = true;
 			this.SetDeferred("monitoring", false);

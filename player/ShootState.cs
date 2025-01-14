@@ -20,23 +20,23 @@ public partial class ShootState : State
 			{
 				game_stats.Charges--;
 				var raygunInstance = raygun.Instantiate() as raygunShot;
-				raygunInstance.SetDirection(player.GlobalPosition, new Vector2(lastMovementX, 0), new Vector2(lastMovementX * 16, 0), player);
+				raygunInstance.SetDirection(Character.GlobalPosition, new Vector2(lastMovementX, 0), new Vector2(lastMovementX * 16, 0), Character);
 				GetTree().Root.AddChild(raygunInstance);
 				hasFired = true;
 			}
 
 		var stopSpeed = Speed;
-		if (!player.IsOnFloor())
+		if (!Character.IsOnFloor())
 		{
-			player.Velocity = player.Velocity with { Y = player.Velocity.Y + gravity * (float)delta };
+			Character.Velocity = Character.Velocity with { Y = Character.Velocity.Y + gravity * (float)delta };
 		 	stopSpeed = Speed / 30;
 		}
 
-		player.Velocity = player.Velocity with { X = Mathf.MoveToward(player.Velocity.X, 0, stopSpeed) };
+		Character.Velocity = Character.Velocity with { X = Mathf.MoveToward(Character.Velocity.X, 0, stopSpeed) };
 		
 		if (Input.IsActionJustReleased("move_shoot"))
 		{
-			if (player.IsOnFloor())
+			if (Character.IsOnFloor())
 			{
 				NextState = StateMachine.KeenStates.Ground;
 			}

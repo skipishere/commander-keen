@@ -2,11 +2,11 @@
 
 [ext_resource type="Script" path="res://scenes/Overworld.cs" id="1_8i8x4"]
 [ext_resource type="Texture2D" uid="uid://cqgyahlpnxrxl" path="res://sprites/mars.png" id="2_mu3it"]
-[ext_resource type="PackedScene" uid="uid://c7m6wb1coorjg" path="res://player/teleporter.tscn" id="3_wfa7x"]
+[ext_resource type="PackedScene" uid="uid://c7m6wb1coorjg" path="res://scenes/environment/teleporter.tscn" id="3_wfa7x"]
 [ext_resource type="AudioStream" uid="uid://ru73lgw8vtph" path="res://music/Reverse-Time-Loop-isaiah658.ogg" id="4_j3uft"]
-[ext_resource type="PackedScene" uid="uid://c7pqcg8qktvrv" path="res://scenes/LevelPortal.tscn" id="5_bn3ky"]
+[ext_resource type="PackedScene" uid="uid://c7pqcg8qktvrv" path="res://scenes/overworld/LevelPortal.tscn" id="5_bn3ky"]
 [ext_resource type="PackedScene" uid="uid://bn8vq8xewxhfp" path="res://scenes/debug.tscn" id="6_p564h"]
-[ext_resource type="PackedScene" uid="uid://bq6nvssx3qu3q" path="res://scenes/LevelPortalBlocking.tscn" id="7_lvyhx"]
+[ext_resource type="PackedScene" uid="uid://bq6nvssx3qu3q" path="res://scenes/overworld/LevelPortalBlocking.tscn" id="7_lvyhx"]
 [ext_resource type="PackedScene" uid="uid://bq77lad6b0om7" path="res://scenes/levels/ck1lv01.tscn" id="8_s8f3l"]
 [ext_resource type="PackedScene" uid="uid://v4cjtldpjka" path="res://scenes/levels/ck1lv02.tscn" id="9_f3obd"]
 [ext_resource type="PackedScene" uid="uid://declpwg68bt56" path="res://scenes/levels/ck1lv03.tscn" id="10_w0bhv"]
@@ -23,7 +23,7 @@
 [ext_resource type="PackedScene" uid="uid://d3mtvkri0xg7k" path="res://scenes/levels/ck1lv14.tscn" id="21_pg7cg"]
 [ext_resource type="PackedScene" uid="uid://cdeop7s030h42" path="res://scenes/levels/ck1lv15.tscn" id="22_gjmjx"]
 [ext_resource type="PackedScene" uid="uid://7prtjrk6vid2" path="res://scenes/levels/ck1lv16.tscn" id="23_tithn"]
-[ext_resource type="PackedScene" uid="uid://b0du0mvfg8ov3" path="res://player/keen-map.tscn" id="24_h1e8j"]
+[ext_resource type="PackedScene" uid="uid://b0du0mvfg8ov3" path="res://scenes/overworld/keen-map.tscn" id="24_h1e8j"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_txjfx"]
 texture = ExtResource("2_mu3it")
