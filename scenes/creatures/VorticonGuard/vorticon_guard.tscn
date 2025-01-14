@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://cnjvd8vb035y8" path="res://sprites/vorticon guard.png" id="1_6l41r"]
 [ext_resource type="Script" path="res://scenes/creatures/VorticonGuard/vorticon_guard.cs" id="1_c61b3"]
-[ext_resource type="Shader" path="res://player/flash.gdshader" id="2_4vb4o"]
+[ext_resource type="Shader" path="res://shaders/flash.gdshader" id="2_4vb4o"]
 [ext_resource type="AudioStream" uid="uid://cypixfvrm0b4t" path="res://music/2012_november_fakeAwake04 back to A minor.ogg" id="2_16nxu"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_llcbj"]
