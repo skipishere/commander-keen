@@ -4,7 +4,7 @@ public abstract partial class State : Node, IState<StateMachine.KeenStates>
 {
     public const float Speed = 180.0f;
 
-    public CharacterBody2D player { get; set; }
+    public CharacterBody2D Character { get; set; }
 
     public AnimationTree AnimationTree { get; set; }
 

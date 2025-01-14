@@ -1,5 +1,4 @@
 using Godot;
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -35,7 +34,7 @@ public partial class StateMachine : Node
 	{
 		foreach (State state in GetChildren().OfType<State>())
 		{
-			state.player = character;
+			state.Character = character;
 			state.AnimationTree = animationTree;
 			states.Add(state.StateType, state);
 			Debug.Print("Added state: " + state.StateType);

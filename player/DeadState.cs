@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using Godot;
 
 public partial class DeadState : State
@@ -18,13 +17,13 @@ public partial class DeadState : State
 
     public override void PhysicsProcess(double delta, float lastMovementX)
 	{
-		player.Velocity = Vector2.Zero;
+		Character.Velocity = Vector2.Zero;
 	}
 
 	public override void Enter()
 	{
 		var deadInstance = deadKeen.Instantiate() as DeadKeen;
-		deadInstance.Position = new Vector2(player.Position.X, player.Position.Y + 4);
+		deadInstance.Position = new Vector2(Character.Position.X, Character.Position.Y + 4);
 		playback.Travel("Hidden");
 		
 		GetTree().Root.AddChild(deadInstance);

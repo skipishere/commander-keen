@@ -12,7 +12,7 @@ public partial class HiddenState : State
 
     public override void PhysicsProcess(double delta, float lastMovementX)
 	{
-		player.Velocity = Vector2.Zero;
+		Character.Velocity = Vector2.Zero;
 	}
 
 	public override void Enter()
