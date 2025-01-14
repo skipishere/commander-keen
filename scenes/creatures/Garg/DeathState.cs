@@ -1,5 +1,3 @@
-using System;
-using System.Diagnostics;
 using Godot;
 
 public partial class DeathState : GargBaseState
@@ -14,12 +12,14 @@ public partial class DeathState : GargBaseState
 
     public override void PhysicsProcess(double delta, float lastMovementX)
 	{
+		Character.Velocity = new Vector2 (0, Character.Velocity.Y + gravity * (float)delta);
 	}
 
 	public override void Enter()
 	{
 		playback.Travel("Die");
-		player.Velocity = Vector2.Zero;
+		// Garg has a slight jump when killed.
+		Character.Velocity = new Vector2 (0, -75);
 	}
 
 }

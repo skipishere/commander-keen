@@ -38,7 +38,7 @@ public partial class ThinkingState : GargBaseState
 	public override void Enter()
 	{
 		playback.Travel("Thinking");
-		player.Velocity = Vector2.Zero;
+		Character.Velocity = Vector2.Zero;
 	}
 
 	private bool CanSeeKeen()

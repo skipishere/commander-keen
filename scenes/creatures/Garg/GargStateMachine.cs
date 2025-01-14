@@ -30,7 +30,7 @@ public partial class GargStateMachine : Node
 	{
 		foreach (GargBaseState state in GetChildren().OfType<GargBaseState>())
 		{
-			state.player = character;
+			state.Character = character;
 			state.AnimationTree = animationTree;
 			states.Add(state.StateType, state);
 			Debug.Print("Garg Added state: " + state.StateType);

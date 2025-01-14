@@ -30,7 +30,7 @@ public partial class WalkState : GargBaseState
 
     public override void PhysicsProcess(double delta, float lastMovementX)
 	{
-		if (player.IsOnFloor())
+		if (Character.IsOnFloor())
 		{
 			if (wallCheckLeft.IsColliding())
 			{
@@ -43,11 +43,11 @@ public partial class WalkState : GargBaseState
 		}
 		else
 		{
-			lastMovementX = player.Velocity.X > 0 ? Vector2.Right.X : Vector2.Left.X;
+			lastMovementX = Character.Velocity.X > 0 ? Vector2.Right.X : Vector2.Left.X;
 		}
 
 		AnimationTree.Set("parameters/Walk/blend_position", lastMovementX);
-		player.Velocity = new Vector2(lastMovementX * Speed, player.Velocity.Y + gravity * (float)delta);
+		Character.Velocity = new Vector2(lastMovementX * Speed, Character.Velocity.Y + gravity * (float)delta);
 	}
 
 	public override void Enter()
@@ -61,8 +61,8 @@ public partial class WalkState : GargBaseState
 
 		// Look up Keen direction
 		var keen = GetTree().GetNodesInGroup("Player")[0] as Keen;
-		var direction = keen.GlobalPosition.X < player.GlobalPosition.X ? Vector2.Left.X : Vector2.Right.X;
+		var direction = keen.GlobalPosition.X < Character.GlobalPosition.X ? Vector2.Left.X : Vector2.Right.X;
 		AnimationTree.Set("parameters/Walk/blend_position", direction);
-		player.Velocity = player.Velocity with { X = direction };
+		Character.Velocity = Character.Velocity with { X = direction };
 	}
 }

@@ -25,9 +25,9 @@ public partial class AgroState : GargBaseState
 
     public override void PhysicsProcess(double delta, float lastMovementX)
     {
-        player.Velocity = player.Velocity with { X = direction * Speed };
+        Character.Velocity = Character.Velocity with { X = direction * Speed };
         
-        if (player.IsOnFloor())
+        if (Character.IsOnFloor())
         {
             if ((wallCheckLeft.IsColliding() && direction == Vector2.Left.X)
                 || (wallCheckRight.IsColliding() && direction == Vector2.Right.X))
@@ -41,11 +41,11 @@ public partial class AgroState : GargBaseState
         {
             if (hasjumped)
             {
-                player.Velocity = player.Velocity with { Y = player.Velocity.Y + gravity * (float)delta };
+                Character.Velocity = Character.Velocity with { Y = Character.Velocity.Y + gravity * (float)delta };
             }
             else
             {
-                player.Velocity = player.Velocity with { Y = JumpVelocity };
+                Character.Velocity = Character.Velocity with { Y = JumpVelocity };
                 hasjumped = true;
             }
         }
@@ -57,7 +57,7 @@ public partial class AgroState : GargBaseState
         hasjumped = false;
 
         var keen = GetTree().GetNodesInGroup("Player")[0] as Keen;
-		direction = keen.GlobalPosition.X < player.GlobalPosition.X ? Vector2.Left.X : Vector2.Right.X;
+		direction = keen.GlobalPosition.X < Character.GlobalPosition.X ? Vector2.Left.X : Vector2.Right.X;
 		AnimationTree.Set("parameters/Walk/blend_position", direction);
     }
 }

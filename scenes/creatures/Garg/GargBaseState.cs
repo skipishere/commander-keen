@@ -2,7 +2,7 @@ using Godot;
 
 public abstract partial class GargBaseState : Node, IState<GargStateMachine.GargStates>
 {
-    public CharacterBody2D player { get; set; }
+    public CharacterBody2D Character { get; set; }
 
     public AnimationTree AnimationTree { get; set; }
 
