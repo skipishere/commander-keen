@@ -3,7 +3,6 @@ using Godot;
 
 public partial class LevelPortal : Area2D
 {
-
 	[Export]
 	public PackedScene Target;
 
@@ -51,7 +50,6 @@ public partial class LevelPortal : Area2D
 	{
 		if (body is OverworldKeen)
 		{
-			Debug.Print("Level Portal exited");
 			inRange = false;
 		}
 	}

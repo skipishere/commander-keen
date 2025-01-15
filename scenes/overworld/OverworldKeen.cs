@@ -3,6 +3,11 @@ using Godot;
 
 public partial class OverworldKeen : CharacterBody2D
 {
+	[Export]
+	public AnimationTree AnimationTree;
+
+	private Vector2 lastDirection = new(0, 1);
+
 	private bool GodModeEnabled = false;
 	private bool ignoreKeys = false;
 	
@@ -13,15 +18,12 @@ public partial class OverworldKeen : CharacterBody2D
 	private Camera2D camera;
 	private int width;
 	private int height;
-	private bool isTeleporting = false;
+	public bool IsTeleporting = false;
 
 	private SignalManager signalManager;
 
-	private AnimatedSprite2D animatedSprite;
-
 	public override void _Ready()
 	{
-	 	animatedSprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
 		camera = GetNode<Camera2D>("Camera2D");
 		
 		var collisionShape = GetNode<CollisionShape2D>("CollisionShape2D").Shape.GetRect().Size;
@@ -41,7 +43,7 @@ public partial class OverworldKeen : CharacterBody2D
 		}
 	}
 
-	public void _on_animated_sprite_2d_tree_exited()
+	public void Remove()
 	{
 		signalManager.TeleportStart -= OnTeleportStart;
 		signalManager.TeleportComplete -= OnTeleportComplete;
@@ -50,25 +52,18 @@ public partial class OverworldKeen : CharacterBody2D
 
 	private void OnTeleportStart()
 	{
-		// TODO State machine
-		this.Visible = false;
-		this.isTeleporting = true;
+		this.IsTeleporting = true;
 	}
 
 	private void OnTeleportComplete(Vector2 position, bool finished)
 	{
-		// TODO State machine
-		animatedSprite.Play("down");
-		animatedSprite.Frame = 0;
 		this.Position = position;
-		
-		this.Visible = finished;
-		this.isTeleporting = !finished;
+		this.IsTeleporting = !finished;
+		SetPhysicsProcess(finished);
 	}
 
 	private void OnEnteringLevel(string levelResource)
 	{
-		Debug.Print($"Coords x {Position.X} y {Position.Y}");
 		mapPosition = Position;
 	}
 
@@ -90,73 +85,22 @@ public partial class OverworldKeen : CharacterBody2D
 		{
 			ignoreKeys = false;
 		}
-
-		if (isTeleporting)
-		{
-			return;
-		}
-
-		Vector2 velocity = Velocity;
-
-		Vector2 direction = Input.GetVector("move_left", "move_right", "map_up", "map_down");
+		
+		var direction = Input.GetVector("move_left", "move_right", "map_up", "map_down");
 		if (direction != Vector2.Zero)
 		{
-			velocity.X = direction.X * Speed;
-			velocity.Y = direction.Y * Speed;
-
-			// TODO fix animation when direction is changed while moving
-			// Add state machine.
-			string animationToPlay = string.Empty;
-			
-			if (direction.Y > 0)
-			{
-				animationToPlay = "down";
-			}
-			else if (direction.Y < 0)
-			{
-				animationToPlay = "up";
-			}
-			else if (direction.X > 0)
-			{
-				animationToPlay = "right";
-			}
-			else if (direction.X < 0)
-			{
-				animationToPlay = "left";
-			}
-
-			if (!animatedSprite.IsPlaying())
-			{
-				animatedSprite.Frame = 1;
-			}
-
-			if ((!string.IsNullOrEmpty(animationToPlay) 
-			&& animatedSprite.Animation.ToString() != animationToPlay)
-			|| !animatedSprite.IsPlaying())
-			{
-				animatedSprite.Play(animationToPlay);
-			}
+			lastDirection = direction.Normalized();
 		}
-		else
-		{
-			velocity = velocity with 
-			{
-				 X = Mathf.MoveToward(Velocity.X, 0, Speed),
-				 Y = Mathf.MoveToward(Velocity.Y, 0, Speed)
-			};
-		}
-		
-		if (direction == Vector2.Zero)
-		{
-			animatedSprite.Stop();
-		}
-		
-		Velocity = velocity;
+
+		Velocity = new Vector2(direction.X * Speed, direction.Y * Speed);
+		AnimationTree.Set("parameters/Walk/blend_position", lastDirection);
+		AnimationTree.Set("parameters/Idle/blend_position", lastDirection);
+
 		MoveAndSlide();
 
 		// Clamp the player position to the camera limits.
-		var xLimit = Mathf.Clamp(this.GlobalPosition.X, camera.LimitLeft+width, camera.LimitRight-width);
-		var yLimit = Mathf.Clamp(this.GlobalPosition.Y, camera.LimitTop, camera.LimitBottom-height);
+		var xLimit = Mathf.Clamp(this.GlobalPosition.X, camera.LimitLeft + width, camera.LimitRight - width);
+		var yLimit = Mathf.Clamp(this.GlobalPosition.Y, camera.LimitTop, camera.LimitBottom - height);
 		
 		this.GlobalPosition = this.GlobalPosition with { X = xLimit, Y = yLimit};
 	}

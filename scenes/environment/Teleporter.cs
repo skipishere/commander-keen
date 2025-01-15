@@ -1,6 +1,4 @@
 using Godot;
-using System;
-using System.Diagnostics;
 
 public partial class Teleporter : Area2D
 {
@@ -13,7 +11,6 @@ public partial class Teleporter : Area2D
 	private bool isTeleporting = false;
 	private SignalManager signalManager;
 	
-	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		animatedSprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
@@ -22,10 +19,11 @@ public partial class Teleporter : Area2D
 		signalManager = GetNode<SignalManager>("/root/SignalManager");
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-		if (inRange && Input.IsActionJustPressed("move_jump") && !isTeleporting)
+		if (inRange 
+			&& Input.IsActionJustPressed("move_jump")
+			&& timer.IsStopped())
 		{
 			isTeleporting = true;
 			Animate();
@@ -47,8 +45,8 @@ public partial class Teleporter : Area2D
 		if (isTeleporting)
 		{
 			Target.Animate();
-			isTeleporting = false;
 			signalManager.EmitSignal(nameof(SignalManager.TeleportComplete), Target.Position, false);
+			isTeleporting = false;
 		}
 		else
 		{
