@@ -517,7 +517,7 @@ collision_layer = 0
 collision_mask = 18
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D"]
-polygon = PackedVector2Array(-12, 5, -12, 16, 12, 16, 12, 5, 5, -15, -5, -15)
+polygon = PackedVector2Array(-12, 5, -12, 16, 12, 16, 12, 5, 5, -13, -5, -13)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 1)
