@@ -1,12 +1,19 @@
-[gd_scene load_steps=4 format=4 uid="uid://s8g3ow2cg7re"]
+[gd_scene load_steps=6 format=4 uid="uid://s8g3ow2cg7re"]
 
 [ext_resource type="TileSet" uid="uid://w7k5amqxc3ac" path="res://scenes/tile_platform.tres" id="1_2bvxc"]
 [ext_resource type="Script" path="res://scenes/levels/Ck1Title.cs" id="1_fv4rj"]
 [ext_resource type="Texture2D" uid="uid://7ma0jb8jrsnk" path="res://backgrounds/title-episode1.png" id="2_2jvqq"]
+[ext_resource type="Texture2D" uid="uid://o53lb5qe7dyc" path="res://backgrounds/stars.png" id="2_hmspx"]
+[ext_resource type="AudioStream" uid="uid://cypixfvrm0b4t" path="res://music/2012_november_fakeAwake04 back to A minor.ogg" id="4_grlq8"]
 
 [node name="Ck1-title" type="Node2D"]
 position = Vector2(0, 8)
 script = ExtResource("1_fv4rj")
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+position = Vector2(160, 91)
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("2_hmspx")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 position = Vector2(0, 6)
@@ -52,6 +59,12 @@ text = "Continue"
 layout_mode = 2
 theme_override_font_sizes/font_size = 8
 text = "Quit"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_grlq8")
+volume_db = -6.0
+autoplay = true
+bus = &"Music"
 
 [connection signal="pressed" from="CanvasLayer/PanelContainer/VBoxContainer/New" to="." method="NewGame"]
 [connection signal="pressed" from="CanvasLayer/PanelContainer/VBoxContainer/Quit" to="." method="QuitGame"]
