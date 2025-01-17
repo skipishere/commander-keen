@@ -4,11 +4,12 @@
 [ext_resource type="Script" path="res://scenes/levels/Ck1Title.cs" id="1_fv4rj"]
 [ext_resource type="Texture2D" uid="uid://7ma0jb8jrsnk" path="res://backgrounds/title-episode1.png" id="2_2jvqq"]
 [ext_resource type="Texture2D" uid="uid://o53lb5qe7dyc" path="res://backgrounds/stars.png" id="2_hmspx"]
-[ext_resource type="AudioStream" uid="uid://cypixfvrm0b4t" path="res://music/2012_november_fakeAwake04 back to A minor.ogg" id="4_grlq8"]
+[ext_resource type="AudioStream" uid="uid://bs5cx54rxsfv7" path="res://music/Blazing-Stars_Looping.mp3" id="5_vgkha"]
 
-[node name="Ck1-title" type="Node2D"]
+[node name="Ck1-title" type="Node2D" node_paths=PackedStringArray("DefaultButton")]
 position = Vector2(0, 8)
 script = ExtResource("1_fv4rj")
+DefaultButton = NodePath("CanvasLayer/PanelContainer/VBoxContainer/New")
 
 [node name="Sprite2D2" type="Sprite2D" parent="."]
 position = Vector2(160, 91)
@@ -47,6 +48,7 @@ layout_mode = 2
 
 [node name="New" type="Button" parent="CanvasLayer/PanelContainer/VBoxContainer"]
 layout_mode = 2
+focus_neighbor_top = NodePath("../Quit")
 theme_override_font_sizes/font_size = 8
 text = "New Game"
 
@@ -57,11 +59,12 @@ text = "Continue"
 
 [node name="Quit" type="Button" parent="CanvasLayer/PanelContainer/VBoxContainer"]
 layout_mode = 2
+focus_neighbor_bottom = NodePath("../New")
 theme_override_font_sizes/font_size = 8
 text = "Quit"
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("4_grlq8")
+stream = ExtResource("5_vgkha")
 volume_db = -6.0
 autoplay = true
 bus = &"Music"

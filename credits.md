@@ -10,6 +10,7 @@
 - 2012_november_fakeAwake04 back to A minor.wav - https://opengameart.org/content/hyperflight-racing
 - beauty_of_chaos.ogg - https://opengameart.org/content/beauty-of-chaos
 - 019_seven_and_eight_7-8_combined.mp3 - https://opengameart.org/content/icy-realm-seven-and-eight
+- BLAZING STARS - https://soundimage.org/sci-fi/
     
 # Sound Effects:
 - Rise01.aif - https://opengameart.org/content/level-up-power-up-coin-get-13-sounds
