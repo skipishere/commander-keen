@@ -43,8 +43,7 @@ public partial class Yorp : CharacterBody2D, ITakeDamage
 		visibleOnScreen = GetNode<VisibleOnScreenNotifier2D>("VisibleOnScreen");
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
+	public override void _PhysicsProcess(double delta)
 	{
 		if (!visibleOnScreen.IsOnScreen())
 		{
@@ -91,9 +90,10 @@ public partial class Yorp : CharacterBody2D, ITakeDamage
 				// 	animationPlayer.Play("dazed");
 				// 	break;
 
-				// case YorpState.Dying:
-				// 	animationPlayer.Play("die");
-				// 	break;
+				 case YorpState.Dying:
+				 	animationPlayer.Play("die");
+
+				 	break;
 			}
 		}
 
@@ -123,6 +123,7 @@ public partial class Yorp : CharacterBody2D, ITakeDamage
     {
 		Health--;
         //animationPlayer.Play("die");
+		knockedOutTimer.Stop();
 		UpdateState(YorpState.Dying);
     }
 

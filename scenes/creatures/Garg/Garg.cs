@@ -30,10 +30,7 @@ public partial class Garg : CharacterBody2D, ITakeDamage
 		
 		stateMachine.PhysicsProcess(delta, lastMovementX, isActivated);
 		
-		if (MoveAndSlide())
-		{
-			HandleCollision();
-		}
+		MoveAndSlide();
 	}
 	
 	public override void _Process(double delta)
@@ -45,20 +42,6 @@ public partial class Garg : CharacterBody2D, ITakeDamage
 		if (body is Keen)
 		{
 			signalManager.EmitSignal(nameof(SignalManager.KeenDead));
-		}
-	}
-
-	private void HandleCollision()
-	{
-		for (int i = 0; i < GetSlideCollisionCount(); i++)
-		{
-			var collision = GetSlideCollision(i);
-			var collider = collision.GetCollider();
-						
-			if (collider is Keen)
-			{
-				signalManager.EmitSignal(nameof(SignalManager.KeenDead));
-			}
 		}
 	}
 
