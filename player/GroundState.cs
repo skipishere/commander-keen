@@ -75,15 +75,16 @@ public partial class GroundState : State
 			Character.Velocity = Character.Velocity with { X = Mathf.MoveToward(Character.Velocity.X, toSpeed, Speed)};
 		}
 
-		if (Character.Velocity.X != 0 && wasIdle)
-		{
-			playback.Travel("Walk");
-			wasIdle = false;
-		}
-		else if ((Character.Velocity.X == 0 && !wasIdle) || groundType == GroundType.Ice)
+		
+		if ((Character.Velocity.X == 0 && !wasIdle) || groundType == GroundType.Ice)
 		{
 			playback.Travel("Idle");
 			wasIdle = true;
+		}
+		else if (Character.Velocity.X != 0 && wasIdle)
+		{
+			playback.Travel("Walk");
+			wasIdle = false;
 		}
 	}
 
