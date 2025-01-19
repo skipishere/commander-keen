@@ -11,12 +11,6 @@ public partial class AgroState : GargBaseState
 
     private bool hasjumped = false;
     
-    [Export]
-    public RayCast2D wallCheckLeft;
-
-    [Export]
-    public RayCast2D wallCheckRight;
-
     public override GargStateMachine.GargStates StateType => GargStateMachine.GargStates.Agro;
 
 	public override void _Process(double delta)
@@ -29,8 +23,7 @@ public partial class AgroState : GargBaseState
         
         if (Character.IsOnFloor())
         {
-            if ((wallCheckLeft.IsColliding() && direction == Vector2.Left.X)
-                || (wallCheckRight.IsColliding() && direction == Vector2.Right.X))
+            if (Character.IsOnWall())
             {
                 NextState = GargStateMachine.GargStates.Walk;
             }
