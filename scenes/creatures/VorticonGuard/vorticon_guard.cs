@@ -93,7 +93,7 @@ public partial class vorticon_guard : CharacterBody2D, ITakeDamage
 		{
 			Debug.WriteLine("Vorticon Guard defeated!");
 			animation.Play("die");
-			this.SetCollisionLayerValue(4, false);
+			this.SetCollisionLayerValue(7, false);
 			this.SetCollisionMaskValue(2, false);
 		}
 	}

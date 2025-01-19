@@ -193,7 +193,6 @@ rect = Rect2(-40, -40, 80, 80)
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("2_16nxu")
 pitch_scale = 1.25
-autoplay = true
 max_distance = 950.0
 attenuation = 1.31951
 bus = &"Music"
