@@ -68,6 +68,13 @@ public partial class StateMachine : Node
 		{
 			ChangeState(KeenStates.Shoot);
 		}
+
+		if (Input.IsActionJustPressed("move_pogo")
+			&& CheckIfCanMove()
+			&& game_stats.HasPogoStick)
+		{
+			ChangeState(Current.StateType == KeenStates.Pogo ? KeenStates.Air : KeenStates.Pogo);
+		}
 	}
 
 	private void ChangeState(KeenStates newState)

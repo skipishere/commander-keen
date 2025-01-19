@@ -29,6 +29,17 @@ public partial class Keen : CharacterBody2D, ITakeDamage
 		height = (int)collisionShape.Y/2;
 	}
 
+	public override void _Input(InputEvent @event)
+	{
+		if (@event.IsActionPressed("move_shoot") 
+			&& Input.IsKeyPressed(Key.T)
+			&& Input.IsKeyPressed(Key.C))
+		{
+			Debug.WriteLine("Cheat activated");
+			Cheat();
+		}
+	}
+
 	public override void _PhysicsProcess(double delta)
 	{
 		if (this.Velocity.Normalized().X != 0)
@@ -104,5 +115,16 @@ public partial class Keen : CharacterBody2D, ITakeDamage
 	public bool HasKey(game_stats.KeyCards key)
 	{
 		return keyCards.HasFlag(key);
+	}
+
+	private void Cheat()
+	{
+		GiveKey(game_stats.KeyCards.Blue);
+		GiveKey(game_stats.KeyCards.Green);
+		GiveKey(game_stats.KeyCards.Red);
+		GiveKey(game_stats.KeyCards.Yellow);
+
+		game_stats.HasPogoStick = true;
+		game_stats.Charges = 100;
 	}
 }

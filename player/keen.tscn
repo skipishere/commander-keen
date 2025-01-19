@@ -1,4 +1,4 @@
-[gd_scene load_steps=56 format=3 uid="uid://dqlj2tioeqgqw"]
+[gd_scene load_steps=69 format=3 uid="uid://dqlj2tioeqgqw"]
 
 [ext_resource type="Script" path="res://player/Keen.cs" id="1_othw7"]
 [ext_resource type="PackedScene" uid="uid://bgl2fe5um74f0" path="res://scenes/raygunShot.tscn" id="2_eenmn"]
@@ -11,6 +11,7 @@
 [ext_resource type="Script" path="res://player/DeadState.cs" id="9_qmxlx"]
 [ext_resource type="Script" path="res://player/HiddenState.cs" id="10_366wu"]
 [ext_resource type="PackedScene" uid="uid://b0mxidil3h22p" path="res://player/DeadKeen.tscn" id="10_sb2rb"]
+[ext_resource type="Script" path="res://player/PogoState.cs" id="12_tvnsi"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1a8jn"]
 radius = 6.5
@@ -225,6 +226,96 @@ tracks/0/keys = {
 "values": [4, 5, 6, 7, 8, 9]
 }
 
+[sub_resource type="Animation" id="Animation_glkif"]
+resource_name = "pogo_left"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [26]
+}
+
+[sub_resource type="Animation" id="Animation_0ocoh"]
+resource_name = "pogo_left_ground"
+length = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [27]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("StateMachine/Pogo")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.125),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"BounceDelayTimeout"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_2sm3h"]
+resource_name = "pogo_right"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [10]
+}
+
+[sub_resource type="Animation" id="Animation_f8xa4"]
+resource_name = "pogo_right_ground"
+length = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [11]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("StateMachine/Pogo")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.125),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"BounceDelayTimeout"
+}]
+}
+
 [sub_resource type="Animation" id="Animation_pallo"]
 resource_name = "shoot_left"
 length = 0.25
@@ -303,6 +394,10 @@ _data = {
 "idle_right": SubResource("Animation_6w1wq"),
 "jump_left": SubResource("Animation_aixbl"),
 "jump_right": SubResource("Animation_pwpow"),
+"pogo_left": SubResource("Animation_glkif"),
+"pogo_left_ground": SubResource("Animation_0ocoh"),
+"pogo_right": SubResource("Animation_2sm3h"),
+"pogo_right_ground": SubResource("Animation_f8xa4"),
 "shoot_left": SubResource("Animation_pallo"),
 "shoot_right": SubResource("Animation_kq7e5"),
 "walk_left": SubResource("Animation_hrnt4"),
@@ -365,6 +460,32 @@ blend_point_1/node = SubResource("AnimationNodeAnimation_c8bmi")
 blend_point_1/pos = 1.0
 blend_mode = 1
 
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_na7i4"]
+animation = &"pogo_left_ground"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ketfn"]
+animation = &"pogo_right_ground"
+
+[sub_resource type="AnimationNodeBlendSpace1D" id="AnimationNodeBlendSpace1D_r5yvc"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_na7i4")
+blend_point_0/pos = -1.0
+blend_point_1/node = SubResource("AnimationNodeAnimation_ketfn")
+blend_point_1/pos = 1.0
+blend_mode = 1
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_0gg6k"]
+animation = &"pogo_left"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ce6kv"]
+animation = &"pogo_right"
+
+[sub_resource type="AnimationNodeBlendSpace1D" id="AnimationNodeBlendSpace1D_o4qax"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_0gg6k")
+blend_point_0/pos = -1.0
+blend_point_1/node = SubResource("AnimationNodeAnimation_ce6kv")
+blend_point_1/pos = 1.0
+blend_mode = 1
+
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_udi3v"]
 animation = &"shoot_left"
 
@@ -411,6 +532,12 @@ advance_mode = 2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_pid7q"]
 
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ertx3"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_eymxq"]
+switch_mode = 2
+advance_mode = 2
+
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_np7so"]
 states/Die/node = SubResource("AnimationNodeBlendTree_4qs1m")
 states/Die/position = Vector2(224, 249)
@@ -423,13 +550,17 @@ states/Idle/node = SubResource("AnimationNodeBlendSpace1D_2grao")
 states/Idle/position = Vector2(295, 130)
 states/Jump/node = SubResource("AnimationNodeBlendSpace1D_dwl3x")
 states/Jump/position = Vector2(-221, -102)
+states/Pogo/node = SubResource("AnimationNodeBlendSpace1D_o4qax")
+states/Pogo/position = Vector2(432, -56)
+states/Pogo-Ground/node = SubResource("AnimationNodeBlendSpace1D_r5yvc")
+states/Pogo-Ground/position = Vector2(667, -47)
 states/Shoot/node = SubResource("AnimationNodeBlendSpace1D_t0wm7")
 states/Shoot/position = Vector2(207, -2)
 states/Start/position = Vector2(439, 33)
 states/Walk/node = SubResource("AnimationNodeBlendSpace1D_ycnk0")
 states/Walk/position = Vector2(-193, 154)
-transitions = ["Idle", "Walk", SubResource("AnimationNodeStateMachineTransition_q2fpk"), "Walk", "Idle", SubResource("AnimationNodeStateMachineTransition_ff2bv"), "Start", "Idle", SubResource("AnimationNodeStateMachineTransition_k1dgt"), "Walk", "Jump", SubResource("AnimationNodeStateMachineTransition_cc5hf"), "Jump", "Fall", SubResource("AnimationNodeStateMachineTransition_b2dt0"), "Fall", "Idle", SubResource("AnimationNodeStateMachineTransition_kd01o"), "Walk", "Fall", SubResource("AnimationNodeStateMachineTransition_w1o8n"), "Idle", "Jump", SubResource("AnimationNodeStateMachineTransition_pid7q")]
-graph_offset = Vector2(-518, -65)
+transitions = ["Idle", "Walk", SubResource("AnimationNodeStateMachineTransition_q2fpk"), "Walk", "Idle", SubResource("AnimationNodeStateMachineTransition_ff2bv"), "Start", "Idle", SubResource("AnimationNodeStateMachineTransition_k1dgt"), "Walk", "Jump", SubResource("AnimationNodeStateMachineTransition_cc5hf"), "Jump", "Fall", SubResource("AnimationNodeStateMachineTransition_b2dt0"), "Fall", "Idle", SubResource("AnimationNodeStateMachineTransition_kd01o"), "Walk", "Fall", SubResource("AnimationNodeStateMachineTransition_w1o8n"), "Idle", "Jump", SubResource("AnimationNodeStateMachineTransition_pid7q"), "Pogo", "Pogo-Ground", SubResource("AnimationNodeStateMachineTransition_ertx3"), "Pogo-Ground", "Pogo", SubResource("AnimationNodeStateMachineTransition_eymxq")]
+graph_offset = Vector2(-323, -203)
 
 [node name="Keen" type="CharacterBody2D" groups=["Player"]]
 z_index = 1
@@ -462,6 +593,8 @@ parameters/Die/TimeScale/scale = 1.0
 parameters/Fall/blend_position = 0
 parameters/Idle/blend_position = 1.0
 parameters/Jump/blend_position = 0
+parameters/Pogo/blend_position = 0.0
+parameters/Pogo-Ground/blend_position = 0.0
 parameters/Shoot/blend_position = 0
 parameters/Walk/blend_position = 0.0
 
@@ -495,6 +628,9 @@ deadKeen = ExtResource("10_sb2rb")
 
 [node name="Hidden" type="Node" parent="StateMachine"]
 script = ExtResource("10_366wu")
+
+[node name="Pogo" type="Node" parent="StateMachine"]
+script = ExtResource("12_tvnsi")
 
 [connection signal="tree_exited" from="." to="." method="OnTreeExited"]
 [connection signal="tree_exiting" from="StateMachine" to="StateMachine" method="Unload"]
