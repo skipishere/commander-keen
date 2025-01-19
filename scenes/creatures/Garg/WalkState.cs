@@ -6,12 +6,6 @@ public partial class WalkState : GargBaseState
 	private const float Speed = 45.0f;
     public override GargStateMachine.GargStates StateType => GargStateMachine.GargStates.Walk;
 
-	[Export]
-    public RayCast2D wallCheckLeft;
-
-	[Export]
-    public RayCast2D wallCheckRight;
-
 	private Timer timer;
 
 	public override void _Ready()
@@ -30,16 +24,9 @@ public partial class WalkState : GargBaseState
 
     public override void PhysicsProcess(double delta, float lastMovementX)
 	{
-		if (Character.IsOnFloor())
+		if (Character.IsOnFloor() && Character.IsOnWall())
 		{
-			if (wallCheckLeft.IsColliding())
-			{
-				lastMovementX = Vector2.Right.X;
-			}
-			else if (wallCheckRight.IsColliding())
-			{
-				lastMovementX = Vector2.Left.X;
-			}
+			lastMovementX = -lastMovementX;
 		}
 		else
 		{

@@ -29,7 +29,6 @@ public partial class Garg : CharacterBody2D, ITakeDamage
 		}
 		
 		stateMachine.PhysicsProcess(delta, lastMovementX, isActivated);
-		
 		MoveAndSlide();
 	}
 	

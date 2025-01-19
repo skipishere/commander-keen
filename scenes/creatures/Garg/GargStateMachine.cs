@@ -12,6 +12,7 @@ public partial class GargStateMachine : Node
 		Agro,
 		Thinking,
 		Dead,
+		TurnAround
 	}
 
     private readonly Dictionary<GargStates, IState<GargStates>> states = new();
@@ -52,7 +53,6 @@ public partial class GargStateMachine : Node
 
 		if (Current.NextState.HasValue)
 		{
-			Debug.Print($"Garg State change - old: {Current.StateType}, New: {Current.NextState}");
 			ChangeState(Current.NextState.Value);
 		}
 	}
@@ -64,6 +64,7 @@ public partial class GargStateMachine : Node
 			return;
 		}
 		
+		Debug.Print($"Garg State change - old: {Current.StateType}, New: {Current.NextState}");
 		Current.Exit();
 		Current = states[newState];
 		Current.Enter();

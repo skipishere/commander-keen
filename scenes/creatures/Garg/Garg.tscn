@@ -452,7 +452,7 @@ _data = {
 }
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ducee"]
-radius = 6.0
+radius = 11.0
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_8fk1p"]
 animation = &"die"
@@ -491,7 +491,7 @@ states/Die/position = Vector2(779, 100)
 states/Thinking/node = SubResource("AnimationNodeAnimation_7aokg")
 states/Thinking/position = Vector2(360, 93)
 states/Walk/node = SubResource("AnimationNodeBlendSpace1D_en3jq")
-states/Walk/position = Vector2(589, 57)
+states/Walk/position = Vector2(584, 87)
 transitions = ["Start", "Thinking", SubResource("AnimationNodeStateMachineTransition_msupj"), "Thinking", "Walk", SubResource("AnimationNodeStateMachineTransition_hhh2w"), "Walk", "Thinking", SubResource("AnimationNodeStateMachineTransition_bsrhg")]
 
 [node name="Garg" type="CharacterBody2D"]
@@ -523,6 +523,7 @@ polygon = PackedVector2Array(-12, 5, -12, 16, 12, 16, 12, 5, 5, -13, -5, -13)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 1)
 shape = SubResource("CapsuleShape2D_ducee")
+metadata/_edit_lock_ = true
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
 tree_root = SubResource("AnimationNodeStateMachine_syip4")
@@ -547,19 +548,15 @@ right = NodePath("../../RayCastRight")
 leftCheck = NodePath("../../RayCastCheckLeft")
 rightCheck = NodePath("../../RayCastCheckRight")
 
-[node name="Walk" type="Node" parent="StateMachine" node_paths=PackedStringArray("wallCheckLeft", "wallCheckRight")]
+[node name="Walk" type="Node" parent="StateMachine"]
 script = ExtResource("4_cj2lk")
-wallCheckLeft = NodePath("../../RayCastLeftWall")
-wallCheckRight = NodePath("../../RayCastRightWall")
 
 [node name="Timer" type="Timer" parent="StateMachine/Walk"]
 process_callback = 0
 one_shot = true
 
-[node name="Agro" type="Node" parent="StateMachine" node_paths=PackedStringArray("wallCheckLeft", "wallCheckRight")]
+[node name="Agro" type="Node" parent="StateMachine"]
 script = ExtResource("5_ghshb")
-wallCheckLeft = NodePath("../../RayCastLeftWall")
-wallCheckRight = NodePath("../../RayCastRightWall")
 
 [node name="Death" type="Node" parent="StateMachine"]
 script = ExtResource("7_onamg")
@@ -588,14 +585,6 @@ enabled = false
 target_position = Vector2(150, 0)
 collision_mask = 2
 
-[node name="RayCastLeftWall" type="RayCast2D" parent="."]
-position = Vector2(0, 7)
-target_position = Vector2(-10, 0)
-
-[node name="RayCastRightWall" type="RayCast2D" parent="."]
-position = Vector2(0, 7)
-target_position = Vector2(10, 0)
-
 [node name="PointLight2D" type="PointLight2D" parent="."]
 position = Vector2(6, -12.4375)
 scale = Vector2(0.0625, 0.0761719)
@@ -606,7 +595,7 @@ texture = ExtResource("8_gk5mj")
 [node name="PointLight2D2" type="PointLight2D" parent="."]
 position = Vector2(-4, -7)
 scale = Vector2(0.0625, 0.0761719)
-color = Color(1, 0, 0, 1)
+color = Color(1, 0, 0.501961, 1)
 energy = 2.0
 texture = ExtResource("8_gk5mj")
 
