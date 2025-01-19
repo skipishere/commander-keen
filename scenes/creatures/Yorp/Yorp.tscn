@@ -3,10 +3,6 @@
 [ext_resource type="Texture2D" uid="uid://dagrrjfqo4cv0" path="res://sprites/yorp.png" id="1_bhl5i"]
 [ext_resource type="Script" path="res://scenes/creatures/Yorp/Yorp.cs" id="1_wx8nb"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jgn1p"]
-radius = 7.0
-height = 14.0
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_i62cy"]
 size = Vector2(8, 5)
 
@@ -70,7 +66,7 @@ tracks/4/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [11]
+"values": [99]
 }
 
 [sub_resource type="Animation" id="Animation_2to7r"]
@@ -123,7 +119,7 @@ tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [9]
+"values": [97]
 }
 
 [sub_resource type="Animation" id="Animation_0tfb6"]
@@ -163,6 +159,20 @@ tracks/2/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [1]
+}
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [false],
+"method": &"set_physics_process"
+}]
 }
 
 [sub_resource type="Animation" id="Animation_p84it"]
@@ -249,16 +259,19 @@ _data = {
 "walk_right": SubResource("Animation_1mvt3")
 }
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jgn1p"]
+radius = 7.0
+height = 20.0
+
 [node name="Yorp" type="CharacterBody2D"]
-collision_layer = 16
-collision_mask = 11
+position = Vector2(0, -4)
+collision_layer = 64
+collision_mask = 99
+slide_on_ceiling = false
+safe_margin = 0.5
 script = ExtResource("1_wx8nb")
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 4)
-shape = SubResource("CapsuleShape2D_jgn1p")
 
 [node name="Area2D" type="Area2D" parent="."]
 collision_mask = 2
@@ -290,6 +303,10 @@ region_filter_clip_enabled = true
 [node name="VisibleOnScreen" type="VisibleOnScreenNotifier2D" parent="."]
 position = Vector2(-1.43051e-06, 1)
 scale = Vector2(2.6, 2.3)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 2)
+shape = SubResource("CapsuleShape2D_jgn1p")
 
 [connection signal="body_entered" from="Area2D" to="." method="KnockedOut"]
 [connection signal="timeout" from="KnockedOutTimer" to="." method="KnockedOutTimeout"]

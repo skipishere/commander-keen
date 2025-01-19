@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=86 format=3 uid="uid://w7k5amqxc3ac"]
+[gd_resource type="TileSet" load_steps=89 format=3 uid="uid://w7k5amqxc3ac"]
 
 [ext_resource type="Texture2D" uid="uid://65y75605vmla" path="res://sprites/platforms.png" id="1_r57yh"]
 [ext_resource type="Texture2D" uid="uid://de6hjukimt53d" path="res://sprites/hazards.png" id="2_1lutc"]
@@ -37,6 +37,9 @@
 [ext_resource type="PackedScene" uid="uid://7n6867ngavnr" path="res://scenes/hazards/StranglingVinesRight.tscn" id="35_jycm0"]
 [ext_resource type="PackedScene" uid="uid://y6kehn2rg2jv" path="res://scenes/hazards/Icicles.tscn" id="36_oplpf"]
 [ext_resource type="PackedScene" uid="uid://l3fxye0kbuqx" path="res://scenes/creatures/Garg/Garg.tscn" id="37_noj1x"]
+[ext_resource type="PackedScene" uid="uid://cxi7xre6i724l" path="res://scenes/creatures/Yorp/Yorp.tscn" id="38_dnaxu"]
+[ext_resource type="PackedScene" uid="uid://bckllpjewggoc" path="res://scenes/creatures/ButlerRobot/ButlerRobot.tscn" id="39_pyfpv"]
+[ext_resource type="PackedScene" uid="uid://cl5vownp8h5px" path="res://scenes/creatures/TankRobot/TankRobot.tscn" id="40_p1sy7"]
 
 [sub_resource type="TileMapPattern" id="TileMapPattern_v5wra"]
 tile_data = PackedInt32Array(0, 131072, 1, 65536, 131072, 1, 65537, 131072, 1, 65538, 131072, 1, 3, 131072, 1, 65539, 131072, 1)
@@ -714,6 +717,9 @@ scenes/6/scene = ExtResource("36_oplpf")
 [sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_lcvtu"]
 resource_name = "Creatures"
 scenes/1/scene = ExtResource("37_noj1x")
+scenes/2/scene = ExtResource("38_dnaxu")
+scenes/3/scene = ExtResource("39_pyfpv")
+scenes/4/scene = ExtResource("40_p1sy7")
 
 [resource]
 occlusion_layer_0/light_mask = 1
