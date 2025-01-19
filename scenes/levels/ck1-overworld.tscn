@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=4 uid="uid://c85ufn8742tq3"]
+[gd_scene load_steps=33 format=4 uid="uid://c85ufn8742tq3"]
 
 [ext_resource type="Script" path="res://scenes/Overworld.cs" id="1_8i8x4"]
 [ext_resource type="Texture2D" uid="uid://cqgyahlpnxrxl" path="res://sprites/mars.png" id="2_mu3it"]
@@ -242,6 +242,43 @@ resource_local_to_scene = true
 a = Vector2(-20, -8.12497)
 b = Vector2(23.125, -8.12497)
 
+[sub_resource type="Animation" id="Animation_kxbyy"]
+resource_name = "start"
+length = 4.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AudioStreamPlayer:volume_db")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 4),
+"transitions": PackedFloat32Array(1, 0.143587),
+"update": 0,
+"values": [-40.0, -20.0]
+}
+
+[sub_resource type="Animation" id="Animation_kaf22"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AudioStreamPlayer:volume_db")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-40.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_wrg3v"]
+_data = {
+"RESET": SubResource("Animation_kaf22"),
+"start": SubResource("Animation_kxbyy")
+}
+
 [node name="Map" type="Node2D"]
 script = ExtResource("1_8i8x4")
 
@@ -266,7 +303,7 @@ tile_set = SubResource("TileSet_wwp2b")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_j3uft")
-volume_db = -10.0
+volume_db = -40.0
 autoplay = true
 bus = &"Music"
 
@@ -370,6 +407,12 @@ Target = ExtResource("23_tithn")
 [node name="Keen-map" parent="." instance=ExtResource("24_h1e8j")]
 position = Vector2(-394, 8)
 collision_layer = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_wrg3v")
+}
+autoplay = "start"
 
 [editable path="Levels/LevelPortal1"]
 [editable path="Levels/LevelPortal7"]
