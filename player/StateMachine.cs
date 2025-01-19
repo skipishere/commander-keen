@@ -54,13 +54,13 @@ public partial class StateMachine : Node
 
 		if (forceState.HasValue)
 		{
-			Debug.Print($"Forced State change - old: {Current.StateType}, New: {forceState}");
+			//Debug.Print($"Forced State change - old: {Current.StateType}, New: {forceState}");
 			ChangeState(forceState.Value);
 			forceState = null;
 		} 
 		else if (Current.NextState.HasValue)
 		{
-			Debug.Print($"State change - old: {Current.StateType}, New: {Current.NextState}");
+			//Debug.Print($"State change - old: {Current.StateType}, New: {Current.NextState}");
 			ChangeState(Current.NextState.Value);
 		}
 		
