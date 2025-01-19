@@ -1,9 +1,11 @@
-[gd_scene load_steps=8 format=4 uid="uid://db4e3oa7n70em"]
+[gd_scene load_steps=14 format=4 uid="uid://db4e3oa7n70em"]
 
+[ext_resource type="Script" path="res://scenes/levels/Ck1Lv04.cs" id="1_eukxk"]
 [ext_resource type="Texture2D" uid="uid://ce0d4ee2x7x5e" path="res://backgrounds/treasure.png" id="1_je5wq"]
 [ext_resource type="TileSet" uid="uid://w7k5amqxc3ac" path="res://scenes/tile_platform.tres" id="1_mjeqg"]
 [ext_resource type="PackedScene" uid="uid://dqlj2tioeqgqw" path="res://player/keen.tscn" id="2_unm3g"]
 [ext_resource type="PackedScene" uid="uid://dkpwgxsjkybvs" path="res://scenes/creatures/VorticonGuard/vorticon_guard.tscn" id="3_ppkar"]
+[ext_resource type="AudioStream" uid="uid://dyex0uf0lalhp" path="res://music/TechnoTronic.mp3" id="6_k0kb7"]
 
 [sub_resource type="Animation" id="Animation_nlisc"]
 length = 0.001
@@ -30,6 +32,62 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [0.25]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AudioStreamPlayer:volume_db")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-10.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AudioStreamPlayer:pitch_scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.9]
+}
+
+[sub_resource type="Animation" id="Animation_aa6md"]
+resource_name = "Trigger1"
+length = 10.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AudioStreamPlayer:pitch_scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 10),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.9, 1.0]
+}
+
+[sub_resource type="Animation" id="Animation_y5pr0"]
+resource_name = "Trigger2"
+length = 10.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AudioStreamPlayer:pitch_scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 10),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.0, 1.1]
 }
 
 [sub_resource type="Animation" id="Animation_cuqfu"]
@@ -59,14 +117,37 @@ tracks/1/keys = {
 "update": 0,
 "values": [0.25, 0.0]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AudioStreamPlayer:volume_db")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [-10.0, -80.0]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_emtx4"]
 _data = {
 "RESET": SubResource("Animation_nlisc"),
+"Trigger1": SubResource("Animation_aa6md"),
+"Trigger2": SubResource("Animation_y5pr0"),
 "level_exit": SubResource("Animation_cuqfu")
 }
 
-[node name="Level" type="Node2D"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hslwy"]
+size = Vector2(31, 49)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_54trc"]
+size = Vector2(53, 79.75)
+
+[node name="Level" type="Node2D" node_paths=PackedStringArray("Player", "Area")]
+script = ExtResource("1_eukxk")
+Player = NodePath("AnimationPlayer")
+Area = NodePath("Trigger Zones/Area2D")
 
 [node name="Parallax2D" type="Parallax2D" parent="."]
 scroll_scale = Vector2(0.1, 1)
@@ -114,3 +195,26 @@ energy = 0.25
 blend_mode = 2
 shadow_enabled = true
 
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_k0kb7")
+volume_db = -10.0
+pitch_scale = 0.9
+autoplay = true
+bus = &"Music"
+
+[node name="Trigger Zones" type="Node" parent="."]
+
+[node name="Area2D" type="Area2D" parent="Trigger Zones"]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Trigger Zones/Area2D"]
+position = Vector2(494, -232)
+shape = SubResource("RectangleShape2D_hslwy")
+debug_color = Color(0.590987, 0.547223, 0.018415, 0.42)
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Trigger Zones/Area2D"]
+position = Vector2(1621, -149)
+shape = SubResource("RectangleShape2D_54trc")
+debug_color = Color(0.667993, 0.51041, 0, 0.42)
+
+[connection signal="body_shape_entered" from="Trigger Zones/Area2D" to="." method="BodyShapeEntered"]
