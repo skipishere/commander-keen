@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://c4s3nfrlj432s"]
+
+[ext_resource type="Script" path="res://scenes/hazards/IceCannon.cs" id="1_or3p8"]
+[ext_resource type="Texture2D" uid="uid://r5c003mioiva" path="res://sprites/ice-cannon.png" id="1_r712c"]
+
+[node name="IceCannon" type="Node2D"]
+script = ExtResource("1_or3p8")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(7, -8)
+texture = ExtResource("1_r712c")
+hframes = 2
+frame = 1
+region_enabled = true
+region_rect = Rect2(0, 0, 64, 32)
