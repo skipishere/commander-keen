@@ -4,6 +4,8 @@ using System.Diagnostics;
 public partial class Keen : CharacterBody2D, ITakeDamage
 {
 	public const float Speed = 180.0f;
+
+	public bool IsPogoing => stateMachine.IsPogoing();
 		
 	public AnimationTree animationTree;
 	private Camera2D camera;
