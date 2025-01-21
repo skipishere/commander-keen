@@ -34,7 +34,6 @@ tile_set = ExtResource("2_0fxow")
 
 [node name="Hazards" type="TileMapLayer" parent="TileMap" groups=["LevelLayers"]]
 use_parent_material = true
-tile_map_data = PackedByteArray("AAAjAPj/AwAAAAAAAQAkAPj/AwAAAAAAAQAlAPj/AwAAAAAAAQAmAPj/AwAAAAAAAQANAPL/BwAAAAAAAQAVAPL/BwAAAAAAAQA=")
 tile_map_data = PackedByteArray("AAANAPL/BwAAAAAAAQAVAPL/BwAAAAAAAQAjAPj/AwAAAAAAFwAlAPj/AwAAAAAAFwA=")
 tile_set = ExtResource("2_0fxow")
 
