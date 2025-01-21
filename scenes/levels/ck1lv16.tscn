@@ -57,4 +57,3 @@ autoplay = true
 bus = &"Music"
 
 [node name="Creatures" type="Node" parent="."]
-
