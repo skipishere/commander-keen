@@ -1,7 +1,7 @@
-[gd_scene load_steps=12 format=3 uid="uid://un6axmoir2v6"]
+[gd_scene load_steps=12 format=3 uid="uid://xi5w2wacxuql"]
 
-[ext_resource type="Texture2D" uid="uid://53qawylv4smy" path="res://textures/fire_particle.png" id="1_3yae8"]
-[ext_resource type="Script" path="res://scenes/hazards/Fire.cs" id="1_p3xh0"]
+[ext_resource type="Script" path="res://scenes/hazards/Fire.cs" id="1_ylklf"]
+[ext_resource type="Texture2D" uid="uid://53qawylv4smy" path="res://textures/fire_particle.png" id="2_yn1w6"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_pjvg2"]
 blend_mode = 1
@@ -38,29 +38,32 @@ scale_curve = SubResource("CurveTexture_sl562")
 color_ramp = SubResource("GradientTexture1D_vyoos")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bvg7s"]
-size = Vector2(14, 16)
+size = Vector2(32, 16)
 
 [node name="Node2D" type="Node2D"]
 z_index = 1
-script = ExtResource("1_p3xh0")
+position = Vector2(8, -1)
+script = ExtResource("1_ylklf")
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
 material = SubResource("CanvasItemMaterial_pjvg2")
 position = Vector2(0, 5)
-scale = Vector2(0.348112, 0.174777)
+scale = Vector2(0.696, 0.175)
 amount = 32
 process_material = SubResource("ParticleProcessMaterial_ho48a")
-texture = ExtResource("1_3yae8")
+texture = ExtResource("2_yn1w6")
 preprocess = 1.0
 local_coords = true
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
+position = Vector2(0, -37.5)
+scale = Vector2(1, 0.609375)
 color = Color(1, 0.87451, 0, 0.462745)
 energy = 1.5
 blend_mode = 2
 shadow_color = Color(0.521569, 0, 0, 0.764706)
 shadow_item_cull_mask = 2
-texture = ExtResource("1_3yae8")
+texture = ExtResource("2_yn1w6")
 texture_scale = 3.0
 
 [node name="Area2D" type="Area2D" parent="."]
