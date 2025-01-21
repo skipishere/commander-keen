@@ -31,17 +31,11 @@ tile_map_data = PackedByteArray("AAACAOT/AwAAAAAACQAGAPn/AwAAAAAAFgA=")
 tile_set = ExtResource("1_hwj0a")
 
 [node name="Hazards" type="TileMapLayer" parent="TileMap"]
-tile_map_data = PackedByteArray("AAAGAOn/BwAAAAAAAQAAAPD/AwAAAAAAAQABAPD/AwAAAAAAAQACAPD/AwAAAAAAAQADAPD/AwAAAAAAAQAFAPD/AwAAAAAAAQAGAPD/AwAAAAAAAQAHAPD/AwAAAAAAAQAIAPD/AwAAAAAAAQAKAPD/AwAAAAAAAQALAPD/AwAAAAAAAQAMAPD/AwAAAAAAAQANAPD/AwAAAAAAAQA=")
+tile_map_data = PackedByteArray("AAAGAOn/BwAAAAAAAQAAAPD/AwAAAAAAFwACAPD/AwAAAAAAFwAFAPD/AwAAAAAAFwAHAPD/AwAAAAAAFwAKAPD/AwAAAAAAFwAMAPD/AwAAAAAAFwA=")
 tile_set = ExtResource("1_hwj0a")
 
 [node name="Keen" parent="." instance=ExtResource("2_750jm")]
 position = Vector2(-8.44849, -11.5524)
-
-[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
-visible = false
-
-[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
-visible = false
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_bnu0v")

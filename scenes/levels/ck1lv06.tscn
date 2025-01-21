@@ -26,7 +26,7 @@ tile_set = ExtResource("1_im6tl")
 
 [node name="Hazards" type="TileMapLayer" parent="TileMap" groups=["LevelLayers"]]
 use_parent_material = true
-tile_map_data = PackedByteArray("AAADAO//AwAAAAAAAQAEAO//AwAAAAAAAQAFAO//AwAAAAAAAQAGAO//AwAAAAAAAQAHAO//AwAAAAAAAQAJAO//AwAAAAAAAQAKAO//AwAAAAAAAQALAO//AwAAAAAAAQAMAO//AwAAAAAAAQANAO//AwAAAAAAAQA=")
+tile_map_data = PackedByteArray("AAADAO//AwAAAAAAAQAFAO//AwAAAAAAAQALAO//AwAAAAAAAQANAO//AwAAAAAAAQAMAO//AwAAAAAAAQAKAO//AwAAAAAAAQAJAO//AwAAAAAAAQAHAO//AwAAAAAAAQAGAO//AwAAAAAAAQAEAO//AwAAAAAAAQA=")
 tile_set = ExtResource("1_im6tl")
 
 [node name="Keen" parent="." instance=ExtResource("2_ujwda")]
