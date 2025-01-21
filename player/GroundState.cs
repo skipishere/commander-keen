@@ -46,7 +46,8 @@ public partial class GroundState : State
 		 {
 		 	if (groundType != GroundType.Ice)
 		 	{
-				var toSpeed = movement * Speed;
+				// Closer to the small movements players could make in the original game.
+				var toSpeed = Mathf.Clamp(Character.Velocity.X + (movement * Speed * 0.1f), -Speed, Speed);
 				Character.Velocity = Character.Velocity with { X = Mathf.MoveToward(Character.Velocity.X, toSpeed, Speed)};
 			}
 		}
