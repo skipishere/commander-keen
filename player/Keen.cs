@@ -4,6 +4,8 @@ using System.Diagnostics;
 public partial class Keen : CharacterBody2D, ITakeDamage
 {
 	public const float Speed = 180.0f;
+
+	public bool IsPogoing => stateMachine.IsPogoing();
 		
 	public AnimationTree animationTree;
 	private Camera2D camera;
@@ -42,33 +44,18 @@ public partial class Keen : CharacterBody2D, ITakeDamage
 
 	public override void _PhysicsProcess(double delta)
 	{
+		var movement = Input.GetAxis("move_left", "move_right");
 		if (this.Velocity.Normalized().X != 0)
 		{
 			lastMovementX = this.Velocity.Normalized().X;
 		}
-		
-		stateMachine.PhysicsProcess(delta, lastMovementX);
-
-		// if (Input.IsActionJustPressed("move_pogo") && game_stats.HasPogoStick)
-		// {
-		// 	this.IsPogoing = !this.IsPogoing;
-		// }
-		
-		// if (this.IsPogoing && IsOnFloor())
-		// {
-		// 	//velocity.Y = JumpVelocity * (float)1.45;
-		// }
-
-		// if (Input.IsActionJustPressed("move_pogo") && IsOnFloor())
-		// {
-		// 	//velocity.Y = JumpVelocity*1.2f;
-			
-		// }
-
-		if (MoveAndSlide())
+		else if (movement != 0)
 		{
-			//HandleCollision();
+			lastMovementX = movement;
 		}
+				
+		stateMachine.PhysicsProcess(delta, lastMovementX);
+		MoveAndSlide();
 
 		// Clamp the player position to the camera limits.
 		var xLimit = Mathf.Clamp(this.GlobalPosition.X, camera.LimitLeft + width, camera.LimitRight - width);

@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://l3fxye0kbuqx"]
+[gd_scene load_steps=27 format=3 uid="uid://l3fxye0kbuqx"]
 
 [ext_resource type="Texture2D" uid="uid://tuk22x5t53fw" path="res://sprites/garg.png" id="1_74ann"]
 [ext_resource type="Script" path="res://scenes/creatures/Garg/Garg.cs" id="1_q1igm"]
@@ -154,6 +154,30 @@ tracks/11/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [true]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("CollisionShape2D2:position")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-10, 7)]
+}
+tracks/13/type = "value"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("CollisionShape2D2:rotation")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.5708]
 }
 
 [sub_resource type="Animation" id="Animation_rcubb"]
@@ -338,6 +362,30 @@ tracks/2/keys = {
 "update": 0,
 "values": [Vector2(2, -6)]
 }
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CollisionShape2D2:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(10, 7)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("CollisionShape2D2:rotation")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-1.5708]
+}
 
 [sub_resource type="Animation" id="Animation_ht1gw"]
 resource_name = "thinking"
@@ -452,7 +500,7 @@ _data = {
 }
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ducee"]
-radius = 11.0
+radius = 5.0
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_8fk1p"]
 animation = &"die"
@@ -493,6 +541,9 @@ states/Thinking/position = Vector2(360, 93)
 states/Walk/node = SubResource("AnimationNodeBlendSpace1D_en3jq")
 states/Walk/position = Vector2(584, 87)
 transitions = ["Start", "Thinking", SubResource("AnimationNodeStateMachineTransition_msupj"), "Thinking", "Walk", SubResource("AnimationNodeStateMachineTransition_hhh2w"), "Walk", "Thinking", SubResource("AnimationNodeStateMachineTransition_bsrhg")]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xnrog"]
+size = Vector2(3, 0.75)
 
 [node name="Garg" type="CharacterBody2D"]
 light_mask = 0
@@ -564,25 +615,25 @@ script = ExtResource("7_onamg")
 [node name="RayCastLeft" type="RayCast2D" parent="."]
 position = Vector2(0, -5)
 enabled = false
-target_position = Vector2(-150, 0)
+target_position = Vector2(-310, 0)
 collision_mask = 2
 
 [node name="RayCastRight" type="RayCast2D" parent="."]
 position = Vector2(0, -5)
 enabled = false
-target_position = Vector2(150, 0)
+target_position = Vector2(310, 0)
 collision_mask = 2
 
 [node name="RayCastCheckLeft" type="RayCast2D" parent="."]
 position = Vector2(0, 7)
 enabled = false
-target_position = Vector2(-150, 0)
+target_position = Vector2(-310, 0)
 collision_mask = 2
 
 [node name="RayCastCheckRight" type="RayCast2D" parent="."]
 position = Vector2(0, 7)
 enabled = false
-target_position = Vector2(150, 0)
+target_position = Vector2(310, 0)
 collision_mask = 2
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
@@ -598,6 +649,12 @@ scale = Vector2(0.0625, 0.0761719)
 color = Color(1, 0, 0.501961, 1)
 energy = 2.0
 texture = ExtResource("8_gk5mj")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
+position = Vector2(-10, 7)
+rotation = 1.5708
+shape = SubResource("RectangleShape2D_xnrog")
+one_way_collision = true
 
 [connection signal="body_entered" from="Area2D" to="." method="BodyEntered" flags=6]
 [connection signal="screen_entered" from="VisibleOnScreen" to="." method="OnScreenEntered"]

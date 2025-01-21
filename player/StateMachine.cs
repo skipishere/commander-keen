@@ -93,4 +93,9 @@ public partial class StateMachine : Node
 	{
 		return Current.CanMove;
 	}
+
+	public bool IsPogoing()
+	{
+		return Current.StateType == KeenStates.Pogo;
+	}
 }

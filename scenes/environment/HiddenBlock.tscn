@@ -1,0 +1,72 @@
+[gd_scene load_steps=7 format=3 uid="uid://datlcif8t71fa"]
+
+[ext_resource type="Texture2D" uid="uid://65y75605vmla" path="res://sprites/platforms.png" id="1_ievy7"]
+[ext_resource type="Texture2D" uid="uid://53qawylv4smy" path="res://textures/fire_particle.png" id="2_betcm"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_s48nq"]
+size = Vector2(16, 16)
+
+[sub_resource type="Animation" id="Animation_jktlx"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PointLight2D:energy")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.5]
+}
+
+[sub_resource type="Animation" id="Animation_wcpye"]
+resource_name = "flicker"
+length = 8.0
+loop_mode = 1
+step = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PointLight2D:energy")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.96667, 2.5, 3, 3.5, 5, 6.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0.5, 0.0, 1.0, 0.0, 1.0, 0.5, 0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_jlmjb"]
+_data = {
+"RESET": SubResource("Animation_jktlx"),
+"flicker": SubResource("Animation_wcpye")
+}
+
+[node name="Node2D" type="StaticBody2D"]
+z_index = 2
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+position = Vector2(-5.5, -5)
+scale = Vector2(0.171875, 0.15625)
+energy = 0.5
+texture = ExtResource("2_betcm")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_ievy7")
+region_enabled = true
+region_rect = Rect2(112, 208, 16, 16)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("RectangleShape2D_s48nq")
+one_way_collision = true
+debug_color = Color(1, 0.631373, 0.980392, 0.419608)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_jlmjb")
+}
+autoplay = "flicker"
