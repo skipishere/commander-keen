@@ -38,7 +38,7 @@ scale_curve = SubResource("CurveTexture_sl562")
 color_ramp = SubResource("GradientTexture1D_vyoos")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bvg7s"]
-size = Vector2(17, 16)
+size = Vector2(13, 16)
 
 [node name="Node2D" type="Node2D"]
 z_index = 1
