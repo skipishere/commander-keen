@@ -49,6 +49,8 @@ _data = {
 z_index = 2
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
+position = Vector2(-5.5, -5)
+scale = Vector2(0.171875, 0.15625)
 energy = 0.5
 texture = ExtResource("2_betcm")
 
