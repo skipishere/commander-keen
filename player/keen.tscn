@@ -1,4 +1,4 @@
-[gd_scene load_steps=69 format=3 uid="uid://dqlj2tioeqgqw"]
+[gd_scene load_steps=71 format=3 uid="uid://dqlj2tioeqgqw"]
 
 [ext_resource type="Script" path="res://player/Keen.cs" id="1_othw7"]
 [ext_resource type="PackedScene" uid="uid://bgl2fe5um74f0" path="res://scenes/raygunShot.tscn" id="2_eenmn"]
@@ -12,6 +12,7 @@
 [ext_resource type="Script" path="res://player/HiddenState.cs" id="10_366wu"]
 [ext_resource type="PackedScene" uid="uid://b0mxidil3h22p" path="res://player/DeadKeen.tscn" id="10_sb2rb"]
 [ext_resource type="Script" path="res://player/PogoState.cs" id="12_tvnsi"]
+[ext_resource type="Script" path="res://player/IcedState.cs" id="13_xq2mm"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1a8jn"]
 radius = 6.5
@@ -513,6 +514,9 @@ blend_point_1/pos = 1.0
 value_label = "x"
 blend_mode = 1
 
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_oldae"]
+animation = &"frozen"
+
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_q2fpk"]
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ff2bv"]
@@ -559,6 +563,8 @@ states/Shoot/position = Vector2(207, -2)
 states/Start/position = Vector2(439, 33)
 states/Walk/node = SubResource("AnimationNodeBlendSpace1D_ycnk0")
 states/Walk/position = Vector2(-193, 154)
+states/frozen/node = SubResource("AnimationNodeAnimation_oldae")
+states/frozen/position = Vector2(430, -151)
 transitions = ["Idle", "Walk", SubResource("AnimationNodeStateMachineTransition_q2fpk"), "Walk", "Idle", SubResource("AnimationNodeStateMachineTransition_ff2bv"), "Start", "Idle", SubResource("AnimationNodeStateMachineTransition_k1dgt"), "Walk", "Jump", SubResource("AnimationNodeStateMachineTransition_cc5hf"), "Jump", "Fall", SubResource("AnimationNodeStateMachineTransition_b2dt0"), "Fall", "Idle", SubResource("AnimationNodeStateMachineTransition_kd01o"), "Walk", "Fall", SubResource("AnimationNodeStateMachineTransition_w1o8n"), "Idle", "Jump", SubResource("AnimationNodeStateMachineTransition_pid7q"), "Pogo", "Pogo-Ground", SubResource("AnimationNodeStateMachineTransition_ertx3"), "Pogo-Ground", "Pogo", SubResource("AnimationNodeStateMachineTransition_eymxq")]
 graph_offset = Vector2(-323, -203)
 
@@ -631,6 +637,9 @@ script = ExtResource("10_366wu")
 
 [node name="Pogo" type="Node" parent="StateMachine"]
 script = ExtResource("12_tvnsi")
+
+[node name="Iced" type="Node" parent="StateMachine"]
+script = ExtResource("13_xq2mm")
 
 [connection signal="tree_exited" from="." to="." method="OnTreeExited"]
 [connection signal="tree_exiting" from="StateMachine" to="StateMachine" method="Unload"]

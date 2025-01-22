@@ -46,6 +46,7 @@ public partial class StateMachine : Node
 		signalManager = GetNode<SignalManager>("/root/SignalManager");
 		signalManager.HidePlayer += () => forceState = KeenStates.Hidden;
 		signalManager.KeenDead += () => forceState = KeenStates.Dead;
+		signalManager.KeenFrozen += () => forceState = KeenStates.Iced;
 	}
 
     public void PhysicsProcess(double delta, float lastMovementX)
