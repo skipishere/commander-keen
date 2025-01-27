@@ -17,7 +17,6 @@ region_enabled = true
 region_rect = Rect2(0, 0, 64, 32)
 
 [node name="Timer" type="Timer" parent="."]
-wait_time = 2.0
 autostart = true
 
 [node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]

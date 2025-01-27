@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Diagnostics;
 
 public partial class IceChunk : StaticBody2D
 {
@@ -7,6 +8,7 @@ public partial class IceChunk : StaticBody2D
 	private Vector2 direction;
 	private GodotObject origin;
 
+	private AnimationPlayer animationPlayer;
 	private SignalManager signalManager;
 
 	public void SetDirection(Vector2 globalPosition, Vector2 direction, Vector2 offset, GodotObject origin)
@@ -21,10 +23,11 @@ public partial class IceChunk : StaticBody2D
 	public override void _Ready()
 	{
 		signalManager = GetNode<SignalManager>("/root/SignalManager");
+		animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
+	public override void _PhysicsProcess(double delta)
 	{
 		this.GlobalPosition += this.direction * Speed * (float)delta;
 
@@ -38,10 +41,14 @@ public partial class IceChunk : StaticBody2D
 			}
 			else
 			{
-				// Animate fracture then QueueFree()
-				// For now, just QueueFree()
-				QueueFree();
+				animationPlayer.Play("break");
+				SetPhysicsProcess(false);
 			}
 		}
+	}
+
+	public void Done()
+	{
+		QueueFree();
 	}
 }
