@@ -19,8 +19,4 @@ region_rect = Rect2(0, 0, 64, 32)
 [node name="Timer" type="Timer" parent="."]
 autostart = true
 
-[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
-position = Vector2(8, -5.5)
-scale = Vector2(5.9, 5.65)
-
 [connection signal="timeout" from="Timer" to="." method="FireIceChunk"]
