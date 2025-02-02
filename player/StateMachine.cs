@@ -46,21 +46,22 @@ public partial class StateMachine : Node
 		signalManager = GetNode<SignalManager>("/root/SignalManager");
 		signalManager.HidePlayer += () => forceState = KeenStates.Hidden;
 		signalManager.KeenDead += () => forceState = KeenStates.Dead;
+		signalManager.KeenFrozen += (bool leftIceBlock) => 
+		{
+			((IcedState)states[KeenStates.Iced]).HitByLeftIceChunk = leftIceBlock;
+			forceState = KeenStates.Iced;
+		};
 	}
 
     public void PhysicsProcess(double delta, float lastMovementX)
 	{
-		Current.PhysicsProcess(delta, lastMovementX);
-
 		if (forceState.HasValue)
 		{
-			//Debug.Print($"Forced State change - old: {Current.StateType}, New: {forceState}");
 			ChangeState(forceState.Value);
 			forceState = null;
 		} 
 		else if (Current.NextState.HasValue)
 		{
-			//Debug.Print($"State change - old: {Current.StateType}, New: {Current.NextState}");
 			ChangeState(Current.NextState.Value);
 		}
 		
@@ -75,11 +76,14 @@ public partial class StateMachine : Node
 		{
 			ChangeState(Current.StateType == KeenStates.Pogo ? KeenStates.Air : KeenStates.Pogo);
 		}
+		
+		Current.PhysicsProcess(delta, lastMovementX);
 	}
 
 	private void ChangeState(KeenStates newState)
 	{
-		if (Current.StateType == newState)
+		if (Current.StateType == newState
+			&& newState != KeenStates.Iced)
 		{
 			return;
 		}

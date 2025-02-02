@@ -6,6 +6,8 @@ public partial class GroundState : State
 {
     public override StateMachine.KeenStates StateType => StateMachine.KeenStates.Ground;
 
+	private const float JumpVelocity = -315.0f;
+
 	[Export]
 	private RayCast2D rayCast;
 
@@ -31,8 +33,15 @@ public partial class GroundState : State
 		AnimationTree.Set("parameters/Idle/blend_position", lastMovementX);
 		AnimationTree.Set("parameters/Walk/blend_position", lastMovementX);
 
-		if (Input.IsActionJustPressed("move_jump") || !Character.IsOnFloor())
+		if (Input.IsActionJustPressed("move_jump"))
 		{
+			Character.Velocity = Character.Velocity with { Y = JumpVelocity };
+			NextState = StateMachine.KeenStates.Air;
+			return;
+		}
+		else if (!Character.IsOnFloor())
+		{
+			Character.Velocity = Character.Velocity with { Y = 40 };
 			NextState = StateMachine.KeenStates.Air;
 			return;
 		}

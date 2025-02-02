@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=92 format=3 uid="uid://w7k5amqxc3ac"]
+[gd_resource type="TileSet" load_steps=93 format=3 uid="uid://w7k5amqxc3ac"]
 
 [ext_resource type="Texture2D" uid="uid://65y75605vmla" path="res://sprites/platforms.png" id="1_r57yh"]
 [ext_resource type="Texture2D" uid="uid://de6hjukimt53d" path="res://sprites/hazards.png" id="2_1lutc"]
@@ -42,6 +42,7 @@
 [ext_resource type="PackedScene" uid="uid://c4s3nfrlj432s" path="res://scenes/hazards/IceCannon.tscn" id="37_p48pc"]
 [ext_resource type="PackedScene" uid="uid://cxi7xre6i724l" path="res://scenes/creatures/Yorp/Yorp.tscn" id="38_dnaxu"]
 [ext_resource type="PackedScene" uid="uid://bckllpjewggoc" path="res://scenes/creatures/ButlerRobot/ButlerRobot.tscn" id="39_pyfpv"]
+[ext_resource type="PackedScene" uid="uid://da72qijtsvshh" path="res://scenes/hazards/IceCannon-Left.tscn" id="40_e854q"]
 [ext_resource type="PackedScene" uid="uid://cl5vownp8h5px" path="res://scenes/creatures/TankRobot/TankRobot.tscn" id="40_p1sy7"]
 
 [sub_resource type="TileMapPattern" id="TileMapPattern_v5wra"]
@@ -731,6 +732,7 @@ scenes/4/scene = ExtResource("34_fgaba")
 scenes/5/scene = ExtResource("35_jycm0")
 scenes/6/scene = ExtResource("36_oplpf")
 scenes/7/scene = ExtResource("37_p48pc")
+scenes/8/scene = ExtResource("40_e854q")
 
 [sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_lcvtu"]
 resource_name = "Creatures"
