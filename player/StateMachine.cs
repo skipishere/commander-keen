@@ -55,8 +55,6 @@ public partial class StateMachine : Node
 
     public void PhysicsProcess(double delta, float lastMovementX)
 	{
-		Current.PhysicsProcess(delta, lastMovementX);
-
 		if (forceState.HasValue)
 		{
 			ChangeState(forceState.Value);
@@ -78,6 +76,8 @@ public partial class StateMachine : Node
 		{
 			ChangeState(Current.StateType == KeenStates.Pogo ? KeenStates.Air : KeenStates.Pogo);
 		}
+		
+		Current.PhysicsProcess(delta, lastMovementX);
 	}
 
 	private void ChangeState(KeenStates newState)

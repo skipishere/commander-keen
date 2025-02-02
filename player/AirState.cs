@@ -1,14 +1,9 @@
+using System.Diagnostics;
 using Godot;
 
 public partial class AirState : State
 {
-	private const float JumpVelocity = -315.0f;
-
     public override StateMachine.KeenStates StateType => StateMachine.KeenStates.Air;
-
-    public override void _Ready()
-	{
-	}
 
 	public override void PhysicsProcess(double delta, float lastMovementX)
 	{
@@ -37,12 +32,10 @@ public partial class AirState : State
 		if (Input.IsActionPressed("move_jump") && Character.IsOnFloor())
 		{
 			playback.Travel("Jump");
-			Character.Velocity = Character.Velocity with { Y = JumpVelocity };
 		}
 		else
 		{
 			playback.Travel("Fall");
-			Character.Velocity = Character.Velocity with { Y = 40 };
 		}
 	}
 }
