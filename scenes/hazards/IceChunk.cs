@@ -1,10 +1,8 @@
 using Godot;
-using System;
-using System.Diagnostics;
 
 public partial class IceChunk : StaticBody2D
 {
-	private const int Speed = 50;
+	private const int Speed = 100;
 	private Vector2 direction;
 	private GodotObject origin;
 
@@ -15,7 +13,6 @@ public partial class IceChunk : StaticBody2D
 	{
 		this.GlobalPosition = globalPosition + direction + offset;
 		this.direction = direction;
-		this.Transform = this.Transform with { X = this.Transform.X * (direction.X > 0 ? 1 : -1) };
 		this.origin = origin;
 	}
 	
@@ -28,26 +25,29 @@ public partial class IceChunk : StaticBody2D
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _PhysicsProcess(double delta)
-	{
-		this.GlobalPosition += this.direction * Speed * (float)delta;
-
-		var collision = MoveAndCollide(direction * Speed * (float)delta);
-		if (collision != null)
+    {
+        var collision = MoveAndCollide(direction * Speed * (float)delta);
+        
+		if (collision == null)
+        {
+            return;
+        }
+        
+		switch (collision.GetCollider())
 		{
-			if (collision.GetCollider() is Keen keen)
-			{
-				signalManager.EmitSignal(nameof(SignalManager.KeenFrozen));
-				QueueFree();
-			}
-			else
-			{
+			case Keen keen:
+				signalManager.EmitSignal(nameof(SignalManager.KeenFrozen), direction.X < 0);
+				Done();
+				break;
+
+			default:
 				animationPlayer.Play("break");
 				SetPhysicsProcess(false);
-			}
+				break;
 		}
-	}
+    }
 
-	public void Done()
+    public void Done()
 	{
 		QueueFree();
 	}

@@ -40,5 +40,5 @@ public partial class SignalManager : Node
 	public delegate void HidePlayerEventHandler();
 
 	[Signal]
-	public delegate void KeenFrozenEventHandler();
+	public delegate void KeenFrozenEventHandler(bool leftIceBlock);
 }
