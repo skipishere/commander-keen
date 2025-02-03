@@ -1,5 +1,6 @@
-[gd_scene load_steps=7 format=4 uid="uid://clgf3nyfs2x58"]
+[gd_scene load_steps=11 format=4 uid="uid://clgf3nyfs2x58"]
 
+[ext_resource type="Texture2D" uid="uid://cjtld1yoxxdls" path="res://backgrounds/ice.png" id="1_iyjv7"]
 [ext_resource type="TileSet" uid="uid://w7k5amqxc3ac" path="res://scenes/tile_platform.tres" id="2_2ewsd"]
 [ext_resource type="PackedScene" uid="uid://dqlj2tioeqgqw" path="res://player/keen.tscn" id="3_uks6n"]
 [ext_resource type="AudioStream" uid="uid://du4dvuk7gjjbq" path="res://music/music_jewels.ogg" id="4_6ar5l"]
@@ -9,9 +10,80 @@
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_dnq4n"]
 distance = -9.0
 
+[sub_resource type="Animation" id="Animation_lgf2g"]
+resource_name = "level_exit"
+length = 2.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AudioStreamPlayer:volume_db")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, -80.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CanvasModulate:color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 2.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.97343, 0.978082, 0.989075, 1), Color(0.0242276, 0.0370273, 0.0761815, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_m5hvl"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AudioStreamPlayer:volume_db")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CanvasModulate:color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_negdh"]
+_data = {
+"RESET": SubResource("Animation_m5hvl"),
+"level_exit": SubResource("Animation_lgf2g")
+}
+
 [node name="Level" type="Node2D"]
 metadata/_edit_vertical_guides_ = [-647.0]
 metadata/_edit_horizontal_guides_ = [-390.0]
+
+[node name="Parallax2D" type="Parallax2D" parent="."]
+scroll_scale = Vector2(0.2, 0.1)
+
+[node name="Sprite2D" type="Sprite2D" parent="Parallax2D"]
+z_index = -1
+texture_filter = 6
+position = Vector2(256, 13)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_iyjv7")
 
 [node name="TileMap" type="Node2D" parent="."]
 
@@ -32,7 +104,7 @@ tile_set = ExtResource("2_2ewsd")
 
 [node name="Hazards" type="TileMapLayer" parent="TileMap" groups=["LevelLayers"]]
 use_parent_material = true
-tile_map_data = PackedByteArray("AAADAOv/BgAAAAAABgAsAPX/BgAAAAAABgAuAO3/BgAAAAAABgBJANj/BgAAAAAABgBKANj/BgAAAAAABgAmAPP/BwAAAAAAAQA2AOz/BwAAAAAAAQADAP//AAAIAA0AAAAEAP//AAAIAA0AAAAFAP//AAAIAA0AAAAGAP//AAAIAA0AAAAHAP//AAAIAA0AAAAIAP//AAAIAA0AAAAJAP//AAAIAA0AAAAKAP//AAAIAA0AAAALAP//AAAIAA0AAAAMAP//AAAIAA0AAAANAP//AAAIAA0AAAAOAP//AAAIAA0AAAAPAP//AAAIAA0AAAAQAP//AAAIAA0AAAARAP//AAAIAA0AAAASAP//AAAIAA0AAAATAP//AAAIAA0AAAAUAP//AAAIAA0AAAAVAP//AAAIAA0AAAAWAP//AAAIAA0AAAAXAP//AAAIAA0AAAAYAP//AAAIAA0AAAAZAP//AAAIAA0AAAAaAP//AAAIAA0AAAAkAP//AAAIAA0AAAAjAP//AAAIAA0AAAA9AP//AAAIAA0AAAA+AP//AAAIAA0AAAA/AP//AAAIAA0AAAA7AN//BwAAAAAABAA3AP3/BwAAAAAABAAIAM7/BwAAAAAABAAcAM7/BwAAAAAABAAZANT/BwAAAAAAAwAKANr/BwAAAAAAAwAZAOD/BwAAAAAAAwALAOb/BwAAAAAAAwA=")
+tile_map_data = PackedByteArray("AAADAOv/BgAAAAAABgAsAPX/BgAAAAAABgAuAO3/BgAAAAAABgBJANj/BgAAAAAABgBKANj/BgAAAAAABgAmAPP/BwAAAAAAAQA2AOz/BwAAAAAAAQADAP//AAAIAA0AAAAEAP//AAAIAA0AAAAFAP//AAAIAA0AAAAGAP//AAAIAA0AAAAHAP//AAAIAA0AAAAIAP//AAAIAA0AAAAJAP//AAAIAA0AAAAKAP//AAAIAA0AAAALAP//AAAIAA0AAAAMAP//AAAIAA0AAAANAP//AAAIAA0AAAAOAP//AAAIAA0AAAAPAP//AAAIAA0AAAAQAP//AAAIAA0AAAARAP//AAAIAA0AAAASAP//AAAIAA0AAAATAP//AAAIAA0AAAAUAP//AAAIAA0AAAAVAP//AAAIAA0AAAAWAP//AAAIAA0AAAAXAP//AAAIAA0AAAAYAP//AAAIAA0AAAAZAP//AAAIAA0AAAAaAP//AAAIAA0AAAAkAP//AAAIAA0AAAAjAP//AAAIAA0AAAA9AP//AAAIAA0AAAA+AP//AAAIAA0AAAA/AP//AAAIAA0AAAA7AN//BwAAAAAABAA3AP3/BwAAAAAABAAIAM7/BwAAAAAABAAcAM7/BwAAAAAABAAZANT/BwAAAAAAAwAKANr/BwAAAAAAAwAZAOD/BwAAAAAAAwALAOb/BwAAAAAAAwBDAPT/BwAAAAAAAwBFAPT/BwAAAAAAAwAKANH/BwAAAAAAAwA=")
 tile_set = ExtResource("2_2ewsd")
 
 [node name="Keen" parent="." instance=ExtResource("3_uks6n")]
@@ -50,8 +122,6 @@ shadow_filter_smooth = 4.3
 height = 0.5
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
-visible = false
-color = Color(0.0242276, 0.0370273, 0.0761815, 1)
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_6ar5l")
@@ -71,6 +141,9 @@ script = ExtResource("5_kvpuw")
 position = Vector2(988, -8)
 shape = SubResource("WorldBoundaryShape2D_dnq4n")
 
-[node name="Creatures" type="Node" parent="."]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_negdh")
+}
 
 [connection signal="body_entered" from="Area2D" to="Area2D" method="OnDeathZoneBodyEntered"]
