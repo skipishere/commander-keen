@@ -32,8 +32,7 @@ public partial class raygunShot : StaticBody2D
 		this.origin = origin;
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
+	public override void _PhysicsProcess(double delta)
 	{
 		var modifier = this.zap.Visible ? 0.1f : 1.0f;
 		var shot = MoveAndCollide(direction * SPEED * modifier * (float)delta);
