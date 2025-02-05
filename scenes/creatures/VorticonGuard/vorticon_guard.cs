@@ -91,12 +91,18 @@ public partial class vorticon_guard : CharacterBody2D, ITakeDamage
 		Debug.WriteLine("Vorticon Guard took damage! Health: " + Health);
 		if (Health <= 0)
 		{
-			Debug.WriteLine("Vorticon Guard defeated!");
-			animation.Play("die");
-			this.SetCollisionLayerValue(7, false);
-			this.SetCollisionMaskValue(2, false);
+			Kill();
 		}
 	}
+
+	public void Kill()
+	{
+		Debug.WriteLine("Vorticon Guard defeated!");
+		animation.Play("die");
+		this.SetCollisionLayerValue(7, false);
+		this.SetCollisionMaskValue(2, false);
+	}
+
 
 	public void _on_screen_entered()
 	{
