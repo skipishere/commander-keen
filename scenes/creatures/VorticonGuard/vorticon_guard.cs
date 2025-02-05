@@ -12,8 +12,8 @@ public partial class vorticon_guard : CharacterBody2D, ITakeDamage
 	public const float JumpVelocity = -315.0f;
 	private bool isActivated = false;
 
-
-	private AnimatedSprite2D animation;
+	private AnimationPlayer animation;
+	private Sprite2D sprite;
 	private CollisionShape2D collisionShape;
 
 	private Timer hitTimer;
@@ -22,7 +22,8 @@ public partial class vorticon_guard : CharacterBody2D, ITakeDamage
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		animation = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
+		animation = GetNode<AnimationPlayer>("AnimationPlayer");
+		sprite = GetNode<Sprite2D>("Sprite2D");
 		collisionShape = GetNode<CollisionShape2D>("CollisionShape2D");
 		hitTimer = GetNode<Timer>("HitTimer");
 		signalManager = GetNode<SignalManager>("/root/SignalManager");
@@ -30,7 +31,7 @@ public partial class vorticon_guard : CharacterBody2D, ITakeDamage
 
     private void HitTimeout()
     {
-        (animation.Material as ShaderMaterial).SetShaderParameter("line_thickness", 0);
+        (sprite.Material as ShaderMaterial).SetShaderParameter("line_thickness", 0);
     }
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -84,7 +85,7 @@ public partial class vorticon_guard : CharacterBody2D, ITakeDamage
 
 	public void TakeDamage()
 	{
-		(animation.Material as ShaderMaterial).SetShaderParameter("line_thickness", 1);
+		(sprite.Material as ShaderMaterial).SetShaderParameter("line_thickness", 0.1);
 		hitTimer.Start();
 
 		Health--;
@@ -97,10 +98,10 @@ public partial class vorticon_guard : CharacterBody2D, ITakeDamage
 
 	public void Kill()
 	{
+		Health = 0;
 		Debug.WriteLine("Vorticon Guard defeated!");
 		animation.Play("die");
-		this.SetCollisionLayerValue(7, false);
-		this.SetCollisionMaskValue(2, false);
+		
 	}
 
 
@@ -121,12 +122,4 @@ public partial class vorticon_guard : CharacterBody2D, ITakeDamage
 			QueueFree();
 		}
 	}
-
-	// private void _on_Area2D_body_entered(object body)
-	// {
-	// 	if (body is keen)
-	// 	{
-	// 		signalManager.EmitSignal(nameof(SignalManager.KeenDead));
-	// 	}
-	// }
 }
