@@ -110,6 +110,7 @@ menu_cancel={
 2d_physics/layer_5="Shots"
 2d_physics/layer_6="One Way"
 2d_physics/layer_7="Creatures"
+2d_physics/layer_8="Platforms"
 
 [rendering]
 
