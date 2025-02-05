@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=4 uid="uid://cv8snxwr13t16"]
+
+[ext_resource type="TileSet" uid="uid://w7k5amqxc3ac" path="res://scenes/tile_platform.tres" id="1_orm0b"]
+[ext_resource type="Script" path="res://scenes/environment/StoneBlock.cs" id="1_oyf0d"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qau52"]
+size = Vector2(144, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cx56d"]
+size = Vector2(5, 16)
+
+[node name="StoneBlock" type="CharacterBody2D"]
+collision_mask = 81
+slide_on_ceiling = false
+script = ExtResource("1_oyf0d")
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+tile_map_data = PackedByteArray("AAD7//7/AAAEAAsAAAD7////AAAEAAwAAAD8//7/AAAFAAsAAAD8////AAAFAAwAAAD9//7/AAAFAAsAAAD9////AAAFAAwAAAD+//7/AAAFAAsAAAD+////AAAFAAwAAAD///7/AAAFAAsAAAD/////AAAFAAwAAAAAAP7/AAAFAAsAAAAAAP//AAAFAAwAAAABAP7/AAAFAAsAAAABAP//AAAFAAwAAAACAP7/AAAFAAsAAAACAP//AAAFAAwAAAADAP7/AAAGAAsAAAADAP//AAAGAAwAAAD///3/AAAHAAwAAAA=")
+tile_set = ExtResource("1_orm0b")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-8, -16)
+shape = SubResource("RectangleShape2D_qau52")
+
+[node name="ChainCollision" type="CollisionShape2D" parent="."]
+position = Vector2(-7.5, -40)
+shape = SubResource("RectangleShape2D_cx56d")
+debug_color = Color(0.965396, 4.81307e-07, 0.486949, 0.42)
