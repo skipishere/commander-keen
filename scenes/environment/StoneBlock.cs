@@ -1,6 +1,4 @@
 using Godot;
-using System;
-using System.Diagnostics;
 
 public partial class StoneBlock : CharacterBody2D, ITakeDamage
 {
@@ -19,13 +17,11 @@ public partial class StoneBlock : CharacterBody2D, ITakeDamage
 		animation = GetNode<AnimationPlayer>("AnimationPlayer");
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-		Debug.WriteLine($"StoneBlock on floor {block.IsOnFloor()}");
 		if (isShot && !block.IsOnFloor())
 		{
-			block.Velocity = block.Velocity with { Y = gravity/16 * (float)delta };
+			block.Velocity = block.Velocity with { Y = gravity / 16 * (float)delta };
 			
 			var result = block.MoveAndCollide(block.Velocity);
 			if (result?.GetCollider() is vorticon_guard vorticon)
