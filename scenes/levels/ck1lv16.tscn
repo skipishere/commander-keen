@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=4 uid="uid://7prtjrk6vid2"]
+[gd_scene load_steps=12 format=4 uid="uid://7prtjrk6vid2"]
 
 [ext_resource type="Texture2D" uid="uid://bjrkr2qp53m4q" path="res://backgrounds/ice-lake.png" id="1_07se1"]
 [ext_resource type="TileSet" uid="uid://w7k5amqxc3ac" path="res://scenes/tile_platform.tres" id="1_vri8o"]
@@ -6,6 +6,96 @@
 [ext_resource type="PackedScene" uid="uid://dkpwgxsjkybvs" path="res://scenes/creatures/VorticonGuard/vorticon_guard.tscn" id="4_k5rx6"]
 [ext_resource type="AudioStream" uid="uid://1jeyehjl5pnt" path="res://music/019_seven_and_eight_7-8_combined.mp3" id="5_xd5u4"]
 [ext_resource type="PackedScene" uid="uid://cv8snxwr13t16" path="res://scenes/environment/StoneBlock.tscn" id="6_4rsto"]
+
+[sub_resource type="Gradient" id="Gradient_f12m8"]
+offsets = PackedFloat32Array(0.496042, 1)
+colors = PackedColorArray(0, 0, 0, 1, 1, 1, 1, 0.00784314)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_70ejo"]
+gradient = SubResource("Gradient_f12m8")
+
+[sub_resource type="Animation" id="Animation_2toxg"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DirectionalLight2D:energy")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CanvasModulate:color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.625597, 0.625597, 0.625597, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AudioStreamPlayer:volume_db")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_c4r02"]
+resource_name = "level_exit"
+length = 2.2
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DirectionalLight2D:energy")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 1.2)
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CanvasModulate:color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 2.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.625597, 0.625597, 0.625597, 1), Color(0, 0, 0, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AudioStreamPlayer:volume_db")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 2.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, -80.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_n6xnt"]
+_data = {
+"RESET": SubResource("Animation_2toxg"),
+"level_exit": SubResource("Animation_c4r02")
+}
 
 [node name="Level" type="Node2D"]
 metadata/_edit_vertical_guides_ = [-647.0]
@@ -19,6 +109,13 @@ z_index = -1
 position = Vector2(256, -16)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("1_07se1")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = -1
+position = Vector2(895.608, -829.618)
+rotation = 1.5708
+scale = Vector2(1.8522, 1814.21)
+texture = SubResource("GradientTexture1D_70ejo")
 
 [node name="TileMap" type="Node2D" parent="."]
 
@@ -71,3 +168,9 @@ bus = &"Music"
 
 [node name="StoneBlock" parent="." instance=ExtResource("6_4rsto")]
 position = Vector2(1520, -896)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_n6xnt")
+}
+
