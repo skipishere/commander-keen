@@ -90,6 +90,17 @@ tracks/2/keys = {
 "update": 0,
 "values": [0.0, -80.0]
 }
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Keen")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(),
+"transitions": PackedFloat32Array(),
+"values": []
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_n6xnt"]
 _data = {
@@ -172,4 +183,3 @@ position = Vector2(1520, -896)
 libraries = {
 "": SubResource("AnimationLibrary_n6xnt")
 }
-
