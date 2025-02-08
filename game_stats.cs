@@ -40,7 +40,25 @@ public partial class game_stats : Resource
 
     public static bool UsedSecretExit = false;
 
-    public static bool HasPogoStick = false;
+    public static PogoStickState HasPogoStick = PogoStickState.No;
+
+    public static int Lives = 5;
+
+    public enum PogoStickState
+    {
+        /// <summary>
+        /// Keen does not have the pogo stick yet.
+        /// </summary>
+        No,
+        /// <summary>
+        /// Keen got the pogo stick in the current level so will lose it if they die.
+        /// </summary>
+        Gained,
+        /// <summary>
+        /// Keen got the pogo stick in a previous level and still has it.
+        /// </summary>
+        Keep
+    }
 
     public static void Reset()
     {
@@ -48,8 +66,9 @@ public partial class game_stats : Resource
         CollectedParts = 0;
         KeenMapPosition = null;
         Score = 0;
-        HasPogoStick = false;
+        HasPogoStick = PogoStickState.No;
         Levels.Clear();
+        Lives = 5;
     }
 
     public static void SetPart(ShipParts part)

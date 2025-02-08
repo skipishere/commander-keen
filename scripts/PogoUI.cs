@@ -14,6 +14,6 @@ public partial class PogoUI : HBoxContainer
 
     private void OnPogoStick()
     {
-        (pogo.Material as ShaderMaterial).SetShaderParameter("enable", false);
+        (pogo.Material as ShaderMaterial).SetShaderParameter("enable", game_stats.HasPogoStick == game_stats.PogoStickState.No);
     }
 }
