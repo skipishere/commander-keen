@@ -18,25 +18,22 @@ public partial class ShipPartsUI : HBoxContainer
 		
 		signalManager = GetNode<SignalManager>("/root/SignalManager");
 		signalManager.ShipPart += OnShipPart;
-		
 	}
 
-	private void OnShipPart(game_stats.ShipParts shipPart)
+	private void OnShipPart()
     {
-		Update(shipPart, true);
-    }
-
-	private void Update(game_stats.ShipParts shipPart, bool collected)
-	{
-		TextureRect part = shipPart switch
+		foreach (game_stats.ShipParts part in Enum.GetValues(typeof(game_stats.ShipParts)))
 		{
-			game_stats.ShipParts.Battery => battery,
-			game_stats.ShipParts.JoyStick => joystick,
-			game_stats.ShipParts.Vaccum => vaccum,
-			game_stats.ShipParts.Fuel => fuel,
-			_ => null
-		};
+			TextureRect ui = part switch
+			{
+				game_stats.ShipParts.Battery => battery,
+				game_stats.ShipParts.JoyStick => joystick,
+				game_stats.ShipParts.Vaccum => vaccum,
+				game_stats.ShipParts.Fuel => fuel,
+				_ => null
+			};
 
-		(part.Material as ShaderMaterial).SetShaderParameter("enable", !collected);
-	}
+			(ui.Material as ShaderMaterial).SetShaderParameter("enable", !game_stats.CollectedParts.HasFlag(part));
+		}
+    }
 }
