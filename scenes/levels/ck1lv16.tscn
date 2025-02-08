@@ -149,14 +149,13 @@ Health = 99
 [node name="DirectionalLight2D" type="DirectionalLight2D" parent="."]
 rotation = -0.324631
 color = Color(0.470076, 0.470076, 0.470076, 1)
-energy = 1.89
 shadow_enabled = true
 shadow_color = Color(0, 0.129412, 0.6, 0)
 shadow_filter = 2
 shadow_filter_smooth = 4.3
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
-color = Color(0.427493, 0.427493, 0.427493, 1)
+color = Color(0.625597, 0.625597, 0.625597, 1)
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_xd5u4")
