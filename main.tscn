@@ -1,10 +1,12 @@
-[gd_scene load_steps=38 format=3 uid="uid://c8br7khwthjke"]
+[gd_scene load_steps=40 format=3 uid="uid://c8br7khwthjke"]
 
 [ext_resource type="Script" path="res://Main.cs" id="1_fj1c2"]
 [ext_resource type="Theme" uid="uid://c5qb3k1thqbgm" path="res://textures/game_stats_ui_theme.tres" id="2_hh658"]
 [ext_resource type="Script" path="res://scripts/UiPanel.cs" id="3_4bkst"]
+[ext_resource type="Script" path="res://scripts/LivesUI.cs" id="4_k8eph"]
 [ext_resource type="Texture2D" uid="uid://b74gl7bkvx1fg" path="res://sprites/rayguns.png" id="5_inty1"]
 [ext_resource type="Script" path="res://scripts/KeyCardsUI.cs" id="6_6ws7r"]
+[ext_resource type="AudioStream" uid="uid://bmif60f0af387" path="res://sfx/Upper01.ogg" id="6_c3hb6"]
 [ext_resource type="Texture2D" uid="uid://d1yg7xwui2p68" path="res://sprites/keen-map.png" id="6_g8taa"]
 [ext_resource type="Script" path="res://scripts/ShipPartsUI.cs" id="7_55jvb"]
 [ext_resource type="Shader" path="res://shaders/greyscale.gdshader" id="7_w6eim"]
@@ -135,6 +137,7 @@ layout_mode = 2
 [node name="Lives" type="HBoxContainer" parent="UI/UiPanel/HBoxContainer"]
 layout_mode = 2
 theme_override_constants/separation = 0
+script = ExtResource("4_k8eph")
 
 [node name="Icon" type="TextureRect" parent="UI/UiPanel/HBoxContainer/Lives"]
 layout_mode = 2
@@ -147,6 +150,10 @@ layout_mode = 2
 text = "00"
 label_settings = SubResource("LabelSettings_hq561")
 vertical_alignment = 1
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="UI/UiPanel/HBoxContainer/Lives"]
+stream = ExtResource("6_c3hb6")
+bus = &"Sound Effects"
 
 [node name="Key cards" type="HBoxContainer" parent="UI/UiPanel/HBoxContainer"]
 layout_mode = 2
