@@ -1,6 +1,4 @@
 using Godot;
-using System;
-using System.Diagnostics;
 
 public partial class ShipItem : Area2D
 {
@@ -27,7 +25,7 @@ public partial class ShipItem : Area2D
 			game_stats.Score += Points;
 			game_stats.SetPart(ShipPart);
 			audioStreamPlayer.Play();
-			signalManager.EmitSignal(nameof(SignalManager.ShipPart), (int)ShipPart);
+			signalManager.EmitSignal(nameof(SignalManager.ShipPart));
 			signalManager.EmitSignal(nameof(SignalManager.ScoreChanged));
 			
 			var tween = GetTree().CreateTween();

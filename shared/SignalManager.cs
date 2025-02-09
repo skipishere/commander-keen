@@ -22,7 +22,7 @@ public partial class SignalManager : Node
 	public delegate void KeyCardEventHandler(game_stats.KeyCards keyCard, bool collected);
 
 	[Signal]
-	public delegate void ShipPartEventHandler(game_stats.ShipParts shipPart);
+	public delegate void ShipPartEventHandler();
 
 	[Signal]
 	public delegate void ScoreChangedEventHandler();

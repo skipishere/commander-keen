@@ -111,7 +111,7 @@ public partial class Keen : CharacterBody2D, ITakeDamage
 		GiveKey(game_stats.KeyCards.Red);
 		GiveKey(game_stats.KeyCards.Yellow);
 
-		game_stats.HasPogoStick = true;
+		game_stats.HasPogoStick = game_stats.PogoStickState.Keep;
 		game_stats.Charges = 100;
 	}
 }

@@ -17,9 +17,12 @@ public partial class PogoStick : Area2D
 		if (body is Keen)
 		{
 			this.SetDeferred("monitoring", false);
-			signalManager.EmitSignal(nameof(SignalManager.PogoStick));
-			game_stats.HasPogoStick = true;
 			audioStreamPlayer.Play();
+			if (game_stats.HasPogoStick == game_stats.PogoStickState.No)
+			{
+				game_stats.HasPogoStick = game_stats.PogoStickState.Gained;
+				signalManager.EmitSignal(nameof(SignalManager.PogoStick));
+			}
 			
 			var tween = GetTree().CreateTween();
 			tween.Parallel().TweenProperty(this, "scale", new Vector2(4, 4), 1f);
