@@ -1,9 +1,10 @@
-[gd_scene load_steps=75 format=3 uid="uid://dqlj2tioeqgqw"]
+[gd_scene load_steps=76 format=3 uid="uid://dqlj2tioeqgqw"]
 
 [ext_resource type="Script" path="res://player/Keen.cs" id="1_othw7"]
 [ext_resource type="PackedScene" uid="uid://bgl2fe5um74f0" path="res://scenes/raygunShot.tscn" id="2_eenmn"]
 [ext_resource type="Script" path="res://player/Camera.cs" id="3_6odgb"]
 [ext_resource type="Texture2D" uid="uid://daoeamcib3t14" path="res://sprites/keen-level.png" id="4_6f3kv"]
+[ext_resource type="Script" path="res://player/StartLevelState.cs" id="5_5qh44"]
 [ext_resource type="Script" path="res://player/AirState.cs" id="6_01e1i"]
 [ext_resource type="Script" path="res://player/StateMachine.cs" id="6_orb7g"]
 [ext_resource type="Script" path="res://player/ShootState.cs" id="7_82reb"]
@@ -13,10 +14,6 @@
 [ext_resource type="PackedScene" uid="uid://b0mxidil3h22p" path="res://player/DeadKeen.tscn" id="10_sb2rb"]
 [ext_resource type="Script" path="res://player/PogoState.cs" id="12_tvnsi"]
 [ext_resource type="Script" path="res://player/IcedState.cs" id="13_xq2mm"]
-
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1a8jn"]
-radius = 6.5
-height = 23.0
 
 [sub_resource type="Animation" id="Animation_uybu3"]
 length = 0.001
@@ -609,6 +606,10 @@ states/thaw/position = Vector2(295, -3)
 transitions = ["Idle", "Walk", SubResource("AnimationNodeStateMachineTransition_q2fpk"), "Walk", "Idle", SubResource("AnimationNodeStateMachineTransition_ff2bv"), "Start", "Idle", SubResource("AnimationNodeStateMachineTransition_k1dgt"), "Walk", "Jump", SubResource("AnimationNodeStateMachineTransition_cc5hf"), "Jump", "Fall", SubResource("AnimationNodeStateMachineTransition_b2dt0"), "Fall", "Idle", SubResource("AnimationNodeStateMachineTransition_kd01o"), "Walk", "Fall", SubResource("AnimationNodeStateMachineTransition_w1o8n"), "Idle", "Jump", SubResource("AnimationNodeStateMachineTransition_pid7q"), "Pogo", "Pogo-Ground", SubResource("AnimationNodeStateMachineTransition_ertx3"), "Pogo-Ground", "Pogo", SubResource("AnimationNodeStateMachineTransition_eymxq"), "frozen", "thaw", SubResource("AnimationNodeStateMachineTransition_moxdp"), "thaw", "Idle", SubResource("AnimationNodeStateMachineTransition_qnwc5")]
 graph_offset = Vector2(-323, -203)
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1a8jn"]
+radius = 6.5
+height = 24.0
+
 [node name="Keen" type="CharacterBody2D" groups=["Player"]]
 z_index = 1
 position = Vector2(0, -12)
@@ -616,9 +617,6 @@ collision_layer = 2
 collision_mask = 173
 slide_on_ceiling = false
 script = ExtResource("1_othw7")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CapsuleShape2D_1a8jn")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -646,17 +644,28 @@ parameters/Shoot/blend_position = 0
 parameters/Walk/blend_position = 0.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(0, -1)
+position = Vector2(-9, -13)
 texture = ExtResource("4_6f3kv")
+centered = false
 hframes = 31
-region_enabled = true
 region_rect = Rect2(0, 0, 527, 25)
-region_filter_clip_enabled = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1, 0)
+shape = SubResource("CapsuleShape2D_1a8jn")
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("character", "animationTree")]
 script = ExtResource("6_orb7g")
 character = NodePath("..")
 animationTree = NodePath("../AnimationTree")
+
+[node name="StartLevel" type="Node" parent="StateMachine"]
+script = ExtResource("5_5qh44")
+
+[node name="Timer" type="Timer" parent="StateMachine/StartLevel"]
+wait_time = 0.25
+one_shot = true
+autostart = true
 
 [node name="Ground" type="Node" parent="StateMachine" node_paths=PackedStringArray("rayCast")]
 script = ExtResource("7_kbmoq")
@@ -689,4 +698,5 @@ one_shot = true
 
 [connection signal="tree_exited" from="." to="." method="OnTreeExited"]
 [connection signal="tree_exiting" from="StateMachine" to="StateMachine" method="Unload"]
+[connection signal="timeout" from="StateMachine/StartLevel/Timer" to="StateMachine/StartLevel" method="DelayInput"]
 [connection signal="timeout" from="StateMachine/Iced/Timer" to="StateMachine/Iced" method="Thaw"]

@@ -7,6 +7,7 @@ public partial class StateMachine : Node
 {
 	public enum KeenStates
 	{
+		StartLevel,
 		Ground,
 		Air,
 		Shoot,

@@ -29,10 +29,11 @@ public partial class LevelPortal : Area2D
 		}
 	}
 
-	public override void _Process(double delta)
+	public override void _PhysicsProcess(double delta)
 	{
 		if (inRange && Input.IsActionJustReleased("move_jump"))
 		{
+			GetViewport().SetInputAsHandled();
 			signalManager.EmitSignal(nameof(SignalManager.EnteringLevel), this.Target.ResourcePath);
 		}
 	}
