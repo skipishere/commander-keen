@@ -15,6 +15,6 @@ public partial class ScoreUI : HBoxContainer
 
     private void OnScoreChanged()
     {
-        score.Text = game_stats.Score.ToString("00,0");
+        score.Text = game_stats.Score.ToString("#,0");
     }
 }

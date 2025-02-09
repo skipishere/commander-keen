@@ -41,4 +41,7 @@ public partial class SignalManager : Node
 
 	[Signal]
 	public delegate void KeenFrozenEventHandler(bool leftIceBlock);
+
+	[Signal]
+	public delegate void KeenGainedLifeEventHandler();
 }

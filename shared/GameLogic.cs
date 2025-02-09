@@ -21,7 +21,19 @@ public partial class GameLogic : Node
         signalManager.KeenDead += OnKeenDead;
         signalManager.ExitingLevel += OnExitingLevel;
         signalManager.EnteringLevel += OnEnteringLevel;
+        signalManager.ScoreChanged += OnScoreChanged;
     }
+
+    private void OnScoreChanged()
+    {
+        if (game_stats.Score >= game_stats.NextKeenScore)
+        {
+            game_stats.Lives++;
+            game_stats.NextKeenScore += 20000;
+            signalManager.EmitSignal(nameof(SignalManager.KeenGainedLife));
+        }
+    }
+
 
     private void OnEnteringLevel(string levelResource)
     {

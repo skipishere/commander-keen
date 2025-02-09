@@ -28,6 +28,8 @@ public partial class game_stats : Resource
     
     public static int Score = 0;
 
+    public static int NextKeenScore = 20000;
+
     public static int Charges = 0;
 
     public static bool ShowUI = true;

@@ -17,6 +17,7 @@
 # Sound Effects:
 - Rise01.aif - https://opengameart.org/content/level-up-power-up-coin-get-13-sounds
 - Rise05.aif - https://opengameart.org/content/level-up-power-up-coin-get-13-sounds
+- Upper01.aif - https://opengameart.org/content/level-up-power-up-coin-get-13-sounds
 - game_over_bad_chest.wav - https://opengameart.org/content/game-over-bad-chest-sfx
 - wave2.wav - https://opengameart.org/content/warp-sound-2
 - Kim Lightyear - Whistle.wav - https://opengameart.org/content/whistle
