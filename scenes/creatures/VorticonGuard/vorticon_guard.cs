@@ -85,7 +85,7 @@ public partial class vorticon_guard : CharacterBody2D, ITakeDamage
 
 	public void TakeDamage()
 	{
-		(sprite.Material as ShaderMaterial).SetShaderParameter("line_thickness", 0.1);
+		(sprite.Material as ShaderMaterial).SetShaderParameter("line_thickness", 1);
 		hitTimer.Start();
 
 		Health--;
