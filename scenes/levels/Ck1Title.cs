@@ -22,6 +22,7 @@ public partial class Ck1Title : Node2D
 
 	public void Continue()
 	{
+		// Duplicate loading code from GameLogic.cs, todo deduplicate.
 		var file = FileAccess.Open("user://savegame.save", FileAccess.ModeFlags.Read);
 		var savedata = file.GetAsText();
 		var json = new Json();

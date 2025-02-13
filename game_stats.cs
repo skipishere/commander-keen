@@ -37,8 +37,6 @@ public partial class game_stats : Resource
 
     public static string CurrentLevel = string.Empty;
 
-    //public static Vector2? KeenMapPosition;
-
     public static Dictionary<string, bool> Levels = new();
 
     public static bool UsedSecretExit = false;
@@ -67,7 +65,6 @@ public partial class game_stats : Resource
     {
         Charges = 0;
         CollectedParts = 0;
-        //KeenMapPosition = null;
         Score = 0;
         HasPogoStick = PogoStickState.No;
         Levels.Clear();
