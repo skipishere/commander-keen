@@ -16,6 +16,7 @@
 [ext_resource type="Script" path="res://scripts/ScoreUI.cs" id="10_u2dbf"]
 [ext_resource type="PackedScene" uid="uid://c85ufn8742tq3" path="res://scenes/levels/ck1-overworld.tscn" id="12_4f0w2"]
 [ext_resource type="PackedScene" uid="uid://cawbouv50vedq" path="res://ui/Dialog.tscn" id="13_rgeja"]
+[ext_resource type="PackedScene" uid="uid://bkeq2is7jqiil" path="res://ui/Pause.tscn" id="17_rs41h"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_m005y"]
 atlas = ExtResource("6_g8taa")
@@ -113,13 +114,9 @@ filter_clip = true
 [sub_resource type="LabelSettings" id="LabelSettings_xwr53"]
 font_size = 7
 
-[sub_resource type="CanvasTexture" id="CanvasTexture_tx5cv"]
-
-[node name="Main" type="Node" node_paths=PackedStringArray("saveButton", "DefaultButton")]
+[node name="Main" type="Node"]
 process_mode = 3
 script = ExtResource("1_fj1c2")
-saveButton = NodePath("Pause Menu/PanelContainer/VBoxContainer/Save")
-DefaultButton = NodePath("Pause Menu/PanelContainer/VBoxContainer/Resume")
 
 [node name="UI" type="CanvasLayer" parent="."]
 process_mode = 1
@@ -283,53 +280,6 @@ visible = false
 
 [node name="Pause Menu" type="CanvasLayer" parent="."]
 process_mode = 2
+
+[node name="PanelContainer" parent="Pause Menu" instance=ExtResource("17_rs41h")]
 visible = false
-
-[node name="PanelContainer" type="PanelContainer" parent="Pause Menu"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -49.5
-offset_top = -42.0
-offset_right = 49.5
-offset_bottom = 42.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="TextureRect" type="TextureRect" parent="Pause Menu/PanelContainer"]
-layout_mode = 2
-texture = SubResource("CanvasTexture_tx5cv")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Pause Menu/PanelContainer"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="Pause Menu/PanelContainer/VBoxContainer"]
-layout_mode = 2
-text = "Game
-Paused"
-horizontal_alignment = 1
-
-[node name="Save" type="Button" parent="Pause Menu/PanelContainer/VBoxContainer"]
-layout_mode = 2
-focus_neighbor_top = NodePath("../Resume")
-theme_override_font_sizes/font_size = 8
-text = "Save"
-
-[node name="Load" type="Button" parent="Pause Menu/PanelContainer/VBoxContainer"]
-layout_mode = 2
-focus_next = NodePath("../Resume")
-focus_previous = NodePath("../Save")
-theme_override_font_sizes/font_size = 8
-text = "Load"
-
-[node name="Resume" type="Button" parent="Pause Menu/PanelContainer/VBoxContainer"]
-layout_mode = 2
-focus_neighbor_bottom = NodePath("../Save")
-theme_override_font_sizes/font_size = 8
-text = "Resume"
-
-[connection signal="pressed" from="Pause Menu/PanelContainer/VBoxContainer/Save" to="." method="SaveFile"]
-[connection signal="pressed" from="Pause Menu/PanelContainer/VBoxContainer/Load" to="." method="LoadFile"]
-[connection signal="pressed" from="Pause Menu/PanelContainer/VBoxContainer/Resume" to="." method="Resume"]

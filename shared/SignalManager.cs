@@ -44,4 +44,7 @@ public partial class SignalManager : Node
 
 	[Signal]
 	public delegate void KeenGainedLifeEventHandler();
+
+	[Signal]
+	public delegate void PauseMenuEventHandler(bool paused, bool showSaveButton);
 }
