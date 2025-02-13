@@ -10,6 +10,7 @@ public partial class PogoUI : HBoxContainer
 		signalManager = GetNode<SignalManager>("/root/SignalManager");
 		pogo = GetNode<TextureRect>("Pogo");
 		signalManager.PogoStick += OnPogoStick;
+        signalManager.ResetUi += OnPogoStick;
 	}
 
     private void OnPogoStick()

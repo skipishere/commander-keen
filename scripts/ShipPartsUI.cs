@@ -18,6 +18,7 @@ public partial class ShipPartsUI : HBoxContainer
 		
 		signalManager = GetNode<SignalManager>("/root/SignalManager");
 		signalManager.ShipPart += OnShipPart;
+		signalManager.ResetUi += OnShipPart;
 	}
 
 	private void OnShipPart()

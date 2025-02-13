@@ -69,6 +69,11 @@ public partial class Pause : PanelContainer
 		// TODO sort out the UI reset
 		signalManager.EmitSignal(nameof(SignalManager.ResetUi));
 		
+		if (!saveButton.Visible)
+		{
+			signalManager.EmitSignal(nameof(SignalManager.ExitingLevel));
+		}
+		
 		Resume();
     }
 
