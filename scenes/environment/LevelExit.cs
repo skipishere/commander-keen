@@ -14,7 +14,7 @@ public partial class LevelExit : Area2D
 
 	private void ExitStart()
 	{
-		var exitPlayer = GetTree().CurrentScene.GetNode<AnimationPlayer>("/root/Main/Level/AnimationPlayer");
+		var exitPlayer = GetTree().CurrentScene.GetNodeOrNull<AnimationPlayer>("/root/Main/Level/AnimationPlayer");
 		exitPlayer?.Play("level_exit");
 	}
 
