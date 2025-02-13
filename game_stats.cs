@@ -37,7 +37,7 @@ public partial class game_stats : Resource
 
     public static string CurrentLevel = string.Empty;
 
-    public static Vector2? KeenMapPosition;
+    //public static Vector2? KeenMapPosition;
 
     public static Dictionary<string, bool> Levels = new();
 
@@ -67,7 +67,7 @@ public partial class game_stats : Resource
     {
         Charges = 0;
         CollectedParts = 0;
-        KeenMapPosition = null;
+        //KeenMapPosition = null;
         Score = 0;
         HasPogoStick = PogoStickState.No;
         Levels.Clear();
@@ -88,9 +88,9 @@ public partial class game_stats : Resource
             { "charges", Charges },
             { "show_ui", ShowUI },
             { "current_level", CurrentLevel },
-            { "keen_map_position_x", KeenMapPosition?.X.ToString() },
-            { "keen_map_position_y", KeenMapPosition?.Y.ToString() },
-            { "levels", Levels.ToString() },
+            { "keen_map_position_x", OverworldKeen.mapPosition?.X.ToString()  },
+            { "keen_map_position_y", OverworldKeen.mapPosition?.Y.ToString() },
+            { "levels", Levels.Select(x => $"{x.Key.Replace("res://scenes/", "")}={x.Value}").Aggregate((x, y) => $"{x},{y}") },
             { "lives", Lives },
             { "collected_parts", (int)CollectedParts },
             { "has_pogo_stick", (int)HasPogoStick }
@@ -106,8 +106,8 @@ public partial class game_stats : Resource
         Charges = (int)dict["charges"];
         ShowUI = (bool)dict["show_ui"];
         CurrentLevel = (string)dict["current_level"];
-        //KeenMapPosition = new Vector2(float.Parse((string)dict["keen_map_position_x"]), float.Parse((string)dict["keen_map_position_y"]));
-        //Levels = dict["levels"].ToString().Split(',').ToDictionary(x => x.Split('=')[0], x => bool.Parse(x.Split('=')[1]));
+        OverworldKeen.mapPosition = new Vector2(float.Parse((string)dict["keen_map_position_x"]), float.Parse((string)dict["keen_map_position_y"]));
+        Levels = dict["levels"].ToString().Split(',').ToDictionary(x => "res://scenes/" + x.Split('=')[0], x => bool.Parse(x.Split('=')[1]));
         Lives = (int)dict["lives"];
         CollectedParts = (ShipParts)(int)dict["collected_parts"];
         HasPogoStick = (PogoStickState)(int)dict["has_pogo_stick"];
