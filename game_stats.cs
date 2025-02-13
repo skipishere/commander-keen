@@ -2,6 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 
 [GlobalClass]
 public partial class game_stats : Resource
@@ -76,5 +77,39 @@ public partial class game_stats : Resource
     public static void SetPart(ShipParts part)
     {
         CollectedParts |= part;
+    }
+
+    public static Godot.Collections.Dictionary<string, Variant> Save()
+    {
+        var dict = new Godot.Collections.Dictionary<string, Variant>
+        {
+            { "score", Score },
+            { "next_keen_score", NextKeenScore },
+            { "charges", Charges },
+            { "show_ui", ShowUI },
+            { "current_level", CurrentLevel },
+            { "keen_map_position_x", KeenMapPosition?.X.ToString() },
+            { "keen_map_position_y", KeenMapPosition?.Y.ToString() },
+            { "levels", Levels.ToString() },
+            { "lives", Lives },
+            { "collected_parts", (int)CollectedParts },
+            { "has_pogo_stick", (int)HasPogoStick }
+        };
+
+        return dict;
+    }
+
+    public static void Load(Godot.Collections.Dictionary<string, Variant> dict)
+    {
+        Score = (int)dict["score"];
+        NextKeenScore = (int)dict["next_keen_score"];
+        Charges = (int)dict["charges"];
+        ShowUI = (bool)dict["show_ui"];
+        CurrentLevel = (string)dict["current_level"];
+        //KeenMapPosition = new Vector2(float.Parse((string)dict["keen_map_position_x"]), float.Parse((string)dict["keen_map_position_y"]));
+        //Levels = dict["levels"].ToString().Split(',').ToDictionary(x => x.Split('=')[0], x => bool.Parse(x.Split('=')[1]));
+        Lives = (int)dict["lives"];
+        CollectedParts = (ShipParts)(int)dict["collected_parts"];
+        HasPogoStick = (PogoStickState)(int)dict["has_pogo_stick"];
     }
 }
