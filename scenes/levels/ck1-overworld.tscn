@@ -302,6 +302,7 @@ tile_map_data = PackedByteArray("AAAKAPX/AAAHAAsAAAABAPL/AAAMAAQAAAABAOr/AAAMAAQ
 tile_set = SubResource("TileSet_wwp2b")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+process_mode = 3
 stream = ExtResource("4_j3uft")
 volume_db = -40.0
 autoplay = true
