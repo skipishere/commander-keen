@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=3 uid="uid://c8br7khwthjke"]
+[gd_scene load_steps=41 format=3 uid="uid://c8br7khwthjke"]
 
 [ext_resource type="Script" path="res://Main.cs" id="1_fj1c2"]
 [ext_resource type="Theme" uid="uid://c5qb3k1thqbgm" path="res://textures/game_stats_ui_theme.tres" id="2_hh658"]
@@ -16,6 +16,7 @@
 [ext_resource type="Script" path="res://scripts/ScoreUI.cs" id="10_u2dbf"]
 [ext_resource type="PackedScene" uid="uid://c85ufn8742tq3" path="res://scenes/levels/ck1-overworld.tscn" id="12_4f0w2"]
 [ext_resource type="PackedScene" uid="uid://cawbouv50vedq" path="res://ui/Dialog.tscn" id="13_rgeja"]
+[ext_resource type="PackedScene" uid="uid://bkeq2is7jqiil" path="res://ui/Pause.tscn" id="17_rs41h"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_m005y"]
 atlas = ExtResource("6_g8taa")
@@ -114,9 +115,11 @@ filter_clip = true
 font_size = 7
 
 [node name="Main" type="Node"]
+process_mode = 3
 script = ExtResource("1_fj1c2")
 
 [node name="UI" type="CanvasLayer" parent="."]
+process_mode = 1
 
 [node name="UiPanel" type="PanelContainer" parent="UI"]
 custom_minimum_size = Vector2(0, 18)
@@ -273,4 +276,10 @@ justification_flags = 128
 process_mode = 2
 
 [node name="Dialog" parent="Dialog" instance=ExtResource("13_rgeja")]
+visible = false
+
+[node name="Pause Menu" type="CanvasLayer" parent="."]
+process_mode = 2
+
+[node name="PanelContainer" parent="Pause Menu" instance=ExtResource("17_rs41h")]
 visible = false

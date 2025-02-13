@@ -23,7 +23,7 @@ public partial class Dialog : Control
 
     public override void _Process(double delta)
 	{
-		if (Input.IsActionJustPressed("show_ui"))
+		if (Input.IsActionJustPressed("show_ui") && this.Visible)
 		{
 			this.Visible = false;
 			GetTree().Paused = false;

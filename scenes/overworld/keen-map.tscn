@@ -300,6 +300,7 @@ states/teleporting/position = Vector2(328, 179)
 transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_ca5yw"), "Idle", "Walk", SubResource("AnimationNodeStateMachineTransition_hw527"), "Walk", "Idle", SubResource("AnimationNodeStateMachineTransition_sinu2"), "Idle", "teleporting", SubResource("AnimationNodeStateMachineTransition_nwnwq"), "teleporting", "Idle", SubResource("AnimationNodeStateMachineTransition_klbmc"), "Walk", "teleporting", SubResource("AnimationNodeStateMachineTransition_l500t")]
 
 [node name="Keen-map" type="CharacterBody2D" node_paths=PackedStringArray("AnimationTree")]
+process_mode = 1
 motion_mode = 1
 script = ExtResource("1_rb72l")
 AnimationTree = NodePath("AnimationTree")

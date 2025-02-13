@@ -34,7 +34,21 @@ public partial class OverworldKeen : CharacterBody2D
 		signalManager.TeleportStart += OnTeleportStart;
 		signalManager.TeleportComplete += OnTeleportComplete;
 		signalManager.EnteringLevel += OnEnteringLevel;
+		signalManager.ResetUi += SetKeenPosition;
 
+		SetKeenPosition();
+	}
+
+    public override void _ExitTree()
+    {
+        signalManager.TeleportStart -= OnTeleportStart;
+		signalManager.TeleportComplete -= OnTeleportComplete;
+		signalManager.EnteringLevel -= OnEnteringLevel;
+		signalManager.ResetUi -= SetKeenPosition;
+    }
+
+    private void SetKeenPosition()
+	{
 		Debug.Print($"OverworldKeen has {mapPosition}.");
 		if (mapPosition.HasValue)
 		{
@@ -103,5 +117,6 @@ public partial class OverworldKeen : CharacterBody2D
 		var yLimit = Mathf.Clamp(this.GlobalPosition.Y, camera.LimitTop, camera.LimitBottom - height);
 		
 		this.GlobalPosition = this.GlobalPosition with { X = xLimit, Y = yLimit};
+		mapPosition = this.Position;
 	}
 }

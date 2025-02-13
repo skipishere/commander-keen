@@ -70,4 +70,5 @@ autoplay = true
 bus = &"Music"
 
 [connection signal="pressed" from="CanvasLayer/PanelContainer/VBoxContainer/New" to="." method="NewGame"]
+[connection signal="pressed" from="CanvasLayer/PanelContainer/VBoxContainer/Continue" to="." method="Continue"]
 [connection signal="pressed" from="CanvasLayer/PanelContainer/VBoxContainer/Quit" to="." method="QuitGame"]
