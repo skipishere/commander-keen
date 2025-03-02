@@ -46,6 +46,12 @@ focus_previous = NodePath("../Save")
 theme_override_font_sizes/font_size = 8
 text = "Load"
 
+[node name="Quit" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+focus_neighbor_bottom = NodePath("../Save")
+theme_override_font_sizes/font_size = 8
+text = "Main menu"
+
 [node name="Resume" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 focus_neighbor_bottom = NodePath("../Save")
@@ -54,4 +60,5 @@ text = "Resume"
 
 [connection signal="pressed" from="VBoxContainer/Save" to="." method="SaveFile"]
 [connection signal="pressed" from="VBoxContainer/Load" to="." method="LoadFile"]
+[connection signal="pressed" from="VBoxContainer/Quit" to="." method="Quit"]
 [connection signal="pressed" from="VBoxContainer/Resume" to="." method="Resume"]

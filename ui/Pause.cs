@@ -11,11 +11,16 @@ public partial class Pause : PanelContainer
 
 	private SignalManager signalManager;
 
-	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		signalManager = GetNode<SignalManager>("/root/SignalManager");
 		signalManager.PauseMenu += OnPauseMenu;
+	}
+
+	public override void _ExitTree()
+	{
+		base._ExitTree();
+		signalManager.PauseMenu -= OnPauseMenu;
 	}
 
     private void OnPauseMenu(bool paused, bool showSaveButton)
@@ -29,11 +34,6 @@ public partial class Pause : PanelContainer
 			DefaultButton.GrabFocus();
 		}
     }
-
-    // Called every frame. 'delta' is the elapsed time since the previous frame.
-    public override void _Process(double delta)
-	{
-	}
 
 	public void SaveFile()
     {
@@ -76,6 +76,13 @@ public partial class Pause : PanelContainer
 		
 		Resume();
     }
+
+	public void Quit()
+	{
+		//TODO add a confirmation dialog
+		OnPauseMenu(false, false);
+		GetTree().ChangeSceneToFile("res://scenes/levels/ck1-title.tscn");
+	}
 
 	public void Resume()
 	{
