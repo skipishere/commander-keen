@@ -47,11 +47,11 @@ public partial class Keen : CharacterBody2D, ITakeDamage
 		var movement = Input.GetAxis("move_left", "move_right");
 		if (this.Velocity.Normalized().X != 0)
 		{
-			lastMovementX = this.Velocity.Normalized().X;
+			lastMovementX = this.Velocity.X > 0 ? Vector2.Right.X : Vector2.Left.X;
 		}
 		else if (movement != 0)
 		{
-			lastMovementX = movement;
+			lastMovementX = movement > 0 ? Vector2.Right.X : Vector2.Left.X;
 		}
 				
 		stateMachine.PhysicsProcess(delta, lastMovementX);
