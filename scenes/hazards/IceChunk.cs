@@ -8,6 +8,9 @@ public partial class IceChunk : StaticBody2D
 
 	private AnimationPlayer animationPlayer;
 	private SignalManager signalManager;
+	
+	[Export]
+	private GpuParticles2D particles;
 
 	public void SetDirection(Vector2 globalPosition, Vector2 direction, Vector2 offset, GodotObject origin)
 	{
@@ -35,7 +38,7 @@ public partial class IceChunk : StaticBody2D
         
 		switch (collision.GetCollider())
 		{
-			case Keen keen:
+			case Keen:
 				signalManager.EmitSignal(nameof(SignalManager.KeenFrozen), direction.X < 0);
 				Done();
 				break;
