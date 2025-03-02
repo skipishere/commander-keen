@@ -1,5 +1,4 @@
 using Godot;
-using System;
 
 public partial class LivesUI : HBoxContainer
 {
@@ -19,9 +18,12 @@ public partial class LivesUI : HBoxContainer
 		signalManager.KeenGainedLife += OnKeenGainLife;
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
+	public override void _ExitTree()
 	{
+		base._ExitTree();
+		signalManager.ResetUi -= OnLivesChanged;
+		signalManager.KeenDead -= OnLivesChanged;
+		signalManager.KeenGainedLife -= OnKeenGainLife;
 	}
 
 	private void OnKeenGainLife()

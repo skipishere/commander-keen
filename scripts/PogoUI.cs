@@ -13,6 +13,13 @@ public partial class PogoUI : HBoxContainer
         signalManager.ResetUi += OnPogoStick;
 	}
 
+    public override void _ExitTree()
+    {
+        base._ExitTree();
+        signalManager.PogoStick -= OnPogoStick;
+        signalManager.ResetUi -= OnPogoStick;
+    }
+
     private void OnPogoStick()
     {
         (pogo.Material as ShaderMaterial).SetShaderParameter("enable", game_stats.HasPogoStick == game_stats.PogoStickState.No);

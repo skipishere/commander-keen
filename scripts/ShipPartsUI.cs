@@ -21,6 +21,13 @@ public partial class ShipPartsUI : HBoxContainer
 		signalManager.ResetUi += OnShipPart;
 	}
 
+	public override void _ExitTree()
+	{
+		base._ExitTree();
+		signalManager.ShipPart -= OnShipPart;
+		signalManager.ResetUi -= OnShipPart;
+	}
+
 	private void OnShipPart()
     {
 		foreach (game_stats.ShipParts part in Enum.GetValues(typeof(game_stats.ShipParts)))
