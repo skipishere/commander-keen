@@ -1,14 +1,9 @@
-[gd_scene load_steps=6 format=4 uid="uid://6eyvaskh04ap"]
+[gd_scene load_steps=5 format=4 uid="uid://6eyvaskh04ap"]
 
 [ext_resource type="TileSet" uid="uid://w7k5amqxc3ac" path="res://scenes/tile_platform.tres" id="1_hwj0a"]
 [ext_resource type="PackedScene" uid="uid://dqlj2tioeqgqw" path="res://player/keen.tscn" id="2_750jm"]
 [ext_resource type="AudioStream" uid="uid://bpbgqxbnfdtfs" path="res://music/Mysterious Ambience song21.mp3" id="3_bnu0v"]
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_7fa7e"]
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_h8lxe"]
-invert = true
-noise = SubResource("FastNoiseLite_7fa7e")
+[ext_resource type="Texture2D" uid="uid://cujmpd54l0h0w" path="res://textures/light-spill.png" id="4_28rjx"]
 
 [node name="Level" type="Node2D"]
 
@@ -47,9 +42,9 @@ energy = 0.8
 blend_mode = 1
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
-position = Vector2(127.5, -352.5)
-scale = Vector2(0.895647, 0.705915)
-color = Color(1, 0, 0, 1)
-energy = 0.5
-texture = SubResource("NoiseTexture2D_h8lxe")
-texture_scale = 0.7
+position = Vector2(104.5, -49)
+scale = Vector2(1.513, 1)
+shadow_enabled = true
+texture = ExtResource("4_28rjx")
+texture_scale = 1.5
+
