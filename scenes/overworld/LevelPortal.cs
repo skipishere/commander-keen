@@ -12,8 +12,20 @@ public partial class LevelPortal : Area2D
 
 	public override void _Ready()
 	{
-		doneMessage = GetNode<Node2D>("DoneMessage");
 		signalManager = GetNode<SignalManager>("/root/SignalManager");
+		signalManager.ResetUi += UpdateLevelStatus;
+		UpdateLevelStatus();
+	}
+
+	public override void _ExitTree()
+	{
+		base._ExitTree();
+		signalManager.ResetUi -= UpdateLevelStatus;
+	}
+
+	private void UpdateLevelStatus()
+	{
+		doneMessage = GetNode<Node2D>("DoneMessage");
 		
 		if (!game_stats.Levels.TryGetValue(this.Target.ResourcePath, out var levelFinished))
 		{
