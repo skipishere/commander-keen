@@ -1,0 +1,260 @@
+[gd_scene load_steps=37 format=3 uid="uid://b32iwr8dwavab"]
+
+[ext_resource type="Theme" uid="uid://c5qb3k1thqbgm" path="res://textures/game_stats_ui_theme.tres" id="1_y3as5"]
+[ext_resource type="Script" path="res://scripts/UiPanel.cs" id="2_xiust"]
+[ext_resource type="Script" path="res://scripts/LivesUI.cs" id="3_nikhl"]
+[ext_resource type="Texture2D" uid="uid://d1yg7xwui2p68" path="res://sprites/keen-map.png" id="4_7t7av"]
+[ext_resource type="AudioStream" uid="uid://bmif60f0af387" path="res://sfx/Upper01.ogg" id="5_xstyo"]
+[ext_resource type="Script" path="res://scripts/KeyCardsUI.cs" id="6_vswcx"]
+[ext_resource type="Shader" path="res://shaders/greyscale.gdshader" id="7_7fwhi"]
+[ext_resource type="Texture2D" uid="uid://dfoof0uonkses" path="res://textures/item_textures.tres" id="8_kp5rs"]
+[ext_resource type="Script" path="res://scripts/RaygunUI.cs" id="9_nr72d"]
+[ext_resource type="Texture2D" uid="uid://b74gl7bkvx1fg" path="res://sprites/rayguns.png" id="10_66tsr"]
+[ext_resource type="Script" path="res://scripts/PogoUI.cs" id="11_6dt05"]
+[ext_resource type="Script" path="res://scripts/ShipPartsUI.cs" id="12_bs83b"]
+[ext_resource type="Script" path="res://scripts/ScoreUI.cs" id="13_fi6dg"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m005y"]
+atlas = ExtResource("4_7t7av")
+region = Rect2(0, 0, 12, 15)
+
+[sub_resource type="LabelSettings" id="LabelSettings_hq561"]
+font_size = 7
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_w3yix"]
+shader = ExtResource("7_7fwhi")
+shader_parameter/enable = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ufq0l"]
+atlas = ExtResource("8_kp5rs")
+region = Rect2(80, 0, 16, 16)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ywglk"]
+shader = ExtResource("7_7fwhi")
+shader_parameter/enable = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n320s"]
+atlas = ExtResource("8_kp5rs")
+region = Rect2(96, 0, 16, 16)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mqhxk"]
+shader = ExtResource("7_7fwhi")
+shader_parameter/enable = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n64e0"]
+atlas = ExtResource("8_kp5rs")
+region = Rect2(112, 0, 16, 16)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sfgnc"]
+shader = ExtResource("7_7fwhi")
+shader_parameter/enable = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6jgrk"]
+atlas = ExtResource("8_kp5rs")
+region = Rect2(128, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ty1o2"]
+atlas = ExtResource("10_66tsr")
+region = Rect2(0, 0, 17, 16)
+
+[sub_resource type="LabelSettings" id="LabelSettings_oj4mh"]
+line_spacing = 0.0
+font_size = 7
+font_color = Color(1, 0.462745, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_y8jiy"]
+shader = ExtResource("7_7fwhi")
+shader_parameter/enable = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x0q74"]
+atlas = ExtResource("8_kp5rs")
+region = Rect2(144, 0, 16, 16)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_i5ea2"]
+shader = ExtResource("7_7fwhi")
+shader_parameter/enable = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b01sr"]
+atlas = ExtResource("8_kp5rs")
+region = Rect2(64, 32, 16, 16)
+filter_clip = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hutug"]
+shader = ExtResource("7_7fwhi")
+shader_parameter/enable = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iheg1"]
+resource_local_to_scene = true
+atlas = ExtResource("8_kp5rs")
+region = Rect2(0, 16, 16, 16)
+filter_clip = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1mpyj"]
+shader = ExtResource("7_7fwhi")
+shader_parameter/enable = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0fwal"]
+atlas = ExtResource("8_kp5rs")
+region = Rect2(80, 16, 16, 16)
+filter_clip = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_85bfs"]
+shader = ExtResource("7_7fwhi")
+shader_parameter/enable = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ktusv"]
+atlas = ExtResource("8_kp5rs")
+region = Rect2(0, 32, 16, 16)
+filter_clip = true
+
+[sub_resource type="LabelSettings" id="LabelSettings_xwr53"]
+font_size = 7
+
+[node name="UiPanel" type="PanelContainer"]
+custom_minimum_size = Vector2(0, 18)
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -16.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 3
+theme = ExtResource("1_y3as5")
+script = ExtResource("2_xiust")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Lives" type="HBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+script = ExtResource("3_nikhl")
+
+[node name="Icon" type="TextureRect" parent="HBoxContainer/Lives"]
+layout_mode = 2
+texture = SubResource("AtlasTexture_m005y")
+expand_mode = 2
+stretch_mode = 3
+
+[node name="Value" type="Label" parent="HBoxContainer/Lives"]
+layout_mode = 2
+text = "00"
+label_settings = SubResource("LabelSettings_hq561")
+vertical_alignment = 1
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="HBoxContainer/Lives"]
+stream = ExtResource("5_xstyo")
+bus = &"Sound Effects"
+
+[node name="Key cards" type="HBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_constants/separation = 0
+script = ExtResource("6_vswcx")
+
+[node name="A" type="TextureRect" parent="HBoxContainer/Key cards"]
+material = SubResource("ShaderMaterial_w3yix")
+layout_mode = 2
+texture = SubResource("AtlasTexture_ufq0l")
+expand_mode = 2
+stretch_mode = 3
+
+[node name="B" type="TextureRect" parent="HBoxContainer/Key cards"]
+material = SubResource("ShaderMaterial_ywglk")
+layout_mode = 2
+texture = SubResource("AtlasTexture_n320s")
+expand_mode = 2
+stretch_mode = 3
+
+[node name="C" type="TextureRect" parent="HBoxContainer/Key cards"]
+material = SubResource("ShaderMaterial_mqhxk")
+layout_mode = 2
+texture = SubResource("AtlasTexture_n64e0")
+expand_mode = 2
+stretch_mode = 3
+
+[node name="D" type="TextureRect" parent="HBoxContainer/Key cards"]
+material = SubResource("ShaderMaterial_sfgnc")
+layout_mode = 2
+texture = SubResource("AtlasTexture_6jgrk")
+expand_mode = 2
+stretch_mode = 3
+
+[node name="Raygun" type="HBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+script = ExtResource("9_nr72d")
+
+[node name="Icon" type="TextureRect" parent="HBoxContainer/Raygun"]
+layout_mode = 2
+texture = SubResource("AtlasTexture_ty1o2")
+
+[node name="Charges" type="Label" parent="HBoxContainer/Raygun"]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+text = "000"
+label_settings = SubResource("LabelSettings_oj4mh")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Pogo" type="HBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+script = ExtResource("11_6dt05")
+
+[node name="Pogo" type="TextureRect" parent="HBoxContainer/Pogo"]
+material = SubResource("ShaderMaterial_y8jiy")
+layout_mode = 2
+texture = SubResource("AtlasTexture_x0q74")
+expand_mode = 2
+stretch_mode = 3
+
+[node name="Ship parts" type="HBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 0
+alignment = 1
+script = ExtResource("12_bs83b")
+
+[node name="Joystick" type="TextureRect" parent="HBoxContainer/Ship parts"]
+material = SubResource("ShaderMaterial_i5ea2")
+layout_mode = 2
+texture = SubResource("AtlasTexture_b01sr")
+expand_mode = 2
+stretch_mode = 3
+
+[node name="Battery" type="TextureRect" parent="HBoxContainer/Ship parts"]
+material = SubResource("ShaderMaterial_hutug")
+layout_mode = 2
+texture = SubResource("AtlasTexture_iheg1")
+expand_mode = 2
+stretch_mode = 3
+
+[node name="Vaccum" type="TextureRect" parent="HBoxContainer/Ship parts"]
+material = SubResource("ShaderMaterial_1mpyj")
+clip_contents = true
+layout_mode = 2
+texture = SubResource("AtlasTexture_0fwal")
+expand_mode = 2
+stretch_mode = 3
+
+[node name="Fuel" type="TextureRect" parent="HBoxContainer/Ship parts"]
+material = SubResource("ShaderMaterial_85bfs")
+layout_mode = 2
+texture = SubResource("AtlasTexture_ktusv")
+expand_mode = 2
+stretch_mode = 3
+
+[node name="Score" type="HBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+script = ExtResource("13_fi6dg")
+
+[node name="Value" type="Label" parent="HBoxContainer/Score"]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+text = "0,000,000"
+label_settings = SubResource("LabelSettings_xwr53")
+horizontal_alignment = 2
+vertical_alignment = 1
+justification_flags = 128
