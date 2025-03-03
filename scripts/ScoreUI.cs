@@ -13,6 +13,13 @@ public partial class ScoreUI : HBoxContainer
 		signalManager.ResetUi += OnScoreChanged;
 	}
 
+	public override void _ExitTree()
+	{
+		base._ExitTree();
+		signalManager.ScoreChanged -= OnScoreChanged;
+		signalManager.ResetUi -= OnScoreChanged;
+	}
+
     private void OnScoreChanged()
     {
         score.Text = game_stats.Score.ToString("#,0");

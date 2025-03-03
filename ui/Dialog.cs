@@ -1,5 +1,4 @@
 using Godot;
-using System;
 using System.Diagnostics;
 
 public partial class Dialog : Control
@@ -11,6 +10,12 @@ public partial class Dialog : Control
 		signalManager = GetNode<SignalManager>("/root/SignalManager");
 		signalManager.ShowUi += ShowUi;
 	}
+
+    public override void _ExitTree()
+    {
+        base._ExitTree();
+		signalManager.ShowUi -= ShowUi;
+    }
 
     private void ShowUi(string title, string message)
     {

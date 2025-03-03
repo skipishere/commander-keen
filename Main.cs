@@ -5,8 +5,6 @@ public partial class Main : Node
 	private SignalManager signalManager;
 	private CanvasLayer pauseMenu;
 
-
-
 	public override void _Ready()
 	{
 		pauseMenu = GetNode<CanvasLayer>("Pause Menu");
@@ -15,6 +13,13 @@ public partial class Main : Node
 		signalManager.EnteringLevel += OnEnteringLevel;
 
 		signalManager.EmitSignal(nameof(SignalManager.ResetUi));
+	}
+	
+	public override void _ExitTree()
+	{
+		base._ExitTree();
+		signalManager.ExitingLevel -= OnExitingLevel;
+		signalManager.EnteringLevel -= OnEnteringLevel;
 	}
 
 	public override void _Process(double delta)

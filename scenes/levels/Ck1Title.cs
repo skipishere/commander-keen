@@ -17,6 +17,8 @@ public partial class Ck1Title : Node2D
 
 	public void NewGame()
 	{
+		game_stats.Reset();
+		OverworldKeen.mapPosition = null;
 		GetTree().ChangeSceneToFile("res://main.tscn");
 	}
 

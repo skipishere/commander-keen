@@ -8,7 +8,7 @@ public partial class KeyCardsUI : HBoxContainer
 	private TextureRect cardC;
 	private TextureRect cardD;
 	private SignalManager signalManager;
-	// Called when the node enters the scene tree for the first time.
+	
 	public override void _Ready()
 	{
 		cardA = GetNode<TextureRect>("A");
@@ -19,6 +19,13 @@ public partial class KeyCardsUI : HBoxContainer
 		signalManager = GetNode<SignalManager>("/root/SignalManager");
 		signalManager.KeyCard += OnKeyCard;
 		signalManager.ExitingLevel += OnResetUi;
+	}
+
+	public override void _ExitTree()
+	{
+		base._ExitTree();
+		signalManager.KeyCard -= OnKeyCard;
+		signalManager.ExitingLevel -= OnResetUi;
 	}
 
     private void OnResetUi()
