@@ -29,9 +29,9 @@ public partial class ShipItem : Area2D
 			signalManager.EmitSignal(nameof(SignalManager.ScoreChanged));
 			
 			var tween = GetTree().CreateTween();
-			tween.Parallel().TweenProperty(this, "position", Position - new Vector2(0, 16), 1f);
-			tween.Parallel().TweenProperty(this, "scale", new Vector2(4, 4), 1f);
-			tween.Parallel().TweenProperty(this, "modulate:a", 0, 1f);
+			tween.Parallel().TweenProperty(this, "position", Position - new Vector2(0, 16), 2f);
+			tween.Parallel().TweenProperty(this, "scale", new Vector2(4, 4), 2f);
+			tween.Parallel().TweenProperty(this, "modulate:a", 0, 2f);
 			tween.TweenCallback(Callable.From(QueueFree));
 		}
 	}
