@@ -77,10 +77,10 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ay7k2"]
 _data = {
-"RESET": SubResource("Animation_6ajg5"),
-"left": SubResource("Animation_jajbl"),
-"right": SubResource("Animation_wnjr7"),
-"turn": SubResource("Animation_8gndq")
+&"RESET": SubResource("Animation_6ajg5"),
+&"left": SubResource("Animation_jajbl"),
+&"right": SubResource("Animation_wnjr7"),
+&"turn": SubResource("Animation_8gndq")
 }
 
 [node name="TankRobot" type="CharacterBody2D"]

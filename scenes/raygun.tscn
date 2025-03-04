@@ -6,8 +6,7 @@
 blend_mode = 1
 
 [sub_resource type="Curve" id="2"]
-min_value = -360.0
-max_value = 360.0
+_limits = [-360.0, 360.0, 0.0, 1.0]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 85.0781), 0.0, 0.0, 0, 0]
 point_count = 2
 
@@ -34,6 +33,7 @@ emission_ring_axis = Vector3(0, 0, 1)
 emission_ring_height = 1.0
 emission_ring_radius = 1.0
 emission_ring_inner_radius = 0.0
+emission_ring_cone_angle = 90.0
 angular_velocity_curve = SubResource("3")
 gravity = Vector3(-100, 0, 0)
 attractor_interaction_enabled = false

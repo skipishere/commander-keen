@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://bkeq2is7jqiil"]
 
-[ext_resource type="Script" path="res://ui/Pause.cs" id="1_v6bqx"]
+[ext_resource type="Script" uid="uid://cy1ntnjfm44xm" path="res://ui/Pause.cs" id="1_v6bqx"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_tx5cv"]
 

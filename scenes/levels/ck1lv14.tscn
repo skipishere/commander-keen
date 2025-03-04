@@ -3,7 +3,7 @@
 [ext_resource type="TileSet" uid="uid://w7k5amqxc3ac" path="res://scenes/tile_platform.tres" id="2_d3iqb"]
 [ext_resource type="PackedScene" uid="uid://dqlj2tioeqgqw" path="res://player/keen.tscn" id="3_5tb73"]
 [ext_resource type="AudioStream" uid="uid://b86d3x50rh5x3" path="res://music/awake10_megaWall.mp3" id="4_fd84n"]
-[ext_resource type="Script" path="res://scripts/DeathZone.cs" id="4_jbh20"]
+[ext_resource type="Script" uid="uid://dnhhh5annvxc7" path="res://scripts/DeathZone.cs" id="4_jbh20"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_ax8pd"]
 distance = -9.0

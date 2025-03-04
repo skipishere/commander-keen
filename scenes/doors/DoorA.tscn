@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://t7mowemw43uw"]
 
-[ext_resource type="Script" path="res://scenes/doors/Doors.cs" id="1_dyqf2"]
+[ext_resource type="Script" uid="uid://cd1kp0fqdnecu" path="res://scenes/doors/Doors.cs" id="1_dyqf2"]
 [ext_resource type="Texture2D" uid="uid://by6u5slfae5qm" path="res://sprites/doors.png" id="1_hhxq2"]
 [ext_resource type="AudioStream" uid="uid://581td73cth4s" path="res://sfx/doorbell.wav" id="3_xcmd8"]
 
@@ -105,8 +105,8 @@ tracks/3/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_vbgbg"]
 _data = {
-"RESET": SubResource("Animation_q5ktp"),
-"open": SubResource("Animation_02tos")
+&"RESET": SubResource("Animation_q5ktp"),
+&"open": SubResource("Animation_02tos")
 }
 
 [node name="DoorA" type="Node2D"]

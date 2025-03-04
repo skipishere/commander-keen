@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://cfcdvelrrvi5u"]
 
-[ext_resource type="Script" path="res://scenes/items/ItemBase.cs" id="1_u2q7c"]
+[ext_resource type="Script" uid="uid://dkgqs720ypo8j" path="res://scenes/items/ItemBase.cs" id="1_u2q7c"]
 [ext_resource type="Texture2D" uid="uid://b6gffs3oj4f4t" path="res://sprites/items.png" id="2_rhwxc"]
 [ext_resource type="AudioStream" uid="uid://ch53thrsq8c63" path="res://sfx/Rise01.ogg" id="3_pwefh"]
 

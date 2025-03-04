@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://ctvb3cr2qiei7"]
 
-[ext_resource type="Script" path="res://scenes/items/ShipItem.cs" id="2_5x4df"]
+[ext_resource type="Script" uid="uid://l1rpf8edq4tv" path="res://scenes/items/ShipItem.cs" id="2_5x4df"]
 [ext_resource type="Texture2D" uid="uid://b6gffs3oj4f4t" path="res://sprites/items.png" id="2_r3tav"]
 [ext_resource type="AudioStream" uid="uid://xbso2m867pet" path="res://sfx/377224__dneproman__sfx_touchtolight_1.wav" id="2_tk3b8"]
 
@@ -41,8 +41,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_1jumn"]
 _data = {
-"RESET": SubResource("Animation_532xm"),
-"blinking": SubResource("Animation_s0k3c")
+&"RESET": SubResource("Animation_532xm"),
+&"blinking": SubResource("Animation_s0k3c")
 }
 
 [node name="Item" type="Area2D"]

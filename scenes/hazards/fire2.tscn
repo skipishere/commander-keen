@@ -1,14 +1,13 @@
 [gd_scene load_steps=12 format=3 uid="uid://xi5w2wacxuql"]
 
-[ext_resource type="Script" path="res://scenes/hazards/Fire.cs" id="1_ylklf"]
+[ext_resource type="Script" uid="uid://d3r0cmp2oqopc" path="res://scenes/hazards/Fire.cs" id="1_ylklf"]
 [ext_resource type="Texture2D" uid="uid://53qawylv4smy" path="res://textures/fire_particle.png" id="2_yn1w6"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_pjvg2"]
 blend_mode = 1
 
 [sub_resource type="Curve" id="Curve_l7usm"]
-min_value = -360.0
-max_value = 360.0
+_limits = [-360.0, 360.0, 0.0, 1.0]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 85.078), 0.0, 0.0, 0, 0]
 point_count = 2
 

@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://c4s3nfrlj432s"]
 
-[ext_resource type="Script" path="res://scenes/hazards/IceCannon.cs" id="1_or3p8"]
+[ext_resource type="Script" uid="uid://02tmtr1dc71v" path="res://scenes/hazards/IceCannon.cs" id="1_or3p8"]
 [ext_resource type="Texture2D" uid="uid://r5c003mioiva" path="res://sprites/ice-cannon.png" id="1_r712c"]
 [ext_resource type="PackedScene" uid="uid://cd6db5pvjl2d0" path="res://scenes/hazards/IceChunk.tscn" id="2_3ecc0"]
 

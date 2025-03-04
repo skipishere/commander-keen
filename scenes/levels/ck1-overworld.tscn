@@ -1,6 +1,6 @@
 [gd_scene load_steps=33 format=4 uid="uid://c85ufn8742tq3"]
 
-[ext_resource type="Script" path="res://scenes/Overworld.cs" id="1_8i8x4"]
+[ext_resource type="Script" uid="uid://dpvfe1371d8tq" path="res://scenes/Overworld.cs" id="1_8i8x4"]
 [ext_resource type="Texture2D" uid="uid://cqgyahlpnxrxl" path="res://sprites/mars.png" id="2_mu3it"]
 [ext_resource type="PackedScene" uid="uid://c7m6wb1coorjg" path="res://scenes/environment/teleporter.tscn" id="3_wfa7x"]
 [ext_resource type="AudioStream" uid="uid://ru73lgw8vtph" path="res://music/Reverse-Time-Loop-isaiah658.ogg" id="4_j3uft"]
@@ -275,8 +275,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_wrg3v"]
 _data = {
-"RESET": SubResource("Animation_kaf22"),
-"start": SubResource("Animation_kxbyy")
+&"RESET": SubResource("Animation_kaf22"),
+&"start": SubResource("Animation_kxbyy")
 }
 
 [node name="Map" type="Node2D"]

@@ -41,8 +41,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_jlmjb"]
 _data = {
-"RESET": SubResource("Animation_jktlx"),
-"flicker": SubResource("Animation_wcpye")
+&"RESET": SubResource("Animation_jktlx"),
+&"flicker": SubResource("Animation_wcpye")
 }
 
 [node name="Node2D" type="StaticBody2D"]

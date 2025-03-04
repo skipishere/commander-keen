@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://dqlj2tioeqgqw" path="res://player/keen.tscn" id="2_g6dg5"]
 [ext_resource type="AudioStream" uid="uid://17m8kx07pnvb" path="res://music/AlexBouncyMaster.ogg" id="3_pd4ci"]
 [ext_resource type="Texture2D" uid="uid://o53lb5qe7dyc" path="res://backgrounds/stars.png" id="5_reml6"]
-[ext_resource type="Script" path="res://scripts/DeathZone.cs" id="6_ous8e"]
+[ext_resource type="Script" uid="uid://dnhhh5annvxc7" path="res://scripts/DeathZone.cs" id="6_ous8e"]
 
 [sub_resource type="Animation" id="Animation_2toxg"]
 length = 0.001
@@ -85,8 +85,8 @@ tracks/2/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_n6xnt"]
 _data = {
-"RESET": SubResource("Animation_2toxg"),
-"level_exit": SubResource("Animation_c4r02")
+&"RESET": SubResource("Animation_2toxg"),
+&"level_exit": SubResource("Animation_c4r02")
 }
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_a77hw"]

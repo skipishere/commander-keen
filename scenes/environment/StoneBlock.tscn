@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=4 uid="uid://cv8snxwr13t16"]
 
 [ext_resource type="TileSet" uid="uid://w7k5amqxc3ac" path="res://scenes/tile_platform.tres" id="1_orm0b"]
-[ext_resource type="Script" path="res://scenes/environment/StoneBlock.cs" id="1_oyf0d"]
+[ext_resource type="Script" uid="uid://nb1i23dkw1pd" path="res://scenes/environment/StoneBlock.cs" id="1_oyf0d"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cx56d"]
 size = Vector2(5, 16)
@@ -38,8 +38,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_636ou"]
 _data = {
-"RESET": SubResource("Animation_fdx3a"),
-"fall": SubResource("Animation_faaok")
+&"RESET": SubResource("Animation_fdx3a"),
+&"fall": SubResource("Animation_faaok")
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qau52"]
