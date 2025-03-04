@@ -155,7 +155,7 @@ bus = &"Music"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_ooaop")
+&"": SubResource("AnimationLibrary_ooaop")
 }
 
 [node name="Polygon2D" type="Polygon2D" parent="."]
