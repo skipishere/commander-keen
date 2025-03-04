@@ -7,7 +7,6 @@
 [ext_resource type="AudioStream" uid="uid://bs5cx54rxsfv7" path="res://music/Blazing-Stars_Looping.mp3" id="5_vgkha"]
 
 [node name="Ck1-title" type="Node2D" node_paths=PackedStringArray("DefaultButton")]
-position = Vector2(0, 8)
 script = ExtResource("1_fv4rj")
 DefaultButton = NodePath("CanvasLayer/PanelContainer/VBoxContainer/New")
 
