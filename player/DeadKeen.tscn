@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=3 uid="uid://b0mxidil3h22p"]
 
-[ext_resource type="Script" path="res://player/DeadKeen.cs" id="1_4nim1"]
+[ext_resource type="Script" uid="uid://be2c168642k5f" path="res://player/DeadKeen.cs" id="1_4nim1"]
 [ext_resource type="Texture2D" uid="uid://daoeamcib3t14" path="res://sprites/keen-level.png" id="1_istpd"]
 [ext_resource type="AudioStream" uid="uid://d0uyi8vbko82t" path="res://sfx/game_over_bad_chest.wav" id="3_nra4a"]
 
@@ -60,8 +60,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_0r2qb"]
 _data = {
-"Ghost": SubResource("Animation_rl8nl"),
-"RESET": SubResource("Animation_72bgf")
+&"Ghost": SubResource("Animation_rl8nl"),
+&"RESET": SubResource("Animation_72bgf")
 }
 
 [node name="DeadKeen" type="CharacterBody2D"]

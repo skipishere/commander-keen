@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=3 uid="uid://c1afdec3i8igq"]
 
-[ext_resource type="Script" path="res://scenes/environment/YorpStatue.cs" id="1_nlcic"]
+[ext_resource type="Script" uid="uid://bhjk7aje0sbrn" path="res://scenes/environment/YorpStatue.cs" id="1_nlcic"]
 [ext_resource type="Texture2D" uid="uid://65y75605vmla" path="res://sprites/platforms.png" id="2_yhsqi"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qq0l7"]

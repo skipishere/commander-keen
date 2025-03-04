@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=4 uid="uid://s8g3ow2cg7re"]
 
 [ext_resource type="TileSet" uid="uid://w7k5amqxc3ac" path="res://scenes/tile_platform.tres" id="1_2bvxc"]
-[ext_resource type="Script" path="res://scenes/levels/Ck1Title.cs" id="1_fv4rj"]
+[ext_resource type="Script" uid="uid://b8gaipyy7tvxb" path="res://scenes/levels/Ck1Title.cs" id="1_fv4rj"]
 [ext_resource type="Texture2D" uid="uid://7ma0jb8jrsnk" path="res://backgrounds/title-episode1.png" id="2_2jvqq"]
 [ext_resource type="Texture2D" uid="uid://o53lb5qe7dyc" path="res://backgrounds/stars.png" id="2_hmspx"]
 [ext_resource type="AudioStream" uid="uid://bs5cx54rxsfv7" path="res://music/Blazing-Stars_Looping.mp3" id="5_vgkha"]

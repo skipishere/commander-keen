@@ -1,8 +1,8 @@
 [gd_scene load_steps=35 format=3 uid="uid://dkpwgxsjkybvs"]
 
 [ext_resource type="Texture2D" uid="uid://cnjvd8vb035y8" path="res://sprites/vorticon guard.png" id="1_6l41r"]
-[ext_resource type="Script" path="res://scenes/creatures/VorticonGuard/vorticon_guard.cs" id="1_c61b3"]
-[ext_resource type="Shader" path="res://shaders/flash.gdshader" id="2_4vb4o"]
+[ext_resource type="Script" uid="uid://p8r8kqbrjj7r" path="res://scenes/creatures/VorticonGuard/vorticon_guard.cs" id="1_c61b3"]
+[ext_resource type="Shader" uid="uid://r0x30fkd2lv0" path="res://shaders/flash.gdshader" id="2_4vb4o"]
 [ext_resource type="AudioStream" uid="uid://cypixfvrm0b4t" path="res://music/2012_november_fakeAwake04 back to A minor.ogg" id="2_16nxu"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_llcbj"]
@@ -342,13 +342,13 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_6a051"]
 _data = {
-"RESET": SubResource("Animation_a7qe5"),
-"die": SubResource("Animation_7yta5"),
-"idle": SubResource("Animation_l12uf"),
-"jump_left": SubResource("Animation_ul7bs"),
-"jump_right": SubResource("Animation_ehbjp"),
-"walk_left": SubResource("Animation_6nqlh"),
-"walk_right": SubResource("Animation_hqh2o")
+&"RESET": SubResource("Animation_a7qe5"),
+&"die": SubResource("Animation_7yta5"),
+&"idle": SubResource("Animation_l12uf"),
+&"jump_left": SubResource("Animation_ul7bs"),
+&"jump_right": SubResource("Animation_ehbjp"),
+&"walk_left": SubResource("Animation_6nqlh"),
+&"walk_right": SubResource("Animation_hqh2o")
 }
 
 [node name="Vorticon Guard" type="CharacterBody2D"]

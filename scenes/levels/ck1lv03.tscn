@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://bckllpjewggoc" path="res://scenes/creatures/ButlerRobot/ButlerRobot.tscn" id="2_khwk3"]
 [ext_resource type="PackedScene" uid="uid://dkpwgxsjkybvs" path="res://scenes/creatures/VorticonGuard/vorticon_guard.tscn" id="3_guhvo"]
 [ext_resource type="AudioStream" uid="uid://lw5btm0q43p7" path="res://music/Dreaming-of-Reefs.mp3" id="7_m71ey"]
-[ext_resource type="Script" path="res://scripts/DeathZone.cs" id="7_yg8ti"]
+[ext_resource type="Script" uid="uid://dnhhh5annvxc7" path="res://scripts/DeathZone.cs" id="7_yg8ti"]
 
 [sub_resource type="Animation" id="Animation_yxesp"]
 length = 0.001
@@ -113,8 +113,8 @@ tracks/3/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_kphsv"]
 _data = {
-"RESET": SubResource("Animation_yxesp"),
-"level_exit": SubResource("Animation_5e6ey")
+&"RESET": SubResource("Animation_yxesp"),
+&"level_exit": SubResource("Animation_5e6ey")
 }
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_667ot"]

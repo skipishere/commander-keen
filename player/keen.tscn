@@ -1,19 +1,19 @@
 [gd_scene load_steps=76 format=3 uid="uid://dqlj2tioeqgqw"]
 
-[ext_resource type="Script" path="res://player/Keen.cs" id="1_othw7"]
+[ext_resource type="Script" uid="uid://dwsb1uqt14rki" path="res://player/Keen.cs" id="1_othw7"]
 [ext_resource type="PackedScene" uid="uid://bgl2fe5um74f0" path="res://scenes/raygunShot.tscn" id="2_eenmn"]
-[ext_resource type="Script" path="res://player/Camera.cs" id="3_6odgb"]
+[ext_resource type="Script" uid="uid://dohri85ykhkol" path="res://player/Camera.cs" id="3_6odgb"]
 [ext_resource type="Texture2D" uid="uid://daoeamcib3t14" path="res://sprites/keen-level.png" id="4_6f3kv"]
-[ext_resource type="Script" path="res://player/StartLevelState.cs" id="5_5qh44"]
-[ext_resource type="Script" path="res://player/AirState.cs" id="6_01e1i"]
-[ext_resource type="Script" path="res://player/StateMachine.cs" id="6_orb7g"]
-[ext_resource type="Script" path="res://player/ShootState.cs" id="7_82reb"]
-[ext_resource type="Script" path="res://player/GroundState.cs" id="7_kbmoq"]
-[ext_resource type="Script" path="res://player/DeadState.cs" id="9_qmxlx"]
-[ext_resource type="Script" path="res://player/HiddenState.cs" id="10_366wu"]
+[ext_resource type="Script" uid="uid://c3gdyf11n7t8p" path="res://player/StartLevelState.cs" id="5_5qh44"]
+[ext_resource type="Script" uid="uid://h23u6v637l0r" path="res://player/AirState.cs" id="6_01e1i"]
+[ext_resource type="Script" uid="uid://r6ymo51a2k7c" path="res://player/StateMachine.cs" id="6_orb7g"]
+[ext_resource type="Script" uid="uid://r2tqu6cbolps" path="res://player/ShootState.cs" id="7_82reb"]
+[ext_resource type="Script" uid="uid://cpk6fgvdvmlgc" path="res://player/GroundState.cs" id="7_kbmoq"]
+[ext_resource type="Script" uid="uid://b13m6dxucjpgh" path="res://player/DeadState.cs" id="9_qmxlx"]
+[ext_resource type="Script" uid="uid://dnxt8u0fqu8by" path="res://player/HiddenState.cs" id="10_366wu"]
 [ext_resource type="PackedScene" uid="uid://b0mxidil3h22p" path="res://player/DeadKeen.tscn" id="10_sb2rb"]
-[ext_resource type="Script" path="res://player/PogoState.cs" id="12_tvnsi"]
-[ext_resource type="Script" path="res://player/IcedState.cs" id="13_xq2mm"]
+[ext_resource type="Script" uid="uid://ciqrr5i88y6c0" path="res://player/PogoState.cs" id="12_tvnsi"]
+[ext_resource type="Script" uid="uid://cs8sv6cmto71p" path="res://player/IcedState.cs" id="13_xq2mm"]
 
 [sub_resource type="Animation" id="Animation_uybu3"]
 length = 0.001
@@ -413,25 +413,25 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_el04f"]
 _data = {
-"RESET": SubResource("Animation_uybu3"),
-"dead": SubResource("Animation_81lsd"),
-"fall_left": SubResource("Animation_0k15s"),
-"fall_right": SubResource("Animation_gnypu"),
-"frozen": SubResource("Animation_f6sy8"),
-"hidden": SubResource("Animation_hesri"),
-"idle_left": SubResource("Animation_2bxji"),
-"idle_right": SubResource("Animation_6w1wq"),
-"jump_left": SubResource("Animation_aixbl"),
-"jump_right": SubResource("Animation_pwpow"),
-"pogo_left": SubResource("Animation_glkif"),
-"pogo_left_ground": SubResource("Animation_0ocoh"),
-"pogo_right": SubResource("Animation_2sm3h"),
-"pogo_right_ground": SubResource("Animation_f8xa4"),
-"shoot_left": SubResource("Animation_pallo"),
-"shoot_right": SubResource("Animation_kq7e5"),
-"thaw": SubResource("Animation_63whe"),
-"walk_left": SubResource("Animation_hrnt4"),
-"walk_right": SubResource("Animation_jt3yl")
+&"RESET": SubResource("Animation_uybu3"),
+&"dead": SubResource("Animation_81lsd"),
+&"fall_left": SubResource("Animation_0k15s"),
+&"fall_right": SubResource("Animation_gnypu"),
+&"frozen": SubResource("Animation_f6sy8"),
+&"hidden": SubResource("Animation_hesri"),
+&"idle_left": SubResource("Animation_2bxji"),
+&"idle_right": SubResource("Animation_6w1wq"),
+&"jump_left": SubResource("Animation_aixbl"),
+&"jump_right": SubResource("Animation_pwpow"),
+&"pogo_left": SubResource("Animation_glkif"),
+&"pogo_left_ground": SubResource("Animation_0ocoh"),
+&"pogo_right": SubResource("Animation_2sm3h"),
+&"pogo_right_ground": SubResource("Animation_f8xa4"),
+&"shoot_left": SubResource("Animation_pallo"),
+&"shoot_right": SubResource("Animation_kq7e5"),
+&"thaw": SubResource("Animation_63whe"),
+&"walk_left": SubResource("Animation_hrnt4"),
+&"walk_right": SubResource("Animation_jt3yl")
 }
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ya0xg"]

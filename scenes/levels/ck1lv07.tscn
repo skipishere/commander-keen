@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://b3374m722sbd7" path="res://backgrounds/mars-mountains.png" id="1_5bwr2"]
 [ext_resource type="TileSet" uid="uid://w7k5amqxc3ac" path="res://scenes/tile_platform.tres" id="2_1kbew"]
 [ext_resource type="PackedScene" uid="uid://dqlj2tioeqgqw" path="res://player/keen.tscn" id="3_gn5p7"]
-[ext_resource type="Script" path="res://scripts/DeathZone.cs" id="4_cr8y5"]
+[ext_resource type="Script" uid="uid://dnhhh5annvxc7" path="res://scripts/DeathZone.cs" id="4_cr8y5"]
 [ext_resource type="AudioStream" uid="uid://dm3c3hdecibfd" path="res://music/enchanted tiki 86.mp3" id="5_ldof7"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_7teqh"]
@@ -90,8 +90,8 @@ tracks/2/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_hstee"]
 _data = {
-"RESET": SubResource("Animation_gpq3p"),
-"level_exit": SubResource("Animation_0l2dq")
+&"RESET": SubResource("Animation_gpq3p"),
+&"level_exit": SubResource("Animation_0l2dq")
 }
 
 [node name="Level" type="Node2D"]

@@ -47,4 +47,3 @@ scale = Vector2(1.513, 1)
 shadow_enabled = true
 texture = ExtResource("4_28rjx")
 texture_scale = 1.5
-

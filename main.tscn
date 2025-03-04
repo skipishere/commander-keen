@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://c8br7khwthjke"]
 
-[ext_resource type="Script" path="res://Main.cs" id="1_fj1c2"]
+[ext_resource type="Script" uid="uid://bmmlc7j6cfiof" path="res://Main.cs" id="1_fj1c2"]
 [ext_resource type="PackedScene" uid="uid://b32iwr8dwavab" path="res://ui/UiPanel.tscn" id="2_66d68"]
 [ext_resource type="PackedScene" uid="uid://c85ufn8742tq3" path="res://scenes/levels/ck1-overworld.tscn" id="12_4f0w2"]
 [ext_resource type="PackedScene" uid="uid://cawbouv50vedq" path="res://ui/Dialog.tscn" id="13_rgeja"]

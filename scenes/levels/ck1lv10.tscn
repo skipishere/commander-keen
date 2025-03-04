@@ -2,7 +2,7 @@
 
 [ext_resource type="TileSet" uid="uid://w7k5amqxc3ac" path="res://scenes/tile_platform.tres" id="2_0fxow"]
 [ext_resource type="PackedScene" uid="uid://dqlj2tioeqgqw" path="res://player/keen.tscn" id="3_0v8xa"]
-[ext_resource type="Script" path="res://scripts/DeathZone.cs" id="4_dltah"]
+[ext_resource type="Script" uid="uid://dnhhh5annvxc7" path="res://scripts/DeathZone.cs" id="4_dltah"]
 [ext_resource type="AudioStream" uid="uid://du4dvuk7gjjbq" path="res://music/music_jewels.ogg" id="4_q7inj"]
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_jhabg"]

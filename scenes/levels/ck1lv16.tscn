@@ -104,8 +104,8 @@ tracks/3/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_n6xnt"]
 _data = {
-"RESET": SubResource("Animation_2toxg"),
-"level_exit": SubResource("Animation_c4r02")
+&"RESET": SubResource("Animation_2toxg"),
+&"level_exit": SubResource("Animation_c4r02")
 }
 
 [node name="Level" type="Node2D"]

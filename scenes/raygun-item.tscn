@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://bigipns5vtp2o"]
 
-[ext_resource type="Script" path="res://scenes/RaygunItem.cs" id="1_lmjrk"]
+[ext_resource type="Script" uid="uid://dtqyvbda5enx4" path="res://scenes/RaygunItem.cs" id="1_lmjrk"]
 [ext_resource type="Texture2D" uid="uid://b74gl7bkvx1fg" path="res://sprites/rayguns.png" id="1_yy8ep"]
 [ext_resource type="AudioStream" uid="uid://ceetvqwu7dbiu" path="res://sfx/138410__cameronmusic__item-collect-2.wav" id="3_d4yj2"]
 

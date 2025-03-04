@@ -67,4 +67,3 @@ position = Vector2(376, -133)
 occluder = SubResource("OccluderPolygon2D_jhabg")
 
 [node name="Creatures" type="Node" parent="."]
-

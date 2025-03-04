@@ -1,7 +1,7 @@
 [gd_scene load_steps=34 format=3 uid="uid://b0du0mvfg8ov3"]
 
-[ext_resource type="Script" path="res://scenes/overworld/OverworldKeen.cs" id="1_rb72l"]
-[ext_resource type="Script" path="res://player/Camera.cs" id="1_uheac"]
+[ext_resource type="Script" uid="uid://72kmjem3dsf3" path="res://scenes/overworld/OverworldKeen.cs" id="1_rb72l"]
+[ext_resource type="Script" uid="uid://dohri85ykhkol" path="res://player/Camera.cs" id="1_uheac"]
 [ext_resource type="Texture2D" uid="uid://d1yg7xwui2p68" path="res://sprites/keen-map.png" id="4_ycxcm"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qkao0"]
@@ -205,16 +205,16 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_alvjl"]
 _data = {
-"RESET": SubResource("Animation_nh713"),
-"idle_down": SubResource("Animation_0xn1o"),
-"idle_left": SubResource("Animation_e0kow"),
-"idle_right": SubResource("Animation_7kawv"),
-"idle_up": SubResource("Animation_53o0s"),
-"teleporting": SubResource("Animation_428om"),
-"walk_down": SubResource("Animation_5yqlq"),
-"walk_left": SubResource("Animation_yu0nm"),
-"walk_right": SubResource("Animation_a8yqx"),
-"walk_up": SubResource("Animation_c14in")
+&"RESET": SubResource("Animation_nh713"),
+&"idle_down": SubResource("Animation_0xn1o"),
+&"idle_left": SubResource("Animation_e0kow"),
+&"idle_right": SubResource("Animation_7kawv"),
+&"idle_up": SubResource("Animation_53o0s"),
+&"teleporting": SubResource("Animation_428om"),
+&"walk_down": SubResource("Animation_5yqlq"),
+&"walk_left": SubResource("Animation_yu0nm"),
+&"walk_right": SubResource("Animation_a8yqx"),
+&"walk_up": SubResource("Animation_c14in")
 }
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_aqctx"]
