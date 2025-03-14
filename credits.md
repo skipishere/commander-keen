@@ -28,3 +28,4 @@
 # Fonts:
 - "Press Start 2P" - https://fonts.google.com/specimen/Press+Start+2P
 - "VT323" - https://fonts.google.com/specimen/VT323
+- PromptFont - Yukari "Shinmera" Hafner available at https://shinmera.com/promptfont
