@@ -5,17 +5,13 @@ using System.Diagnostics;
 public partial class RaygunItem : Area2D
 {
 	private AudioStreamPlayer2D audioStreamPlayer;
+	private SignalManager signalManager;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		audioStreamPlayer = GetNode<AudioStreamPlayer2D>("AudioStreamPlayer2D");
-		
-	}
-
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
+		signalManager = GetNode<SignalManager>("/root/SignalManager");
 	}
 
 	public void OnBodyEntered(Node2D body)
@@ -23,6 +19,10 @@ public partial class RaygunItem : Area2D
 		Debug.Print($"Collided with {body.GetType()}");
 		if (body is Keen)
 		{
+			if (game_stats.Charges == 0)
+			{
+				signalManager.EmitSignal(nameof(SignalManager.ShowUiHint), $"{UiKeyTransform.GetKeycode("move_shoot")} to fire raygun");
+			}
 			this.SetDeferred("monitoring", false);
 			game_stats.Charges+=5;
 			audioStreamPlayer.Play();
