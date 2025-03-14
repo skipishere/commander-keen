@@ -332,7 +332,7 @@ scale = Vector2(1.6, 1.6)
 Target = ExtResource("8_s8f3l")
 
 [node name="CollisionPolygon2D" parent="Levels/LevelPortal1/StaticBody2D" index="0"]
-position = Vector2(6.25, 0)
+position = Vector2(3.75, 0)
 shape = SubResource("SegmentShape2D_wp6a7")
 
 [node name="LevelPortal2" parent="Levels" instance=ExtResource("5_bn3ky")]
@@ -363,6 +363,7 @@ scale = Vector2(1.6, 1.6)
 Target = ExtResource("14_jkfcb")
 
 [node name="CollisionPolygon2D" parent="Levels/LevelPortal7/StaticBody2D" index="0"]
+position = Vector2(0, 10.625)
 shape = SubResource("SegmentShape2D_k40in")
 
 [node name="LevelPortal8" parent="Levels" instance=ExtResource("5_bn3ky")]
