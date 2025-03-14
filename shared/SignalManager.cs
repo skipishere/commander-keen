@@ -50,4 +50,7 @@ public partial class SignalManager : Node
 
     [Signal]
     public delegate void KeenHitYorpEyeEventHandler();
+
+    [Signal]
+    public delegate void ShowUiHintEventHandler(string message);
 }
