@@ -411,7 +411,7 @@ collision_layer = 2
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_wrg3v")
+&"": SubResource("AnimationLibrary_wrg3v")
 }
 autoplay = "start"
 

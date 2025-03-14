@@ -314,7 +314,7 @@ script = ExtResource("1_uheac")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_alvjl")
+&"": SubResource("AnimationLibrary_alvjl")
 }
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
