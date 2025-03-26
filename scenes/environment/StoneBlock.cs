@@ -1,3 +1,4 @@
+using CommanderKeen.Scenes.Creatures.Vorticon;
 using Godot;
 
 public partial class StoneBlock : CharacterBody2D, ITakeDamage
