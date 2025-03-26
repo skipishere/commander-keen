@@ -1,9 +1,14 @@
-[gd_scene load_steps=35 format=3 uid="uid://dkpwgxsjkybvs"]
+[gd_scene load_steps=57 format=3 uid="uid://dkpwgxsjkybvs"]
 
 [ext_resource type="Texture2D" uid="uid://cnjvd8vb035y8" path="res://sprites/vorticon guard.png" id="1_6l41r"]
 [ext_resource type="Script" uid="uid://p8r8kqbrjj7r" path="res://scenes/creatures/VorticonGuard/vorticon_guard.cs" id="1_c61b3"]
 [ext_resource type="Shader" uid="uid://r0x30fkd2lv0" path="res://shaders/flash.gdshader" id="2_4vb4o"]
 [ext_resource type="AudioStream" uid="uid://cypixfvrm0b4t" path="res://music/2012_november_fakeAwake04 back to A minor.ogg" id="2_16nxu"]
+[ext_resource type="Script" uid="uid://conh01ubxvinh" path="res://scenes/creatures/VorticonGuard/WalkState.cs" id="5_jydvr"]
+[ext_resource type="Script" uid="uid://b6y4vsv72l17c" path="res://scenes/creatures/VorticonGuard/ThinkingState.cs" id="5_tvrcg"]
+[ext_resource type="Script" uid="uid://bwq7xclxgey2h" path="res://scenes/creatures/VorticonGuard/VorticonStateMachine.cs" id="5_vs700"]
+[ext_resource type="Script" uid="uid://b14e2au1y5c1d" path="res://scenes/creatures/VorticonGuard/JumpState.cs" id="6_aox8w"]
+[ext_resource type="Script" uid="uid://cybrcekmynu6f" path="res://scenes/creatures/VorticonGuard/DeathState.cs" id="7_tvrcg"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_llcbj"]
 
@@ -213,7 +218,19 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [163]
+"values": [161]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Area2D:monitoring")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
 }
 
 [sub_resource type="Animation" id="Animation_7yta5"]
@@ -255,6 +272,18 @@ tracks/2/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [33]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Area2D:monitoring")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
 }
 
 [sub_resource type="Animation" id="Animation_l12uf"]
@@ -351,9 +380,80 @@ _data = {
 &"walk_right": SubResource("Animation_hqh2o")
 }
 
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_aox8w"]
+animation = &"die"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_tvrcg"]
+animation = &"idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_vs700"]
+animation = &"jump_right"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_w3ygt"]
+animation = &"jump_left"
+
+[sub_resource type="AnimationNodeBlendSpace1D" id="AnimationNodeBlendSpace1D_1qxjx"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_tvrcg")
+blend_point_0/pos = 0.0
+blend_point_1/node = SubResource("AnimationNodeAnimation_vs700")
+blend_point_1/pos = 1.0
+blend_point_2/node = SubResource("AnimationNodeAnimation_w3ygt")
+blend_point_2/pos = -1.0
+blend_mode = 1
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_nq4k1"]
+animation = &"jump_left"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_bpye1"]
+animation = &"jump_right"
+
+[sub_resource type="AnimationNodeBlendSpace1D" id="AnimationNodeBlendSpace1D_o1ubb"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_nq4k1")
+blend_point_0/pos = -1.0
+blend_point_1/node = SubResource("AnimationNodeAnimation_bpye1")
+blend_point_1/pos = 1.0
+blend_mode = 1
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ut7d4"]
+animation = &"walk_left"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_0ubmx"]
+animation = &"walk_right"
+
+[sub_resource type="AnimationNodeBlendSpace1D" id="AnimationNodeBlendSpace1D_ski3g"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_ut7d4")
+blend_point_0/pos = -1.0
+blend_point_1/node = SubResource("AnimationNodeAnimation_0ubmx")
+blend_point_1/pos = 1.0
+blend_mode = 1
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ri5xl"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_2gnh8"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_6yqtr"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_m121e"]
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_6l0hx"]
+states/Die/node = SubResource("AnimationNodeAnimation_aox8w")
+states/Die/position = Vector2(897, 183)
+states/Idle/node = SubResource("AnimationNodeBlendSpace1D_1qxjx")
+states/Idle/position = Vector2(388, 219)
+states/Jump/node = SubResource("AnimationNodeBlendSpace1D_o1ubb")
+states/Jump/position = Vector2(771, 219)
+states/Start/position = Vector2(202, 100)
+states/Walk/node = SubResource("AnimationNodeBlendSpace1D_ski3g")
+states/Walk/position = Vector2(573, 41)
+transitions = ["Walk", "Jump", SubResource("AnimationNodeStateMachineTransition_ri5xl"), "Start", "Idle", SubResource("AnimationNodeStateMachineTransition_2gnh8"), "Idle", "Walk", SubResource("AnimationNodeStateMachineTransition_6yqtr"), "Jump", "Idle", SubResource("AnimationNodeStateMachineTransition_m121e")]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tvrcg"]
+size = Vector2(23, 30)
+
 [node name="Vorticon Guard" type="CharacterBody2D"]
 collision_layer = 64
-collision_mask = 163
+collision_mask = 161
 script = ExtResource("1_c61b3")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -389,9 +489,49 @@ region_rect = Rect2(0, 0, 450, 34)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_6a051")
+&"": SubResource("AnimationLibrary_6a051")
 }
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+tree_root = SubResource("AnimationNodeStateMachine_6l0hx")
+anim_player = NodePath("../AnimationPlayer")
+parameters/Idle/blend_position = 0
+parameters/Jump/blend_position = 0.0
+parameters/Walk/blend_position = 0
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("character", "animationTree")]
+script = ExtResource("5_vs700")
+character = NodePath("..")
+animationTree = NodePath("../AnimationTree")
+
+[node name="Thinking" type="Node" parent="StateMachine"]
+script = ExtResource("5_tvrcg")
+
+[node name="Timer" type="Timer" parent="StateMachine/Thinking"]
+one_shot = true
+
+[node name="Walk" type="Node" parent="StateMachine"]
+script = ExtResource("5_jydvr")
+
+[node name="Timer" type="Timer" parent="StateMachine/Walk"]
+one_shot = true
+
+[node name="Jump" type="Node" parent="StateMachine"]
+script = ExtResource("6_aox8w")
+
+[node name="Death" type="Node" parent="StateMachine"]
+script = ExtResource("7_tvrcg")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(-0.5, 1)
+shape = SubResource("RectangleShape2D_tvrcg")
+debug_color = Color(0.960784, 0, 0, 0.419608)
 
 [connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_screen_entered"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="OnScreenExited"]
 [connection signal="timeout" from="HitTimer" to="." method="HitTimeout"]
+[connection signal="body_entered" from="Area2D" to="." method="BodyEntered"]
