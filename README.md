@@ -1,14 +1,8 @@
 # What is this?
 An early attempt to recreate the original Command Keen (Episode 1) using the Godot engine. What better way to learn to make a game then to try and recreate an old one.
+This project uses some custom music and sound effects ([see credits](https://github.com/skipishere/commander-keen/blob/main/credits.md) for what and where) as the original didn't have music, and the PC speaker sound effects are not the nicest & hard to get decent versions of.
 
-Things that need to be worked on:
- - [x] Hazards - ~currently Keen can't die~ (added in https://github.com/skipishere/commander-keen/pull/2 and https://github.com/skipishere/commander-keen/pull/4)
- - [ ] Enemies/Creatures
-   - [ ] Vorticons
-   - [x] Gargs (https://github.com/skipishere/commander-keen/pull/11)
-   - [ ] Tank Robot
-   - [ ] Butler robot
-   - [ ] Yorp
+[Milestone for things needed to make Episode 1 complete](https://github.com/skipishere/commander-keen/milestone/1)
 
 ## Useful resources:
 
