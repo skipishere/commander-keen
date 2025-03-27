@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using Godot;
 
 namespace CommanderKeen.Scenes.Creatures.Vorticon;
@@ -10,7 +11,7 @@ public partial class WalkState : VorticonBaseState
 
 	public override void _Ready()
 	{
-		timer = GetNode<Timer>("Timer");
+		timer = GetNode<Timer>("WalkTimer");
 	}
 
     private void OnTimerTimeout()
@@ -24,7 +25,7 @@ public partial class WalkState : VorticonBaseState
 
     public override void PhysicsProcess(double delta, float lastMovementX)
 	{
-		if (Character.IsOnFloor() && Character.IsOnWall())
+		if (Character.IsOnWall())
 		{
 			lastMovementX = -lastMovementX;
 		}
@@ -34,14 +35,13 @@ public partial class WalkState : VorticonBaseState
 		}
 
 		AnimationTree.Set("parameters/Walk/blend_position", lastMovementX);
+		AnimationTree.Set("parameters/Jump/blend_position", lastMovementX);
 		Character.Velocity = new Vector2(lastMovementX * Speed, Character.Velocity.Y + gravity * (float)delta);
 	}
 
 	public override void Enter()
 	{
-		playback.Travel("Walk");
-
-		// Walk time is around 1-5 seconds
+		// Walk time is around 1-4 seconds
 		var random = new Random().Next(1, 5);
 		timer.WaitTime = random;
 		timer.Start();
@@ -50,6 +50,7 @@ public partial class WalkState : VorticonBaseState
 		var keen = GetTree().GetNodesInGroup("Player")[0] as Keen;
 		var direction = keen.GlobalPosition.X < Character.GlobalPosition.X ? Vector2.Left.X : Vector2.Right.X;
 		AnimationTree.Set("parameters/Walk/blend_position", direction);
+		AnimationTree.Set("parameters/Jump/blend_position", direction);
 		Character.Velocity = Character.Velocity with { X = direction };
 	}
 }

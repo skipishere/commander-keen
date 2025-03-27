@@ -10,7 +10,7 @@ public partial class ThinkingState : VorticonBaseState
 
 	public override void _Ready()
 	{
-		timer = GetNode<Timer>("Timer");
+		timer = GetNode<Timer>("ThinkTimer");
 	}
 
     private void OnTimerTimeout()
@@ -24,17 +24,13 @@ public partial class ThinkingState : VorticonBaseState
 
     public override void PhysicsProcess(double delta, float lastMovementX)
 	{
-		var random = new Random().Next(-1, 1);
-		AnimationTree.Set("parameters/Idle/blend_position", random);
 	}
 
 	public override void Enter()
 	{
-		playback.Travel("Idle");
-
-		// Idle time is around 1-3 seconds?
+		// Idle time is around 0.5 - 1 second?
 		var random = new Random().Next(1, 3);
-		timer.WaitTime = random;
+		timer.WaitTime = random * 0.5;
 		timer.Start();
 
 		Character.Velocity = Vector2.Zero;

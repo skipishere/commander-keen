@@ -1,4 +1,4 @@
-[gd_scene load_steps=57 format=3 uid="uid://dkpwgxsjkybvs"]
+[gd_scene load_steps=56 format=3 uid="uid://dkpwgxsjkybvs"]
 
 [ext_resource type="Texture2D" uid="uid://cnjvd8vb035y8" path="res://sprites/vorticon guard.png" id="1_6l41r"]
 [ext_resource type="Script" uid="uid://p8r8kqbrjj7r" path="res://scenes/creatures/VorticonGuard/vorticon_guard.cs" id="1_c61b3"]
@@ -383,23 +383,8 @@ _data = {
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_aox8w"]
 animation = &"die"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_tvrcg"]
-animation = &"idle"
-
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_vs700"]
-animation = &"jump_right"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_w3ygt"]
-animation = &"jump_left"
-
-[sub_resource type="AnimationNodeBlendSpace1D" id="AnimationNodeBlendSpace1D_1qxjx"]
-blend_point_0/node = SubResource("AnimationNodeAnimation_tvrcg")
-blend_point_0/pos = 0.0
-blend_point_1/node = SubResource("AnimationNodeAnimation_vs700")
-blend_point_1/pos = 1.0
-blend_point_2/node = SubResource("AnimationNodeAnimation_w3ygt")
-blend_point_2/pos = -1.0
-blend_mode = 1
+animation = &"idle"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_nq4k1"]
 animation = &"jump_left"
@@ -428,28 +413,42 @@ blend_point_1/pos = 1.0
 blend_mode = 1
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ri5xl"]
+advance_mode = 2
+advance_expression = "!is_on_floor()"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_2gnh8"]
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_w3ygt"]
+advance_mode = 2
+advance_expression = "velocity.x == 0 and is_on_floor()"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_1qxjx"]
+advance_mode = 2
+advance_expression = "velocity.x != 0"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_nq4k1"]
 advance_mode = 2
 
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_6yqtr"]
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_vs700"]
+advance_mode = 2
+advance_expression = "is_on_floor() and velocity.x != 0"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_m121e"]
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_bpye1"]
+advance_mode = 2
+advance_expression = "velocity.x == 0"
 
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_6l0hx"]
 states/Die/node = SubResource("AnimationNodeAnimation_aox8w")
 states/Die/position = Vector2(897, 183)
-states/Idle/node = SubResource("AnimationNodeBlendSpace1D_1qxjx")
-states/Idle/position = Vector2(388, 219)
+states/Idle/node = SubResource("AnimationNodeAnimation_vs700")
+states/Idle/position = Vector2(389, 227)
 states/Jump/node = SubResource("AnimationNodeBlendSpace1D_o1ubb")
 states/Jump/position = Vector2(771, 219)
 states/Start/position = Vector2(202, 100)
 states/Walk/node = SubResource("AnimationNodeBlendSpace1D_ski3g")
 states/Walk/position = Vector2(573, 41)
-transitions = ["Walk", "Jump", SubResource("AnimationNodeStateMachineTransition_ri5xl"), "Start", "Idle", SubResource("AnimationNodeStateMachineTransition_2gnh8"), "Idle", "Walk", SubResource("AnimationNodeStateMachineTransition_6yqtr"), "Jump", "Idle", SubResource("AnimationNodeStateMachineTransition_m121e")]
+transitions = ["Walk", "Jump", SubResource("AnimationNodeStateMachineTransition_ri5xl"), "Jump", "Idle", SubResource("AnimationNodeStateMachineTransition_w3ygt"), "Idle", "Walk", SubResource("AnimationNodeStateMachineTransition_1qxjx"), "Start", "Idle", SubResource("AnimationNodeStateMachineTransition_nq4k1"), "Jump", "Walk", SubResource("AnimationNodeStateMachineTransition_vs700"), "Walk", "Idle", SubResource("AnimationNodeStateMachineTransition_bpye1")]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tvrcg"]
-size = Vector2(23, 30)
+size = Vector2(22, 32)
 
 [node name="Vorticon Guard" type="CharacterBody2D"]
 collision_layer = 64
@@ -494,26 +493,28 @@ libraries = {
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
 tree_root = SubResource("AnimationNodeStateMachine_6l0hx")
+advance_expression_base_node = NodePath("..")
 anim_player = NodePath("../AnimationPlayer")
-parameters/Idle/blend_position = 0
 parameters/Jump/blend_position = 0.0
-parameters/Walk/blend_position = 0
+parameters/Walk/blend_position = -0.00123304
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("character", "animationTree")]
 script = ExtResource("5_vs700")
 character = NodePath("..")
 animationTree = NodePath("../AnimationTree")
 
-[node name="Thinking" type="Node" parent="StateMachine"]
-script = ExtResource("5_tvrcg")
-
-[node name="Timer" type="Timer" parent="StateMachine/Thinking"]
-one_shot = true
-
 [node name="Walk" type="Node" parent="StateMachine"]
 script = ExtResource("5_jydvr")
 
-[node name="Timer" type="Timer" parent="StateMachine/Walk"]
+[node name="WalkTimer" type="Timer" parent="StateMachine/Walk"]
+process_callback = 0
+one_shot = true
+
+[node name="Thinking" type="Node" parent="StateMachine"]
+script = ExtResource("5_tvrcg")
+
+[node name="ThinkTimer" type="Timer" parent="StateMachine/Thinking"]
+process_callback = 0
 one_shot = true
 
 [node name="Jump" type="Node" parent="StateMachine"]
@@ -527,11 +528,13 @@ collision_layer = 0
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(-0.5, 1)
+position = Vector2(-1, 0)
 shape = SubResource("RectangleShape2D_tvrcg")
 debug_color = Color(0.960784, 0, 0, 0.419608)
 
 [connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_screen_entered"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="OnScreenExited"]
 [connection signal="timeout" from="HitTimer" to="." method="HitTimeout"]
+[connection signal="timeout" from="StateMachine/Walk/WalkTimer" to="StateMachine/Walk" method="OnTimerTimeout"]
+[connection signal="timeout" from="StateMachine/Thinking/ThinkTimer" to="StateMachine/Thinking" method="OnTimerTimeout"]
 [connection signal="body_entered" from="Area2D" to="." method="BodyEntered"]

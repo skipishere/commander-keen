@@ -1,8 +1,8 @@
 using Godot;
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+
 
 namespace CommanderKeen.Scenes.Creatures.Vorticon;
 public partial class VorticonStateMachine : Node
@@ -12,11 +12,10 @@ public partial class VorticonStateMachine : Node
 		Walk,
 		Jump,
 		Thinking,
-		Dead,
-		TurnAround
+		Dead
 	}
 
-    private readonly Dictionary<VorticonStates, IState<VorticonStates>> states = new();
+    private readonly Dictionary<VorticonStates, IState<VorticonStates>> states = [];
 
     private IState<VorticonStates> Current { get; set; }
 
@@ -40,6 +39,7 @@ public partial class VorticonStateMachine : Node
 		
 		Current = states.First().Value;
 		Debug.Print("Vorticon Default state: " + Current.StateType);
+		Current.Enter();
 	}
 
     public void PhysicsProcess(double delta, float lastMovementX, bool isActivated)
