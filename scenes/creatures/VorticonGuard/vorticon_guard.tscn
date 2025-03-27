@@ -451,6 +451,7 @@ transitions = ["Walk", "Jump", SubResource("AnimationNodeStateMachineTransition_
 size = Vector2(22, 32)
 
 [node name="Vorticon Guard" type="CharacterBody2D"]
+process_mode = 1
 collision_layer = 64
 collision_mask = 161
 script = ExtResource("1_c61b3")
