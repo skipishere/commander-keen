@@ -136,6 +136,7 @@ region_enabled = true
 region_rect = Rect2(0, 0, 16, 32)
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
+collision_layer = 256
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
@@ -149,7 +150,7 @@ bus = &"Sound Effects"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_vbgbg")
+&"": SubResource("AnimationLibrary_vbgbg")
 }
 
 [connection signal="body_entered" from="Polygon2D/Area2D" to="." method="OnArea2dBodyEntered"]
