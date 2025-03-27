@@ -46,6 +46,7 @@ _data = {
 size = Vector2(142, 32)
 
 [node name="RigidBody2D" type="CharacterBody2D"]
+process_mode = 1
 collision_layer = 128
 collision_mask = 16
 slide_on_ceiling = false
@@ -58,7 +59,7 @@ debug_color = Color(0.965396, 4.81307e-07, 0.486949, 0.42)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_636ou")
+&"": SubResource("AnimationLibrary_636ou")
 }
 
 [node name="StoneBlock" type="CharacterBody2D" parent="."]

@@ -112,6 +112,7 @@ menu_cancel={
 2d_physics/layer_6="One Way"
 2d_physics/layer_7="Creatures"
 2d_physics/layer_8="Platforms"
+2d_physics/layer_9="Door"
 
 [rendering]
 

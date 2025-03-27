@@ -38,11 +38,11 @@ public partial class StateMachine : Node
 			state.Character = character;
 			state.AnimationTree = animationTree;
 			states.Add(state.StateType, state);
-			Debug.Print("Added state: " + state.StateType);
+			//Debug.Print("Keen Added state: " + state.StateType);
 		}
 		
 		Current = states.First().Value;
-		Debug.Print("Default state: " + Current.StateType);
+		Debug.Print("Keen Default state: " + Current.StateType);
 
 		signalManager = GetNode<SignalManager>("/root/SignalManager");
 		signalManager.HidePlayer += () => forceState = KeenStates.Hidden;

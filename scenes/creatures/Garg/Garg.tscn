@@ -561,7 +561,7 @@ region_rect = Rect2(0, 0, 250, 32)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_flmgh")
+&"": SubResource("AnimationLibrary_flmgh")
 }
 
 [node name="Area2D" type="Area2D" parent="."]
