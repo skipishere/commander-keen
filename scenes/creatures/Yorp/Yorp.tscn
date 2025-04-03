@@ -1,7 +1,12 @@
-[gd_scene load_steps=12 format=3 uid="uid://cxi7xre6i724l"]
+[gd_scene load_steps=30 format=3 uid="uid://cxi7xre6i724l"]
 
 [ext_resource type="Texture2D" uid="uid://dagrrjfqo4cv0" path="res://sprites/yorp.png" id="1_bhl5i"]
 [ext_resource type="Script" uid="uid://4eewxqi34766" path="res://scenes/creatures/Yorp/Yorp.cs" id="1_wx8nb"]
+[ext_resource type="Script" uid="uid://d2ykcrtkskta8" path="res://scenes/creatures/Yorp/WalkState.cs" id="3_8cwy3"]
+[ext_resource type="Script" uid="uid://dbufi5gll8xrb" path="res://scenes/creatures/Yorp/DazedState.cs" id="3_lkvrj"]
+[ext_resource type="Script" uid="uid://dtanxwhsbt2gg" path="res://scenes/creatures/Yorp/YorpStateMachine.cs" id="3_p3bo8"]
+[ext_resource type="Script" uid="uid://de135f4jgh44g" path="res://scenes/creatures/Yorp/ThinkingState.cs" id="4_p3bo8"]
+[ext_resource type="Script" uid="uid://k8j8d4bmqfpg" path="res://scenes/creatures/Yorp/DeathState.cs" id="4_yxusf"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_i62cy"]
 size = Vector2(8, 5)
@@ -175,22 +180,6 @@ tracks/3/keys = {
 }]
 }
 
-[sub_resource type="Animation" id="Animation_p84it"]
-resource_name = "looking"
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.25, 0.5, 0.75),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 1,
-"values": [6, 7, 6, 5]
-}
-
 [sub_resource type="Animation" id="Animation_4iu4c"]
 resource_name = "walk_left"
 length = 0.3
@@ -249,15 +238,126 @@ tracks/1/keys = {
 "values": [Vector2(5, -6.5)]
 }
 
+[sub_resource type="Animation" id="Animation_8cwy3"]
+resource_name = "look_left"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [6, 5]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("StateMachine/Think")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.5),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"ThinkingFinished"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_p84it"]
+resource_name = "look_right"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [6, 7]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("StateMachine/Think")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.5),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"ThinkingFinished"
+}]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_mlcmu"]
 _data = {
 &"RESET": SubResource("Animation_vlyq1"),
 &"dazed": SubResource("Animation_2to7r"),
 &"die": SubResource("Animation_0tfb6"),
-&"looking": SubResource("Animation_p84it"),
+&"look_left": SubResource("Animation_8cwy3"),
+&"look_right": SubResource("Animation_p84it"),
 &"walk_left": SubResource("Animation_4iu4c"),
 &"walk_right": SubResource("Animation_1mvt3")
 }
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_p3bo8"]
+animation = &"dazed"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_g274x"]
+animation = &"die"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_d82sg"]
+animation = &"look_left"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_o224v"]
+animation = &"look_right"
+
+[sub_resource type="AnimationNodeBlendSpace1D" id="AnimationNodeBlendSpace1D_j8kw4"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_d82sg")
+blend_point_0/pos = -1.0
+blend_point_1/node = SubResource("AnimationNodeAnimation_o224v")
+blend_point_1/pos = 1.0
+blend_mode = 1
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_y647g"]
+animation = &"walk_left"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_686vx"]
+animation = &"walk_right"
+
+[sub_resource type="AnimationNodeBlendSpace1D" id="AnimationNodeBlendSpace1D_gmeuc"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_y647g")
+blend_point_0/pos = -1.0
+blend_point_1/node = SubResource("AnimationNodeAnimation_686vx")
+blend_point_1/pos = 1.0
+blend_mode = 1
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_qpsbx"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_sc8hs"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_tli3e"]
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_8rhep"]
+states/Dazed/node = SubResource("AnimationNodeAnimation_p3bo8")
+states/Dazed/position = Vector2(463, 256)
+states/Die/node = SubResource("AnimationNodeAnimation_g274x")
+states/Die/position = Vector2(739, 223)
+states/Look/node = SubResource("AnimationNodeBlendSpace1D_j8kw4")
+states/Look/position = Vector2(574, 89)
+states/Walk/node = SubResource("AnimationNodeBlendSpace1D_gmeuc")
+states/Walk/position = Vector2(357, 159)
+transitions = ["Start", "Walk", SubResource("AnimationNodeStateMachineTransition_qpsbx"), "Walk", "Look", SubResource("AnimationNodeStateMachineTransition_sc8hs"), "Dazed", "Look", SubResource("AnimationNodeStateMachineTransition_tli3e")]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jgn1p"]
 radius = 7.0
@@ -265,7 +365,7 @@ height = 20.0
 
 [node name="Yorp" type="CharacterBody2D"]
 position = Vector2(0, -4)
-collision_layer = 64
+collision_layer = 16
 collision_mask = 99
 slide_on_ceiling = false
 safe_margin = 0.5
@@ -279,18 +379,19 @@ collision_mask = 2
 [node name="EyeCollision" type="CollisionShape2D" parent="Area2D"]
 position = Vector2(0, -6.5)
 shape = SubResource("RectangleShape2D_i62cy")
-disabled = true
 debug_color = Color(0.955172, 0.149873, 0.386387, 0.42)
-
-[node name="KnockedOutTimer" type="Timer" parent="."]
-wait_time = 6.0
-one_shot = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_mlcmu")
+&"": SubResource("AnimationLibrary_mlcmu")
 }
 autoplay = "RESET"
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+tree_root = SubResource("AnimationNodeStateMachine_8rhep")
+anim_player = NodePath("../AnimationPlayer")
+parameters/Look/blend_position = -0.324291
+parameters/Walk/blend_position = 0.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_bhl5i")
@@ -308,6 +409,37 @@ scale = Vector2(2.6, 2.3)
 position = Vector2(0, 2)
 shape = SubResource("CapsuleShape2D_jgn1p")
 
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("character", "animationTree")]
+script = ExtResource("3_p3bo8")
+character = NodePath("..")
+animationTree = NodePath("../AnimationTree")
+
+[node name="Walk" type="Node" parent="StateMachine"]
+script = ExtResource("3_8cwy3")
+
+[node name="JumpTimer" type="Timer" parent="StateMachine/Walk"]
+one_shot = true
+
+[node name="WalkTimer" type="Timer" parent="StateMachine/Walk"]
+one_shot = true
+
+[node name="Think" type="Node" parent="StateMachine"]
+script = ExtResource("4_p3bo8")
+
+[node name="Dazed" type="Node" parent="StateMachine"]
+script = ExtResource("3_lkvrj")
+
+[node name="KnockedOutTimer" type="Timer" parent="StateMachine/Dazed"]
+wait_time = 6.0
+one_shot = true
+
+[node name="Dead" type="Node" parent="StateMachine"]
+script = ExtResource("4_yxusf")
+
+[connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="OnScreenEntered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="ScreenExited"]
 [connection signal="body_entered" from="Area2D" to="." method="KnockedOut"]
-[connection signal="timeout" from="KnockedOutTimer" to="." method="KnockedOutTimeout"]
 [connection signal="screen_exited" from="VisibleOnScreen" to="." method="ScreenExited"]
+[connection signal="timeout" from="StateMachine/Walk/JumpTimer" to="StateMachine/Walk" method="Jump"]
+[connection signal="timeout" from="StateMachine/Walk/WalkTimer" to="StateMachine/Walk" method="OnTimerTimeout"]
+[connection signal="timeout" from="StateMachine/Dazed/KnockedOutTimer" to="StateMachine/Dazed" method="OnTimerTimeout"]
