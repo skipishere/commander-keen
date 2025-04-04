@@ -26,6 +26,7 @@ public partial class ThinkingState : YorpBaseState
 		thinkAmount--;
 		if (thinkAmount <= 0)
 		{
+			AnimationTree.Set("parameters/Look/blend_position", 0);
 			this.NextState = YorpStateMachine.YorpStates.Walk;
 		}
 		
@@ -35,7 +36,7 @@ public partial class ThinkingState : YorpBaseState
 
 	public override void Enter()
 	{
-		thinkAmount = random.Next(1, 5);
+		thinkAmount = random.Next(3, 5);
 		direction = random.Next(0, 2) == 0 ? -1 : 1;
 		
 		playback.Travel("Look");

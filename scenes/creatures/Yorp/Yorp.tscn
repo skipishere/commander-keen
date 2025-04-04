@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://cxi7xre6i724l"]
+[gd_scene load_steps=32 format=3 uid="uid://cxi7xre6i724l"]
 
 [ext_resource type="Texture2D" uid="uid://dagrrjfqo4cv0" path="res://sprites/yorp.png" id="1_bhl5i"]
 [ext_resource type="Script" uid="uid://4eewxqi34766" path="res://scenes/creatures/Yorp/Yorp.cs" id="1_wx8nb"]
@@ -180,6 +180,68 @@ tracks/3/keys = {
 }]
 }
 
+[sub_resource type="Animation" id="Animation_8cwy3"]
+resource_name = "look_left"
+length = 0.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [6, 5]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("StateMachine/Think")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.5),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"ThinkingFinished"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_p84it"]
+resource_name = "look_right"
+length = 0.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [6, 7]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("StateMachine/Think")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.5),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"ThinkingFinished"
+}]
+}
+
 [sub_resource type="Animation" id="Animation_4iu4c"]
 resource_name = "walk_left"
 length = 0.3
@@ -238,8 +300,8 @@ tracks/1/keys = {
 "values": [Vector2(5, -6.5)]
 }
 
-[sub_resource type="Animation" id="Animation_8cwy3"]
-resource_name = "look_left"
+[sub_resource type="Animation" id="Animation_p3bo8"]
+resource_name = "idle"
 length = 0.5
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -248,54 +310,10 @@ tracks/0/path = NodePath("Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.25),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [6, 5]
-}
-tracks/1/type = "method"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("StateMachine/Think")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0.5),
+"times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"values": [{
-"args": [],
-"method": &"ThinkingFinished"
-}]
-}
-
-[sub_resource type="Animation" id="Animation_p84it"]
-resource_name = "look_right"
-length = 0.5
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.25),
-"transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [6, 7]
-}
-tracks/1/type = "method"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("StateMachine/Think")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0.5),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": [],
-"method": &"ThinkingFinished"
-}]
+"values": [6]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_mlcmu"]
@@ -303,6 +321,7 @@ _data = {
 &"RESET": SubResource("Animation_vlyq1"),
 &"dazed": SubResource("Animation_2to7r"),
 &"die": SubResource("Animation_0tfb6"),
+&"idle": SubResource("Animation_p3bo8"),
 &"look_left": SubResource("Animation_8cwy3"),
 &"look_right": SubResource("Animation_p84it"),
 &"walk_left": SubResource("Animation_4iu4c"),
@@ -321,11 +340,16 @@ animation = &"look_left"
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_o224v"]
 animation = &"look_right"
 
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_j8kw4"]
+animation = &"idle"
+
 [sub_resource type="AnimationNodeBlendSpace1D" id="AnimationNodeBlendSpace1D_j8kw4"]
 blend_point_0/node = SubResource("AnimationNodeAnimation_d82sg")
 blend_point_0/pos = -1.0
 blend_point_1/node = SubResource("AnimationNodeAnimation_o224v")
 blend_point_1/pos = 1.0
+blend_point_2/node = SubResource("AnimationNodeAnimation_j8kw4")
+blend_point_2/pos = 0.0
 blend_mode = 1
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_y647g"]
@@ -390,7 +414,7 @@ autoplay = "RESET"
 [node name="AnimationTree" type="AnimationTree" parent="."]
 tree_root = SubResource("AnimationNodeStateMachine_8rhep")
 anim_player = NodePath("../AnimationPlayer")
-parameters/Look/blend_position = -0.324291
+parameters/Look/blend_position = 0.288533
 parameters/Walk/blend_position = 0.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -418,9 +442,11 @@ animationTree = NodePath("../AnimationTree")
 script = ExtResource("3_8cwy3")
 
 [node name="JumpTimer" type="Timer" parent="StateMachine/Walk"]
+process_callback = 0
 one_shot = true
 
 [node name="WalkTimer" type="Timer" parent="StateMachine/Walk"]
+process_callback = 0
 one_shot = true
 
 [node name="Think" type="Node" parent="StateMachine"]
@@ -430,6 +456,7 @@ script = ExtResource("4_p3bo8")
 script = ExtResource("3_lkvrj")
 
 [node name="KnockedOutTimer" type="Timer" parent="StateMachine/Dazed"]
+process_callback = 0
 wait_time = 6.0
 one_shot = true
 
