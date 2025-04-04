@@ -30,5 +30,10 @@ public abstract partial class YorpBaseState : Node, IState<YorpStateMachine.Yorp
     public void Exit()
     {
         NextState = null;
+        ExitState();
+    }
+
+    public virtual void ExitState()
+    {
     }
 }

@@ -63,11 +63,17 @@ public partial class WalkState : YorpBaseState
 		Character.Velocity = Character.Velocity with { X = direction };
 	}
 
+	public override void ExitState()
+	{
+		walkTimer.Stop();
+		jumpTimer.Stop();
+	}
+
 	private void Jump()
 	{
 		if (Character.IsOnFloor())
 		{
-			Character.Velocity = new Vector2(Character.Velocity.X, random.Next((int)MaxJumpVelocity, 0));
+			Character.Velocity = Character.Velocity with { Y = random.Next((int)MaxJumpVelocity, 0) };
 		}
 	}
 }
