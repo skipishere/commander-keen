@@ -12,6 +12,7 @@ public partial class WalkState : YorpBaseState
 
 	private Timer walkTimer;
 	private Timer jumpTimer;
+	private bool jump = false;
 
 	public override void _Ready()
 	{
@@ -21,7 +22,6 @@ public partial class WalkState : YorpBaseState
 
     private void OnTimerTimeout()
     {
-        this.NextState = YorpStateMachine.YorpStates.Thinking;
 		walkTimer.Stop();
 		jumpTimer.Stop();
     }
@@ -32,6 +32,17 @@ public partial class WalkState : YorpBaseState
 
     public override void PhysicsProcess(double delta, float lastMovementX)
 	{
+		if (Character.IsOnFloor() && jump)
+		{
+			jump = false;
+			Character.Velocity = Character.Velocity with { Y = random.Next((int)MaxJumpVelocity, 0) };
+		}
+		
+		if (walkTimer.IsStopped() && Character.IsOnFloor())
+		{
+			this.NextState = YorpStateMachine.YorpStates.Thinking;
+		}
+
 		if (Character.IsOnFloor() && Character.IsOnWall())
 		{
 			lastMovementX = -lastMovementX;
@@ -71,9 +82,6 @@ public partial class WalkState : YorpBaseState
 
 	private void Jump()
 	{
-		if (Character.IsOnFloor())
-		{
-			Character.Velocity = Character.Velocity with { Y = random.Next((int)MaxJumpVelocity, 0) };
-		}
+		jump = true;
 	}
 }
