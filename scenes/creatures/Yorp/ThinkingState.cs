@@ -19,6 +19,7 @@ public partial class ThinkingState : YorpBaseState
 
 	public override void PhysicsProcess(double delta, float lastMovementX)
 	{
+		Character.Velocity = new Vector2 (0, Character.Velocity.Y + gravity * (float)delta);
 	}
 
 	public void ThinkingFinished()
