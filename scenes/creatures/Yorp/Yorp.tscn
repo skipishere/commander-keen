@@ -385,7 +385,7 @@ transitions = ["Start", "Walk", SubResource("AnimationNodeStateMachineTransition
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jgn1p"]
 radius = 7.0
-height = 20.0
+height = 21.0
 
 [node name="Yorp" type="CharacterBody2D"]
 process_mode = 1
@@ -431,7 +431,7 @@ position = Vector2(-1.43051e-06, 1)
 scale = Vector2(2.6, 2.3)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 2)
+position = Vector2(0, 1)
 shape = SubResource("CapsuleShape2D_jgn1p")
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("character", "animationTree")]
