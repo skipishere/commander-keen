@@ -3,7 +3,7 @@ using Godot;
 namespace CommanderKeen.Scenes.Creatures.Yorp;
 public abstract partial class YorpBaseState : Node, IState<YorpStateMachine.YorpStates>
 {
-    internal const float Speed = 40.0f;
+    internal const float Speed = 25.0f;
     public CharacterBody2D Character { get; set; }
 
     public AnimationTree AnimationTree { get; set; }
@@ -15,7 +15,7 @@ public abstract partial class YorpBaseState : Node, IState<YorpStateMachine.Yorp
 
     internal AnimationNodeStateMachinePlayback playback { get => (AnimationNodeStateMachinePlayback)AnimationTree.Get("parameters/playback"); }
 
-    internal float gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
+    internal float gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle() / 1.5f;
 
     public virtual void StateInput(InputEvent inputEvent)
     {
