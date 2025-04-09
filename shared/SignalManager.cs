@@ -47,4 +47,7 @@ public partial class SignalManager : Node
 
 	[Signal]
 	public delegate void PauseMenuEventHandler(bool paused, bool showSaveButton);
+
+	[Signal]
+	public delegate void KeenHitYorpEyeEventHandler();
 }

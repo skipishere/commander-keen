@@ -34,7 +34,11 @@ public partial class Yorp : CharacterBody2D, ITakeDamage
 
 	private void KnockedOut(Node body)
 	{
-		stateMachine.KnockedOut();
+		if (body is Keen)
+		{
+			signalManager.EmitSignal(nameof(SignalManager.KeenHitYorpEye));
+			stateMachine.KnockedOut();
+		}		
 	}
 
     public void TakeDamage()
