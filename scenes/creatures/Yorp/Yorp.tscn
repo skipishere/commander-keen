@@ -409,6 +409,7 @@ script = ExtResource("1_wx8nb")
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 
 [node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
 collision_mask = 2
 
 [node name="EyeCollision" type="CollisionShape2D" parent="Area2D"]
