@@ -5,7 +5,7 @@ using System.Diagnostics;
 namespace CommanderKeen.Scenes.Creatures.Yorp;
 public partial class Yorp : CharacterBody2D, ITakeDamage
 {
-	public const float ShovePower = 2.0f;
+	public const float ShovePower = 3.0f;
 
 	private int Health = 1;
 
@@ -29,7 +29,20 @@ public partial class Yorp : CharacterBody2D, ITakeDamage
 		}
 		
 		stateMachine.PhysicsProcess(delta, lastMovementX, isActivated);
-		MoveAndSlide();
+		
+		if (MoveAndSlide())
+		{
+			for (int i = 0; i < GetSlideCollisionCount(); i++)
+			{
+				var collision = GetSlideCollision(i);
+
+				if (collision.GetCollider() is Keen keen)
+				{
+					Debug.WriteLine($"Collided with Player - Yorp last x: {lastMovementX}");
+					keen.Shove(ShovePower * lastMovementX, (float)delta);
+				}
+			}
+		}
 	}
 
 	private void KnockedOut(Node body)
