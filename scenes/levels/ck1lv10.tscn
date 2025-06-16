@@ -1,9 +1,11 @@
-[gd_scene load_steps=7 format=4 uid="uid://r07u80sx2ff8"]
+[gd_scene load_steps=9 format=4 uid="uid://r07u80sx2ff8"]
 
 [ext_resource type="TileSet" uid="uid://w7k5amqxc3ac" path="res://scenes/tile_platform.tres" id="2_0fxow"]
 [ext_resource type="PackedScene" uid="uid://dqlj2tioeqgqw" path="res://player/keen.tscn" id="3_0v8xa"]
 [ext_resource type="Script" uid="uid://dnhhh5annvxc7" path="res://scripts/DeathZone.cs" id="4_dltah"]
 [ext_resource type="AudioStream" uid="uid://du4dvuk7gjjbq" path="res://music/music_jewels.ogg" id="4_q7inj"]
+[ext_resource type="PackedScene" uid="uid://bckllpjewggoc" path="res://scenes/creatures/ButlerRobot/ButlerRobot.tscn" id="5_e684o"]
+[ext_resource type="PackedScene" uid="uid://cl5vownp8h5px" path="res://scenes/creatures/TankRobot/TankRobot.tscn" id="6_ioybh"]
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_jhabg"]
 polygon = PackedVector2Array(-215, -471, 281, -471, 281, -442, -215, -442)
@@ -76,5 +78,11 @@ position = Vector2(172, 25)
 shape = SubResource("WorldBoundaryShape2D_gvmf3")
 
 [node name="Creatures" type="Node" parent="."]
+
+[node name="ButlerRobot" parent="Creatures" instance=ExtResource("5_e684o")]
+position = Vector2(120, -328)
+
+[node name="TankRobot" parent="Creatures" instance=ExtResource("6_ioybh")]
+position = Vector2(185, -428)
 
 [connection signal="body_entered" from="Area2D" to="Area2D" method="OnDeathZoneBodyEntered"]
