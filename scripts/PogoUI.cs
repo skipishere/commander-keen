@@ -6,12 +6,12 @@ public partial class PogoUI : HBoxContainer
     private TextureRect pogo;
 
     public override void _Ready()
-	{
-		signalManager = GetNode<SignalManager>("/root/SignalManager");
-		pogo = GetNode<TextureRect>("Pogo");
-		signalManager.PogoStick += OnPogoStick;
+    {
+        signalManager = GetNode<SignalManager>("/root/SignalManager");
+        pogo = GetNode<TextureRect>("Pogo");
+        signalManager.PogoStick += OnPogoStick;
         signalManager.ResetUi += OnPogoStick;
-	}
+    }
 
     public override void _ExitTree()
     {

@@ -2,48 +2,48 @@ using Godot;
 
 public partial class ThinkingState : GargBaseState
 {
-	public override GargStateMachine.GargStates StateType => GargStateMachine.GargStates.Thinking;
-	
-	[Export]
-	private RayCast2D left;
-	
-	[Export]
-	private RayCast2D right;
+    public override GargStateMachine.GargStates StateType => GargStateMachine.GargStates.Thinking;
 
-	[Export]
-	private RayCast2D leftCheck;
+    [Export]
+    private RayCast2D left;
 
-	[Export]
-	private RayCast2D rightCheck;
+    [Export]
+    private RayCast2D right;
 
-	public override void _Ready()
-	{
-	}
+    [Export]
+    private RayCast2D leftCheck;
 
-	public override void StateInput(InputEvent inputEvent)
-	{
-	}
+    [Export]
+    private RayCast2D rightCheck;
 
-	public override void PhysicsProcess(double delta, float lastMovementX)
-	{
-	}
-
-	public void ThinkingFinished()
-	{
-		NextState = CanSeeKeen() 
-		? GargStateMachine.GargStates.Agro
-		: GargStateMachine.GargStates.Walk;
+    public override void _Ready()
+    {
     }
 
-	public override void Enter()
-	{
-		playback.Travel("Thinking");
-		Character.Velocity = Vector2.Zero;
-	}
+    public override void StateInput(InputEvent inputEvent)
+    {
+    }
 
-	private bool CanSeeKeen()
-	{
+    public override void PhysicsProcess(double delta, float lastMovementX)
+    {
+    }
+
+    public void ThinkingFinished()
+    {
+        NextState = CanSeeKeen()
+        ? GargStateMachine.GargStates.Agro
+        : GargStateMachine.GargStates.Walk;
+    }
+
+    public override void Enter()
+    {
+        playback.Travel("Thinking");
+        Character.Velocity = Vector2.Zero;
+    }
+
+    private bool CanSeeKeen()
+    {
         return (left.IsColliding() && leftCheck.IsColliding())
-			|| (right.IsColliding() && rightCheck.IsColliding());
+            || (right.IsColliding() && rightCheck.IsColliding());
     }
 }

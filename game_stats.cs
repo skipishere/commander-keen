@@ -25,7 +25,7 @@ public partial class game_stats : Resource
     }
 
     public static ShipParts CollectedParts = 0;
-    
+
     public static int Score = 0;
 
     public static int NextKeenScore = 20000;

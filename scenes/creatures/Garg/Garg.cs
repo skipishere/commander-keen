@@ -2,65 +2,65 @@ using Godot;
 
 public partial class Garg : CharacterBody2D, ITakeDamage
 {
-	[Export]
-	private int Health = 1;
-	public const float Speed = 180.0f;
-	public const float JumpVelocity = -315.0f;
-	private bool isActivated = false;
-	public AnimationTree animationTree;
-	
-	private SignalManager signalManager;
-	private GargStateMachine stateMachine = new GargStateMachine();
+    [Export]
+    private int Health = 1;
+    public const float Speed = 180.0f;
+    public const float JumpVelocity = -315.0f;
+    private bool isActivated = false;
+    public AnimationTree animationTree;
 
-	public float lastMovementX = Vector2.Left.X;
+    private SignalManager signalManager;
+    private GargStateMachine stateMachine = new GargStateMachine();
 
-	public override void _Ready()
-	{
-		signalManager = GetNode<SignalManager>("/root/SignalManager");
-		animationTree = GetNode<AnimationTree>("AnimationTree");
-		stateMachine = GetNode<GargStateMachine>("StateMachine");
-	}
+    public float lastMovementX = Vector2.Left.X;
 
-	public override void _PhysicsProcess(double delta)
-	{
-		if (this.Velocity.Normalized().X != 0)
-		{
-			lastMovementX = this.Velocity.Normalized().X;
-		}
-		
-		stateMachine.PhysicsProcess(delta, lastMovementX, isActivated);
-		MoveAndSlide();
-	}
-	
-	public override void _Process(double delta)
-	{
-	}
+    public override void _Ready()
+    {
+        signalManager = GetNode<SignalManager>("/root/SignalManager");
+        animationTree = GetNode<AnimationTree>("AnimationTree");
+        stateMachine = GetNode<GargStateMachine>("StateMachine");
+    }
 
-	public void BodyEntered(Node2D body)
-	{
-		if (body is Keen)
-		{
-			signalManager.EmitSignal(nameof(SignalManager.KeenDead));
-		}
-	}
+    public override void _PhysicsProcess(double delta)
+    {
+        if (this.Velocity.Normalized().X != 0)
+        {
+            lastMovementX = this.Velocity.Normalized().X;
+        }
+
+        stateMachine.PhysicsProcess(delta, lastMovementX, isActivated);
+        MoveAndSlide();
+    }
+
+    public override void _Process(double delta)
+    {
+    }
+
+    public void BodyEntered(Node2D body)
+    {
+        if (body is Keen)
+        {
+            signalManager.EmitSignal(nameof(SignalManager.KeenDead));
+        }
+    }
 
     public void TakeDamage()
     {
-		stateMachine.TakeDamage();
+        stateMachine.TakeDamage();
     }
 
-	public void OnScreenEntered()
-	{
-		isActivated = true;
-	}
+    public void OnScreenEntered()
+    {
+        isActivated = true;
+    }
 
-	public void OnScreenExited()
-	{
-		isActivated = false;
+    public void OnScreenExited()
+    {
+        isActivated = false;
 
-		if (!Camera.CameraRect.HasPoint(this.GlobalPosition))
-		{
-			QueueFree();
-		}
-	}
+        if (!Camera.CameraRect.HasPoint(this.GlobalPosition))
+        {
+            QueueFree();
+        }
+    }
 }

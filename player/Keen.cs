@@ -3,115 +3,115 @@ using System.Diagnostics;
 
 public partial class Keen : CharacterBody2D, ITakeDamage
 {
-	public const float Speed = 180.0f;
+    public const float Speed = 180.0f;
 
-	public bool IsPogoing => stateMachine.IsPogoing();
-		
-	public AnimationTree animationTree;
-	private Camera2D camera;
-	private int width;
-	private int height;
+    public bool IsPogoing => stateMachine.IsPogoing();
 
-	private game_stats.KeyCards keyCards = 0;
+    public AnimationTree animationTree;
+    private Camera2D camera;
+    private int width;
+    private int height;
 
-	public float lastMovementX = Vector2.Right.X;
+    private game_stats.KeyCards keyCards = 0;
 
-	public float gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
+    public float lastMovementX = Vector2.Right.X;
 
-	private StateMachine stateMachine;
+    public float gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
 
-	public override void _Ready()
-	{
-		camera = GetNode<Camera2D>("Camera2D");
-		animationTree = GetNode<AnimationTree>("AnimationTree");
-		stateMachine = GetNode<StateMachine>("StateMachine");
+    private StateMachine stateMachine;
 
-		var collisionShape = GetNode<CollisionShape2D>("CollisionShape2D").Shape.GetRect().Size;
-		width = (int)collisionShape.X/2;
-		height = (int)collisionShape.Y/2;
-	}
+    public override void _Ready()
+    {
+        camera = GetNode<Camera2D>("Camera2D");
+        animationTree = GetNode<AnimationTree>("AnimationTree");
+        stateMachine = GetNode<StateMachine>("StateMachine");
 
-	public override void _Input(InputEvent @event)
-	{
-		if (@event.IsActionPressed("move_shoot") 
-			&& Input.IsKeyPressed(Key.T)
-			&& Input.IsKeyPressed(Key.C))
-		{
-			Debug.WriteLine("Cheat activated");
-			Cheat();
-		}
-	}
+        var collisionShape = GetNode<CollisionShape2D>("CollisionShape2D").Shape.GetRect().Size;
+        width = (int)collisionShape.X / 2;
+        height = (int)collisionShape.Y / 2;
+    }
 
-	public override void _PhysicsProcess(double delta)
-	{
-		var movement = Input.GetAxis("move_left", "move_right");
-		if (this.Velocity.Normalized().X != 0)
-		{
-			lastMovementX = this.Velocity.X > 0 ? Vector2.Right.X : Vector2.Left.X;
-		}
-		else if (movement != 0)
-		{
-			lastMovementX = movement > 0 ? Vector2.Right.X : Vector2.Left.X;
-		}
-				
-		stateMachine.PhysicsProcess(delta, lastMovementX);
-		MoveAndSlide();
+    public override void _Input(InputEvent @event)
+    {
+        if (@event.IsActionPressed("move_shoot")
+            && Input.IsKeyPressed(Key.T)
+            && Input.IsKeyPressed(Key.C))
+        {
+            Debug.WriteLine("Cheat activated");
+            Cheat();
+        }
+    }
 
-		// Clamp the player position to the camera limits.
-		var xLimit = Mathf.Clamp(this.GlobalPosition.X, camera.LimitLeft + width, camera.LimitRight - width);
-		var yLimit = Mathf.Clamp(this.GlobalPosition.Y, camera.LimitTop - height, camera.LimitBottom - height);
-		if (this.GlobalPosition.Y <= camera.LimitTop - height && Velocity.Y < 0)
-		{
-			// This is needed for maps where there is no 'roof' tiles
-			Debug.Print($"Hit the camera top limit - {yLimit}");
-			Velocity = Velocity with { Y = 0 };
-		}
-		
-		this.GlobalPosition = this.GlobalPosition with { X = xLimit, Y = yLimit};
-	}
+    public override void _PhysicsProcess(double delta)
+    {
+        var movement = Input.GetAxis("move_left", "move_right");
+        if (this.Velocity.Normalized().X != 0)
+        {
+            lastMovementX = this.Velocity.X > 0 ? Vector2.Right.X : Vector2.Left.X;
+        }
+        else if (movement != 0)
+        {
+            lastMovementX = movement > 0 ? Vector2.Right.X : Vector2.Left.X;
+        }
 
-	public void Shove(float direction, float delta)
-	{
-		// Apply a force to the player.
-		var velocity = Velocity;
-		if (!IsOnFloor())
-		{
-			velocity.Y += gravity * delta;
-		}
-		velocity.X = direction * Speed;
-		
-		Velocity = velocity;
-		MoveAndSlide();
-		if (IsOnWall())
-		{
-			Debug.WriteLine("Shove hit wall");
-		}
-	}
-	
-	public void TakeDamage()
-	{
-		Debug.WriteLine("Keen hit!");
-	}
+        stateMachine.PhysicsProcess(delta, lastMovementX);
+        MoveAndSlide();
 
-	public void GiveKey(game_stats.KeyCards key)
-	{
-		keyCards |= key;
-		Debug.WriteLine($"Keen has key {key}");
-	}
+        // Clamp the player position to the camera limits.
+        var xLimit = Mathf.Clamp(this.GlobalPosition.X, camera.LimitLeft + width, camera.LimitRight - width);
+        var yLimit = Mathf.Clamp(this.GlobalPosition.Y, camera.LimitTop - height, camera.LimitBottom - height);
+        if (this.GlobalPosition.Y <= camera.LimitTop - height && Velocity.Y < 0)
+        {
+            // This is needed for maps where there is no 'roof' tiles
+            Debug.Print($"Hit the camera top limit - {yLimit}");
+            Velocity = Velocity with { Y = 0 };
+        }
 
-	public bool HasKey(game_stats.KeyCards key)
-	{
-		return keyCards.HasFlag(key);
-	}
+        this.GlobalPosition = this.GlobalPosition with { X = xLimit, Y = yLimit };
+    }
 
-	private void Cheat()
-	{
-		GiveKey(game_stats.KeyCards.Blue);
-		GiveKey(game_stats.KeyCards.Green);
-		GiveKey(game_stats.KeyCards.Red);
-		GiveKey(game_stats.KeyCards.Yellow);
+    public void Shove(float direction, float delta)
+    {
+        // Apply a force to the player.
+        var velocity = Velocity;
+        if (!IsOnFloor())
+        {
+            velocity.Y += gravity * delta;
+        }
+        velocity.X = direction * Speed;
 
-		game_stats.HasPogoStick = game_stats.PogoStickState.Keep;
-		game_stats.Charges = 100;
-	}
+        Velocity = velocity;
+        MoveAndSlide();
+        if (IsOnWall())
+        {
+            Debug.WriteLine("Shove hit wall");
+        }
+    }
+
+    public void TakeDamage()
+    {
+        Debug.WriteLine("Keen hit!");
+    }
+
+    public void GiveKey(game_stats.KeyCards key)
+    {
+        keyCards |= key;
+        Debug.WriteLine($"Keen has key {key}");
+    }
+
+    public bool HasKey(game_stats.KeyCards key)
+    {
+        return keyCards.HasFlag(key);
+    }
+
+    private void Cheat()
+    {
+        GiveKey(game_stats.KeyCards.Blue);
+        GiveKey(game_stats.KeyCards.Green);
+        GiveKey(game_stats.KeyCards.Red);
+        GiveKey(game_stats.KeyCards.Yellow);
+
+        game_stats.HasPogoStick = game_stats.PogoStickState.Keep;
+        game_stats.Charges = 100;
+    }
 }
