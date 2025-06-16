@@ -1,0 +1,20 @@
+name: .NET format
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  dotnet-format:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-dotnet@v4
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Format
+      run: dotnet format --verify-no-changes --verbosity diagnostic
