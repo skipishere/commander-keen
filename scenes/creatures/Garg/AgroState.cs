@@ -6,21 +6,21 @@ public partial class AgroState : GargBaseState
 
     private float direction = Vector2.Left.X;
 
-    
+
     private const float JumpVelocity = -130f;
 
     private bool hasjumped = false;
-    
+
     public override GargStateMachine.GargStates StateType => GargStateMachine.GargStates.Agro;
 
-	public override void _Process(double delta)
-	{
-	}
+    public override void _Process(double delta)
+    {
+    }
 
     public override void PhysicsProcess(double delta, float lastMovementX)
     {
         Character.Velocity = Character.Velocity with { X = direction * Speed };
-        
+
         if (Character.IsOnFloor())
         {
             if (Character.IsOnWall())
@@ -50,7 +50,7 @@ public partial class AgroState : GargBaseState
         hasjumped = false;
 
         var keen = GetTree().GetNodesInGroup("Player")[0] as Keen;
-		direction = keen.GlobalPosition.X < Character.GlobalPosition.X ? Vector2.Left.X : Vector2.Right.X;
-		AnimationTree.Set("parameters/Walk/blend_position", direction);
+        direction = keen.GlobalPosition.X < Character.GlobalPosition.X ? Vector2.Left.X : Vector2.Right.X;
+        AnimationTree.Set("parameters/Walk/blend_position", direction);
     }
 }

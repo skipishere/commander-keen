@@ -7,7 +7,7 @@ public partial class Camera : Camera2D
 {
     public static Rect2 CameraRect { get; private set; }
 
-	// Called when the node enters the scene tree for the first time.
+    // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
         Debug.Print("Camera setup started.");
