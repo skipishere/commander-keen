@@ -52,6 +52,13 @@ public partial class StateMachine : Node
 			((IcedState)states[KeenStates.Iced]).HitByLeftIceChunk = leftIceBlock;
 			forceState = KeenStates.Iced;
 		};
+		signalManager.KeenHitYorpEye += () => 
+		{
+			if (IsPogoing())
+			{
+				forceState = KeenStates.Air;
+			}
+		};
 	}
 
     public void PhysicsProcess(double delta, float lastMovementX)
