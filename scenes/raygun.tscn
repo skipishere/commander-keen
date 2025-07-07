@@ -49,6 +49,6 @@ texture_filter = 4
 material = SubResource("1")
 position = Vector2(1, -1)
 amount = 16
-process_material = SubResource("6")
 texture = ExtResource("1_hxljc")
 lifetime = 0.7
+process_material = SubResource("6")
