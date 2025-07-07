@@ -655,6 +655,12 @@ region_rect = Rect2(0, 0, 527, 25)
 position = Vector2(-1, 0)
 shape = SubResource("CapsuleShape2D_1a8jn")
 
+[node name="ShotEmiterLeft" type="Node2D" parent="."]
+position = Vector2(-16, 2)
+
+[node name="ShotEmiterRight" type="Node2D" parent="."]
+position = Vector2(15, 2)
+
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("character", "animationTree")]
 script = ExtResource("6_orb7g")
 character = NodePath("..")
@@ -675,9 +681,11 @@ rayCast = NodePath("../../RayCast2D")
 [node name="Air" type="Node" parent="StateMachine"]
 script = ExtResource("6_01e1i")
 
-[node name="Shoot" type="Node" parent="StateMachine"]
+[node name="Shoot" type="Node" parent="StateMachine" node_paths=PackedStringArray("emitShotLeft", "emitShotRight")]
 script = ExtResource("7_82reb")
 raygun = ExtResource("2_eenmn")
+emitShotLeft = NodePath("../../ShotEmiterLeft")
+emitShotRight = NodePath("../../ShotEmiterRight")
 
 [node name="Dead" type="Node" parent="StateMachine"]
 script = ExtResource("9_qmxlx")
