@@ -4,6 +4,10 @@ public partial class ShootState : State
 {
     [Export]
     private PackedScene raygun;
+    [Export]
+    private Node2D emitShotLeft;
+    [Export]
+    private Node2D emitShotRight;
 
     public override StateMachine.KeenStates StateType => StateMachine.KeenStates.Shoot;
 
@@ -20,7 +24,10 @@ public partial class ShootState : State
         {
             game_stats.Charges--;
             var raygunInstance = raygun.Instantiate() as raygunShot;
-            raygunInstance.SetDirection(Character.GlobalPosition, new Vector2(lastMovementX, 0), new Vector2(lastMovementX * 16, 0), Character);
+            raygunInstance.SetDirection(
+                lastMovementX > 0 ? emitShotRight.GlobalPosition : emitShotLeft.GlobalPosition,
+                new Vector2(lastMovementX, 0),
+                Character);
             GetTree().Root.AddChild(raygunInstance);
             hasFired = true;
         }

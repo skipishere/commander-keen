@@ -19,9 +19,9 @@ public partial class raygunShot : StaticBody2D
         collisionShape = GetNode<CollisionShape2D>("CollisionShape2D");
     }
 
-    public void SetDirection(Vector2 globalPosition, Vector2 direction, Vector2 offset, GodotObject origin)
+    public void SetDirection(Vector2 globalPosition, Vector2 direction, GodotObject origin)
     {
-        this.GlobalPosition = globalPosition + direction + offset;
+        this.GlobalPosition = globalPosition;
         this.direction = direction;
         this.Transform = this.Transform with { X = this.Transform.X * (direction.X > 0 ? 1 : -1) };
         this.origin = origin;

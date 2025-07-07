@@ -1,7 +1,7 @@
 [gd_scene load_steps=76 format=3 uid="uid://dqlj2tioeqgqw"]
 
 [ext_resource type="Script" uid="uid://dwsb1uqt14rki" path="res://player/Keen.cs" id="1_othw7"]
-[ext_resource type="PackedScene" uid="uid://bgl2fe5um74f0" path="res://scenes/raygunShot.tscn" id="2_eenmn"]
+[ext_resource type="PackedScene" uid="uid://bgl2fe5um74f0" path="res://scenes/raygun/raygunShot.tscn" id="2_eenmn"]
 [ext_resource type="Script" uid="uid://dohri85ykhkol" path="res://player/Camera.cs" id="3_6odgb"]
 [ext_resource type="Texture2D" uid="uid://daoeamcib3t14" path="res://sprites/keen-level.png" id="4_6f3kv"]
 [ext_resource type="Script" uid="uid://c3gdyf11n7t8p" path="res://player/StartLevelState.cs" id="5_5qh44"]
@@ -655,6 +655,12 @@ region_rect = Rect2(0, 0, 527, 25)
 position = Vector2(-1, 0)
 shape = SubResource("CapsuleShape2D_1a8jn")
 
+[node name="ShotEmiterLeft" type="Node2D" parent="."]
+position = Vector2(-16, 2)
+
+[node name="ShotEmiterRight" type="Node2D" parent="."]
+position = Vector2(15, 2)
+
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("character", "animationTree")]
 script = ExtResource("6_orb7g")
 character = NodePath("..")
@@ -675,9 +681,11 @@ rayCast = NodePath("../../RayCast2D")
 [node name="Air" type="Node" parent="StateMachine"]
 script = ExtResource("6_01e1i")
 
-[node name="Shoot" type="Node" parent="StateMachine"]
+[node name="Shoot" type="Node" parent="StateMachine" node_paths=PackedStringArray("emitShotLeft", "emitShotRight")]
 script = ExtResource("7_82reb")
 raygun = ExtResource("2_eenmn")
+emitShotLeft = NodePath("../../ShotEmiterLeft")
+emitShotRight = NodePath("../../ShotEmiterRight")
 
 [node name="Dead" type="Node" parent="StateMachine"]
 script = ExtResource("9_qmxlx")

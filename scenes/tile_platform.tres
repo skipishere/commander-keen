@@ -8,7 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://bdqb85wbkl5m7" path="res://scenes/environment/light.tscn" id="5_tacv7"]
 [ext_resource type="PackedScene" uid="uid://bjbehw7hjpmri" path="res://scenes/environment/FalseFloorBlock.tscn" id="5_v3wpp"]
 [ext_resource type="PackedScene" uid="uid://doxlbjo63iuvi" path="res://scenes/environment/LevelTeleporterExit.tscn" id="6_4ckdc"]
-[ext_resource type="PackedScene" uid="uid://bigipns5vtp2o" path="res://scenes/raygun-item.tscn" id="6_8pp3j"]
+[ext_resource type="PackedScene" uid="uid://bigipns5vtp2o" path="res://scenes/items/raygun-item.tscn" id="6_8pp3j"]
 [ext_resource type="Texture2D" uid="uid://b6gffs3oj4f4t" path="res://sprites/items.png" id="6_jbogi"]
 [ext_resource type="PackedScene" uid="uid://bruadtk11tldf" path="res://scenes/keycards/KeyCardA.tscn" id="7_yfvgj"]
 [ext_resource type="PackedScene" uid="uid://cfcdvelrrvi5u" path="res://scenes/items/ItemBase.tscn" id="8_3emsk"]
