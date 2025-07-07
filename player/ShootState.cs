@@ -20,7 +20,11 @@ public partial class ShootState : State
         {
             game_stats.Charges--;
             var raygunInstance = raygun.Instantiate() as raygunShot;
-            raygunInstance.SetDirection(Character.GlobalPosition, new Vector2(lastMovementX, 0), new Vector2(lastMovementX * 16, 0), Character);
+            raygunInstance.SetDirection(
+                Character.GlobalPosition,
+                new Vector2(lastMovementX, 0),
+                new Vector2(lastMovementX * 16, 0),
+                Character);
             GetTree().Root.AddChild(raygunInstance);
             hasFired = true;
         }
