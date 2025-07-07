@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=3 uid="uid://c1ejkq43c2j4t"]
 
-[ext_resource type="Texture2D" uid="uid://bxqongktwvy1n" path="res://sprites/laser.png" id="1_hxljc"]
+[ext_resource type="Texture2D" uid="uid://bxqongktwvy1n" path="res://sprites/laser.png" id="1_iah7o"]
 
 [sub_resource type="CanvasItemMaterial" id="1"]
 blend_mode = 1
@@ -49,6 +49,6 @@ texture_filter = 4
 material = SubResource("1")
 position = Vector2(1, -1)
 amount = 16
-texture = ExtResource("1_hxljc")
+texture = ExtResource("1_iah7o")
 lifetime = 0.7
 process_material = SubResource("6")
