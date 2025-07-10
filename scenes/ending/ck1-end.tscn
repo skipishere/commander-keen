@@ -1,0 +1,243 @@
+[gd_scene load_steps=13 format=3 uid="uid://1rbxklod6npi"]
+
+[ext_resource type="Texture2D" uid="uid://caurpgfmqxugm" path="res://backgrounds/keen1-ending.png" id="1_0ie56"]
+[ext_resource type="Texture2D" uid="uid://dywtta1vbcgtk" path="res://backgrounds/keen1-ending-lightsout.png" id="2_dal2q"]
+
+[sub_resource type="Animation" id="Animation_0ie56"]
+resource_name = "Keen rushes back"
+length = 9.0
+step = 1.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Dialog/PanelContainer/Message:visible_characters")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0, 59]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Light-off:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 7, 8),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, false, true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Dialog/PanelContainer/Message:text")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["Keen makes it home and
+rushes to beat his parents upstairs."]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Dialog/PanelContainer:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 6),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="Animation" id="Animation_dal2q"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Dialog/PanelContainer/Message:visible_characters")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Light-off:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Dialog/PanelContainer/Message:text")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["Keen makes it home and
+rushes to beat his parents upstairs."]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Dialog/PanelContainer:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_d4w87"]
+resource_name = "Shh honey"
+length = 6.0
+step = 1.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Dialog/PanelContainer/Message:visible_characters")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0, 51]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Light-off:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Dialog/PanelContainer/Message:text")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["Shhh, honey... Let's see if little Billy is asleep."]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Dialog/PanelContainer:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 6),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_lb4hi"]
+_data = {
+&"Keen rushes back": SubResource("Animation_0ie56"),
+&"RESET": SubResource("Animation_dal2q"),
+&"Shh honey": SubResource("Animation_d4w87")
+}
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_0ie56"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_kdtul"]
+animation = &"Keen rushes back"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_gxojo"]
+animation = &"Shh honey"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_chmkc"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_gkhtp"]
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_d6tqj"]
+"states/Keen rushes back/node" = SubResource("AnimationNodeAnimation_kdtul")
+"states/Keen rushes back/position" = Vector2(359, 108)
+"states/Shh honey/node" = SubResource("AnimationNodeAnimation_gxojo")
+"states/Shh honey/position" = Vector2(584, 108)
+states/Start/position = Vector2(158, 100)
+transitions = ["Start", "Keen rushes back", SubResource("AnimationNodeStateMachineTransition_chmkc"), "Keen rushes back", "Shh honey", SubResource("AnimationNodeStateMachineTransition_gkhtp")]
+
+[node name="Ck1-end" type="Node2D"]
+
+[node name="Background" type="Sprite2D" parent="."]
+position = Vector2(160, 100)
+texture = ExtResource("1_0ie56")
+
+[node name="Light-off" type="Sprite2D" parent="."]
+position = Vector2(110, 17)
+texture = ExtResource("2_dal2q")
+offset = Vector2(-0.5, -1)
+
+[node name="Actions" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_lb4hi")
+}
+autoplay = "Keen rushes back"
+"next/Keen rushes back" = &"Shh honey"
+
+[node name="Dialog" type="Node" parent="."]
+
+[node name="PanelContainer" type="PanelContainer" parent="Dialog"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 1.0
+offset_top = -86.0
+offset_right = 173.0
+offset_bottom = -43.0
+grow_vertical = 0
+
+[node name="TextureRect" type="TextureRect" parent="Dialog/PanelContainer"]
+layout_mode = 2
+texture = SubResource("CanvasTexture_0ie56")
+
+[node name="Message" type="Label" parent="Dialog/PanelContainer"]
+visibility_layer = 16
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+size_flags_vertical = 1
+text = "Keen makes it home and
+rushes to beat his parents upstairs."
+autowrap_mode = 3
+visible_characters = 0
+visible_characters_behavior = 1
+visible_ratio = 0.0
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+tree_root = SubResource("AnimationNodeStateMachine_d6tqj")
+anim_player = NodePath("../Actions")
