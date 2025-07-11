@@ -1,0 +1,24 @@
+# Git files
+.git
+.gitignore
+.gitattributes
+
+# Build artifacts
+.godot/
+artifact/
+*.tmp
+
+# Documentation
+README.md
+credits.md
+
+# IDE files
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
