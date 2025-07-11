@@ -32,37 +32,89 @@ fi
 
 # Import project assets (after C# compilation)
 echo "Importing project assets..."
-if ! timeout 120 xvfb-run -a godot --headless --import --quit; then
-    echo "ERROR: Failed to import project assets!"
-    echo "This often happens when C# compilation failed or resources can't be loaded."
-    echo "Trying alternative import method..."
+
+# First, try the standard import method with more time
+echo "Step 1: Running standard asset import..."
+if ! timeout 180 xvfb-run -a godot --headless --import; then
+    echo "WARNING: Standard import failed, trying editor mode..."
     
-    # Try a more thorough import process
-    if ! timeout 120 xvfb-run -a godot --headless --editor --quit; then
-        echo "ERROR: Alternative import method also failed!"
+    # Try opening in editor mode briefly to trigger full import
+    echo "Step 2: Running editor import..."
+    if ! timeout 180 xvfb-run -a godot --headless --editor --quit; then
+        echo "ERROR: Both import methods failed!"
         exit 1
     fi
 fi
 
-# Wait a moment for import to complete
-sleep 5
+# Give Godot time to complete all file operations
+echo "Waiting for import completion..."
+sleep 10
 
-# Verify import was successful by checking if .godot directory was created
+# Verify basic import structure
 if [ ! -d ".godot" ]; then
     echo "ERROR: Import failed - .godot directory not found!"
-    echo "For C# projects, ensure that C# compilation completed successfully before import."
     exit 1
 fi
 
-# Additional verification - check for imported assets
 if [ ! -d ".godot/imported" ]; then
     echo "ERROR: Import incomplete - .godot/imported directory not found!"
-    echo "This indicates that asset import did not complete successfully."
-    echo "For C# projects, this often means C# scripts couldn't be loaded due to compilation issues."
     exit 1
+fi
+
+# Verify specific critical assets that cause build failures
+echo "Verifying critical asset imports..."
+CRITICAL_ASSETS=(
+    ".godot/imported/border.png-0be7b0e67e5060aa14b097bb4fddc453.ctex"
+    ".godot/imported/PressStart2P-Regular.ttf-c7d83f2c4bd295d4c960a93a703ae2b2.fontdata"
+)
+
+MISSING_ASSETS=()
+for asset in "${CRITICAL_ASSETS[@]}"; do
+    if [ ! -f "$asset" ]; then
+        MISSING_ASSETS+=("$asset")
+    fi
+done
+
+if [ ${#MISSING_ASSETS[@]} -gt 0 ]; then
+    echo "ERROR: Critical assets failed to import:"
+    for asset in "${MISSING_ASSETS[@]}"; do
+        echo "  - Missing: $asset"
+    done
+    
+    echo "Attempting forced reimport..."
+    # Try a more aggressive import that doesn't quit immediately
+    timeout 300 xvfb-run -a godot --headless --import --verbose || {
+        echo "ERROR: Forced reimport also failed!"
+        echo "Available imported files:"
+        ls -la .godot/imported/ | head -20
+        exit 1
+    }
+    
+    # Wait longer for completion
+    sleep 15
+    
+    # Check again
+    STILL_MISSING=()
+    for asset in "${MISSING_ASSETS[@]}"; do
+        if [ ! -f "$asset" ]; then
+            STILL_MISSING+=("$asset")
+        fi
+    done
+    
+    if [ ${#STILL_MISSING[@]} -gt 0 ]; then
+        echo "ERROR: Critical assets still missing after forced reimport:"
+        for asset in "${STILL_MISSING[@]}"; do
+            echo "  - Still missing: $asset"
+        done
+        echo "This indicates a fundamental issue with asset import."
+        echo "Available imported files:"
+        ls -la .godot/imported/ | head -20
+        exit 1
+    fi
 fi
 
 echo "Import verification successful - found $(ls .godot/imported | wc -l) imported assets"
+echo "All critical assets verified successfully"
 
 # Build for Windows
 echo "Building for Windows..."
