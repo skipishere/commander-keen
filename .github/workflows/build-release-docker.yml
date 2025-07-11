@@ -1,0 +1,92 @@
+name: Build Release (Docker)
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Tag to build (e.g., v1.0.0)'
+        required: false
+        default: 'test'
+
+jobs:
+  build-docker:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Set up tag name
+      id: tag
+      run: |
+        if [ -n "${{ github.event.inputs.tag }}" ]; then
+          echo "tag=${{ github.event.inputs.tag }}" >> $GITHUB_OUTPUT
+        else
+          echo "tag=dev-$(date +%Y%m%d-%H%M%S)" >> $GITHUB_OUTPUT
+        fi
+    
+    # Use a pre-built Godot Docker image
+    - name: Build game with Docker
+      run: |
+        # Create artifact directory
+        mkdir -p artifact
+        
+        # Use barichello/godot-ci which is a popular Godot Docker image
+        docker run --rm \
+          -v ${{ github.workspace }}:/workspace \
+          -w /workspace \
+          barichello/godot-ci:4.4.1 \
+          /bin/bash -c "
+            # Install .NET dependencies
+            apt-get update && apt-get install -y dotnet-sdk-8.0
+            
+            # Restore .NET dependencies
+            dotnet restore
+            
+            # Import project assets
+            godot --headless --import
+            
+            # Build for all platforms
+            godot --headless --export-release 'WindowsDesktop' artifact/commander-keen-windows.exe
+            godot --headless --export-release 'Linux/X11' artifact/commander-keen-linux.x86_64
+            godot --headless --export-release 'macOS' artifact/commander-keen-macos.zip
+            
+            # List results
+            ls -la artifact/
+          "
+    
+    - name: List built artifacts
+      run: |
+        echo "Built artifacts:"
+        ls -la artifact/
+    
+    - name: Create release zip files
+      run: |
+        cd artifact
+        
+        # Package Windows build
+        if [ -f commander-keen-windows.exe ]; then
+          zip -r commander-keen-windows-${{ steps.tag.outputs.tag }}.zip commander-keen-windows.exe
+        fi
+        
+        # Package Linux build
+        if [ -f commander-keen-linux.x86_64 ]; then
+          chmod +x commander-keen-linux.x86_64
+          zip -r commander-keen-linux-${{ steps.tag.outputs.tag }}.zip commander-keen-linux.x86_64
+        fi
+        
+        # Rename macOS build if it exists
+        if [ -f commander-keen-macos.zip ]; then
+          mv commander-keen-macos.zip commander-keen-macos-${{ steps.tag.outputs.tag }}.zip
+        fi
+        
+        echo "Final release files:"
+        ls -la *.zip
+    
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: commander-keen-builds-${{ steps.tag.outputs.tag }}
+        path: artifact/*.zip

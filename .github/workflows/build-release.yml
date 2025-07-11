@@ -1,0 +1,159 @@
+name: Build Release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+  release:
+    types: [created]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Tag to build (e.g., v1.0.0)'
+        required: false
+        default: ''
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Set up tag name
+      id: tag
+      run: |
+        if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ -n "${{ github.event.inputs.tag }}" ]; then
+          echo "tag=${{ github.event.inputs.tag }}" >> $GITHUB_OUTPUT
+        elif [ "${{ github.event_name }}" = "push" ]; then
+          echo "tag=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+        elif [ "${{ github.event_name }}" = "release" ]; then
+          echo "tag=${{ github.event.release.tag_name }}" >> $GITHUB_OUTPUT
+        else
+          echo "tag=dev-$(date +%Y%m%d-%H%M%S)" >> $GITHUB_OUTPUT
+        fi
+    
+    - name: Setup Godot and .NET
+      run: |
+        # Install .NET 8.0
+        wget https://packages.microsoft.com/config/ubuntu/22.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
+        sudo dpkg -i packages-microsoft-prod.deb
+        sudo apt-get update
+        sudo apt-get install -y dotnet-sdk-8.0
+        
+        # Install Godot
+        wget -q https://github.com/godotengine/godot/releases/download/4.4.1-stable/Godot_v4.4.1-stable_linux.x86_64.zip
+        unzip Godot_v4.4.1-stable_linux.x86_64.zip
+        sudo mv Godot_v4.4.1-stable_linux.x86_64 /usr/local/bin/godot
+        sudo chmod +x /usr/local/bin/godot
+        
+        # Install export templates
+        mkdir -p ~/.local/share/godot/export_templates/4.4.1.stable
+        wget -q https://github.com/godotengine/godot/releases/download/4.4.1-stable/Godot_v4.4.1-stable_export_templates.tpz
+        unzip Godot_v4.4.1-stable_export_templates.tpz
+        mv templates/* ~/.local/share/godot/export_templates/4.4.1.stable/
+        rm -rf templates
+    
+    - name: Verify installation
+      run: |
+        godot --version
+        dotnet --version
+    
+    - name: Restore .NET dependencies
+      run: dotnet restore
+    
+    - name: Import project assets
+      run: |
+        # Start Xvfb for headless display
+        export DISPLAY=:99
+        Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
+        sleep 2
+        
+        # Import project
+        timeout 60 godot --headless --import || echo "Import completed or timed out"
+        sleep 5
+    
+    - name: Create artifact directory
+      run: mkdir -p artifact
+    
+    - name: Build for Windows
+      run: |
+        export DISPLAY=:99
+        godot --headless --export-release "WindowsDesktop" artifact/commander-keen-windows.exe
+    
+    - name: Build for Linux
+      run: |
+        export DISPLAY=:99
+        godot --headless --export-release "Linux/X11" artifact/commander-keen-linux.x86_64
+    
+    - name: Build for macOS
+      run: |
+        export DISPLAY=:99
+        godot --headless --export-release "macOS" artifact/commander-keen-macos.zip
+    
+    - name: List built artifacts
+      run: |
+        echo "Built artifacts:"
+        ls -la artifact/
+    
+    - name: Create release zip files
+      run: |
+        cd artifact
+        
+        # Package Windows build
+        if [ -f commander-keen-windows.exe ]; then
+          zip -r commander-keen-windows-${{ steps.tag.outputs.tag }}.zip commander-keen-windows.exe
+        fi
+        
+        # Package Linux build
+        if [ -f commander-keen-linux.x86_64 ]; then
+          chmod +x commander-keen-linux.x86_64
+          zip -r commander-keen-linux-${{ steps.tag.outputs.tag }}.zip commander-keen-linux.x86_64
+        fi
+        
+        # Rename macOS build if it exists
+        if [ -f commander-keen-macos.zip ]; then
+          mv commander-keen-macos.zip commander-keen-macos-${{ steps.tag.outputs.tag }}.zip
+        fi
+        
+        echo "Final release files:"
+        ls -la *.zip
+    
+    - name: Upload Windows artifact
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: commander-keen-windows-${{ steps.tag.outputs.tag }}
+        path: artifact/commander-keen-windows-${{ steps.tag.outputs.tag }}.zip
+        if-no-files-found: warn
+    
+    - name: Upload Linux artifact
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: commander-keen-linux-${{ steps.tag.outputs.tag }}
+        path: artifact/commander-keen-linux-${{ steps.tag.outputs.tag }}.zip
+        if-no-files-found: warn
+    
+    - name: Upload macOS artifact
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: commander-keen-macos-${{ steps.tag.outputs.tag }}
+        path: artifact/commander-keen-macos-${{ steps.tag.outputs.tag }}.zip
+        if-no-files-found: warn
+    
+    - name: Upload to release
+      if: github.event_name == 'release' || github.event_name == 'push'
+      uses: softprops/action-gh-release@v1
+      with:
+        tag_name: ${{ steps.tag.outputs.tag }}
+        files: |
+          artifact/commander-keen-windows-${{ steps.tag.outputs.tag }}.zip
+          artifact/commander-keen-linux-${{ steps.tag.outputs.tag }}.zip
+          artifact/commander-keen-macos-${{ steps.tag.outputs.tag }}.zip
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
