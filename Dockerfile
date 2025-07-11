@@ -24,25 +24,25 @@ RUN apt-get update && apt-get install -y \
     libglu1-mesa-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# Set Godot version
-ENV GODOT_VERSION="4.4.1"
+# Set Godot version - using 4.2.2 (latest stable available)
+ENV GODOT_VERSION="4.2.2"
 
 # Download and install Godot headless
-RUN wget -q https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}-stable/Godot_v${GODOT_VERSION}-stable_linux.x86_64.zip
+RUN wget -q https://github.com/godotengine/godot/releases/download/4.2.2-stable/Godot_v4.2.2-stable_linux.x86_64.zip
 
-RUN unzip Godot_v${GODOT_VERSION}-stable_linux.x86_64.zip
+RUN unzip Godot_v4.2.2-stable_linux.x86_64.zip
 
-RUN mv Godot_v${GODOT_VERSION}-stable_linux.x86_64 /usr/local/bin/godot \
+RUN mv Godot_v4.2.2-stable_linux.x86_64 /usr/local/bin/godot \
     && chmod +x /usr/local/bin/godot \
-    && rm Godot_v${GODOT_VERSION}-stable_linux.x86_64.zip
+    && rm Godot_v4.2.2-stable_linux.x86_64.zip
 
 # Download export templates
-RUN wget -q https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}-stable/Godot_v${GODOT_VERSION}-stable_export_templates.tpz
+RUN wget -q https://github.com/godotengine/godot/releases/download/4.2.2-stable/Godot_v4.2.2-stable_export_templates.tpz
 
-RUN mkdir -p /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable \
-    && unzip Godot_v${GODOT_VERSION}-stable_export_templates.tpz \
-    && mv templates/* /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable/ \
-    && rm -rf templates Godot_v${GODOT_VERSION}-stable_export_templates.tpz
+RUN mkdir -p /root/.local/share/godot/export_templates/4.2.2.stable \
+    && unzip Godot_v4.2.2-stable_export_templates.tpz \
+    && mv templates/* /root/.local/share/godot/export_templates/4.2.2.stable/ \
+    && rm -rf templates Godot_v4.2.2-stable_export_templates.tpz
 
 # Create working directory
 WORKDIR /workspace
