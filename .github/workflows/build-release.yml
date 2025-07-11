@@ -57,48 +57,59 @@ jobs:
       run: |
         cd artifact
         
-        # Package Windows build
-        if [ -f commander-keen-windows.exe ]; then
-          zip -r commander-keen-windows-${{ steps.tag.outputs.tag }}.zip commander-keen-windows.exe
+        # Verify that all expected files were built
+        missing_files=0
+        
+        if [ ! -f commander-keen-windows.exe ]; then
+          echo "ERROR: Windows build file missing!"
+          missing_files=$((missing_files + 1))
         fi
+        
+        if [ ! -f commander-keen-linux.x86_64 ]; then
+          echo "ERROR: Linux build file missing!"
+          missing_files=$((missing_files + 1))
+        fi
+        
+        if [ ! -f commander-keen-macos.zip ]; then
+          echo "ERROR: macOS build file missing!"
+          missing_files=$((missing_files + 1))
+        fi
+        
+        if [ $missing_files -gt 0 ]; then
+          echo "ERROR: $missing_files build files are missing. Aborting release packaging."
+          exit 1
+        fi
+        
+        # Package Windows build
+        zip -r commander-keen-windows-${{ steps.tag.outputs.tag }}.zip commander-keen-windows.exe
         
         # Package Linux build
-        if [ -f commander-keen-linux.x86_64 ]; then
-          chmod +x commander-keen-linux.x86_64
-          zip -r commander-keen-linux-${{ steps.tag.outputs.tag }}.zip commander-keen-linux.x86_64
-        fi
+        chmod +x commander-keen-linux.x86_64
+        zip -r commander-keen-linux-${{ steps.tag.outputs.tag }}.zip commander-keen-linux.x86_64
         
-        # Rename macOS build if it exists
-        if [ -f commander-keen-macos.zip ]; then
-          mv commander-keen-macos.zip commander-keen-macos-${{ steps.tag.outputs.tag }}.zip
-        fi
+        # Rename macOS build
+        mv commander-keen-macos.zip commander-keen-macos-${{ steps.tag.outputs.tag }}.zip
         
         echo "Final release files:"
         ls -la *.zip
     
     - name: Upload Windows artifact
       uses: actions/upload-artifact@v4
-      if: always()
       with:
         name: commander-keen-windows-${{ steps.tag.outputs.tag }}
         path: artifact/commander-keen-windows-${{ steps.tag.outputs.tag }}.zip
-        if-no-files-found: warn
 
     - name: Upload Linux artifact
       uses: actions/upload-artifact@v4
-      if: always()
       with:
         name: commander-keen-linux-${{ steps.tag.outputs.tag }}
         path: artifact/commander-keen-linux-${{ steps.tag.outputs.tag }}.zip
-        if-no-files-found: warn
 
     - name: Upload macOS artifact
       uses: actions/upload-artifact@v4
-      if: always()
       with:
         name: commander-keen-macos-${{ steps.tag.outputs.tag }}
         path: artifact/commander-keen-macos-${{ steps.tag.outputs.tag }}.zip
-        if-no-files-found: warn
 
     - name: Upload to release
       if: github.event_name == 'release' || github.event_name == 'push'
