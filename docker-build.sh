@@ -22,11 +22,19 @@ dotnet --version
 echo "Restoring .NET dependencies..."
 dotnet restore
 
-# Import project assets
+# Build C# project first - this is critical for Godot 4.x with C#
+echo "Building C# project..."
+if ! godot --headless --build-solutions; then
+    echo "ERROR: Failed to build C# solutions!"
+    echo "C# scripts must be compiled before assets can be imported."
+    exit 1
+fi
+
+# Import project assets (after C# compilation)
 echo "Importing project assets..."
 if ! timeout 120 xvfb-run -a godot --headless --import --quit; then
     echo "ERROR: Failed to import project assets!"
-    echo "This often happens when resources haven't been imported by opening the project in the editor at least once."
+    echo "This often happens when C# compilation failed or resources can't be loaded."
     echo "Trying alternative import method..."
     
     # Try a more thorough import process
@@ -42,7 +50,7 @@ sleep 5
 # Verify import was successful by checking if .godot directory was created
 if [ ! -d ".godot" ]; then
     echo "ERROR: Import failed - .godot directory not found!"
-    echo "Make sure resources have been imported by opening the project in the editor at least once."
+    echo "For C# projects, ensure that C# compilation completed successfully before import."
     exit 1
 fi
 
@@ -50,6 +58,7 @@ fi
 if [ ! -d ".godot/imported" ]; then
     echo "ERROR: Import incomplete - .godot/imported directory not found!"
     echo "This indicates that asset import did not complete successfully."
+    echo "For C# projects, this often means C# scripts couldn't be loaded due to compilation issues."
     exit 1
 fi
 
