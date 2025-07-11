@@ -75,9 +75,29 @@ Alternatively, create a release through the GitHub web interface and the workflo
 ## Technical Implementation
 
 - Uses a custom Docker image built from the official Microsoft .NET SDK
-- Downloads Godot 4.4.1 directly from official godotengine releases  
+- Downloads Godot 4.2.2 directly from official godotengine releases  
 - Uses Godot headless mode with Xvfb for display in the container
 - Restores .NET dependencies with `dotnet restore`
-- Imports project assets before building
+- Imports project assets before building with proper error handling
 - Cross-platform builds from Ubuntu GitHub runners with Docker
 - Proper error handling and timeout management
+
+## Recent Fixes
+
+### Build Reliability Improvements
+
+The build system has been improved to address common failure scenarios:
+
+**Error Handling Enhancements:**
+- Import failures now properly abort the build instead of continuing silently
+- Each build export is verified to ensure output files are actually created
+- Build script exits immediately on any error using proper shell error handling
+- GitHub workflow only uploads artifacts when builds actually succeed
+
+**Verification Steps:**
+- Validates `.godot` directory creation after import
+- Checks existence of each platform build output before packaging
+- Fails fast if any expected build artifact is missing
+- Removes `if: always()` conditions that masked build failures
+
+These improvements ensure that build failures are detected early and artifacts are only created when builds genuinely succeed.
