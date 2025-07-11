@@ -13,7 +13,8 @@
 - BLAZING STARS - https://soundimage.org/sci-fi/
 - Dreaming of Reefs - https://soundimage.org/fantasy-8/
 - TECHNOTRONIC - https://soundimage.org/dance-techno/
-    
+- cinematic-calm.wav - https://opengameart.org/content/at-home-orchestral
+
 # Sound Effects:
 - Rise01.aif - https://opengameart.org/content/level-up-power-up-coin-get-13-sounds
 - Rise05.aif - https://opengameart.org/content/level-up-power-up-coin-get-13-sounds
@@ -24,6 +25,8 @@
 - shrinkray.ogg - https://opengameart.org/content/generic-shrink-ray
 - 138410__cameronmusic__item-collect-2.wav - https://freesound.org/people/cameronmusic/sounds/138410/
 - doorbell.wav - https://opengameart.org/content/doorbell-1
+- Light Switch Click On Sfx.wav - https://opengameart.org/content/light-switch-on-sfx-sound-effect
+- light_switch_turn_off.mp3 - https://opengameart.org/content/light-switch-turn-on-and-off-sfx-0
 
 # Fonts:
 - "Press Start 2P" - https://fonts.google.com/specimen/Press+Start+2P

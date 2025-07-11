@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dpqr7whq3mlgj"
+path="res://.godot/imported/Light Switch Click On Sfx.wav-34264e7867a171467d2ad4fdb341f23d.sample"
+
+[deps]
+
+source_file="res://sfx/Light Switch Click On Sfx.wav"
+dest_files=["res://.godot/imported/Light Switch Click On Sfx.wav-34264e7867a171467d2ad4fdb341f23d.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2
