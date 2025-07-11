@@ -75,7 +75,7 @@ Alternatively, create a release through the GitHub web interface and the workflo
 ## Technical Implementation
 
 - Uses a custom Docker image built from the official Microsoft .NET SDK
-- Downloads Godot 4.2.2 directly from official godotengine releases  
+- Downloads Godot 4.4.1 directly from official godotengine releases  
 - Uses Godot headless mode with Xvfb for display in the container
 - Restores .NET dependencies with `dotnet restore`
 - Imports project assets before building with proper error handling

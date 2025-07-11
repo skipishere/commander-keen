@@ -24,9 +24,16 @@ dotnet restore
 
 # Import project assets
 echo "Importing project assets..."
-if ! timeout 60 xvfb-run -a godot --headless --import; then
+if ! timeout 120 xvfb-run -a godot --headless --import --quit; then
     echo "ERROR: Failed to import project assets!"
-    exit 1
+    echo "This often happens when resources haven't been imported by opening the project in the editor at least once."
+    echo "Trying alternative import method..."
+    
+    # Try a more thorough import process
+    if ! timeout 120 xvfb-run -a godot --headless --editor --quit; then
+        echo "ERROR: Alternative import method also failed!"
+        exit 1
+    fi
 fi
 
 # Wait a moment for import to complete
@@ -35,9 +42,18 @@ sleep 5
 # Verify import was successful by checking if .godot directory was created
 if [ ! -d ".godot" ]; then
     echo "ERROR: Import failed - .godot directory not found!"
+    echo "Make sure resources have been imported by opening the project in the editor at least once."
     exit 1
 fi
-echo "Import verification successful"
+
+# Additional verification - check for imported assets
+if [ ! -d ".godot/imported" ]; then
+    echo "ERROR: Import incomplete - .godot/imported directory not found!"
+    echo "This indicates that asset import did not complete successfully."
+    exit 1
+fi
+
+echo "Import verification successful - found $(ls .godot/imported | wc -l) imported assets"
 
 # Build for Windows
 echo "Building for Windows..."
