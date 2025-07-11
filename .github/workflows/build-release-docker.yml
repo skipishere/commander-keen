@@ -27,35 +27,17 @@ jobs:
           echo "tag=dev-$(date +%Y%m%d-%H%M%S)" >> $GITHUB_OUTPUT
         fi
     
-    # Use a pre-built Godot Docker image
+    # Build custom Docker image and run build
     - name: Build game with Docker
       run: |
-        # Create artifact directory
-        mkdir -p artifact
+        # Build the custom Docker image
+        docker build -t commander-keen-builder .
         
-        # Use barichello/godot-ci which is a popular Godot Docker image
+        # Run the build using our custom image and build script
         docker run --rm \
           -v ${{ github.workspace }}:/workspace \
           -w /workspace \
-          barichello/godot-ci:4.4.1 \
-          /bin/bash -c "
-            # Install .NET dependencies
-            apt-get update && apt-get install -y dotnet-sdk-8.0
-            
-            # Restore .NET dependencies
-            dotnet restore
-            
-            # Import project assets
-            godot --headless --import
-            
-            # Build for all platforms
-            godot --headless --export-release 'WindowsDesktop' artifact/commander-keen-windows.exe
-            godot --headless --export-release 'Linux/X11' artifact/commander-keen-linux.x86_64
-            godot --headless --export-release 'macOS' artifact/commander-keen-macos.zip
-            
-            # List results
-            ls -la artifact/
-          "
+          commander-keen-builder
     
     - name: List built artifacts
       run: |
