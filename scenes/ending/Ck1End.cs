@@ -1,6 +1,4 @@
 using Godot;
-using System;
-using System.Diagnostics;
 
 public partial class Ck1End : Node2D
 {
@@ -15,6 +13,8 @@ public partial class Ck1End : Node2D
         actionPlayer.Queue("Can I keep");
         actionPlayer.Queue("Talk in morning");
         actionPlayer.Queue("Goodnight");
+        actionPlayer.Queue("No sleep");
+        actionPlayer.Queue("Finish");
     }
 
     public override void _Process(double delta)
