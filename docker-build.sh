@@ -10,9 +10,14 @@ mkdir -p artifact
 # Change to project directory
 cd /workspace
 
+# Set up virtual display for headless operations
+export DISPLAY=:99
+Xvfb :99 -screen 0 1024x768x24 &
+sleep 2
+
 # Verify Godot installation
 echo "Checking Godot version..."
-godot --version
+timeout 30 godot --version --headless || echo "Godot version check timed out"
 
 # Verify .NET installation
 echo "Checking .NET version..."
@@ -27,12 +32,14 @@ echo "Importing project assets..."
 
 # First, try the standard import method with more time and better timeout
 echo "Step 1: Running standard asset import with timeout..."
-if ! timeout 300 xvfb-run -a godot --headless --import --verbose; then
+if ! timeout 180 godot --headless --import --verbose --quit 2>&1; then
     echo "WARNING: Standard import failed or timed out..."
     # Try a more aggressive approach
-    echo "Step 2: Trying import with quit flag..."
-    if ! timeout 120 xvfb-run -a godot --headless --import --quit; then
-        echo "WARNING: Import with quit flag also failed..."
+    echo "Step 2: Trying import with xvfb..."
+    if ! timeout 120 xvfb-run -a godot --headless --import --quit 2>&1; then
+        echo "WARNING: Import with xvfb also failed..."
+        echo "Step 3: Forcing basic project validation..."
+        timeout 60 godot --headless --validate --quit 2>&1 || echo "Validation attempt completed"
     fi
 fi
 
@@ -54,33 +61,29 @@ echo "Import completed successfully, .godot directory exists"
 echo "Building C# project..."
 echo "Attempting build with multiple strategies..."
 
-# Strategy 1: Try normal build first
-echo "Strategy 1: Normal build"
-if timeout 120 godot --headless --build-solutions --verbose 2>&1; then
-    echo "Build successful with normal strategy"
-elif timeout 120 godot --headless --build-solutions 2>&1; then
-    echo "Build successful with quiet strategy"
-elif timeout 120 xvfb-run -a godot --headless --build-solutions 2>&1; then
+# Strategy 1: Try manual dotnet build first (most reliable)
+echo "Strategy 1: Manual dotnet build"
+if dotnet build Commander-keen.csproj -c Release --nologo --verbosity quiet; then
+    echo "Manual dotnet build successful"
+elif timeout 90 godot --headless --build-solutions --quit 2>&1; then
+    echo "Build successful with Godot headless strategy"
+elif timeout 90 xvfb-run -a godot --headless --build-solutions --quit 2>&1; then
     echo "Build successful with xvfb strategy"
 else
-    echo "All build strategies failed, trying manual dotnet build..."
-    if dotnet build Commander-keen.csproj -c Release --nologo; then
-        echo "Manual dotnet build successful"
-    else
-        echo "ERROR: All build strategies failed!"
-        echo "Listing project files for debugging:"
-        ls -la *.csproj *.cs
-        exit 1
-    fi
+    echo "ERROR: All build strategies failed!"
+    echo "Listing project files for debugging:"
+    ls -la *.csproj *.cs 2>/dev/null || echo "No project files found"
+    exit 1
 fi
 
 echo "C# build completed"
 
 # Build for Windows
 echo "Building for Windows..."
-if timeout 120 godot --headless --export-release "WindowsDesktop" artifact/commander-keen-windows.exe 2>&1 || \
-   timeout 120 xvfb-run -a godot --headless --export-release "WindowsDesktop" artifact/commander-keen-windows.exe 2>&1; then
+if timeout 90 godot --headless --export-release "WindowsDesktop" artifact/commander-keen-windows.exe --quit 2>&1; then
     echo "Windows export command completed"
+elif timeout 90 xvfb-run -a godot --headless --export-release "WindowsDesktop" artifact/commander-keen-windows.exe --quit 2>&1; then
+    echo "Windows export command completed with xvfb"
 else
     echo "ERROR: Windows build failed or timed out!"
     exit 1
@@ -95,9 +98,10 @@ echo "Windows build successful"
 
 # Build for Linux
 echo "Building for Linux..."
-if timeout 120 godot --headless --export-release "Linux/X11" artifact/commander-keen-linux.x86_64 2>&1 || \
-   timeout 120 xvfb-run -a godot --headless --export-release "Linux/X11" artifact/commander-keen-linux.x86_64 2>&1; then
+if timeout 90 godot --headless --export-release "Linux/X11" artifact/commander-keen-linux.x86_64 --quit 2>&1; then
     echo "Linux export command completed"
+elif timeout 90 xvfb-run -a godot --headless --export-release "Linux/X11" artifact/commander-keen-linux.x86_64 --quit 2>&1; then
+    echo "Linux export command completed with xvfb"
 else
     echo "ERROR: Linux build failed or timed out!"
     exit 1
@@ -112,9 +116,10 @@ echo "Linux build successful"
 
 # Build for macOS
 echo "Building for macOS..."
-if timeout 120 godot --headless --export-release "macOS" artifact/commander-keen-macos.zip 2>&1 || \
-   timeout 120 xvfb-run -a godot --headless --export-release "macOS" artifact/commander-keen-macos.zip 2>&1; then
+if timeout 90 godot --headless --export-release "macOS" artifact/commander-keen-macos.zip --quit 2>&1; then
     echo "macOS export command completed"
+elif timeout 90 xvfb-run -a godot --headless --export-release "macOS" artifact/commander-keen-macos.zip --quit 2>&1; then
+    echo "macOS export command completed with xvfb"
 else
     echo "ERROR: macOS build failed or timed out!"
     exit 1
@@ -128,5 +133,15 @@ fi
 echo "macOS build successful"
 
 echo "Build completed successfully!"
+
+# Clean up background processes
+echo "Cleaning up processes..."
+pkill Xvfb 2>/dev/null || true
+
+# Fix permissions for GitHub Actions (container runs as root, but CI needs access)
+echo "Fixing file permissions..."
+chmod -R 755 artifact/
+chown -R 1001:1001 artifact/ 2>/dev/null || true
+
 echo "Built artifacts:"
 ls -la artifact/

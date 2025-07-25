@@ -16,7 +16,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 30
     permissions:
       contents: write
     
@@ -47,7 +47,7 @@ jobs:
         docker run --rm \
           -v ${{ github.workspace }}:/workspace \
           -w /workspace \
-          commander-keen-builder
+          commander-keen-builder docker-build.sh
     
     - name: List built artifacts
       run: |
