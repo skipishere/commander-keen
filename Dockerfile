@@ -28,13 +28,13 @@ RUN apt-get update && apt-get install -y \
 ENV GODOT_VERSION="4.4.1"
 
 # Download and install Godot headless
-RUN wget -q https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}-stable/Godot_v${GODOT_VERSION}-stable_mono_linux.x86_64.zip
+RUN wget -q https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}-stable/Godot_v${GODOT_VERSION}-stable_mono_linux_x86_64.zip
 
-RUN unzip Godot_v${GODOT_VERSION}-stable_mono_linux.x86_64.zip
+RUN unzip Godot_v${GODOT_VERSION}-stable_mono_linux_x86_64.zip
 
-RUN mv Godot_v${GODOT_VERSION}-stable_mono_linux.x86_64 /usr/local/bin/godot \
+RUN mv Godot_v${GODOT_VERSION}-stable_mono_linux_x86_64 /usr/local/bin/godot \
     && chmod +x /usr/local/bin/godot \
-    && rm Godot_v${GODOT_VERSION}-stable_mono_linux.x86_64.zip
+    && rm Godot_v${GODOT_VERSION}-stable_mono_linux_x86_64.zip
 
 # Download export templates
 RUN wget -q https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}-stable/Godot_v${GODOT_VERSION}-stable_mono_export_templates.tpz
