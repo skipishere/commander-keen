@@ -34,8 +34,8 @@ RUN unzip Godot_v${GODOT_VERSION}-stable_mono_linux_x86_64.zip
 
 RUN mkdir -p /opt/godot \
     && mv Godot_v${GODOT_VERSION}-stable_mono_linux_x86_64/* /opt/godot/ \
-    && ln -s /opt/godot/Godot_v${GODOT_VERSION}-stable_mono_linux_x86_64 /usr/local/bin/godot \
-    && chmod +x /opt/godot/Godot_v${GODOT_VERSION}-stable_mono_linux_x86_64 \
+    && ln -s /opt/godot/Godot_v${GODOT_VERSION}-stable_mono_linux.x86_64 /usr/local/bin/godot \
+    && chmod +x /opt/godot/Godot_v${GODOT_VERSION}-stable_mono_linux.x86_64 \
     && rm -rf Godot_v${GODOT_VERSION}-stable_mono_linux_x86_64 \
     && rm Godot_v${GODOT_VERSION}-stable_mono_linux_x86_64.zip
 
