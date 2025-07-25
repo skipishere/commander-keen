@@ -42,9 +42,9 @@ RUN mkdir -p /opt/godot \
 # Download export templates
 RUN wget -q https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}-stable/Godot_v${GODOT_VERSION}-stable_mono_export_templates.tpz
 
-RUN mkdir -p /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable \
+RUN mkdir -p /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable.mono \
     && unzip Godot_v${GODOT_VERSION}-stable_mono_export_templates.tpz \
-    && mv templates/* /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable/ \
+    && mv templates/* /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable.mono/ \
     && rm -rf templates Godot_v${GODOT_VERSION}-stable_mono_export_templates.tpz
 
 # Create working directory
