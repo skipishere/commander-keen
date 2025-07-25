@@ -32,8 +32,11 @@ RUN wget -q https://github.com/godotengine/godot/releases/download/${GODOT_VERSI
 
 RUN unzip Godot_v${GODOT_VERSION}-stable_mono_linux_x86_64.zip
 
-RUN mv Godot_v${GODOT_VERSION}-stable_mono_linux_x86_64 /usr/local/bin/godot \
-    && chmod +x /usr/local/bin/godot \
+RUN mkdir -p /opt/godot \
+    && mv Godot_v${GODOT_VERSION}-stable_mono_linux_x86_64/* /opt/godot/ \
+    && ln -s /opt/godot/Godot_v${GODOT_VERSION}-stable_mono_linux_x86_64 /usr/local/bin/godot \
+    && chmod +x /opt/godot/Godot_v${GODOT_VERSION}-stable_mono_linux_x86_64 \
+    && rm -rf Godot_v${GODOT_VERSION}-stable_mono_linux_x86_64 \
     && rm Godot_v${GODOT_VERSION}-stable_mono_linux_x86_64.zip
 
 # Download export templates
