@@ -17,7 +17,7 @@ sleep 2
 
 # Verify Godot installation
 echo "Checking Godot version..."
-timeout 30 godot --version --headless || echo "Godot version check timed out"
+godot --version --headless
 
 # Verify .NET installation
 echo "Checking .NET version..."
