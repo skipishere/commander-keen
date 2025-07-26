@@ -28,21 +28,24 @@ RUN apt-get update && apt-get install -y \
 ENV GODOT_VERSION="4.4.1"
 
 # Download and install Godot headless
-RUN wget -q https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}-stable/Godot_v${GODOT_VERSION}-stable_linux.x86_64.zip
+RUN wget -q https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}-stable/Godot_v${GODOT_VERSION}-stable_mono_linux_x86_64.zip
 
-RUN unzip Godot_v${GODOT_VERSION}-stable_linux.x86_64.zip
+RUN unzip Godot_v${GODOT_VERSION}-stable_mono_linux_x86_64.zip
 
-RUN mv Godot_v${GODOT_VERSION}-stable_linux.x86_64 /usr/local/bin/godot \
-    && chmod +x /usr/local/bin/godot \
-    && rm Godot_v${GODOT_VERSION}-stable_linux.x86_64.zip
+RUN mkdir -p /opt/godot \
+    && mv Godot_v${GODOT_VERSION}-stable_mono_linux_x86_64/* /opt/godot/ \
+    && ln -s /opt/godot/Godot_v${GODOT_VERSION}-stable_mono_linux.x86_64 /usr/local/bin/godot \
+    && chmod +x /opt/godot/Godot_v${GODOT_VERSION}-stable_mono_linux.x86_64 \
+    && rm -rf Godot_v${GODOT_VERSION}-stable_mono_linux_x86_64 \
+    && rm Godot_v${GODOT_VERSION}-stable_mono_linux_x86_64.zip
 
 # Download export templates
-RUN wget -q https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}-stable/Godot_v${GODOT_VERSION}-stable_export_templates.tpz
+RUN wget -q https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}-stable/Godot_v${GODOT_VERSION}-stable_mono_export_templates.tpz
 
-RUN mkdir -p /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable \
-    && unzip Godot_v${GODOT_VERSION}-stable_export_templates.tpz \
-    && mv templates/* /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable/ \
-    && rm -rf templates Godot_v${GODOT_VERSION}-stable_export_templates.tpz
+RUN mkdir -p /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable.mono \
+    && unzip Godot_v${GODOT_VERSION}-stable_mono_export_templates.tpz \
+    && mv templates/* /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable.mono/ \
+    && rm -rf templates Godot_v${GODOT_VERSION}-stable_mono_export_templates.tpz
 
 # Create working directory
 WORKDIR /workspace
