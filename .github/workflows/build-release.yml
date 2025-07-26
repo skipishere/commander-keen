@@ -121,10 +121,22 @@ jobs:
         echo "Downloaded artifacts:"
         find artifacts/ -type f -name "*.zip" | sort
 
-    - name: Upload to release
-      uses: softprops/action-gh-release@v1
-      with:
-        tag_name: ${{ needs.setup.outputs.tag }}
-        files: artifacts/*/*.zip
+    - name: Create or update release
+      run: |
+        TAG_NAME="${{ needs.setup.outputs.tag }}"
+        
+        # Check if release already exists
+        if gh release view "$TAG_NAME" >/dev/null 2>&1; then
+          echo "Release $TAG_NAME already exists, uploading assets..."
+          # Upload all artifacts to existing release
+          find artifacts/ -type f -name "*.zip" -exec gh release upload "$TAG_NAME" {} \;
+        else
+          echo "Creating new release $TAG_NAME..."
+          # Create new release with all artifacts
+          gh release create "$TAG_NAME" \
+            --title "Release $TAG_NAME" \
+            --notes "Automated release build for $TAG_NAME" \
+            artifacts/*/*.zip
+        fi
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
