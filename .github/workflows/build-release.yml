@@ -14,16 +14,12 @@ on:
         default: ''
 
 jobs:
-  build:
+  # First job to set up the tag name for all matrix jobs
+  setup:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
-    permissions:
-      contents: write
-    
+    outputs:
+      tag: ${{ steps.tag.outputs.tag }}
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-    
     - name: Set up tag name
       id: tag
       run: |
@@ -36,90 +32,99 @@ jobs:
         else
           echo "tag=dev-$(date +%Y%m%d-%H%M%S)" >> $GITHUB_OUTPUT
         fi
+
+  # Matrix job for parallel platform builds
+  build:
+    needs: setup
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: write
+    strategy:
+      matrix:
+        platform: [windows, linux, macos]
+        include:
+          - platform: windows
+            preset: "WindowsDesktop"
+            output: "commander-keen-windows.exe"
+            artifact_name: "commander-keen-windows"
+          - platform: linux
+            preset: "Linux/X11"
+            output: "commander-keen-linux.x86_64"
+            artifact_name: "commander-keen-linux"
+          - platform: macos
+            preset: "macOS"
+            output: "commander-keen-macos.zip"
+            artifact_name: "commander-keen-macos"
     
-    # Build custom Docker image and run build
-    - name: Build game with Docker
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Build ${{ matrix.platform }} with Docker
       run: |
         # Build the custom Docker image
         docker build -t commander-keen-builder .
         
-        # Run the build using our custom image and build script
+        # Run the single-platform build
         docker run --rm \
           -v ${{ github.workspace }}:/workspace \
           -w /workspace \
-          commander-keen-builder docker-build.sh
-    
-    - name: List built artifacts
+          -e BUILD_PLATFORM=${{ matrix.platform }} \
+          -e BUILD_PRESET="${{ matrix.preset }}" \
+          -e BUILD_OUTPUT="${{ matrix.output }}" \
+          commander-keen-builder
+
+    - name: Verify ${{ matrix.platform }} build
       run: |
-        echo "Built artifacts:"
-        ls -la artifact/
-    
-    - name: Create release zip files
+        if [ ! -f "artifact/${{ matrix.output }}" ]; then
+          echo "ERROR: ${{ matrix.platform }} build file missing!"
+          exit 1
+        fi
+        echo "${{ matrix.platform }} build successful:"
+        ls -la artifact/${{ matrix.output }}
+
+    - name: Package ${{ matrix.platform }} build
       run: |
         cd artifact
         
-        # Verify that all expected files were built
-        missing_files=0
-        
-        if [ ! -f commander-keen-windows.exe ]; then
-          echo "ERROR: Windows build file missing!"
-          missing_files=$((missing_files + 1))
+        if [ "${{ matrix.platform }}" = "windows" ]; then
+          zip -r ${{ matrix.artifact_name }}-${{ needs.setup.outputs.tag }}.zip ${{ matrix.output }}
+        elif [ "${{ matrix.platform }}" = "linux" ]; then
+          chmod +x ${{ matrix.output }}
+          zip -r ${{ matrix.artifact_name }}-${{ needs.setup.outputs.tag }}.zip ${{ matrix.output }}
+        elif [ "${{ matrix.platform }}" = "macos" ]; then
+          mv ${{ matrix.output }} ${{ matrix.artifact_name }}-${{ needs.setup.outputs.tag }}.zip
         fi
-        
-        if [ ! -f commander-keen-linux.x86_64 ]; then
-          echo "ERROR: Linux build file missing!"
-          missing_files=$((missing_files + 1))
-        fi
-        
-        if [ ! -f commander-keen-macos.zip ]; then
-          echo "ERROR: macOS build file missing!"
-          missing_files=$((missing_files + 1))
-        fi
-        
-        if [ $missing_files -gt 0 ]; then
-          echo "ERROR: $missing_files build files are missing. Aborting release packaging."
-          exit 1
-        fi
-        
-        # Package Windows build
-        zip -r commander-keen-windows-${{ steps.tag.outputs.tag }}.zip commander-keen-windows.exe
-        
-        # Package Linux build
-        chmod +x commander-keen-linux.x86_64
-        zip -r commander-keen-linux-${{ steps.tag.outputs.tag }}.zip commander-keen-linux.x86_64
-        
-        # Rename macOS build
-        mv commander-keen-macos.zip commander-keen-macos-${{ steps.tag.outputs.tag }}.zip
-        
-        echo "Final release files:"
-        ls -la *.zip
-    
-    - name: Upload Windows artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: commander-keen-windows-${{ steps.tag.outputs.tag }}
-        path: artifact/commander-keen-windows-${{ steps.tag.outputs.tag }}.zip
 
-    - name: Upload Linux artifact
+    - name: Upload ${{ matrix.platform }} artifact
       uses: actions/upload-artifact@v4
       with:
-        name: commander-keen-linux-${{ steps.tag.outputs.tag }}
-        path: artifact/commander-keen-linux-${{ steps.tag.outputs.tag }}.zip
+        name: ${{ matrix.artifact_name }}-${{ needs.setup.outputs.tag }}
+        path: artifact/${{ matrix.artifact_name }}-${{ needs.setup.outputs.tag }}.zip
 
-    - name: Upload macOS artifact
-      uses: actions/upload-artifact@v4
+  # Final job to create the release with all artifacts
+  release:
+    needs: [setup, build]
+    runs-on: ubuntu-latest
+    if: github.event_name == 'release' || github.event_name == 'push'
+    permissions:
+      contents: write
+    steps:
+    - name: Download all artifacts
+      uses: actions/download-artifact@v4
       with:
-        name: commander-keen-macos-${{ steps.tag.outputs.tag }}
-        path: artifact/commander-keen-macos-${{ steps.tag.outputs.tag }}.zip
+        path: artifacts/
+
+    - name: List downloaded artifacts
+      run: |
+        echo "Downloaded artifacts:"
+        find artifacts/ -type f -name "*.zip" | sort
 
     - name: Upload to release
-      if: github.event_name == 'release' || github.event_name == 'push'
       uses: softprops/action-gh-release@v1
       with:
-        tag_name: ${{ steps.tag.outputs.tag }}
-        files: |
-          artifact/commander-keen-windows-${{ steps.tag.outputs.tag }}.zip
-          artifact/commander-keen-linux-${{ steps.tag.outputs.tag }}.zip
-          artifact/commander-keen-macos-${{ steps.tag.outputs.tag }}.zip
+        tag_name: ${{ needs.setup.outputs.tag }}
+        files: artifacts/*/*.zip
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

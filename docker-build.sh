@@ -2,6 +2,19 @@
 
 set -e
 
+# Configuration
+PROJECT_NAME="commander-keen"
+GODOT_TIMEOUT=120
+IMPORT_TIMEOUT=180
+BUILD_TIMEOUT=120
+
+# Platform configurations
+declare -A PLATFORMS=(
+    ["windows"]="WindowsDesktop|${PROJECT_NAME}-windows.exe"
+    ["linux"]="Linux/X11|${PROJECT_NAME}-linux.x86_64"
+    ["macos"]="macOS|${PROJECT_NAME}-macos.zip"
+)
+
 echo "Starting Godot .NET build process..."
 
 # Create artifact directory
@@ -30,17 +43,12 @@ dotnet restore
 # Import project assets (after C# compilation)
 echo "Importing project assets..."
 
-# First, try the standard import method with more time and better timeout
-echo "Step 1: Running standard asset import with timeout..."
-if ! timeout 180 godot --headless --import --verbose --quit 2>&1; then
-    echo "WARNING: Standard import failed or timed out..."
-    # Try a more aggressive approach
-    echo "Step 2: Trying import with xvfb..."
-    if ! timeout 120 xvfb-run -a godot --headless --import --quit 2>&1; then
-        echo "WARNING: Import with xvfb also failed..."
-        echo "Step 3: Forcing basic project validation..."
-        timeout 60 godot --headless --validate --quit 2>&1 || echo "Validation attempt completed"
-    fi
+echo "Running asset import with timeout..."
+if ! timeout $IMPORT_TIMEOUT godot --headless --import --verbose --quit 2>&1; then
+    echo "ERROR: Asset import failed!"
+    echo "Contents of current directory:"
+    ls -la
+    exit 1
 fi
 
 # Give Godot time to complete all file operations
@@ -50,27 +58,19 @@ sleep 5
 # Verify basic import structure
 if [ ! -d ".godot" ]; then
     echo "ERROR: Import failed - .godot directory not found!"
-    echo "Contents of current directory:"
-    ls -la
     exit 1
 fi
 
-echo "Import completed successfully, .godot directory exists"
-
 # Build C# project first - this is critical for Godot 4.x with C#
 echo "Building C# project..."
-echo "Attempting build with multiple strategies..."
 
-# Strategy 1: Try manual dotnet build first (most reliable)
-echo "Strategy 1: Manual dotnet build"
-if dotnet build Commander-keen.csproj -c Release --nologo --verbosity quiet; then
+# Try manual dotnet build first (most reliable)
+if dotnet build ${PROJECT_NAME}.csproj -c Release --nologo --verbosity quiet; then
     echo "Manual dotnet build successful"
-elif timeout 90 godot --headless --build-solutions --quit 2>&1; then
-    echo "Build successful with Godot headless strategy"
-elif timeout 90 xvfb-run -a godot --headless --build-solutions --quit 2>&1; then
-    echo "Build successful with xvfb strategy"
+elif timeout $BUILD_TIMEOUT godot --headless --build-solutions --quit 2>&1; then
+    echo "Build successful with Godot strategy"
 else
-    echo "ERROR: All build strategies failed!"
+    echo "ERROR: C# build failed!"
     echo "Listing project files for debugging:"
     ls -la *.csproj *.cs 2>/dev/null || echo "No project files found"
     exit 1
@@ -78,59 +78,49 @@ fi
 
 echo "C# build completed"
 
-# Build for Windows
-echo "Building for Windows..."
-if timeout 90 godot --headless --export-release "WindowsDesktop" artifact/commander-keen-windows.exe --quit 2>&1; then
-    echo "Windows export command completed"
-elif timeout 90 xvfb-run -a godot --headless --export-release "WindowsDesktop" artifact/commander-keen-windows.exe --quit 2>&1; then
-    echo "Windows export command completed with xvfb"
+# Function to build a platform
+build_platform() {
+    local platform_name=$1
+    local preset=$2
+    local output_file=$3
+    
+    echo "Building for $platform_name..."
+    
+    if timeout $GODOT_TIMEOUT godot --headless --export-release "$preset" "$output_file" --quit 2>&1; then
+        echo "$platform_name export command completed"
+    else
+        echo "ERROR: $platform_name build failed or timed out!"
+        return 1
+    fi
+
+    # Verify build output
+    if [ ! -f "$output_file" ]; then
+        echo "ERROR: $platform_name executable was not created!"
+        return 1
+    fi
+    
+    echo "$platform_name build successful"
+    return 0
+}
+
+# Check if we're building a specific platform (for matrix builds)
+if [ -n "$BUILD_PLATFORM" ] && [ -n "$BUILD_PRESET" ] && [ -n "$BUILD_OUTPUT" ]; then
+    echo "Building single platform: $BUILD_PLATFORM"
+    
+    if ! build_platform "$BUILD_PLATFORM" "$BUILD_PRESET" "artifact/$BUILD_OUTPUT"; then
+        exit 1
+    fi
 else
-    echo "ERROR: Windows build failed or timed out!"
-    exit 1
+    echo "Building all platforms..."
+    
+    # Build all platforms using the configuration
+    for platform in "${!PLATFORMS[@]}"; do
+        IFS='|' read -r preset output <<< "${PLATFORMS[$platform]}"
+        if ! build_platform "$platform" "$preset" "artifact/$output"; then
+            exit 1
+        fi
+    done
 fi
-
-# Verify Windows build output
-if [ ! -f "artifact/commander-keen-windows.exe" ]; then
-    echo "ERROR: Windows executable was not created!"
-    exit 1
-fi
-echo "Windows build successful"
-
-# Build for Linux
-echo "Building for Linux..."
-if timeout 90 godot --headless --export-release "Linux/X11" artifact/commander-keen-linux.x86_64 --quit 2>&1; then
-    echo "Linux export command completed"
-elif timeout 90 xvfb-run -a godot --headless --export-release "Linux/X11" artifact/commander-keen-linux.x86_64 --quit 2>&1; then
-    echo "Linux export command completed with xvfb"
-else
-    echo "ERROR: Linux build failed or timed out!"
-    exit 1
-fi
-
-# Verify Linux build output
-if [ ! -f "artifact/commander-keen-linux.x86_64" ]; then
-    echo "ERROR: Linux executable was not created!"
-    exit 1
-fi
-echo "Linux build successful"
-
-# Build for macOS
-echo "Building for macOS..."
-if timeout 90 godot --headless --export-release "macOS" artifact/commander-keen-macos.zip --quit 2>&1; then
-    echo "macOS export command completed"
-elif timeout 90 xvfb-run -a godot --headless --export-release "macOS" artifact/commander-keen-macos.zip --quit 2>&1; then
-    echo "macOS export command completed with xvfb"
-else
-    echo "ERROR: macOS build failed or timed out!"
-    exit 1
-fi
-
-# Verify macOS build output
-if [ ! -f "artifact/commander-keen-macos.zip" ]; then
-    echo "ERROR: macOS build was not created!"
-    exit 1
-fi
-echo "macOS build successful"
 
 echo "Build completed successfully!"
 
