@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
     inputs:
       tag:
-        description: 'Tag to build (e.g., v1.0.0)'
+        description: 'Tag to build (e.g. v1.0.0)'
         required: false
         default: ''
 
@@ -14,7 +14,7 @@ jobs:
   # Single job for all platform builds with shared setup
   build-all-platforms:
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 10
     permissions:
       contents: write
     steps:
