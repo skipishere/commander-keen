@@ -1,9 +1,6 @@
 name: Build Release
 
 on:
-  push:
-    tags:
-      - 'v*.*.*'
   release:
     types: [created]
   workflow_dispatch:
@@ -157,7 +154,7 @@ jobs:
   release:
     needs: build-all-platforms
     runs-on: ubuntu-latest
-    if: github.event_name == 'release' || github.event_name == 'push'
+    if: github.event_name == 'release'
     permissions:
       contents: write
     steps:
