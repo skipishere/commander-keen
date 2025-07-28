@@ -1,25 +1,26 @@
 name: Build Release
 
 on:
-  push:
-    tags:
-      - 'v*.*.*'
   release:
     types: [created]
   workflow_dispatch:
     inputs:
       tag:
-        description: 'Tag to build (e.g., v1.0.0)'
+        description: 'Tag to build (e.g. v1.0.0)'
         required: false
         default: ''
 
 jobs:
-  # First job to set up the tag name for all matrix jobs
-  setup:
+  # Single job for all platform builds with shared setup
+  build-all-platforms:
     runs-on: ubuntu-latest
-    outputs:
-      tag: ${{ steps.tag.outputs.tag }}
+    timeout-minutes: 10
+    permissions:
+      contents: write
     steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
     - name: Set up tag name
       id: tag
       run: |
@@ -33,86 +34,145 @@ jobs:
           echo "tag=dev-$(date +%Y%m%d-%H%M%S)" >> $GITHUB_OUTPUT
         fi
 
-  # Matrix job for parallel platform builds
-  build:
-    needs: setup
-    runs-on: ubuntu-latest
-    timeout-minutes: 30
-    permissions:
-      contents: write
-    strategy:
-      matrix:
-        platform: [windows, linux, macos]
-        include:
-          - platform: windows
-            preset: "WindowsDesktop"
-            output: "commander-keen-windows.exe"
-            artifact_name: "commander-keen-windows"
-          - platform: linux
-            preset: "Linux/X11"
-            output: "commander-keen-linux.x86_64"
-            artifact_name: "commander-keen-linux"
-          - platform: macos
-            preset: "macOS"
-            output: "commander-keen-macos.zip"
-            artifact_name: "commander-keen-macos"
-    
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-
-    - name: Build ${{ matrix.platform }} with Docker
+    - name: Build Docker image (shared setup)
       run: |
-        # Build the custom Docker image
+        echo "Building Docker image with Godot setup..."
         docker build -t commander-keen-builder .
-        
-        # Run the single-platform build
+
+    - name: Setup Godot project (import assets and compile C#)
+      run: |
+        echo "Setting up Godot project (import assets and compile C#)..."
         docker run --rm \
           -v ${{ github.workspace }}:/workspace \
           -w /workspace \
-          -e BUILD_PLATFORM=${{ matrix.platform }} \
-          -e BUILD_PRESET="${{ matrix.preset }}" \
-          -e BUILD_OUTPUT="${{ matrix.output }}" \
+          -e SETUP_ONLY=true \
           commander-keen-builder
 
-    - name: Verify ${{ matrix.platform }} build
+    - name: Build Windows platform
       run: |
-        if [ ! -f "artifact/${{ matrix.output }}" ]; then
-          echo "ERROR: ${{ matrix.platform }} build file missing!"
+        echo "Building Windows platform..."
+        docker run --rm \
+          -v ${{ github.workspace }}:/workspace \
+          -w /workspace \
+          -e BUILD_PLATFORM=windows \
+          -e BUILD_PRESET="WindowsDesktop" \
+          -e BUILD_OUTPUT="commander-keen-windows.exe" \
+          -e SKIP_SETUP=true \
+          commander-keen-builder
+
+    - name: Verify Windows build
+      run: |
+        if [ ! -f "artifact/commander-keen-windows.exe" ]; then
+          echo "ERROR: Windows build file missing!"
           exit 1
         fi
-        echo "${{ matrix.platform }} build successful:"
-        ls -la artifact/${{ matrix.output }}
+        echo "Windows build successful:"
+        ls -la artifact/commander-keen-windows.exe
 
-    - name: Package ${{ matrix.platform }} build
+    - name: Build Linux platform
+      run: |
+        echo "Building Linux platform..."
+        docker run --rm \
+          -v ${{ github.workspace }}:/workspace \
+          -w /workspace \
+          -e BUILD_PLATFORM=linux \
+          -e BUILD_PRESET="Linux/X11" \
+          -e BUILD_OUTPUT="commander-keen-linux.x86_64" \
+          -e SKIP_SETUP=true \
+          commander-keen-builder
+
+    - name: Verify Linux build
+      run: |
+        if [ ! -f "artifact/commander-keen-linux.x86_64" ]; then
+          echo "ERROR: Linux build file missing!"
+          exit 1
+        fi
+        echo "Linux build successful:"
+        ls -la artifact/commander-keen-linux.x86_64
+
+    - name: Build macOS platform
+      run: |
+        echo "Building macOS platform..."
+        docker run --rm \
+          -v ${{ github.workspace }}:/workspace \
+          -w /workspace \
+          -e BUILD_PLATFORM=macos \
+          -e BUILD_PRESET="macOS" \
+          -e BUILD_OUTPUT="commander-keen-macos.zip" \
+          -e SKIP_SETUP=true \
+          commander-keen-builder
+
+    - name: Verify macOS build
+      run: |
+        if [ ! -f "artifact/commander-keen-macos.zip" ]; then
+          echo "ERROR: macOS build file missing!"
+          exit 1
+        fi
+        echo "macOS build successful:"
+        ls -la artifact/commander-keen-macos.zip
+
+    - name: Package all builds
       run: |
         cd artifact
+        TAG_NAME="${{ steps.tag.outputs.tag }}"
         
-        if [ "${{ matrix.platform }}" = "windows" ]; then
-          zip -r ${{ matrix.artifact_name }}-${{ needs.setup.outputs.tag }}.zip ${{ matrix.output }}
-        elif [ "${{ matrix.platform }}" = "linux" ]; then
-          chmod +x ${{ matrix.output }}
-          zip -r ${{ matrix.artifact_name }}-${{ needs.setup.outputs.tag }}.zip ${{ matrix.output }}
-        elif [ "${{ matrix.platform }}" = "macos" ]; then
-          mv ${{ matrix.output }} ${{ matrix.artifact_name }}-${{ needs.setup.outputs.tag }}.zip
-        fi
+        # Package Windows
+        echo "Packaging Windows build..."
+        zip -r commander-keen-windows-${TAG_NAME}.zip commander-keen-windows.exe
+        
+        # Package Linux
+        echo "Packaging Linux build..."
+        chmod +x commander-keen-linux.x86_64
+        zip -r commander-keen-linux-${TAG_NAME}.zip commander-keen-linux.x86_64
+        
+        # Package macOS (already zipped by Godot)
+        echo "Packaging macOS build..."
+        mv commander-keen-macos.zip commander-keen-macos-${TAG_NAME}.zip
+        
+        echo "All packages created:"
+        ls -la *.zip
 
-    - name: Upload ${{ matrix.platform }} artifact
+    - name: Upload Windows artifact
       uses: actions/upload-artifact@v4
       with:
-        name: ${{ matrix.artifact_name }}-${{ needs.setup.outputs.tag }}
-        path: artifact/${{ matrix.artifact_name }}-${{ needs.setup.outputs.tag }}.zip
+        name: commander-keen-windows-${{ steps.tag.outputs.tag }}
+        path: artifact/commander-keen-windows-${{ steps.tag.outputs.tag }}.zip
+
+    - name: Upload Linux artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: commander-keen-linux-${{ steps.tag.outputs.tag }}
+        path: artifact/commander-keen-linux-${{ steps.tag.outputs.tag }}.zip
+
+    - name: Upload macOS artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: commander-keen-macos-${{ steps.tag.outputs.tag }}
+        path: artifact/commander-keen-macos-${{ steps.tag.outputs.tag }}.zip
 
   # Final job to create the release with all artifacts
   release:
-    needs: [setup, build]
+    needs: build-all-platforms
     runs-on: ubuntu-latest
-    if: github.event_name == 'release' || github.event_name == 'push'
+    if: github.event_name == 'release'
     permissions:
       contents: write
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
+
+    - name: Set up tag name
+      id: tag
+      run: |
+        if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ -n "${{ github.event.inputs.tag }}" ]; then
+          echo "tag=${{ github.event.inputs.tag }}" >> $GITHUB_OUTPUT
+        elif [ "${{ github.event_name }}" = "push" ]; then
+          echo "tag=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+        elif [ "${{ github.event_name }}" = "release" ]; then
+          echo "tag=${{ github.event.release.tag_name }}" >> $GITHUB_OUTPUT
+        else
+          echo "tag=dev-$(date +%Y%m%d-%H%M%S)" >> $GITHUB_OUTPUT
+        fi
 
     - name: Download all artifacts
       uses: actions/download-artifact@v4
@@ -126,7 +186,7 @@ jobs:
 
     - name: Create or update release
       run: |
-        TAG_NAME="${{ needs.setup.outputs.tag }}"
+        TAG_NAME="${{ steps.tag.outputs.tag }}"
         
         # Check if release already exists
         if gh release view "$TAG_NAME" >/dev/null 2>&1; then

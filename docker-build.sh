@@ -23,11 +23,6 @@ mkdir -p artifact
 # Change to project directory
 cd /workspace
 
-# Set up virtual display for headless operations
-export DISPLAY=:99
-Xvfb :99 -screen 0 1024x768x24 &
-sleep 2
-
 # Verify Godot installation
 echo "Checking Godot version..."
 godot --version --headless
@@ -103,9 +98,29 @@ build_platform() {
     return 0
 }
 
+# Check if we're only doing setup (import + C# build)
+if [ "$SETUP_ONLY" = "true" ]; then
+    echo "Setup-only mode - completing import and C# build..."
+    echo "Setup completed successfully!"
+    
+    # Fix permissions for GitHub Actions
+    echo "Fixing file permissions..."
+    chmod -R 755 .godot/ 2>/dev/null || true
+    chown -R 1001:1001 .godot/ 2>/dev/null || true
+    
+    exit 0
+fi
+
 # Check if we're building a specific platform (for matrix builds)
 if [ -n "$BUILD_PLATFORM" ] && [ -n "$BUILD_PRESET" ] && [ -n "$BUILD_OUTPUT" ]; then
     echo "Building single platform: $BUILD_PLATFORM"
+    
+    # Skip setup if assets are already imported (for multi-step builds)
+    if [ "$SKIP_SETUP" = "true" ] && [ -d ".godot" ]; then
+        echo "Skipping setup - using existing assets and build..."
+    else
+        echo "Running full setup (import + C# build)..."
+    fi
     
     if ! build_platform "$BUILD_PLATFORM" "$BUILD_PRESET" "artifact/$BUILD_OUTPUT"; then
         exit 1
@@ -123,10 +138,6 @@ else
 fi
 
 echo "Build completed successfully!"
-
-# Clean up background processes
-echo "Cleaning up processes..."
-pkill Xvfb 2>/dev/null || true
 
 # Fix permissions for GitHub Actions (container runs as root, but CI needs access)
 echo "Fixing file permissions..."

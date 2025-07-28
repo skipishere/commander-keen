@@ -4,24 +4,11 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0-jammy
 # Avoid prompts from apt
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Install dependencies for Godot
+# Install minimal dependencies for Godot headless build
 RUN apt-get update && apt-get install -y \
     wget \
     unzip \
-    curl \
     ca-certificates \
-    xvfb \
-    libc6-dev \
-    libgcc-s1 \
-    libasound2-dev \
-    libpulse-dev \
-    libudev-dev \
-    libxi6 \
-    libxrandr2 \
-    libxinerama1 \
-    libxcursor1 \
-    libgl1-mesa-dev \
-    libglu1-mesa-dev \
     && rm -rf /var/lib/apt/lists/*
 
 # Set Godot version
