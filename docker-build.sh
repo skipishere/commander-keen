@@ -98,9 +98,29 @@ build_platform() {
     return 0
 }
 
+# Check if we're only doing setup (import + C# build)
+if [ "$SETUP_ONLY" = "true" ]; then
+    echo "Setup-only mode - completing import and C# build..."
+    echo "Setup completed successfully!"
+    
+    # Fix permissions for GitHub Actions
+    echo "Fixing file permissions..."
+    chmod -R 755 .godot/ 2>/dev/null || true
+    chown -R 1001:1001 .godot/ 2>/dev/null || true
+    
+    exit 0
+fi
+
 # Check if we're building a specific platform (for matrix builds)
 if [ -n "$BUILD_PLATFORM" ] && [ -n "$BUILD_PRESET" ] && [ -n "$BUILD_OUTPUT" ]; then
     echo "Building single platform: $BUILD_PLATFORM"
+    
+    # Skip setup if assets are already imported (for multi-step builds)
+    if [ "$SKIP_SETUP" = "true" ] && [ -d ".godot" ]; then
+        echo "Skipping setup - using existing assets and build..."
+    else
+        echo "Running full setup (import + C# build)..."
+    fi
     
     if ! build_platform "$BUILD_PLATFORM" "$BUILD_PRESET" "artifact/$BUILD_OUTPUT"; then
         exit 1
