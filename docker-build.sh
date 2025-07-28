@@ -23,11 +23,6 @@ mkdir -p artifact
 # Change to project directory
 cd /workspace
 
-# Set up virtual display for headless operations
-export DISPLAY=:99
-Xvfb :99 -screen 0 1024x768x24 &
-sleep 2
-
 # Verify Godot installation
 echo "Checking Godot version..."
 godot --version --headless
@@ -123,10 +118,6 @@ else
 fi
 
 echo "Build completed successfully!"
-
-# Clean up background processes
-echo "Cleaning up processes..."
-pkill Xvfb 2>/dev/null || true
 
 # Fix permissions for GitHub Actions (container runs as root, but CI needs access)
 echo "Fixing file permissions..."
