@@ -1,9 +1,13 @@
-[gd_resource type="Theme" load_steps=5 format=3 uid="uid://djfoqrsh78nwu"]
+[gd_resource type="Theme" load_steps=6 format=3 uid="uid://djfoqrsh78nwu"]
 
 [ext_resource type="Texture2D" uid="uid://bb558584udltk" path="res://sprites/border.png" id="1_tdqdk"]
 [ext_resource type="FontFile" uid="uid://dinh5bt172qs7" path="res://fonts/PressStart2P-Regular.ttf" id="1_tylsf"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_scmcd"]
+content_margin_left = 1.0
+content_margin_top = 1.0
+content_margin_right = 1.0
+content_margin_bottom = 1.0
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_hi6mq"]
 texture = ExtResource("1_tdqdk")
@@ -12,19 +16,23 @@ texture_margin_top = 8.0
 texture_margin_right = 8.0
 texture_margin_bottom = 8.0
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8yhpx"]
+bg_color = Color(1, 1, 1, 1)
+
 [resource]
 Label/colors/font_color = Color(0, 0, 0, 1)
 Label/colors/font_outline_color = Color(0, 0, 0, 1)
 Label/colors/font_shadow_color = Color(0, 0, 0, 0)
-Label/constants/line_spacing = 3
+Label/constants/line_spacing = 2
 Label/constants/outline_size = 0
-Label/constants/shadow_offset_x = 1
-Label/constants/shadow_offset_y = 1
-Label/constants/shadow_outline_size = 1
-Label/font_sizes/font_size = 11
+Label/constants/shadow_offset_x = 0
+Label/constants/shadow_offset_y = 0
+Label/constants/shadow_outline_size = 0
+Label/font_sizes/font_size = 7
 Label/fonts/font = ExtResource("1_tylsf")
 Label/styles/normal = SubResource("StyleBoxEmpty_scmcd")
 PanelContainer/styles/panel = SubResource("StyleBoxTexture_hi6mq")
 RichTextLabel/colors/default_color = Color(0, 0, 0, 1)
 RichTextLabel/font_sizes/normal_font_size = 10
 RichTextLabel/fonts/normal_font = ExtResource("1_tylsf")
+RichTextLabel/styles/background = SubResource("StyleBoxFlat_8yhpx")
