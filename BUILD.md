@@ -43,6 +43,13 @@ The project includes a complete Docker setup for consistent builds:
    ```
 
 2. Run the build:
+   
+   **On Windows (PowerShell):**
+   ```powershell
+   docker run --rm -v ${PWD}:/workspace -w /workspace commander-keen-builder
+   ```
+   
+   **On Linux/macOS:**
    ```bash
    docker run --rm -v $(pwd):/workspace -w /workspace commander-keen-builder
    ```
