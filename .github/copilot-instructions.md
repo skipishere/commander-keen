@@ -41,9 +41,28 @@ Global state lives in static `game_stats` class:
 
 ### Running Locally
 ```bash
-# Standard Godot C# workflow
+# Restore .NET dependencies
 dotnet restore
-# Open in Godot Editor or run directly
+
+# Open project in Godot Editor (required for C# development)
+# - Install Godot 4.4.1 Mono version
+# - Open project.godot in Godot Editor
+# - Let Godot import assets and compile C# code
+# - Press F5 to run, or use Play button in editor
+```
+
+### Docker Build (Production)
+```bash
+# Build using Docker (matches CI/CD environment)
+docker build -t commander-keen-builder .
+
+# On Windows (PowerShell):
+docker run --rm -v ${PWD}:/workspace -w /workspace commander-keen-builder
+
+# On Linux/macOS:
+docker run --rm -v $(pwd):/workspace -w /workspace commander-keen-builder
+
+# Outputs to artifact/ directory
 ```
 
 ### Testing Pattern
