@@ -4,16 +4,16 @@ on:
   push:
     branches: [ "main" ]
     paths:
-      - '**.cs'
-      - '**.csproj'
-      - '**.sln'
+      - '**/*.cs'
+      - '**/*.csproj'
+      - '**/*.sln'
       - '.github/workflows/format-code.yml'
   pull_request:
     branches: [ "main" ]
     paths:
-      - '**.cs'
-      - '**.csproj'
-      - '**.sln'
+      - '**/*.cs'
+      - '**/*.csproj'
+      - '**/*.sln'
       - '.github/workflows/format-code.yml'
 
 jobs:
