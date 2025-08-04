@@ -59,8 +59,24 @@ fi
 # Build C# project first - this is critical for Godot 4.x with C#
 echo "Building C# project..."
 
+# Set up version information for build
+VERSION_PROPS=""
+if [ -n "$VERSION_TAG" ]; then
+    echo "Using version from tag: $VERSION_TAG"
+    # Clean the version (remove 'v' prefix if present)
+    CLEAN_VERSION=$(echo "$VERSION_TAG" | sed 's/^v//')
+    VERSION_PROPS="-p:Version=$CLEAN_VERSION -p:InformationalVersion=$CLEAN_VERSION"
+elif [ -n "$GITHUB_REF" ] && [[ "$GITHUB_REF" == refs/tags/* ]]; then
+    TAG_NAME=$(echo "$GITHUB_REF" | sed 's/refs\/tags\///')
+    CLEAN_VERSION=$(echo "$TAG_NAME" | sed 's/^v//')
+    echo "Using version from GitHub ref: $CLEAN_VERSION"
+    VERSION_PROPS="-p:Version=$CLEAN_VERSION -p:InformationalVersion=$CLEAN_VERSION"
+else
+    echo "No version tag found, using default"
+fi
+
 # Try manual dotnet build first (most reliable)
-if dotnet build ${PROJECT_NAME}.csproj -c Release --nologo --verbosity quiet; then
+if dotnet build ${PROJECT_NAME}.csproj -c Release --nologo --verbosity quiet $VERSION_PROPS; then
     echo "Manual dotnet build successful"
 elif timeout $BUILD_TIMEOUT godot --headless --build-solutions --quit 2>&1; then
     echo "Build successful with Godot strategy"

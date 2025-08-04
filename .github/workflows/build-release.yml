@@ -46,6 +46,8 @@ jobs:
           -v ${{ github.workspace }}:/workspace \
           -w /workspace \
           -e SETUP_ONLY=true \
+          -e GITHUB_REF="${{ github.ref }}" \
+          -e VERSION_TAG="${{ steps.tag.outputs.tag }}" \
           commander-keen-builder
 
     - name: Build Windows platform
@@ -58,6 +60,8 @@ jobs:
           -e BUILD_PRESET="WindowsDesktop" \
           -e BUILD_OUTPUT="commander-keen-windows.exe" \
           -e SKIP_SETUP=true \
+          -e GITHUB_REF="${{ github.ref }}" \
+          -e VERSION_TAG="${{ steps.tag.outputs.tag }}" \
           commander-keen-builder
 
     - name: Verify Windows build
@@ -79,6 +83,8 @@ jobs:
           -e BUILD_PRESET="Linux/X11" \
           -e BUILD_OUTPUT="commander-keen-linux.x86_64" \
           -e SKIP_SETUP=true \
+          -e GITHUB_REF="${{ github.ref }}" \
+          -e VERSION_TAG="${{ steps.tag.outputs.tag }}" \
           commander-keen-builder
 
     - name: Verify Linux build
@@ -100,6 +106,8 @@ jobs:
           -e BUILD_PRESET="macOS" \
           -e BUILD_OUTPUT="commander-keen-macos.zip" \
           -e SKIP_SETUP=true \
+          -e GITHUB_REF="${{ github.ref }}" \
+          -e VERSION_TAG="${{ steps.tag.outputs.tag }}" \
           commander-keen-builder
 
     - name: Verify macOS build

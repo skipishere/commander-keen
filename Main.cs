@@ -7,6 +7,9 @@ public partial class Main : Node
 
     public override void _Ready()
     {
+        // Log version information on startup
+        VersionInfo.LogVersionInfo();
+        
         pauseMenu = GetNode<CanvasLayer>("Pause Menu");
         signalManager = GetNode<SignalManager>("/root/SignalManager");
         signalManager.ExitingLevel += OnExitingLevel;
