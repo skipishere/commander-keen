@@ -55,5 +55,11 @@ RUN echo "=== Build Environment Info ===" \
 COPY docker-build.sh /usr/local/bin/docker-build.sh
 RUN chmod +x /usr/local/bin/docker-build.sh
 
+# Set up proper permissions for GitHub Actions (container runs as root, CI needs access)
+# Create user with same UID as GitHub Actions (1001) for seamless file ownership
+RUN groupadd -g 1001 builder && useradd -u 1001 -g 1001 -m builder \
+    && chown -R 1001:1001 /workspace \
+    && chmod -R 755 /workspace
+
 # Default command
 CMD ["/usr/local/bin/docker-build.sh"]

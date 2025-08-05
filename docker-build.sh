@@ -86,12 +86,6 @@ fi
 if [ "$SETUP_ONLY" = "true" ]; then
     echo "Setup-only mode - completing import and C# build..."
     echo "Setup completed successfully!"
-    
-    # Fix permissions for GitHub Actions
-    echo "Fixing file permissions..."
-    chmod -R 755 .godot/ 2>/dev/null || true
-    chown -R 1001:1001 .godot/ 2>/dev/null || true
-    
     exit 0
 fi
 
@@ -153,11 +147,6 @@ else
 fi
 
 echo "Build completed successfully!"
-
-# Fix permissions for GitHub Actions (container runs as root, but CI needs access)
-echo "Fixing file permissions..."
-chmod -R 755 artifact/
-chown -R 1001:1001 artifact/ 2>/dev/null || true
 
 echo "Built artifacts:"
 ls -la artifact/
