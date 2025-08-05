@@ -34,8 +34,22 @@ RUN mkdir -p /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable.m
     && mv templates/* /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable.mono/ \
     && rm -rf templates Godot_v${GODOT_VERSION}-stable_mono_export_templates.tpz
 
-# Create working directory
+# Create working directory and artifact directory
 WORKDIR /workspace
+RUN mkdir -p /workspace/artifact
+
+# Copy project files for dependency restoration (for Docker layer caching)
+COPY Commander-keen.csproj Commander-keen.sln ./
+RUN echo "Pre-restoring common .NET dependencies..." \
+    && dotnet restore --verbosity quiet || true
+
+# Verify installations and display versions
+RUN echo "=== Build Environment Info ===" \
+    && echo "Godot version:" \
+    && godot --version --headless \
+    && echo ".NET version:" \
+    && dotnet --version \
+    && echo "=========================="
 
 # Copy build script
 COPY docker-build.sh /usr/local/bin/docker-build.sh

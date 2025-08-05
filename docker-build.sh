@@ -17,23 +17,12 @@ declare -A PLATFORMS=(
 
 echo "Starting Godot .NET build process..."
 
-# Create artifact directory
-mkdir -p artifact
-
-# Change to project directory
+# Change to project directory (artifact directory already exists from Dockerfile)
 cd /workspace
 
-# Verify Godot installation
-echo "Checking Godot version..."
-godot --version --headless
-
-# Verify .NET installation
-echo "Checking .NET version..."
-dotnet --version
-
-# Restore .NET dependencies
+# Restore .NET dependencies (incremental restore of any new dependencies)
 echo "Restoring .NET dependencies..."
-dotnet restore
+dotnet restore --verbosity quiet
 
 # Import project assets (after C# compilation)
 echo "Importing project assets..."
