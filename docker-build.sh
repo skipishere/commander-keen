@@ -24,10 +24,8 @@ cd /workspace
 echo "Restoring .NET dependencies..."
 dotnet restore --verbosity quiet
 
-# Import project assets (after C# compilation)
+# Import project assets
 echo "Importing project assets..."
-
-echo "Running asset import with timeout..."
 if ! timeout $IMPORT_TIMEOUT godot --headless --import --verbose --quit 2>&1; then
     echo "ERROR: Asset import failed!"
     echo "Contents of current directory:"
@@ -118,17 +116,12 @@ build_platform() {
 if [ -n "$BUILD_PLATFORM" ] && [ -n "$BUILD_PRESET" ] && [ -n "$BUILD_OUTPUT" ]; then
     echo "Building single platform: $BUILD_PLATFORM"
     
-    # Skip setup if assets are already imported (for multi-step builds)
-    if [ "$SKIP_SETUP" = "true" ] && [ -d ".godot" ]; then
-        echo "Skipping setup - using existing assets and compiled assemblies..."
-        
-        # Verify C# assemblies exist
+    # Verify C# assemblies exist when skipping setup
+    if [ "$SKIP_SETUP" = "true" ]; then
         if [ ! -d ".godot/mono" ]; then
             echo "ERROR: No compiled C# assemblies found! Run setup first."
             exit 1
         fi
-    else
-        echo "Running full setup (import + C# build)..."
     fi
     
     if ! build_platform "$BUILD_PLATFORM" "$BUILD_PRESET" "artifact/$BUILD_OUTPUT"; then
@@ -147,6 +140,5 @@ else
 fi
 
 echo "Build completed successfully!"
-
 echo "Built artifacts:"
 ls -la artifact/
