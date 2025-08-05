@@ -20,10 +20,6 @@ echo "Starting Godot .NET build process..."
 # Change to project directory (artifact directory already exists from Dockerfile)
 cd /workspace
 
-# Restore .NET dependencies (incremental restore of any new dependencies)
-echo "Restoring .NET dependencies..."
-dotnet restore --verbosity quiet
-
 # Import project assets
 echo "Importing project assets..."
 if ! timeout $IMPORT_TIMEOUT godot --headless --import --verbose --quit 2>&1; then
