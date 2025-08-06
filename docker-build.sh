@@ -15,32 +15,28 @@ declare -A PLATFORMS=(
     ["macos"]="macOS|${PROJECT_NAME}-macos.zip"
 )
 
-echo "Starting Godot .NET build process..."
+# Function to setup Godot project (import assets and compile C#)
+setup_project() {
+    echo "=== SETUP: Importing assets and building C# ==="
+    
+    cd /workspace
 
-# Change to project directory (artifact directory already exists from Dockerfile)
-cd /workspace
+    # Import project assets
+    echo "Importing project assets..."
+    if ! timeout $IMPORT_TIMEOUT godot --headless --import --verbose --quit 2>&1; then
+        echo "ERROR: Asset import failed!"
+        echo "Contents of current directory:"
+        ls -la
+        exit 1
+    fi
 
-# Import project assets
-echo "Importing project assets..."
-if ! timeout $IMPORT_TIMEOUT godot --headless --import --verbose --quit 2>&1; then
-    echo "ERROR: Asset import failed!"
-    echo "Contents of current directory:"
-    ls -la
-    exit 1
-fi
+    # Verify basic import structure
+    if [ ! -d ".godot" ]; then
+        echo "ERROR: Import failed - .godot directory not found!"
+        exit 1
+    fi
 
-# Give Godot time to complete all file operations
-echo "Waiting for import completion..."
-sleep 5
-
-# Verify basic import structure
-if [ ! -d ".godot" ]; then
-    echo "ERROR: Import failed - .godot directory not found!"
-    exit 1
-fi
-
-# Build C# project only if not skipping setup (i.e., during initial setup phase)
-if [ "$SKIP_SETUP" != "true" ]; then
+    # Build C# project
     echo "Building C# project..."
 
     # Set up version information for build
@@ -59,11 +55,8 @@ if [ "$SKIP_SETUP" != "true" ]; then
         echo "No version tag found, using default"
     fi
 
-    # Try manual dotnet build first (most reliable)
     if dotnet build ${PROJECT_NAME}.csproj -c Release --nologo --verbosity quiet $VERSION_PROPS; then
         echo "Manual dotnet build successful"
-    elif timeout $BUILD_TIMEOUT godot --headless --build-solutions --quit 2>&1; then
-        echo "Build successful with Godot strategy"
     else
         echo "ERROR: C# build failed!"
         echo "Listing project files for debugging:"
@@ -71,17 +64,8 @@ if [ "$SKIP_SETUP" != "true" ]; then
         exit 1
     fi
 
-    echo "C# build completed"
-else
-    echo "Skipping C# build - using existing compiled assemblies"
-fi
-
-# Check if we're only doing setup (import + C# build)
-if [ "$SETUP_ONLY" = "true" ]; then
-    echo "Setup-only mode - completing import and C# build..."
     echo "Setup completed successfully!"
-    exit 0
-fi
+}
 
 # Function to build a platform
 build_platform() {
@@ -108,22 +92,47 @@ build_platform() {
     return 0
 }
 
-# Check if we're building a specific platform (for matrix builds)
-if [ -n "$BUILD_PLATFORM" ] && [ -n "$BUILD_PRESET" ] && [ -n "$BUILD_OUTPUT" ]; then
-    echo "Building single platform: $BUILD_PLATFORM"
+# Function to build platform(s) - all by default, single if BUILD_PLATFORM is specified
+build_platforms() {
+    cd /workspace
     
-    # Verify C# assemblies exist when skipping setup
-    if [ "$SKIP_SETUP" = "true" ]; then
-        if [ ! -d ".godot/mono" ]; then
-            echo "ERROR: No compiled C# assemblies found! Run setup first."
-            exit 1
-        fi
-    fi
-    
-    if ! build_platform "$BUILD_PLATFORM" "$BUILD_PRESET" "artifact/$BUILD_OUTPUT"; then
+    # Verify C# assemblies exist
+    if [ ! -d ".godot/mono" ]; then
+        echo "ERROR: No compiled C# assemblies found! Run setup first."
         exit 1
     fi
-else
+    
+    if [ -z "$BUILD_PLATFORM" ]; then
+        echo "=== BUILD: All platforms (no specific platform set) ==="
+        build_all_platforms
+        return 0
+    fi
+    
+    echo "=== BUILD: Single platform build ==="
+    
+    # Look up platform configuration
+    if [ -z "${PLATFORMS[$BUILD_PLATFORM]}" ]; then
+        echo "ERROR: Unknown platform '$BUILD_PLATFORM'"
+        echo "Available platforms: ${!PLATFORMS[*]}"
+        exit 1
+    fi
+    
+    # Parse platform configuration
+    IFS='|' read -r preset output <<< "${PLATFORMS[$BUILD_PLATFORM]}"
+    
+    echo "Building platform: $BUILD_PLATFORM"
+    echo "Using preset: $preset"
+    echo "Output file: $output"
+    
+    if ! build_platform "$BUILD_PLATFORM" "$preset" "artifact/$output"; then
+        exit 1
+    fi
+    
+    echo "Platform build completed successfully!"
+}
+
+# Function to build all platforms
+build_all_platforms() {
     echo "Building all platforms..."
     
     # Build all platforms using the configuration
@@ -133,8 +142,36 @@ else
             exit 1
         fi
     done
-fi
+    
+    echo "All platforms built successfully!"
+}
 
-echo "Build completed successfully!"
-echo "Built artifacts:"
-ls -la artifact/
+# Function to show built artifacts
+show_artifacts() {
+    echo "Built artifacts:"
+    ls -la artifact/
+}
+
+# Main execution logic
+main() {
+    echo "Starting Godot .NET build process..."
+    
+    # Check for specific function calls
+    if [ "$1" = "setup" ]; then
+        setup_project
+        return 0
+    elif [ "$1" = "build" ]; then
+        build_platforms
+        show_artifacts
+        return 0
+    fi
+    
+    # Default behavior: full build (setup + build all platforms)
+    echo "=== FULL BUILD: Setup + All Platforms ==="
+    setup_project
+    build_all_platforms
+    show_artifacts
+}
+
+# Execute main function with all arguments
+main "$@"

@@ -98,10 +98,23 @@ Alternatively, create a release through the GitHub web interface and the workflo
 - Uses a custom Docker image built from the official Microsoft .NET SDK
 - Downloads Godot 4.4.1 directly from official godotengine releases  
 - Uses Godot headless mode with Xvfb for display in the container
-- Restores .NET dependencies with `dotnet restore`
-- Imports project assets before building with proper error handling
+- Pre-installs dependencies and verifies toolchain in Docker image
+- Optimized layer caching for faster subsequent builds
 - Cross-platform builds from Ubuntu GitHub runners with Docker
 - Proper error handling and timeout management
+
+## Docker Optimizations
+
+**Build-time optimizations:**
+- **Pre-built base image**: Godot and .NET tools installed during image build
+- **Layer caching**: Project files copied separately for dependency caching
+- **Pre-restore**: Common dependencies restored in Docker image
+- **Version checking**: Tool versions verified at image build time
+
+**Runtime optimizations:**
+- **Artifact directory**: Pre-created in image
+- **Incremental restore**: Only new dependencies restored at runtime
+- **Selective copying**: `.dockerignore` excludes unnecessary files
 
 ## Version Handling
 
