@@ -3,12 +3,6 @@
     <TargetFramework>net8.0</TargetFramework>
     <EnableDynamicLoading>true</EnableDynamicLoading>
     <RootNamespace>Commanderkeen</RootNamespace>
-    
-    <!-- Version information -->
-    <Version>0.0.1</Version>
-    <AssemblyVersion>$(Version)</AssemblyVersion>
-    <FileVersion>$(Version)</FileVersion>
-    <InformationalVersion>$(Version)</InformationalVersion>
   </PropertyGroup>
 
   <!-- Get Git tag/commit info during build -->
