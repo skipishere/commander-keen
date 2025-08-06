@@ -102,48 +102,48 @@ build_platforms() {
         exit 1
     fi
     
+    # Determine which platforms to build
+    local platforms_to_build=()
+    
     if [ -z "$BUILD_PLATFORM" ]; then
         echo "=== BUILD: All platforms (no specific platform set) ==="
-        build_all_platforms
-        return 0
+        # Add all platforms to the build array
+        for platform in "${!PLATFORMS[@]}"; do
+            platforms_to_build+=("$platform")
+        done
+    else
+        echo "=== BUILD: Single platform build ==="
+        
+        # Validate platform exists
+        if [ -z "${PLATFORMS[$BUILD_PLATFORM]}" ]; then
+            echo "ERROR: Unknown platform '$BUILD_PLATFORM'"
+            echo "Available platforms: ${!PLATFORMS[*]}"
+            exit 1
+        fi
+        
+        # Add single platform to build array
+        platforms_to_build=("$BUILD_PLATFORM")
+        
+        echo "Building platform: $BUILD_PLATFORM"
     fi
     
-    echo "=== BUILD: Single platform build ==="
-    
-    # Look up platform configuration
-    if [ -z "${PLATFORMS[$BUILD_PLATFORM]}" ]; then
-        echo "ERROR: Unknown platform '$BUILD_PLATFORM'"
-        echo "Available platforms: ${!PLATFORMS[*]}"
-        exit 1
-    fi
-    
-    # Parse platform configuration
-    IFS='|' read -r preset output <<< "${PLATFORMS[$BUILD_PLATFORM]}"
-    
-    echo "Building platform: $BUILD_PLATFORM"
-    echo "Using preset: $preset"
-    echo "Output file: $output"
-    
-    if ! build_platform "$BUILD_PLATFORM" "$preset" "artifact/$output"; then
-        exit 1
-    fi
-    
-    echo "Platform build completed successfully!"
-}
-
-# Function to build all platforms
-build_all_platforms() {
-    echo "Building all platforms..."
-    
-    # Build all platforms using the configuration
-    for platform in "${!PLATFORMS[@]}"; do
+    # Build all platforms in the array
+    for platform in "${platforms_to_build[@]}"; do
         IFS='|' read -r preset output <<< "${PLATFORMS[$platform]}"
+        
+        echo "Using preset: $preset"
+        echo "Output file: $output"
+        
         if ! build_platform "$platform" "$preset" "artifact/$output"; then
             exit 1
         fi
     done
     
-    echo "All platforms built successfully!"
+    if [ ${#platforms_to_build[@]} -eq 1 ]; then
+        echo "Platform build completed successfully!"
+    else
+        echo "All platforms built successfully!"
+    fi
 }
 
 # Function to show built artifacts
@@ -169,7 +169,7 @@ main() {
     # Default behavior: full build (setup + build all platforms)
     echo "=== FULL BUILD: Setup + All Platforms ==="
     setup_project
-    build_all_platforms
+    build_platforms
     show_artifacts
 }
 
