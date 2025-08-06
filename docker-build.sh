@@ -15,9 +15,27 @@ declare -A PLATFORMS=(
     ["macos"]="macOS|${PROJECT_NAME}-macos.zip"
 )
 
+# Determine version once at startup
+determine_version() {
+    if [ -n "$VERSION_TAG" ]; then
+        echo "Using version from VERSION_TAG: $VERSION_TAG"
+        VERSION=$(echo "$VERSION_TAG" | sed 's/^v//')
+    elif [ -n "$GITHUB_REF" ] && [[ "$GITHUB_REF" == refs/tags/* ]]; then
+        TAG_NAME=$(echo "$GITHUB_REF" | sed 's/refs\/tags\///')
+        VERSION=$(echo "$TAG_NAME" | sed 's/^v//')
+        echo "Using version from GITHUB_REF: $VERSION"
+    else
+        echo "No version tag found, using project default"
+        VERSION=""
+    fi
+}
+
 # Function to setup Godot project (import assets and compile C#)
 setup_project() {
     echo "=== SETUP: Importing assets and building C# ==="
+    
+    # Determine version for C# compilation
+    determine_version
     
     cd /workspace
 
@@ -39,20 +57,10 @@ setup_project() {
     # Build C# project
     echo "Building C# project..."
 
-    # Set up version information for build
+    # Set up version properties if version was determined
     VERSION_PROPS=""
-    if [ -n "$VERSION_TAG" ]; then
-        echo "Using version from tag: $VERSION_TAG"
-        # Clean the version (remove 'v' prefix if present)
-        CLEAN_VERSION=$(echo "$VERSION_TAG" | sed 's/^v//')
-        VERSION_PROPS="-p:Version=$CLEAN_VERSION -p:InformationalVersion=$CLEAN_VERSION"
-    elif [ -n "$GITHUB_REF" ] && [[ "$GITHUB_REF" == refs/tags/* ]]; then
-        TAG_NAME=$(echo "$GITHUB_REF" | sed 's/refs\/tags\///')
-        CLEAN_VERSION=$(echo "$TAG_NAME" | sed 's/^v//')
-        echo "Using version from GitHub ref: $CLEAN_VERSION"
-        VERSION_PROPS="-p:Version=$CLEAN_VERSION -p:InformationalVersion=$CLEAN_VERSION"
-    else
-        echo "No version tag found, using default"
+    if [ -n "$VERSION" ]; then
+        VERSION_PROPS="-p:Version=$VERSION -p:InformationalVersion=$VERSION"
     fi
 
     if dotnet build ${PROJECT_NAME}.csproj -c Release --nologo --verbosity quiet $VERSION_PROPS; then

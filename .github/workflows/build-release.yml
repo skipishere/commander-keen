@@ -41,7 +41,6 @@ jobs:
         docker run --rm \
           -v ${{ github.workspace }}:/workspace \
           -w /workspace \
-          -e GITHUB_REF="${{ github.ref }}" \
           -e VERSION_TAG="${{ steps.tag.outputs.tag }}" \
           commander-keen-builder setup
 
@@ -52,8 +51,6 @@ jobs:
           -v ${{ github.workspace }}:/workspace \
           -w /workspace \
           -e BUILD_PLATFORM=windows \
-          -e GITHUB_REF="${{ github.ref }}" \
-          -e VERSION_TAG="${{ steps.tag.outputs.tag }}" \
           commander-keen-builder build
 
     - name: Verify Windows build
@@ -72,8 +69,6 @@ jobs:
           -v ${{ github.workspace }}:/workspace \
           -w /workspace \
           -e BUILD_PLATFORM=linux \
-          -e GITHUB_REF="${{ github.ref }}" \
-          -e VERSION_TAG="${{ steps.tag.outputs.tag }}" \
           commander-keen-builder build
 
     - name: Verify Linux build
@@ -92,8 +87,6 @@ jobs:
           -v ${{ github.workspace }}:/workspace \
           -w /workspace \
           -e BUILD_PLATFORM=macos \
-          -e GITHUB_REF="${{ github.ref }}" \
-          -e VERSION_TAG="${{ steps.tag.outputs.tag }}" \
           commander-keen-builder build
 
     - name: Verify macOS build
