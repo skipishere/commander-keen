@@ -164,21 +164,14 @@ show_artifacts() {
 main() {
     echo "Starting Godot .NET build process..."
     
-    # Check for specific function calls
-    if [ "$1" = "setup" ]; then
+    if [ "$1" = "setup" ] || [ -z "$1" ]; then
         setup_project
-        return 0
-    elif [ "$1" = "build" ]; then
-        build_platforms
-        show_artifacts
-        return 0
     fi
     
-    # Default behavior: full build (setup + build all platforms)
-    echo "=== FULL BUILD: Setup + All Platforms ==="
-    setup_project
-    build_platforms
-    show_artifacts
+    if [ "$1" = "build" ] || [ -z "$1" ]; then
+        build_platforms
+        show_artifacts
+    fi
 }
 
 # Execute main function with all arguments
