@@ -25,7 +25,7 @@ public partial class VersionInfo : Node
                 .InformationalVersion
                              ?? assembly.GetName().Version?.ToString()
                              ?? "Unknown";
-                
+
                 // Clean up version string (remove build metadata after +)
                 var plusIndex = version.IndexOf('+');
                 _version = plusIndex > 0 ? version.Substring(0, plusIndex) : version;

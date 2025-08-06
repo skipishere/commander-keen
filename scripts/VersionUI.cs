@@ -12,7 +12,7 @@ public partial class VersionUI : Label
     public override void _Ready()
     {
         UpdateVersionDisplay();
-        
+
         // Log version info when first loaded (useful for debugging)
         VersionInfo.LogVersionInfo();
     }
