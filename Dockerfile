@@ -9,6 +9,7 @@ RUN apt-get update && apt-get install -y \
     wget \
     unzip \
     ca-certificates \
+    fontconfig \
     && rm -rf /var/lib/apt/lists/*
 
 # Set Godot version
