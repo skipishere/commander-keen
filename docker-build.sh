@@ -41,7 +41,10 @@ setup_project() {
 
     # Import project assets
     echo "Importing project assets..."
-    if ! timeout $IMPORT_TIMEOUT godot --headless --import --verbose --quit 2>&1; then
+    
+    if timeout $IMPORT_TIMEOUT godot --headless --import --quit 2>&1; then
+        echo "Asset import successful"
+    else
         echo "ERROR: Asset import failed!"
         echo "Contents of current directory:"
         ls -la
@@ -82,17 +85,20 @@ build_platform() {
     local output_file=$3
     
     echo "Building for $platform_name..."
+    echo "Output file: $output_file"
     
-    if timeout $GODOT_TIMEOUT godot --headless --export-release "$preset" "$output_file" --quit 2>&1; then
-        echo "$platform_name export command completed"
+    # Run export command - ignore exit code since Godot may crash during cleanup
+    timeout $GODOT_TIMEOUT godot --headless --export-release "$preset" "$output_file" --quit 2>&1
+    local export_exit_code=$?
+    
+    # Check if build output exists (this is the real success indicator)
+    if [ -f "$output_file" ]; then
+        echo "$platform_name export completed successfully"
     else
-        echo "ERROR: $platform_name build failed or timed out!"
-        return 1
-    fi
-
-    # Verify build output
-    if [ ! -f "$output_file" ]; then
-        echo "ERROR: $platform_name executable was not created!"
+        echo "ERROR: $platform_name build failed - output file not created!"
+        echo "Export command exit code: $export_exit_code"
+        echo "Contents of artifact directory:"
+        ls -la artifact/ || echo "Artifact directory doesn't exist"
         return 1
     fi
     
