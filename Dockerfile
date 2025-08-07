@@ -9,6 +9,7 @@ RUN apt-get update && apt-get install -y \
     wget \
     unzip \
     ca-certificates \
+    fontconfig \
     && rm -rf /var/lib/apt/lists/*
 
 # Set Godot version
@@ -34,12 +35,32 @@ RUN mkdir -p /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable.m
     && mv templates/* /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable.mono/ \
     && rm -rf templates Godot_v${GODOT_VERSION}-stable_mono_export_templates.tpz
 
-# Create working directory
+# Create working directory and artifact directory
 WORKDIR /workspace
+RUN mkdir -p /workspace/artifact
+
+# Copy project files for dependency restoration (for Docker layer caching)
+COPY Commander-keen.csproj Commander-keen.sln ./
+RUN echo "Pre-restoring common .NET dependencies..." \
+    && dotnet restore --verbosity quiet || true
+
+# Verify installations and display versions
+RUN echo "=== Build Environment Info ===" \
+    && echo "Godot version:" \
+    && godot --version --headless \
+    && echo ".NET version:" \
+    && dotnet --version \
+    && echo "=========================="
 
 # Copy build script
 COPY docker-build.sh /usr/local/bin/docker-build.sh
 RUN chmod +x /usr/local/bin/docker-build.sh
+
+# Set up proper permissions for GitHub Actions (container runs as root, CI needs access)
+# Create user with same UID as GitHub Actions (1001) for seamless file ownership
+RUN groupadd -g 1001 builder && useradd -u 1001 -g 1001 -m builder \
+    && chown -R 1001:1001 /workspace \
+    && chmod -R 755 /workspace
 
 # Default command
 CMD ["/usr/local/bin/docker-build.sh"]

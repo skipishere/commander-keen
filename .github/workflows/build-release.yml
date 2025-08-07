@@ -6,8 +6,8 @@ on:
   workflow_dispatch:
     inputs:
       tag:
-        description: 'Tag to build (e.g. v1.0.0)'
-        required: false
+        description: 'Tag to build (e.g. 1.0.0)'
+        required: true
         default: ''
 
 jobs:
@@ -26,12 +26,8 @@ jobs:
       run: |
         if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ -n "${{ github.event.inputs.tag }}" ]; then
           echo "tag=${{ github.event.inputs.tag }}" >> $GITHUB_OUTPUT
-        elif [ "${{ github.event_name }}" = "push" ]; then
-          echo "tag=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
         elif [ "${{ github.event_name }}" = "release" ]; then
           echo "tag=${{ github.event.release.tag_name }}" >> $GITHUB_OUTPUT
-        else
-          echo "tag=dev-$(date +%Y%m%d-%H%M%S)" >> $GITHUB_OUTPUT
         fi
 
     - name: Build Docker image (shared setup)
@@ -45,8 +41,8 @@ jobs:
         docker run --rm \
           -v ${{ github.workspace }}:/workspace \
           -w /workspace \
-          -e SETUP_ONLY=true \
-          commander-keen-builder
+          -e VERSION_TAG="${{ steps.tag.outputs.tag }}" \
+          commander-keen-builder setup
 
     - name: Build Windows platform
       run: |
@@ -55,10 +51,7 @@ jobs:
           -v ${{ github.workspace }}:/workspace \
           -w /workspace \
           -e BUILD_PLATFORM=windows \
-          -e BUILD_PRESET="WindowsDesktop" \
-          -e BUILD_OUTPUT="commander-keen-windows.exe" \
-          -e SKIP_SETUP=true \
-          commander-keen-builder
+          commander-keen-builder build
 
     - name: Verify Windows build
       run: |
@@ -76,10 +69,7 @@ jobs:
           -v ${{ github.workspace }}:/workspace \
           -w /workspace \
           -e BUILD_PLATFORM=linux \
-          -e BUILD_PRESET="Linux/X11" \
-          -e BUILD_OUTPUT="commander-keen-linux.x86_64" \
-          -e SKIP_SETUP=true \
-          commander-keen-builder
+          commander-keen-builder build
 
     - name: Verify Linux build
       run: |
@@ -97,10 +87,7 @@ jobs:
           -v ${{ github.workspace }}:/workspace \
           -w /workspace \
           -e BUILD_PLATFORM=macos \
-          -e BUILD_PRESET="macOS" \
-          -e BUILD_OUTPUT="commander-keen-macos.zip" \
-          -e SKIP_SETUP=true \
-          commander-keen-builder
+          commander-keen-builder build
 
     - name: Verify macOS build
       run: |

@@ -15,63 +15,68 @@ declare -A PLATFORMS=(
     ["macos"]="macOS|${PROJECT_NAME}-macos.zip"
 )
 
-echo "Starting Godot .NET build process..."
+# Determine version once at startup
+determine_version() {
+    if [ -n "$VERSION_TAG" ]; then
+        echo "Using version from VERSION_TAG: $VERSION_TAG"
+        VERSION=$(echo "$VERSION_TAG" | sed 's/^v//')
+    elif [ -n "$GITHUB_REF" ] && [[ "$GITHUB_REF" == refs/tags/* ]]; then
+        TAG_NAME=$(echo "$GITHUB_REF" | sed 's/refs\/tags\///')
+        VERSION=$(echo "$TAG_NAME" | sed 's/^v//')
+        echo "Using version from GITHUB_REF: $VERSION"
+    else
+        echo "No version tag found, using project default"
+        VERSION=""
+    fi
+}
 
-# Create artifact directory
-mkdir -p artifact
+# Function to setup Godot project (import assets and compile C#)
+setup_project() {
+    echo "=== SETUP: Importing assets and building C# ==="
+    
+    # Determine version for C# compilation
+    determine_version
+    
+    cd /workspace
 
-# Change to project directory
-cd /workspace
+    # Import project assets
+    echo "Importing project assets..."
+    
+    if timeout $IMPORT_TIMEOUT godot --headless --import --quit 2>&1; then
+        echo "Asset import successful"
+    else
+        echo "ERROR: Asset import failed!"
+        echo "Contents of current directory:"
+        ls -la
+        exit 1
+    fi
 
-# Verify Godot installation
-echo "Checking Godot version..."
-godot --version --headless
+    # Verify basic import structure
+    if [ ! -d ".godot" ]; then
+        echo "ERROR: Import failed - .godot directory not found!"
+        exit 1
+    fi
 
-# Verify .NET installation
-echo "Checking .NET version..."
-dotnet --version
+    # Build C# project
+    echo "Building C# project..."
 
-# Restore .NET dependencies
-echo "Restoring .NET dependencies..."
-dotnet restore
+    # Set up version properties if version was determined
+    VERSION_PROPS=""
+    if [ -n "$VERSION" ]; then
+        VERSION_PROPS="-p:Version=$VERSION -p:InformationalVersion=$VERSION"
+    fi
 
-# Import project assets (after C# compilation)
-echo "Importing project assets..."
+    if dotnet build ${PROJECT_NAME}.csproj -c Release --nologo --verbosity quiet $VERSION_PROPS; then
+        echo "Manual dotnet build successful"
+    else
+        echo "ERROR: C# build failed!"
+        echo "Listing project files for debugging:"
+        ls -la *.csproj *.cs 2>/dev/null || echo "No project files found"
+        exit 1
+    fi
 
-echo "Running asset import with timeout..."
-if ! timeout $IMPORT_TIMEOUT godot --headless --import --verbose --quit 2>&1; then
-    echo "ERROR: Asset import failed!"
-    echo "Contents of current directory:"
-    ls -la
-    exit 1
-fi
-
-# Give Godot time to complete all file operations
-echo "Waiting for import completion..."
-sleep 5
-
-# Verify basic import structure
-if [ ! -d ".godot" ]; then
-    echo "ERROR: Import failed - .godot directory not found!"
-    exit 1
-fi
-
-# Build C# project first - this is critical for Godot 4.x with C#
-echo "Building C# project..."
-
-# Try manual dotnet build first (most reliable)
-if dotnet build ${PROJECT_NAME}.csproj -c Release --nologo --verbosity quiet; then
-    echo "Manual dotnet build successful"
-elif timeout $BUILD_TIMEOUT godot --headless --build-solutions --quit 2>&1; then
-    echo "Build successful with Godot strategy"
-else
-    echo "ERROR: C# build failed!"
-    echo "Listing project files for debugging:"
-    ls -la *.csproj *.cs 2>/dev/null || echo "No project files found"
-    exit 1
-fi
-
-echo "C# build completed"
+    echo "Setup completed successfully!"
+}
 
 # Function to build a platform
 build_platform() {
@@ -80,17 +85,20 @@ build_platform() {
     local output_file=$3
     
     echo "Building for $platform_name..."
+    echo "Output file: $output_file"
     
-    if timeout $GODOT_TIMEOUT godot --headless --export-release "$preset" "$output_file" --quit 2>&1; then
-        echo "$platform_name export command completed"
+    # Run export command - ignore exit code since Godot may crash during cleanup
+    timeout $GODOT_TIMEOUT godot --headless --export-release "$preset" "$output_file" --quit 2>&1
+    local export_exit_code=$?
+    
+    # Check if build output exists (this is the real success indicator)
+    if [ -f "$output_file" ]; then
+        echo "$platform_name export completed successfully"
     else
-        echo "ERROR: $platform_name build failed or timed out!"
-        return 1
-    fi
-
-    # Verify build output
-    if [ ! -f "$output_file" ]; then
-        echo "ERROR: $platform_name executable was not created!"
+        echo "ERROR: $platform_name build failed - output file not created!"
+        echo "Export command exit code: $export_exit_code"
+        echo "Contents of artifact directory:"
+        ls -la artifact/ || echo "Artifact directory doesn't exist"
         return 1
     fi
     
@@ -98,51 +106,79 @@ build_platform() {
     return 0
 }
 
-# Check if we're only doing setup (import + C# build)
-if [ "$SETUP_ONLY" = "true" ]; then
-    echo "Setup-only mode - completing import and C# build..."
-    echo "Setup completed successfully!"
+# Function to build platform(s) - all by default, single if BUILD_PLATFORM is specified
+build_platforms() {
+    cd /workspace
     
-    # Fix permissions for GitHub Actions
-    echo "Fixing file permissions..."
-    chmod -R 755 .godot/ 2>/dev/null || true
-    chown -R 1001:1001 .godot/ 2>/dev/null || true
-    
-    exit 0
-fi
-
-# Check if we're building a specific platform (for matrix builds)
-if [ -n "$BUILD_PLATFORM" ] && [ -n "$BUILD_PRESET" ] && [ -n "$BUILD_OUTPUT" ]; then
-    echo "Building single platform: $BUILD_PLATFORM"
-    
-    # Skip setup if assets are already imported (for multi-step builds)
-    if [ "$SKIP_SETUP" = "true" ] && [ -d ".godot" ]; then
-        echo "Skipping setup - using existing assets and build..."
-    else
-        echo "Running full setup (import + C# build)..."
-    fi
-    
-    if ! build_platform "$BUILD_PLATFORM" "$BUILD_PRESET" "artifact/$BUILD_OUTPUT"; then
+    # Verify C# assemblies exist
+    if [ ! -d ".godot/mono" ]; then
+        echo "ERROR: No compiled C# assemblies found! Run setup first."
         exit 1
     fi
-else
-    echo "Building all platforms..."
     
-    # Build all platforms using the configuration
-    for platform in "${!PLATFORMS[@]}"; do
+    # Determine which platforms to build
+    local platforms_to_build=()
+    
+    if [ -z "$BUILD_PLATFORM" ]; then
+        echo "=== BUILD: All platforms (no specific platform set) ==="
+        # Add all platforms to the build array
+        for platform in "${!PLATFORMS[@]}"; do
+            platforms_to_build+=("$platform")
+        done
+    else
+        echo "=== BUILD: Single platform build ==="
+        
+        # Validate platform exists
+        if [ -z "${PLATFORMS[$BUILD_PLATFORM]}" ]; then
+            echo "ERROR: Unknown platform '$BUILD_PLATFORM'"
+            echo "Available platforms: ${!PLATFORMS[*]}"
+            exit 1
+        fi
+        
+        # Add single platform to build array
+        platforms_to_build=("$BUILD_PLATFORM")
+        
+        echo "Building platform: $BUILD_PLATFORM"
+    fi
+    
+    # Build all platforms in the array
+    for platform in "${platforms_to_build[@]}"; do
         IFS='|' read -r preset output <<< "${PLATFORMS[$platform]}"
+        
+        echo "Using preset: $preset"
+        echo "Output file: $output"
+        
         if ! build_platform "$platform" "$preset" "artifact/$output"; then
             exit 1
         fi
     done
-fi
+    
+    if [ ${#platforms_to_build[@]} -eq 1 ]; then
+        echo "Platform build completed successfully!"
+    else
+        echo "All platforms built successfully!"
+    fi
+}
 
-echo "Build completed successfully!"
+# Function to show built artifacts
+show_artifacts() {
+    echo "Built artifacts:"
+    ls -la artifact/
+}
 
-# Fix permissions for GitHub Actions (container runs as root, but CI needs access)
-echo "Fixing file permissions..."
-chmod -R 755 artifact/
-chown -R 1001:1001 artifact/ 2>/dev/null || true
+# Main execution logic
+main() {
+    echo "Starting Godot .NET build process..."
+    
+    if [ "$1" = "setup" ] || [ -z "$1" ]; then
+        setup_project
+    fi
+    
+    if [ "$1" = "build" ] || [ -z "$1" ]; then
+        build_platforms
+        show_artifacts
+    fi
+}
 
-echo "Built artifacts:"
-ls -la artifact/
+# Execute main function with all arguments
+main "$@"
