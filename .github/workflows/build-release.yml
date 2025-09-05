@@ -35,9 +35,9 @@ jobs:
         echo "Building Docker image with Godot setup..."
         docker build -t commander-keen-builder .
 
-    - name: Setup project (import assets and compile C#)
+    - name: Setup Godot project (import assets and compile C#)
       run: |
-        echo "Setting up project (asset import and C# compilation)..."
+        echo "Setting up Godot project (import assets and compile C#)..."
         docker run --rm \
           -v ${{ github.workspace }}:/workspace \
           -w /workspace \
@@ -51,7 +51,6 @@ jobs:
           -v ${{ github.workspace }}:/workspace \
           -w /workspace \
           -e BUILD_PLATFORM=windows \
-          -e VERSION_TAG="${{ steps.tag.outputs.tag }}" \
           commander-keen-builder build
 
     - name: Verify Windows build
@@ -70,7 +69,6 @@ jobs:
           -v ${{ github.workspace }}:/workspace \
           -w /workspace \
           -e BUILD_PLATFORM=linux \
-          -e VERSION_TAG="${{ steps.tag.outputs.tag }}" \
           commander-keen-builder build
 
     - name: Verify Linux build
@@ -89,7 +87,6 @@ jobs:
           -v ${{ github.workspace }}:/workspace \
           -w /workspace \
           -e BUILD_PLATFORM=macos \
-          -e VERSION_TAG="${{ steps.tag.outputs.tag }}" \
           commander-keen-builder build
 
     - name: Verify macOS build
