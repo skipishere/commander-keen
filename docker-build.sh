@@ -60,13 +60,12 @@ setup_project() {
     # Build C# project
     echo "Building C# project..."
 
-    # Set up version properties if version was determined
-    VERSION_PROPS=""
+    # Export VERSION_TAG for the dotnet build process if version was determined
     if [ -n "$VERSION" ]; then
-        VERSION_PROPS="-p:Version=$VERSION -p:InformationalVersion=$VERSION"
+        export VERSION_TAG="$VERSION"
     fi
 
-    if dotnet build Commander-keen.csproj -c Release --nologo --verbosity quiet $VERSION_PROPS; then
+    if dotnet build Commander-keen.csproj -c Release --nologo --verbosity quiet; then
         echo "Manual dotnet build successful"
     else
         echo "ERROR: C# build failed!"
