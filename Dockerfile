@@ -62,5 +62,5 @@ RUN groupadd -g 1001 builder && useradd -u 1001 -g 1001 -m builder \
     && chown -R 1001:1001 /workspace \
     && chmod -R 755 /workspace
 
-# Default command
-CMD ["/usr/local/bin/docker-build.sh"]
+# Use ENTRYPOINT so arguments are passed to the script properly
+ENTRYPOINT ["/usr/local/bin/docker-build.sh"]
