@@ -6,6 +6,10 @@ This document explains how the automated release build system works for the Comm
 
 The project includes a GitHub Actions workflow to automatically build the game for Windows, Linux, and macOS platforms using Docker when releases are created.
 
+**Version Logic:**
+- **CI Environment**: If `VERSION_TAG` or `GITHUB_REF` is provided, uses that version and skips git commands
+- **Local Development**: If no CI version variables are present, runs `git describe` to get current version
+
 ## Workflow
 
 ### Docker-based Release Workflow (`build-release.yml`)
@@ -54,6 +58,16 @@ The project includes a complete Docker setup for consistent builds:
    docker run --rm -v $(pwd):/workspace -w /workspace commander-keen-builder
    ```
 
+3. To test with a specific version tag:
+   ```powershell
+   # Windows PowerShell
+   docker run --rm -v ${PWD}:/workspace -w /workspace -e VERSION_TAG=1.2.3 commander-keen-builder
+   ```
+   ```bash
+   # Linux/macOS
+   docker run --rm -v $(pwd):/workspace -w /workspace -e VERSION_TAG=1.2.3 commander-keen-builder
+   ```
+
 This will create builds in the `artifact/` directory.
 
 ### Local Build (Alternative)
@@ -84,10 +98,51 @@ Alternatively, create a release through the GitHub web interface and the workflo
 - Uses a custom Docker image built from the official Microsoft .NET SDK
 - Downloads Godot 4.4.1 directly from official godotengine releases  
 - Uses Godot headless mode with Xvfb for display in the container
-- Restores .NET dependencies with `dotnet restore`
-- Imports project assets before building with proper error handling
+- Pre-installs dependencies and verifies toolchain in Docker image
+- Optimized layer caching for faster subsequent builds
 - Cross-platform builds from Ubuntu GitHub runners with Docker
 - Proper error handling and timeout management
+
+## Docker Optimizations
+
+**Build-time optimizations:**
+- **Pre-built base image**: Godot and .NET tools installed during image build
+- **Layer caching**: Project files copied separately for dependency caching
+- **Pre-restore**: Common dependencies restored in Docker image
+- **Version checking**: Tool versions verified at image build time
+
+**Runtime optimizations:**
+- **Artifact directory**: Pre-created in image
+- **Incremental restore**: Only new dependencies restored at runtime
+- **Selective copying**: `.dockerignore` excludes unnecessary files
+
+## Version Handling
+
+The build system automatically extracts version information from Git tags and embeds it in the compiled game:
+
+**Version Sources (in priority order):**
+1. `VERSION_TAG` environment variable (manual override)
+2. `GITHUB_REF` from CI/CD (release tags)
+3. `git describe --tags --always --dirty` (local development)
+4. Default fallback: `0.0.1`
+
+**Version Format Handling:**
+- **Input**: Supports complex git describe formats like `v1.2.3-alpha-7-gc2ee5a8`
+- **Parsing**: Extracts clean version numbers (e.g., `1.2.3`) for .NET compatibility
+- **Output**: 
+  - `AssemblyVersion`: Clean format (`1.2.3`)
+  - `InformationalVersion`: Full git describe output for debugging
+
+**Testing Version Locally:**
+```bash
+# Create a test tag
+git tag v1.2.3-beta
+
+# Build and see version extraction
+dotnet build -v normal
+
+# Check version in game console output
+```
 
 ## Recent Fixes
 
