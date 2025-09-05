@@ -98,6 +98,11 @@ jobs:
         echo "macOS build successful:"
         ls -la artifact/commander-keen-macos.zip
 
+    - name: Fix artifact permissions
+      run: |
+        sudo chown -R $USER:$USER artifact/
+        sudo chmod -R 755 artifact/
+
     - name: Package all builds
       run: |
         cd artifact
