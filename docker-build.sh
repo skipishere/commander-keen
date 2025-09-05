@@ -110,11 +110,8 @@ build_platform() {
 build_platforms() {
     cd /workspace
     
-    # Verify C# assemblies exist
-    if [ ! -d ".godot/mono" ]; then
-        echo "ERROR: No compiled C# assemblies found! Run setup first."
-        exit 1
-    fi
+    # Ensure artifact directory exists
+    mkdir -p artifact
     
     # Determine which platforms to build
     local platforms_to_build=()
