@@ -66,7 +66,7 @@ setup_project() {
         VERSION_PROPS="-p:Version=$VERSION -p:InformationalVersion=$VERSION"
     fi
 
-    if dotnet build ${PROJECT_NAME}.csproj -c Release --nologo --verbosity quiet $VERSION_PROPS; then
+    if dotnet build Commander-keen.csproj -c Release --nologo --verbosity quiet $VERSION_PROPS; then
         echo "Manual dotnet build successful"
     else
         echo "ERROR: C# build failed!"
