@@ -7,21 +7,10 @@
 
   <!-- Get Git tag/commit info during build -->
   <Target Name="GetGitInfo" BeforeTargets="GetAssemblyVersion;GenerateAssemblyInfo">
-    <PropertyGroup>
-      <!-- Try different sources for version information -->
-      
-      <!-- 1. Check for VERSION_TAG environment variable (from CI) -->
-      <GitTag Condition="'$(GitTag)' == '' AND '$(VERSION_TAG)' != ''">$(VERSION_TAG)</GitTag>
-      
-      <!-- 2. Try to extract from GITHUB_REF environment variable -->
-      <GitTag Condition="'$(GitTag)' == '' AND '$(GITHUB_REF)' != '' AND $(GITHUB_REF.StartsWith('refs/tags/'))">$([System.Text.RegularExpressions.Regex]::Replace('$(GITHUB_REF)', '^refs/tags/v?(.+)$', '$1'))</GitTag>
-    </PropertyGroup>
-    
     <!-- Execute git describe to get version info (only if no version provided from CI) -->
     <Exec Command="git describe --tags --always --dirty" 
           ConsoleToMSBuild="true" 
           ContinueOnError="true"
-          Condition="'$(GitTag)' == ''"
           StandardOutputImportance="low">
       <Output TaskParameter="ConsoleOutput" PropertyName="GitDescribeOutput" />
       <Output TaskParameter="ExitCode" PropertyName="GitExitCode" />
@@ -29,11 +18,8 @@
     
     <PropertyGroup>
       <!-- Use git describe output if successful and no CI version was provided -->
-      <GitTag Condition="'$(GitTag)' == '' AND '$(GitExitCode)' == '0' AND '$(GitDescribeOutput)' != ''">$(GitDescribeOutput)</GitTag>
-      
-      <!-- Final fallback: use default version -->
-      <GitTag Condition="'$(GitTag)' == ''">$(Version)</GitTag>
-      
+      <GitTag Condition="'$(GitExitCode)' == '0' AND '$(GitDescribeOutput)' != ''">$(GitDescribeOutput)</GitTag>
+            
       <!-- Parse and clean up the version for .NET compatibility -->
       <!-- Remove 'v' prefix if present -->
       <RawVersion>$([System.Text.RegularExpressions.Regex]::Replace('$(GitTag)', '^v', ''))</RawVersion>
@@ -41,10 +27,7 @@
       <!-- Extract just the version numbers (major.minor.patch) from start of string -->
       <!-- This handles formats like: 1.2.3, 1.2.3-alpha, 1.2.3-alpha-7-gc2ee5a8 -->
       <CleanVersion>$([System.Text.RegularExpressions.Regex]::Replace('$(RawVersion)', '^(\d+\.\d+\.\d+).*', '$1'))</CleanVersion>
-      
-      <!-- If regex didn't match a version pattern, use fallback -->
-      <CleanVersion Condition="'$(CleanVersion)' == '$(RawVersion)' AND !$([System.Text.RegularExpressions.Regex]::IsMatch('$(RawVersion)', '^\d+\.\d+\.\d+'))">0.0.1</CleanVersion>
-      
+            
       <!-- Keep the original tag for InformationalVersion (this can be any format) -->
       <InformationalVersionValue>$(RawVersion)</InformationalVersionValue>
     </PropertyGroup>
