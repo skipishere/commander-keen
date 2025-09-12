@@ -4,11 +4,6 @@ on:
   release:
     types: [created]
   workflow_dispatch:
-    inputs:
-      tag:
-        description: 'Tag to build (e.g. 1.0.0)'
-        required: true
-        default: ''
 
 jobs:
   # Single job for all platform builds with shared setup
@@ -20,15 +15,33 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
+      with:
+        fetch-depth: 0  # Fetch all history for tags
 
-    - name: Set up tag name
+    - name: Determine version tag
       id: tag
       run: |
-        if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ -n "${{ github.event.inputs.tag }}" ]; then
-          echo "tag=${{ github.event.inputs.tag }}" >> $GITHUB_OUTPUT
-        elif [ "${{ github.event_name }}" = "release" ]; then
-          echo "tag=${{ github.event.release.tag_name }}" >> $GITHUB_OUTPUT
+        # Determine which tag to use for the build version
+        if [ "${{ github.event_name }}" = "release" ]; then
+          BUILD_TAG="${{ github.event.release.tag_name }}"
+          echo "Using release tag: $BUILD_TAG"
+        else
+          # Get the latest tag from the repository
+          BUILD_TAG="$(git describe --tags --abbrev=0 2>/dev/null)-dev"
+          echo "Using latest repository tag: $BUILD_TAG"
         fi
+        
+        # Clean the tag (remove 'v' prefix if present) for version parsing
+        CLEAN_TAG=$(echo "$BUILD_TAG" | sed 's/^v//')
+        
+        echo "=== Build Version Information ==="
+        echo "Raw tag: $BUILD_TAG"
+        echo "Clean version: $CLEAN_TAG"
+        echo "================================="
+        
+        # Export both raw and clean versions
+        echo "tag=$BUILD_TAG" >> $GITHUB_OUTPUT
+        echo "version=$CLEAN_TAG" >> $GITHUB_OUTPUT
 
     - name: Build Docker image (shared setup)
       run: |
@@ -38,6 +51,7 @@ jobs:
     - name: Setup Godot project (import assets and compile C#)
       run: |
         echo "Setting up Godot project (import assets and compile C#)..."
+        echo "Using version tag: ${{ steps.tag.outputs.tag }}"
         docker run --rm \
           -v ${{ github.workspace }}:/workspace \
           -w /workspace \
@@ -51,6 +65,7 @@ jobs:
           -v ${{ github.workspace }}:/workspace \
           -w /workspace \
           -e BUILD_PLATFORM=windows \
+          -e VERSION_TAG="${{ steps.tag.outputs.tag }}" \
           commander-keen-builder build
 
     - name: Verify Windows build
@@ -69,6 +84,7 @@ jobs:
           -v ${{ github.workspace }}:/workspace \
           -w /workspace \
           -e BUILD_PLATFORM=linux \
+          -e VERSION_TAG="${{ steps.tag.outputs.tag }}" \
           commander-keen-builder build
 
     - name: Verify Linux build
@@ -87,6 +103,7 @@ jobs:
           -v ${{ github.workspace }}:/workspace \
           -w /workspace \
           -e BUILD_PLATFORM=macos \
+          -e VERSION_TAG="${{ steps.tag.outputs.tag }}" \
           commander-keen-builder build
 
     - name: Verify macOS build
