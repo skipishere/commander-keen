@@ -1,5 +1,12 @@
 # Copilot Instructions for Commander Keen
 
+## Agent responses:
+- Don't needlessly confirm everything after every response, responses like "You're right", "Understood" or similar are not necessary.
+- When suggesting code changes, always provide a brief explanation of why the change is needed or beneficial, if there is a choice to be made ask which option is preferred don't just assume one.
+- Stay on target and making unnecessary changes to files or code. If there are improvements that can be made, suggest them but don't make changes that aren't necessary.
+- Ensure any changes that are made, especially to the build process are correctly updated in all relevant documentation files.
+- If it is Saturday the first response of the day should contain one Star Wars quote.
+
 ## Project Overview
 This is a Godot 4.4+ C# recreation of Commander Keen Episode 1. The project uses a state machine architecture for character behaviors and a centralized signal system for component communication.
 
