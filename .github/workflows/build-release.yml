@@ -22,6 +22,13 @@ jobs:
       uses: actions/checkout@v4
       with:
         fetch-depth: 0  # Fetch full history including tags
+        fetch-tags: true  # Explicitly fetch all tags
+
+    - name: Ensure tags are available
+      run: |
+        git fetch --tags --force
+        echo "Available tags:"
+        git tag -l
 
     - name: Set up tag name
       id: tag
