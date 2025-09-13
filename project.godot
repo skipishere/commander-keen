@@ -14,7 +14,9 @@ config/name="Commander-keen"
 config/tags=PackedStringArray("2d")
 run/main_scene="res://scenes/levels/ck1-title.tscn"
 config/features=PackedStringArray("4.4", "C#", "Mobile")
-config/icon="res://icon.svg"
+boot_splash/image="uid://hg4u1v1vf4rb"
+config/icon="uid://8dyr5s2erno1"
+boot_splash/minimum_display_time=4000
 
 [autoload]
 
