@@ -52,7 +52,7 @@ Global state lives in static `game_stats` class:
 dotnet restore
 
 # Open project in Godot Editor (required for C# development)
-# - Install Godot 4.4.1 Mono version
+# - Install Godot 4.5 Mono version
 # - Open project.godot in Godot Editor
 # - Let Godot import assets and compile C# code
 # - Press F5 to run, or use Play button in editor
@@ -103,7 +103,7 @@ docker run --rm -v $(pwd):/workspace -w /workspace commander-keen-builder
 - **`artifact/`**: Build output directory (generated)
 
 ## Key Dependencies
-- **Godot 4.4.1** with Mono/.NET support
+- **Godot 4.5** with Mono/.NET support
 - **.NET 8.0** SDK
 - **Docker** for consistent build environment
 - Custom input helper addon: `addons/input_helper/`

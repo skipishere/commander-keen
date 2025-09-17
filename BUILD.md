@@ -20,7 +20,7 @@ The project includes a GitHub Actions workflow to automatically build the game f
 - Manual trigger via workflow dispatch
 
 **What it does**:
-- Builds a custom Docker image with Godot 4.4.1 and .NET 8.0 from official sources
+- Builds a custom Docker image with Godot 4.5 and .NET 8.0 from official sources
 - Uses the secure custom image instead of third-party Docker images
 - Restores .NET dependencies in the container
 - Imports Godot project assets
@@ -74,7 +74,7 @@ This will create builds in the `artifact/` directory.
 
 To build locally without Docker:
 
-1. Install Godot 4.4.1 and .NET 8.0 SDK
+1. Install Godot 4.5 and .NET 8.0 SDK
 2. Run `dotnet restore` to restore dependencies
 3. Open the project in Godot or use headless mode:
    ```bash
@@ -96,7 +96,7 @@ Alternatively, create a release through the GitHub web interface and the workflo
 ## Technical Implementation
 
 - Uses a custom Docker image built from the official Microsoft .NET SDK
-- Downloads Godot 4.4.1 directly from official godotengine releases  
+- Downloads Godot 4.5 directly from official godotengine releases  
 - Uses Godot headless mode with Xvfb for display in the container
 - Pre-installs dependencies and verifies toolchain in Docker image
 - Optimized layer caching for faster subsequent builds
