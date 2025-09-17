@@ -13,7 +13,7 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Set Godot version
-ENV GODOT_VERSION="4.4.1"
+ENV GODOT_VERSION="4.5"
 
 # Download and install Godot headless
 RUN wget -q https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}-stable/Godot_v${GODOT_VERSION}-stable_mono_linux_x86_64.zip
