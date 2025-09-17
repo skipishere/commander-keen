@@ -10,7 +10,7 @@ This repository is also used to experiment with Copilot, Docker and GitHub featu
 
 # Prerequisites
 - [Godot 4.4.1 .Net version](https://godotengine.org/download/windows/)
-- [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0)
+- [.NET 9 SDK](https://dotnet.microsoft.com/download/dotnet/9.0)
 - [Docker](https://www.docker.com/get-started) (optional, if you just want to build the game in a container and not install Godot or .NET)
 
 # How to build
