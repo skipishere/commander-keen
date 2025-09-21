@@ -16,7 +16,7 @@ public partial class Main : Node
         signalManager.EnteringLevel += OnEnteringLevel;
 
         signalManager.EmitSignal(nameof(SignalManager.ResetUi));
-        signalManager.EmitSignal(nameof(SignalManager.ShowUiHint), $"{PromptFont.KEYBOARD_ARROWS} to move, {UiKeyTransform.GetKeycode("move_jump")} to enter level");
+        signalManager.EmitSignal(nameof(SignalManager.ShowUiHint), $"{PromptFont.KEYBOARD_ARROWS} to move,\n{UiKeyTransform.GetKeycode("move_jump")} to enter level");
     }
 
     public override void _ExitTree()
