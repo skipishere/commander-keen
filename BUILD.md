@@ -48,6 +48,8 @@ The project includes a complete Docker setup for consistent builds:
 
 2. Run the build:
    
+   **Build All Platforms (Default):**
+   
    **On Windows (PowerShell):**
    ```powershell
    docker run --rm -v ${PWD}:/workspace -w /workspace commander-keen-builder
@@ -58,17 +60,74 @@ The project includes a complete Docker setup for consistent builds:
    docker run --rm -v $(pwd):/workspace -w /workspace commander-keen-builder
    ```
 
+   **Build Specific Platform:**
+   
+   You can build for a single platform by setting the `BUILD_PLATFORM` environment variable:
+   
+   **On Windows (PowerShell):**
+   ```powershell
+   # Build only for Windows
+   docker run --rm -v ${PWD}:/workspace -w /workspace -e BUILD_PLATFORM=windows commander-keen-builder
+   
+   # Build only for Linux
+   docker run --rm -v ${PWD}:/workspace -w /workspace -e BUILD_PLATFORM=linux commander-keen-builder
+   
+   # Build only for macOS
+   docker run --rm -v ${PWD}:/workspace -w /workspace -e BUILD_PLATFORM=macos commander-keen-builder
+   ```
+   
+   **On Linux/macOS:**
+   ```bash
+   # Build only for Windows
+   docker run --rm -v $(pwd):/workspace -w /workspace -e BUILD_PLATFORM=windows commander-keen-builder
+   
+   # Build only for Linux  
+   docker run --rm -v $(pwd):/workspace -w /workspace -e BUILD_PLATFORM=linux commander-keen-builder
+   
+   # Build only for macOS
+   docker run --rm -v $(pwd):/workspace -w /workspace -e BUILD_PLATFORM=macos commander-keen-builder
+   ```
+
+   **Available Platforms:**
+   - `windows` - Builds `commander-keen-windows.exe`
+   - `linux` - Builds `commander-keen-linux.x86_64`
+   - `macos` - Builds `commander-keen-macos.zip`
+
 3. To test with a specific version tag:
    ```powershell
-   # Windows PowerShell
+   # Windows PowerShell - All platforms with version
    docker run --rm -v ${PWD}:/workspace -w /workspace -e VERSION_TAG=1.2.3 commander-keen-builder
+   
+   # Windows PowerShell - Single platform with version
+   docker run --rm -v ${PWD}:/workspace -w /workspace -e VERSION_TAG=1.2.3 -e BUILD_PLATFORM=windows commander-keen-builder
    ```
    ```bash
-   # Linux/macOS
+   # Linux/macOS - All platforms with version
    docker run --rm -v $(pwd):/workspace -w /workspace -e VERSION_TAG=1.2.3 commander-keen-builder
+   
+   # Linux/macOS - Single platform with version
+   docker run --rm -v $(pwd):/workspace -w /workspace -e VERSION_TAG=1.2.3 -e BUILD_PLATFORM=linux commander-keen-builder
    ```
 
 This will create builds in the `artifact/` directory.
+
+## Environment Variables
+
+The Docker build system supports several environment variables for customization:
+
+- **`BUILD_PLATFORM`**: Build only a specific platform instead of all platforms
+  - Valid values: `windows`, `linux`, `macos`
+  - If not set, builds all platforms
+  
+- **`VERSION_TAG`**: Override the version number for the build
+  - Format: `1.2.3` (without the 'v' prefix)
+  - If not set, uses git describe or project default
+
+**Examples:**
+```powershell
+# Windows - Build only Linux version with custom version
+docker run --rm -v ${PWD}:/workspace -w /workspace -e BUILD_PLATFORM=linux -e VERSION_TAG=1.0.0 commander-keen-builder
+```
 
 ### Local Build (Alternative)
 

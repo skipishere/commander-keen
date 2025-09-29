@@ -9,7 +9,7 @@ I wanted to learn how to make a game in Godot. I figured it would be fun to try 
 This repository is also used to experiment with Copilot, Docker and GitHub features to allow me to better understand how I can better use them in my day to day work.
 
 # Prerequisites
-- [Godot 4.4.1 .Net version](https://godotengine.org/download/windows/)
+- [Godot 4.5 .Net version](https://godotengine.org/download/windows/)
 - [.NET 9 SDK](https://dotnet.microsoft.com/download/dotnet/9.0)
 - [Docker](https://www.docker.com/get-started) (optional, if you just want to build the game in a container and not install Godot or .NET)
 

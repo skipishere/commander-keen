@@ -41,7 +41,7 @@ Global state lives in static `game_stats` class:
 ## Development Workflows
 
 ### Building & Export
-- **Docker-based**: Uses `Dockerfile` with Godot 4.4.1 Mono + .NET 8
+- **Docker-based**: Uses `Dockerfile` with Godot 4.5 Mono + .NET 9.0
 - **Build script**: `docker-build.sh` handles asset import and multi-platform export
 - **Export presets**: Configured in `export_presets.cfg` for Windows/Linux/macOS
 - **CI/CD**: GitHub Actions in `.github/workflows/build-release.yml`
@@ -104,7 +104,7 @@ docker run --rm -v $(pwd):/workspace -w /workspace commander-keen-builder
 
 ## Key Dependencies
 - **Godot 4.5** with Mono/.NET support
-- **.NET 8.0** SDK
+- **.NET 9.0** SDK
 - **Docker** for consistent build environment
 - Custom input helper addon: `addons/input_helper/`
 
@@ -120,6 +120,6 @@ docker run --rm -v $(pwd):/workspace -w /workspace commander-keen-builder
 - **Always call out** any proposed 3rd party packages/libraries before implementation
 - **Check licensing compatibility** - this project recreates a classic game, so licensing matters
 - **Justify necessity** - explain why built-in Godot features can't solve the problem
-- **Current dependencies**: Only uses Godot 4.4.1 Mono, .NET 8.0 SDK, and custom input helper addon
+- **Current dependencies**: Only uses Godot 4.5 Mono, .NET 9.0 SDK, and custom input helper addon
 
 When modifying state machines, always update both the state class and the parent state machine's state enum. When adding new signals, declare them in `SignalManager.cs` first.
