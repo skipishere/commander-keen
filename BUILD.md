@@ -37,112 +37,49 @@ The project includes export presets for:
 
 ## Manual Build
 
-### Using Docker (Recommended)
+### Using Docker
 
 The project includes a complete Docker setup for consistent builds:
 
-1. Build the Docker image:
+1. **Build the Docker image:**
    ```bash
    docker build -t commander-keen-builder .
    ```
 
-2. Run the build:
-   
-   **Build All Platforms (Default):**
-   
-   **On Windows (PowerShell):**
+2. **Run the build:**
+
+   **Basic Commands:**
    ```powershell
+   # Windows PowerShell - All platforms
    docker run --rm -v ${PWD}:/workspace -w /workspace commander-keen-builder
-   ```
    
-   **On Linux/macOS:**
-   ```bash
-   docker run --rm -v $(pwd):/workspace -w /workspace commander-keen-builder
-   ```
-
-   **Build Specific Platform:**
-   
-   You can build for a single platform by setting the `BUILD_PLATFORM` environment variable:
-   
-   **On Windows (PowerShell):**
-   ```powershell
-   # Build only for Windows
+   # Windows PowerShell - Single platform
    docker run --rm -v ${PWD}:/workspace -w /workspace -e BUILD_PLATFORM=windows commander-keen-builder
-   
-   # Build only for Linux
-   docker run --rm -v ${PWD}:/workspace -w /workspace -e BUILD_PLATFORM=linux commander-keen-builder
-   
-   # Build only for macOS
-   docker run --rm -v ${PWD}:/workspace -w /workspace -e BUILD_PLATFORM=macos commander-keen-builder
    ```
    
-   **On Linux/macOS:**
    ```bash
-   # Build only for Windows
-   docker run --rm -v $(pwd):/workspace -w /workspace -e BUILD_PLATFORM=windows commander-keen-builder
+   # Linux/macOS - All platforms
+   docker run --rm -v $(pwd):/workspace -w /workspace commander-keen-builder
    
-   # Build only for Linux  
+   # Linux/macOS - Single platform  
    docker run --rm -v $(pwd):/workspace -w /workspace -e BUILD_PLATFORM=linux commander-keen-builder
-   
-   # Build only for macOS
-   docker run --rm -v $(pwd):/workspace -w /workspace -e BUILD_PLATFORM=macos commander-keen-builder
    ```
 
-   **Available Platforms:**
-   - `windows` - Builds `commander-keen-windows.exe`
-   - `linux` - Builds `commander-keen-linux.x86_64`
-   - `macos` - Builds `commander-keen-macos.zip`
-
-3. To test with a specific version tag:
-   ```powershell
-   # Windows PowerShell - All platforms with version
-   docker run --rm -v ${PWD}:/workspace -w /workspace -e VERSION_TAG=1.2.3 commander-keen-builder
-   
-   # Windows PowerShell - Single platform with version
-   docker run --rm -v ${PWD}:/workspace -w /workspace -e VERSION_TAG=1.2.3 -e BUILD_PLATFORM=windows commander-keen-builder
-   ```
-   ```bash
-   # Linux/macOS - All platforms with version
-   docker run --rm -v $(pwd):/workspace -w /workspace -e VERSION_TAG=1.2.3 commander-keen-builder
-   
-   # Linux/macOS - Single platform with version
-   docker run --rm -v $(pwd):/workspace -w /workspace -e VERSION_TAG=1.2.3 -e BUILD_PLATFORM=linux commander-keen-builder
-   ```
-
-This will create builds in the `artifact/` directory.
-
-## Environment Variables
-
-The Docker build system supports several environment variables for customization:
-
-- **`BUILD_PLATFORM`**: Build only a specific platform instead of all platforms
-  - Valid values: `windows`, `linux`, `macos`
-  - If not set, builds all platforms
-  
-- **`VERSION_TAG`**: Override the version number for the build
-  - Format: `1.2.3` (without the 'v' prefix)
-  - If not set, uses git describe or project default
+**Environment Variables:**
+- **`BUILD_PLATFORM`**: Build specific platform (`windows`, `linux`, `macos`) instead of all
+- **`VERSION_TAG`**: Override version number (format: `1.2.3` without 'v' prefix)
 
 **Examples:**
 ```powershell
-# Windows - Build only Linux version with custom version
 docker run --rm -v ${PWD}:/workspace -w /workspace -e BUILD_PLATFORM=linux -e VERSION_TAG=1.0.0 commander-keen-builder
 ```
 
-### Local Build (Alternative)
+**Platform Outputs:**
+- `windows` → `commander-keen-windows.exe`
+- `linux` → `commander-keen-linux.x86_64`  
+- `macos` → `commander-keen-macos.zip`
 
-To build locally without Docker:
-
-1. Install Godot 4.5 and .NET 9.0 SDK
-2. Run `dotnet restore` to restore dependencies
-3. Open the project in Godot or use headless mode:
-   ```bash
-   mkdir -p artifact
-   xvfb-run -a godot --headless --import
-   godot --headless --export-release "WindowsDesktop" artifact/commander-keen-windows.exe
-   godot --headless --export-release "Linux/X11" artifact/commander-keen-linux.x86_64
-   godot --headless --export-release "macOS" artifact/commander-keen-macos.zip
-   ```
+Builds are created in the `artifact/` directory.
 
 ## Creating a Release
 
