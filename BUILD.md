@@ -15,7 +15,6 @@ The project includes a GitHub Actions workflow to automatically build the game f
 ### Docker-based Release Workflow (`build-release.yml`)
 
 **Trigger**: 
-- When a git tag matching `v*.*.*` is pushed
 - When a GitHub release is created
 - Manual trigger via workflow dispatch
 
@@ -49,45 +48,35 @@ The project includes a complete Docker setup for consistent builds:
 2. **Run the build:**
 
    **Basic Commands:**
+   PowerShell
    ```powershell
-   # Windows PowerShell - All platforms
    docker run --rm -v ${PWD}:/workspace -w /workspace commander-keen-builder
-   
-   # Windows PowerShell - Single platform
-   docker run --rm -v ${PWD}:/workspace -w /workspace -e BUILD_PLATFORM=windows commander-keen-builder
    ```
    
+   Bash
    ```bash
-   # Linux/macOS - All platforms
    docker run --rm -v $(pwd):/workspace -w /workspace commander-keen-builder
-   
-   # Linux/macOS - Single platform  
-   docker run --rm -v $(pwd):/workspace -w /workspace -e BUILD_PLATFORM=linux commander-keen-builder
    ```
 
-**Environment Variables:**
-- **`BUILD_PLATFORM`**: Build specific platform (`windows`, `linux`, `macos`) instead of all
-- **`VERSION_TAG`**: Override version number (format: `1.2.3` without 'v' prefix)
+   **Environment Variables:**
+   - **`BUILD_PLATFORM`**: Build specific platform (`windows`, `linux`, `macos`) instead of all
+   - **`VERSION_TAG`**: Override version number (format: `1.2.3` without 'v' prefix)
 
-**Examples:**
-```powershell
-docker run --rm -v ${PWD}:/workspace -w /workspace -e BUILD_PLATFORM=linux -e VERSION_TAG=1.0.0 commander-keen-builder
-```
+   **Examples:**
+   ```powershell
+   docker run --rm -v ${PWD}:/workspace -w /workspace -e BUILD_PLATFORM=windows -e VERSION_TAG=1.2.3 commander-keen-builder
+   ```
 
-**Platform Outputs:**
-- `windows` → `commander-keen-windows.exe`
-- `linux` → `commander-keen-linux.x86_64`  
-- `macos` → `commander-keen-macos.zip`
+   **Platform Outputs:**
+   - `windows` → `commander-keen-windows.exe`
+   - `linux` → `commander-keen-linux.x86_64`
+   - `macos` → `commander-keen-macos.zip`
 
-Builds are created in the `artifact/` directory.
+   Builds are created in the `artifact/` directory.
 
 ## Creating a Release
 
-1. Create a git tag: `git tag v1.0.0`
-2. Push the tag: `git push origin v1.0.0`
-3. The workflow will automatically build and create a GitHub release with artifacts
-
-Alternatively, create a release through the GitHub web interface and the workflow will build the artifacts.
+Create a release through the GitHub web interface and the workflow will build the artifacts.
 
 ## Version Handling
 
