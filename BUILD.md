@@ -15,7 +15,6 @@ The project includes a GitHub Actions workflow to automatically build the game f
 ### Docker-based Release Workflow (`build-release.yml`)
 
 **Trigger**: 
-- When a git tag matching `v*.*.*` is pushed
 - When a GitHub release is created
 - Manual trigger via workflow dispatch
 
@@ -37,129 +36,56 @@ The project includes export presets for:
 
 ## Manual Build
 
-### Using Docker (Recommended)
+### Using Docker
 
 The project includes a complete Docker setup for consistent builds:
 
-1. Build the Docker image:
+1. **Build the Docker image:**
    ```bash
    docker build -t commander-keen-builder .
    ```
 
-2. Run the build:
-   
-   **On Windows (PowerShell):**
+2. **Run the build:**
+
+   **Basic Commands:**
+   PowerShell
    ```powershell
    docker run --rm -v ${PWD}:/workspace -w /workspace commander-keen-builder
    ```
    
-   **On Linux/macOS:**
+   Bash
    ```bash
    docker run --rm -v $(pwd):/workspace -w /workspace commander-keen-builder
    ```
 
-3. To test with a specific version tag:
+   **Environment Variables:**
+   - **`BUILD_PLATFORM`**: Build specific platform (`windows`, `linux`, `macos`) instead of all
+   - **`VERSION_TAG`**: Override version number (format: `1.2.3` without 'v' prefix)
+
+   **Examples:**
    ```powershell
-   # Windows PowerShell
-   docker run --rm -v ${PWD}:/workspace -w /workspace -e VERSION_TAG=1.2.3 commander-keen-builder
-   ```
-   ```bash
-   # Linux/macOS
-   docker run --rm -v $(pwd):/workspace -w /workspace -e VERSION_TAG=1.2.3 commander-keen-builder
+   docker run --rm -v ${PWD}:/workspace -w /workspace -e BUILD_PLATFORM=windows -e VERSION_TAG=1.2.3 commander-keen-builder
    ```
 
-This will create builds in the `artifact/` directory.
+   **Platform Outputs:**
+   - `windows` → `commander-keen-windows.exe`
+   - `linux` → `commander-keen-linux.x86_64`
+   - `macos` → `commander-keen-macos.zip`
 
-### Local Build (Alternative)
-
-To build locally without Docker:
-
-1. Install Godot 4.5 and .NET 9.0 SDK
-2. Run `dotnet restore` to restore dependencies
-3. Open the project in Godot or use headless mode:
-   ```bash
-   mkdir -p artifact
-   xvfb-run -a godot --headless --import
-   godot --headless --export-release "WindowsDesktop" artifact/commander-keen-windows.exe
-   godot --headless --export-release "Linux/X11" artifact/commander-keen-linux.x86_64
-   godot --headless --export-release "macOS" artifact/commander-keen-macos.zip
-   ```
+   Builds are created in the `artifact/` directory.
 
 ## Creating a Release
 
-1. Create a git tag: `git tag v1.0.0`
-2. Push the tag: `git push origin v1.0.0`
-3. The workflow will automatically build and create a GitHub release with artifacts
-
-Alternatively, create a release through the GitHub web interface and the workflow will build the artifacts.
-
-## Technical Implementation
-
-- Uses a custom Docker image built from the official Microsoft .NET SDK
-- Downloads Godot 4.5 directly from official godotengine releases  
-- Uses Godot headless mode with Xvfb for display in the container
-- Pre-installs dependencies and verifies toolchain in Docker image
-- Optimized layer caching for faster subsequent builds
-- Cross-platform builds from Ubuntu GitHub runners with Docker
-- Proper error handling and timeout management
-
-## Docker Optimizations
-
-**Build-time optimizations:**
-- **Pre-built base image**: Godot and .NET tools installed during image build
-- **Layer caching**: Project files copied separately for dependency caching
-- **Pre-restore**: Common dependencies restored in Docker image
-- **Version checking**: Tool versions verified at image build time
-
-**Runtime optimizations:**
-- **Artifact directory**: Pre-created in image
-- **Incremental restore**: Only new dependencies restored at runtime
-- **Selective copying**: `.dockerignore` excludes unnecessary files
+Create a release through the GitHub web interface and the workflow will build the artifacts.
 
 ## Version Handling
 
-The build system automatically extracts version information from Git tags and embeds it in the compiled game:
+The build system automatically extracts version information from Git tags:
 
 **Version Sources (in priority order):**
 1. `VERSION_TAG` environment variable (manual override)
-2. `GITHUB_REF` from CI/CD (release tags)
+2. `GITHUB_REF` from CI/CD (release tags)  
 3. `git describe --tags --always --dirty` (local development)
 4. Default fallback: `0.0.1`
 
-**Version Format Handling:**
-- **Input**: Supports complex git describe formats like `v1.2.3-alpha-7-gc2ee5a8`
-- **Parsing**: Extracts clean version numbers (e.g., `1.2.3`) for .NET compatibility
-- **Output**: 
-  - `AssemblyVersion`: Clean format (`1.2.3`)
-  - `InformationalVersion`: Full git describe output for debugging
-
-**Testing Version Locally:**
-```bash
-# Create a test tag
-git tag v1.2.3-beta
-
-# Build and see version extraction
-dotnet build -v normal
-
-# Check version in game console output
-```
-
-## Recent Fixes
-
-### Build Reliability Improvements
-
-The build system has been improved to address common failure scenarios:
-
-**Error Handling Enhancements:**
-- Import failures now properly abort the build instead of continuing silently
-- Each build export is verified to ensure output files are actually created
-- Build script exits immediately on any error using proper shell error handling
-- GitHub workflow only uploads artifacts when builds actually succeed
-
-**Verification Steps:**
-- Validates `.godot` directory creation after import
-- Checks existence of each platform build output before packaging
-- Fails fast if any expected build artifact is missing
-- Removes `if: always()` conditions that masked build failures
-
-These improvements ensure that build failures are detected early and artifacts are only created when builds genuinely succeed.
+**Format:** Supports complex git describe formats like `v1.2.3-alpha-7-gc2ee5a8` and extracts clean version numbers for .NET compatibility.
