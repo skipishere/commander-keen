@@ -9,6 +9,7 @@ public partial class Ck1Title : Node2D
     public override void _Ready()
     {
         DefaultButton.GrabFocus();
+        Input.MouseMode = Input.MouseModeEnum.Visible;
     }
 
     public override void _Process(double delta)
@@ -18,8 +19,7 @@ public partial class Ck1Title : Node2D
     public void NewGame()
     {
         game_stats.Reset();
-        OverworldKeen.mapPosition = null;
-        GetTree().ChangeSceneToFile("res://main.tscn");
+        PlayGame();
     }
 
     public void Continue()
@@ -35,12 +35,17 @@ public partial class Ck1Title : Node2D
         }
         var nodeData = new Godot.Collections.Dictionary<string, Variant>((Godot.Collections.Dictionary)json.Data);
         game_stats.Load(nodeData);
-
-        GetTree().ChangeSceneToFile("res://main.tscn");
+        PlayGame();
     }
 
     public void QuitGame()
     {
         GetTree().Quit();
+    }
+
+    private void PlayGame()
+    {
+        GetTree().ChangeSceneToFile("res://main.tscn");
+        Input.MouseMode = Input.MouseModeEnum.Hidden;
     }
 }
