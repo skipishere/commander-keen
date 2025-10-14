@@ -68,6 +68,7 @@ public partial class game_stats : Resource
         HasPogoStick = PogoStickState.No;
         Levels.Clear();
         Lives = 5;
+        OverworldKeen.mapPosition = null;
     }
 
     public static void SetPart(ShipParts part)
