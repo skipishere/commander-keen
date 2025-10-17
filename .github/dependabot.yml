@@ -4,8 +4,28 @@
 # https://docs.github.com/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
 
 version: 2
-updates:
-  - package-ecosystem: "docker" # See documentation for possible values
-    directory: "/" # Location of package manifests
+
+multi-ecosystem-groups:
+  dotnet-group:
     schedule:
       interval: "weekly"
+    labels: ["upgrades"]
+
+updates:
+  - package-ecosystem: "docker"
+    directory: "/"
+    patterns: ["*"]
+    multi-ecosystem-group: "dotnet-group"
+
+  - package-ecosystem: "dotnet-sdk"
+    directory: "/"
+    patterns: ["*"]
+    multi-ecosystem-group: "dotnet-group"
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    cooldown:
+      default-days: 7
+    labels: ["upgrades"]
