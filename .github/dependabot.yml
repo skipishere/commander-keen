@@ -1,0 +1,31 @@
+# To get started with Dependabot version updates, you'll need to specify which
+# package ecosystems to update and where the package manifests are located.
+# Please see the documentation for all configuration options:
+# https://docs.github.com/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
+
+version: 2
+
+multi-ecosystem-groups:
+  dotnet-group:
+    schedule:
+      interval: "weekly"
+    labels: ["upgrades"]
+
+updates:
+  - package-ecosystem: "docker"
+    directory: "/"
+    patterns: ["*"]
+    multi-ecosystem-group: "dotnet-group"
+
+  - package-ecosystem: "dotnet-sdk"
+    directory: "/"
+    patterns: ["*"]
+    multi-ecosystem-group: "dotnet-group"
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    cooldown:
+      default-days: 7
+    labels: ["upgrades"]
