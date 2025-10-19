@@ -37,7 +37,7 @@ scale_curve = SubResource("CurveTexture_sl562")
 color_ramp = SubResource("GradientTexture1D_vyoos")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bvg7s"]
-size = Vector2(14, 16)
+size = Vector2(14, 14)
 
 [node name="Node2D" type="Node2D"]
 z_index = 1
@@ -48,10 +48,10 @@ material = SubResource("CanvasItemMaterial_pjvg2")
 position = Vector2(0, 5)
 scale = Vector2(0.348112, 0.174777)
 amount = 32
-process_material = SubResource("ParticleProcessMaterial_ho48a")
 texture = ExtResource("1_3yae8")
 preprocess = 1.0
 local_coords = true
+process_material = SubResource("ParticleProcessMaterial_ho48a")
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
 color = Color(1, 0.87451, 0, 0.462745)
@@ -67,7 +67,7 @@ collision_layer = 8
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(0, 1)
+position = Vector2(0, 2)
 shape = SubResource("RectangleShape2D_bvg7s")
 
 [connection signal="body_entered" from="Area2D" to="." method="OnBodyEntered"]
