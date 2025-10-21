@@ -1,5 +1,3 @@
-using System;
-using System.Diagnostics;
 using Godot;
 
 namespace CommanderKeen.Scenes.Creatures.Vorticon;
@@ -42,8 +40,7 @@ public partial class WalkState : VorticonBaseState
     public override void Enter()
     {
         // Walk time is around 1-4 seconds
-        var random = new Random().Next(1, 5);
-        timer.WaitTime = random;
+        timer.WaitTime = random.RandfRange(1, 4);
         timer.Start();
 
         // Look up Keen direction

@@ -1,4 +1,3 @@
-using System;
 using System.Diagnostics;
 using Godot;
 
@@ -46,9 +45,8 @@ public partial class JumpState : VorticonBaseState
     public override void Enter()
     {
         aboutToJump = true;
-
         // Can jump a half tile or 1 to 6 tiles high
-        float jump = new Random().Next(1, 7) * JumpMultiple;
+        var jump = random.RandfRange(1, 6) * JumpMultiple;
 
         Debug.Print("Jump power: " + jump);
         var direction = Character.Velocity.X > 0 ? Vector2.Right.X : Vector2.Left.X;

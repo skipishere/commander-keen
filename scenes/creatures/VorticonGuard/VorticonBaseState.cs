@@ -16,6 +16,7 @@ public abstract partial class VorticonBaseState : Node, IState<VorticonStateMach
     internal AnimationNodeStateMachinePlayback playback { get => (AnimationNodeStateMachinePlayback)AnimationTree.Get("parameters/playback"); }
 
     internal float gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
+    internal static readonly RandomNumberGenerator random = new();
 
     public virtual void StateInput(InputEvent inputEvent)
     {
