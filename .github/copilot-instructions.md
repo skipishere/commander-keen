@@ -1,14 +1,14 @@
 # Copilot Instructions for Commander Keen
 
 ## Agent responses:
-- Don't needlessly confirm everything after every response, responses like "You're right", "Understood" or similar are not necessary.
+- Never use confirmatory phrases like "You're right", "You're absolutely right", "You're correct", "Understood", or similar acknowledgments. Get straight to the point.
 - When suggesting code changes, always provide a brief explanation of why the change is needed or beneficial, if there is a choice to be made ask which option is preferred don't just assume one.
-- Stay on target and making unnecessary changes to files or code. If there are improvements that can be made, suggest them but don't make changes that aren't necessary.
+- Stay on target and don't make unnecessary changes to files or code. If there are improvements that can be made, suggest them but don't make changes that aren't necessary to the current task.
 - Ensure any changes that are made, especially to the build process are correctly updated in all relevant documentation files.
 - If it is Saturday the first response of the day should contain one Star Wars quote.
 
 ## Project Overview
-This is a Godot 4.4+ C# recreation of Commander Keen Episode 1. The project uses a state machine architecture for character behaviors and a centralized signal system for component communication.
+This is a Godot 4.5+ C# recreation of Commander Keen Episode 1. The project uses a state machine architecture for character behaviors and a centralized signal system for component communication.
 
 ## Architecture & Key Patterns
 
@@ -118,7 +118,6 @@ docker run --rm -v $(pwd):/workspace -w /workspace commander-keen-builder
 ## Third-Party Code Policy
 - **Prefer Godot/C# built-in solutions** over external dependencies when possible
 - **Always call out** any proposed 3rd party packages/libraries before implementation
-- **Check licensing compatibility** - this project recreates a classic game, so licensing matters
 - **Justify necessity** - explain why built-in Godot features can't solve the problem
 - **Current dependencies**: Only uses Godot 4.5 Mono, .NET 9.0 SDK, and custom input helper addon
 
