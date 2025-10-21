@@ -1,4 +1,3 @@
-using System;
 using Godot;
 
 namespace CommanderKeen.Scenes.Creatures.Vorticon;
@@ -29,8 +28,7 @@ public partial class ThinkingState : VorticonBaseState
     public override void Enter()
     {
         // Idle time is around 0.5 - 1 second?
-        var random = new Random().Next(1, 3);
-        timer.WaitTime = random * 0.5;
+        timer.WaitTime = random.RandfRange(0.5f, 1.0f);
         timer.Start();
 
         Character.Velocity = Vector2.Zero;

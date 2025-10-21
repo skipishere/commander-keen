@@ -1,11 +1,11 @@
 using Godot;
-using System;
 using System.Diagnostics;
 
 public partial class HazardBase : Area2D
 {
     [Export]
     public bool RandomStartFrame = true;
+    private static readonly RandomNumberGenerator random = new();
 
     [Export]
     public AnimatedSprite2D AnimatedSprite2D;
@@ -18,8 +18,8 @@ public partial class HazardBase : Area2D
 
         if (RandomStartFrame)
         {
-            var max = AnimatedSprite2D.SpriteFrames.GetFrameCount("default");
-            AnimatedSprite2D.Frame = new Random().Next(0, max);
+            var max = AnimatedSprite2D.SpriteFrames.GetFrameCount("default") - 1;
+            AnimatedSprite2D.Frame = random.RandiRange(0, max);
         }
     }
 

@@ -5,6 +5,7 @@ public partial class WalkState : GargBaseState
 {
     private const float Speed = 45.0f;
     public override GargStateMachine.GargStates StateType => GargStateMachine.GargStates.Walk;
+    private static readonly RandomNumberGenerator random = new();
 
     private Timer timer;
 
@@ -42,8 +43,7 @@ public partial class WalkState : GargBaseState
         playback.Travel("Walk");
 
         // Walk time is around 1-5 seconds
-        var random = new Random().Next(1, 5);
-        timer.WaitTime = random;
+        timer.WaitTime = random.RandfRange(1, 5);
         timer.Start();
 
         // Look up Keen direction

@@ -6,7 +6,6 @@ public partial class WalkState : YorpBaseState
 {
     [Export]
     public float MaxJumpVelocity = -200.0f;
-    private Random random = new Random();
 
     public override YorpStateMachine.YorpStates StateType => YorpStateMachine.YorpStates.Walk;
 
@@ -35,7 +34,7 @@ public partial class WalkState : YorpBaseState
         if (Character.IsOnFloor() && jump)
         {
             jump = false;
-            Character.Velocity = Character.Velocity with { Y = random.Next((int)MaxJumpVelocity, 0) };
+            Character.Velocity = Character.Velocity with { Y = random.RandiRange((int)MaxJumpVelocity, -1) };
         }
 
         if (walkTimer.IsStopped() && Character.IsOnFloor())
@@ -61,10 +60,10 @@ public partial class WalkState : YorpBaseState
         playback.Travel("Walk");
 
         // Walk time is around 1-5 seconds
-        walkTimer.WaitTime = random.Next(1, 5);
+        walkTimer.WaitTime = random.RandiRange(1, 5);
         walkTimer.Start();
 
-        jumpTimer.WaitTime = random.Next(1, 5);
+        jumpTimer.WaitTime = random.RandiRange(1, 4);
         jumpTimer.Start();
 
         // Look up Keen direction

@@ -1,11 +1,9 @@
-using System;
 using Godot;
 
 namespace CommanderKeen.Scenes.Creatures.Yorp;
 public partial class ThinkingState : YorpBaseState
 {
     public override YorpStateMachine.YorpStates StateType => YorpStateMachine.YorpStates.Thinking;
-    private Random random = new Random();
     private int thinkAmount;
     private int direction = 0;
 
@@ -37,8 +35,8 @@ public partial class ThinkingState : YorpBaseState
 
     public override void Enter()
     {
-        thinkAmount = random.Next(3, 5);
-        direction = random.Next(0, 2) == 0 ? -1 : 1;
+        thinkAmount = random.RandiRange(3, 4);
+        direction = random.RandiRange(0, 1) == 0 ? -1 : 1;
 
         playback.Travel("Look");
         AnimationTree.Set("parameters/Look/blend_position", direction);

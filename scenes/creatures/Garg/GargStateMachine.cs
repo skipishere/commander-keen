@@ -1,7 +1,5 @@
 using Godot;
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 
 public partial class GargStateMachine : Node
@@ -34,11 +32,9 @@ public partial class GargStateMachine : Node
             state.Character = character;
             state.AnimationTree = animationTree;
             states.Add(state.StateType, state);
-            //Debug.Print("Garg Added state: " + state.StateType);
         }
 
         Current = states.First().Value;
-        //Debug.Print("Garg Default state: " + Current.StateType);
     }
 
     public void PhysicsProcess(double delta, float lastMovementX, bool isActivated)
@@ -64,7 +60,6 @@ public partial class GargStateMachine : Node
             return;
         }
 
-        //Debug.Print($"Garg State change - old: {Current.StateType}, New: {Current.NextState}");
         Current.Exit();
         Current = states[newState];
         Current.Enter();
