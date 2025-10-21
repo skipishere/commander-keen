@@ -16,6 +16,7 @@ public abstract partial class YorpBaseState : Node, IState<YorpStateMachine.Yorp
     internal AnimationNodeStateMachinePlayback playback { get => (AnimationNodeStateMachinePlayback)AnimationTree.Get("parameters/playback"); }
 
     internal float gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle() / 1.5f;
+    internal static readonly RandomNumberGenerator random = new();
 
     public virtual void StateInput(InputEvent inputEvent)
     {
