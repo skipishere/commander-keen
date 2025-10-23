@@ -22,6 +22,7 @@ public partial class DeadState : State
 
     public override void Enter()
     {
+        VibrationManager.TryStartVibration(0f, 1f, 1f);
         var deadInstance = deadKeen.Instantiate() as DeadKeen;
         deadInstance.Position = new Vector2(Character.Position.X, Character.Position.Y + 4);
         playback.Travel("Hidden");

@@ -68,6 +68,10 @@ public partial class Keen : CharacterBody2D, ITakeDamage
         }
 
         this.GlobalPosition = this.GlobalPosition with { X = xLimit, Y = yLimit };
+        if (this.IsOnCeiling())
+        {
+            VibrationManager.TryStartVibration(0f, 0.8f, 0.4f);
+        }
     }
 
     public void Shove(float direction, float delta)

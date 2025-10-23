@@ -36,6 +36,7 @@ public partial class GroundState : State
         if (Input.IsActionJustPressed("move_jump"))
         {
             Character.Velocity = Character.Velocity with { Y = JumpVelocity };
+            VibrationManager.TryStartVibration(0.3f, 0.2f, 0.08f);
             NextState = StateMachine.KeenStates.Air;
             return;
         }
