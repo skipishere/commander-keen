@@ -1,6 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://c5vxqy8p0wqbh"]
+[gd_scene load_steps=2 format=3 uid="uid://bsiexy7iwft5a"]
 
-[ext_resource type="Script" path="res://scripts/ControllerDebug.cs" id="1_u6y8v"]
+[ext_resource type="Script" uid="uid://cfjbty8pqbrpw" path="res://scripts/ControllerDebug.cs" id="1_u6y8v"]
 
 [node name="ControllerDebug" type="Node"]
 script = ExtResource("1_u6y8v")
