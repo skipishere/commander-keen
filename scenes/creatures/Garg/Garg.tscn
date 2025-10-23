@@ -546,6 +546,7 @@ transitions = ["Start", "Thinking", SubResource("AnimationNodeStateMachineTransi
 size = Vector2(3, 0.75)
 
 [node name="Garg" type="CharacterBody2D"]
+process_mode = 1
 light_mask = 0
 position = Vector2(0, -8)
 collision_layer = 64
