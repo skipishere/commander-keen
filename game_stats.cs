@@ -34,6 +34,8 @@ public partial class game_stats : Resource
 
     public static bool ShowUI = true;
 
+    public static bool DialogShowing = false;
+
     public static string CurrentLevel = string.Empty;
 
     public static Dictionary<string, bool> Levels = new();

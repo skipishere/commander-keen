@@ -27,7 +27,7 @@ public partial class Main : Node
 
     public override void _Process(double delta)
     {
-        if (Input.IsActionJustPressed("ui_cancel"))
+        if (Input.IsActionJustPressed("ui_cancel") && !game_stats.DialogShowing)
         {
             signalManager.EmitSignal(nameof(SignalManager.PauseMenu), !GetTree().Paused, GetNodeOrNull<Node2D>("Map") != null);
         }
