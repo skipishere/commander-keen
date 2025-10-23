@@ -19,6 +19,7 @@ public partial class Dialog : Control
 
     private void ShowUi(string title, string message)
     {
+        game_stats.DialogShowing = true;
         Debug.WriteLine($"Showing message: {title} {message}");
         GetNode<Label>("PannelContainer/VBoxContainer/Title").Text = title;
         GetNode<Label>("PannelContainer/VBoxContainer/Message").Text = message;
@@ -28,10 +29,11 @@ public partial class Dialog : Control
 
     public override void _Process(double delta)
     {
-        if (Input.IsActionJustPressed("show_ui") && this.Visible)
+        if (Input.IsActionJustPressed("dialog_accept") && this.Visible)
         {
             this.Visible = false;
             GetTree().Paused = false;
+            game_stats.DialogShowing = false;
         }
     }
 }

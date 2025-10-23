@@ -28,6 +28,7 @@ public partial class Pause : PanelContainer
         saveButton.Visible = showSaveButton;
         GetTree().Paused = paused;
         Visible = paused;
+        Input.MouseMode = paused ? Input.MouseModeEnum.Visible : Input.MouseModeEnum.Hidden;
 
         if (paused)
         {

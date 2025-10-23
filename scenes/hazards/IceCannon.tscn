@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://cd6db5pvjl2d0" path="res://scenes/hazards/IceChunk.tscn" id="2_3ecc0"]
 
 [node name="IceCannon" type="Node2D"]
+process_mode = 1
 script = ExtResource("1_or3p8")
 iceChunk = ExtResource("2_3ecc0")
 

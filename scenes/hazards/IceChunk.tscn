@@ -81,6 +81,7 @@ initial_velocity_max = 400.0
 gravity = Vector3(0, 0, 0)
 
 [node name="IceChunk" type="StaticBody2D" node_paths=PackedStringArray("particles")]
+process_mode = 1
 collision_layer = 0
 collision_mask = 3
 script = ExtResource("1_cyw7a")
@@ -97,14 +98,14 @@ shape = SubResource("RectangleShape2D_fltda")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_k8dgm")
+&"": SubResource("AnimationLibrary_k8dgm")
 }
 
 [node name="Ice shards" type="GPUParticles2D" parent="."]
 emitting = false
 amount = 4
-process_material = SubResource("ParticleProcessMaterial_jthtk")
 texture = ExtResource("3_vnr3m")
 lifetime = 0.25
 one_shot = true
+process_material = SubResource("ParticleProcessMaterial_jthtk")
 script = ExtResource("4_3gai5")

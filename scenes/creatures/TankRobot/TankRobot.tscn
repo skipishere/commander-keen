@@ -84,6 +84,7 @@ _data = {
 }
 
 [node name="TankRobot" type="CharacterBody2D"]
+process_mode = 1
 position = Vector2(0, -4)
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -97,5 +98,5 @@ shape = SubResource("CapsuleShape2D_tic67")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_ay7k2")
+&"": SubResource("AnimationLibrary_ay7k2")
 }
