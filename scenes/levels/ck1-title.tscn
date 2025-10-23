@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=4 uid="uid://s8g3ow2cg7re"]
+[gd_scene load_steps=8 format=4 uid="uid://s8g3ow2cg7re"]
 
 [ext_resource type="TileSet" uid="uid://w7k5amqxc3ac" path="res://scenes/tile_platform.tres" id="1_2bvxc"]
 [ext_resource type="Script" uid="uid://b8gaipyy7tvxb" path="res://scenes/levels/Ck1Title.cs" id="1_fv4rj"]
@@ -6,7 +6,6 @@
 [ext_resource type="Texture2D" uid="uid://o53lb5qe7dyc" path="res://backgrounds/stars.png" id="2_hmspx"]
 [ext_resource type="AudioStream" uid="uid://bs5cx54rxsfv7" path="res://music/Blazing-Stars_Looping.mp3" id="5_vgkha"]
 [ext_resource type="Script" uid="uid://baol0dv66map0" path="res://scripts/VersionUI.cs" id="6_1fp7t"]
-[ext_resource type="PackedScene" path="res://scripts/ControllerDebug.tscn" id="7_a502e"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_7clat"]
 
@@ -85,8 +84,6 @@ text = "v0.0.0"
 horizontal_alignment = 2
 script = ExtResource("6_1fp7t")
 Prefix = "v"
-
-[node name="ControllerDebug" parent="." instance=ExtResource("7_a502e")]
 
 [connection signal="pressed" from="CanvasLayer/PanelContainer/VBoxContainer/New" to="." method="NewGame"]
 [connection signal="pressed" from="CanvasLayer/PanelContainer/VBoxContainer/Continue" to="." method="Continue"]
