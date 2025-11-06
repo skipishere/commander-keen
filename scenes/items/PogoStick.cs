@@ -22,6 +22,9 @@ public partial class PogoStick : Area2D
             {
                 game_stats.HasPogoStick = game_stats.PogoStickState.Gained;
                 signalManager.EmitSignal(nameof(SignalManager.PogoStick));
+                signalManager.EmitSignal(
+                    nameof(SignalManager.ShowUiHint),
+                    $"{UiKeyTransform.GetKeycode("move_pogo")} to toggle pogo stick,\n{UiKeyTransform.GetKeycode("move_jump")} to bounce higher");
             }
 
             var tween = GetTree().CreateTween();
