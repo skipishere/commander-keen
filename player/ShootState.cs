@@ -30,6 +30,7 @@ public partial class ShootState : State
                 Character);
             GetTree().Root.AddChild(raygunInstance);
             hasFired = true;
+            VibrationManager.TryStartVibration(0.8f, 0.5f, 0.12f);
         }
 
         var stopSpeed = Speed;

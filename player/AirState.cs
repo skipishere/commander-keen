@@ -1,9 +1,10 @@
-using System.Diagnostics;
 using Godot;
 
 public partial class AirState : State
 {
     public override StateMachine.KeenStates StateType => StateMachine.KeenStates.Air;
+
+    private float fallSpeed;
 
     public override void PhysicsProcess(double delta, float lastMovementX)
     {
@@ -14,6 +15,8 @@ public partial class AirState : State
 
         if (Character.IsOnFloor())
         {
+            var intensity = Mathf.Clamp(fallSpeed / 800.0f, 0.1f, 1f);
+            VibrationManager.TryStartVibration(intensity * 0.5f, intensity, 0.2f);
             NextState = StateMachine.KeenStates.Ground;
             return;
         }
@@ -25,10 +28,14 @@ public partial class AirState : State
         Character.Velocity = new Vector2(
             movement * Speed,
             Character.Velocity.Y + gravity * (float)delta);
+
+        fallSpeed = Mathf.Abs(Character.Velocity.Y);
     }
 
     public override void Enter()
     {
+        fallSpeed = 0f;
+
         if (Input.IsActionPressed("move_jump") && Character.IsOnFloor())
         {
             playback.Travel("Jump");

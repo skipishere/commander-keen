@@ -41,10 +41,12 @@ public partial class PogoState : State
                 if (Input.IsActionPressed("move_jump"))
                 {
                     Character.Velocity = Character.Velocity with { Y = PogoVelocity * 1.4f };
+                    VibrationManager.TryStartVibration(0.3f, 0.9f, 0.15f);
                 }
                 else
                 {
                     Character.Velocity = Character.Velocity with { Y = PogoVelocity };
+                    VibrationManager.TryStartVibration(0.7f, 0.4f, 0.15f);
                 }
                 bounce = false;
             }
