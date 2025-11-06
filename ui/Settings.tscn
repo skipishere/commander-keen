@@ -1,0 +1,75 @@
+[gd_scene load_steps=3 format=3 uid="uid://d1234568aa0ab"]
+
+[ext_resource type="Script" uid="uid://2sotcerfe8lf" path="res://ui/Settings.cs" id="1_settings"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_cn1eo"]
+
+[node name="Settings" type="PanelContainer" node_paths=PackedStringArray("vibrationIntensityLabel", "vibrationEnabledCheckbox", "DefaultButton")]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -80.0
+offset_top = -80.0
+offset_right = 80.0
+offset_bottom = 80.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_settings")
+vibrationIntensityLabel = NodePath("VBoxContainer/IntensityLabel")
+vibrationEnabledCheckbox = NodePath("VBoxContainer/EnabledCheck")
+DefaultButton = NodePath("VBoxContainer/EnabledCheck")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 2
+texture = SubResource("CanvasTexture_cn1eo")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Settings"
+horizontal_alignment = 1
+
+[node name="EnabledCheck" type="CheckButton" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 8
+button_pressed = true
+text = "Vibration"
+
+[node name="IntensityLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Intensity: 1.0x"
+horizontal_alignment = 1
+
+[node name="IntensityControls" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="DecreaseButton" type="Button" parent="VBoxContainer/IntensityControls"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 8
+text = "-"
+
+[node name="TestButton" type="Button" parent="VBoxContainer/IntensityControls"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 8
+text = "Test"
+
+[node name="IncreaseButton" type="Button" parent="VBoxContainer/IntensityControls"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 8
+text = "+"
+
+[node name="BackButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 8
+text = "Back"
+
+[connection signal="toggled" from="VBoxContainer/EnabledCheck" to="." method="ToggleVibration"]
+[connection signal="pressed" from="VBoxContainer/IntensityControls/DecreaseButton" to="." method="DecreaseVibration"]
+[connection signal="pressed" from="VBoxContainer/IntensityControls/TestButton" to="." method="TestVibration"]
+[connection signal="pressed" from="VBoxContainer/IntensityControls/IncreaseButton" to="." method="IncreaseVibration"]
+[connection signal="pressed" from="VBoxContainer/BackButton" to="." method="BackToMainMenu"]

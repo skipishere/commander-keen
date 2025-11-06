@@ -9,12 +9,23 @@ public partial class Pause : PanelContainer
     [Export]
     public Control DefaultButton;
 
+    [Export]
+    private VBoxContainer mainMenuContainer;
+
+    [Export]
+    private Settings settingsMenu;
+
     private SignalManager signalManager;
 
     public override void _Ready()
     {
         signalManager = GetNode<SignalManager>("/root/SignalManager");
         signalManager.PauseMenu += OnPauseMenu;
+
+        if (settingsMenu != null)
+        {
+            settingsMenu.Visible = false;
+        }
     }
 
     public override void _ExitTree()
@@ -32,7 +43,36 @@ public partial class Pause : PanelContainer
 
         if (paused)
         {
+            ShowMainMenu();
+        }
+    }
+
+    public void ShowMainMenu()
+    {
+        if (mainMenuContainer != null)
+        {
+            mainMenuContainer.Visible = true;
+        }
+        if (settingsMenu != null)
+        {
+            settingsMenu.Visible = false;
+        }
+        if (DefaultButton != null)
+        {
             DefaultButton.GrabFocus();
+        }
+    }
+
+    public void ShowSettings()
+    {
+        if (mainMenuContainer != null)
+        {
+            mainMenuContainer.Visible = false;
+        }
+        if (settingsMenu != null)
+        {
+            settingsMenu.Visible = true;
+            settingsMenu.OnVisibilityChanged();
         }
     }
 

@@ -1,10 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://bkeq2is7jqiil"]
+[gd_scene load_steps=4 format=3 uid="uid://bkeq2is7jqiil"]
 
 [ext_resource type="Script" uid="uid://cy1ntnjfm44xm" path="res://ui/Pause.cs" id="1_v6bqx"]
+[ext_resource type="PackedScene" uid="uid://d1234568aa0ab" path="res://ui/Settings.tscn" id="2_settings"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_tx5cv"]
 
-[node name="PanelContainer" type="PanelContainer" node_paths=PackedStringArray("saveButton", "DefaultButton")]
+[node name="PanelContainer" type="PanelContainer" node_paths=PackedStringArray("saveButton", "DefaultButton", "mainMenuContainer", "settingsMenu")]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -17,43 +18,55 @@ offset_bottom = 42.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_v6bqx")
-saveButton = NodePath("VBoxContainer/Save")
-DefaultButton = NodePath("VBoxContainer/Resume")
+saveButton = NodePath("MainMenu/Save")
+DefaultButton = NodePath("MainMenu/Resume")
+mainMenuContainer = NodePath("MainMenu")
+settingsMenu = NodePath("SettingsSubmenu")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 2
 texture = SubResource("CanvasTexture_tx5cv")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="MainMenu" type="VBoxContainer" parent="."]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="VBoxContainer"]
+[node name="Label" type="Label" parent="MainMenu"]
 layout_mode = 2
 text = "Game
 Paused"
 horizontal_alignment = 1
 
-[node name="Save" type="Button" parent="VBoxContainer"]
+[node name="Save" type="Button" parent="MainMenu"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 8
 text = "Save"
 
-[node name="Load" type="Button" parent="VBoxContainer"]
+[node name="Load" type="Button" parent="MainMenu"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 8
 text = "Load"
 
-[node name="Quit" type="Button" parent="VBoxContainer"]
+[node name="Settings" type="Button" parent="MainMenu"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 8
+text = "Settings"
+
+[node name="Quit" type="Button" parent="MainMenu"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 8
 text = "Main menu"
 
-[node name="Resume" type="Button" parent="VBoxContainer"]
+[node name="Resume" type="Button" parent="MainMenu"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 8
 text = "Resume"
 
-[connection signal="pressed" from="VBoxContainer/Save" to="." method="SaveFile"]
-[connection signal="pressed" from="VBoxContainer/Load" to="." method="LoadFile"]
-[connection signal="pressed" from="VBoxContainer/Quit" to="." method="Quit"]
-[connection signal="pressed" from="VBoxContainer/Resume" to="." method="Resume"]
+[node name="SettingsSubmenu" parent="." instance=ExtResource("2_settings")]
+visible = false
+layout_mode = 2
+
+[connection signal="pressed" from="MainMenu/Save" to="." method="SaveFile"]
+[connection signal="pressed" from="MainMenu/Load" to="." method="LoadFile"]
+[connection signal="pressed" from="MainMenu/Settings" to="." method="ShowSettings"]
+[connection signal="pressed" from="MainMenu/Quit" to="." method="Quit"]
+[connection signal="pressed" from="MainMenu/Resume" to="." method="Resume"]
