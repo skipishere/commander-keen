@@ -44,7 +44,7 @@ public partial class ButlerRobot : CharacterBody2D, ITakeDamage
         var result = MoveAndCollide(velocity);
         if (result?.GetCollider() is Keen player)
         {
-            player.Shove(ShovePower * direction, (float)delta);
+            player.Shove(direction);
         }
         else if (result?.GetCollider() is TileMapLayer wall)
         {
