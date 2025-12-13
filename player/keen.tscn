@@ -1,4 +1,4 @@
-[gd_scene load_steps=76 format=3 uid="uid://dqlj2tioeqgqw"]
+[gd_scene load_steps=77 format=3 uid="uid://dqlj2tioeqgqw"]
 
 [ext_resource type="Script" uid="uid://dwsb1uqt14rki" path="res://player/Keen.cs" id="1_othw7"]
 [ext_resource type="PackedScene" uid="uid://bgl2fe5um74f0" path="res://scenes/raygun/raygunShot.tscn" id="2_eenmn"]
@@ -14,6 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://b0mxidil3h22p" path="res://player/DeadKeen.tscn" id="10_sb2rb"]
 [ext_resource type="Script" uid="uid://ciqrr5i88y6c0" path="res://player/PogoState.cs" id="12_tvnsi"]
 [ext_resource type="Script" uid="uid://cs8sv6cmto71p" path="res://player/IcedState.cs" id="13_xq2mm"]
+[ext_resource type="Script" uid="uid://cad6q7ut4o05t" path="res://player/ShovedState.cs" id="15_fbl4h"]
 
 [sub_resource type="Animation" id="Animation_uybu3"]
 length = 0.001
@@ -441,12 +442,12 @@ animation = &"dead"
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_4qs1m"]
 graph_offset = Vector2(-143.559, 18.8754)
+nodes/output/position = Vector2(960, 180)
 nodes/Animation/node = SubResource("AnimationNodeAnimation_ya0xg")
 nodes/Animation/position = Vector2(400, 160)
 nodes/TimeScale/node = SubResource("AnimationNodeTimeScale_vggcu")
 nodes/TimeScale/position = Vector2(671.441, 225.875)
-nodes/output/position = Vector2(960, 180)
-node_connections = [&"TimeScale", 0, &"Animation", &"output", 0, &"TimeScale"]
+node_connections = [&"output", 0, &"TimeScale", &"TimeScale", 0, &"Animation"]
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_su60r"]
 animation = &"fall_left"
@@ -636,12 +637,12 @@ tree_root = SubResource("AnimationNodeStateMachine_np7so")
 advance_expression_base_node = NodePath("..")
 anim_player = NodePath("../AnimationPlayer")
 parameters/Die/TimeScale/scale = 1.0
-parameters/Fall/blend_position = 0
+parameters/Fall/blend_position = 0.0
 parameters/Idle/blend_position = 1.0
-parameters/Jump/blend_position = 0
+parameters/Jump/blend_position = 0.0
 parameters/Pogo/blend_position = 0.0
 parameters/Pogo-Ground/blend_position = 0.0
-parameters/Shoot/blend_position = 0
+parameters/Shoot/blend_position = 0.0
 parameters/Walk/blend_position = 0.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -704,6 +705,9 @@ IcedLength = NodePath("Timer")
 [node name="Timer" type="Timer" parent="StateMachine/Iced"]
 wait_time = 5.0
 one_shot = true
+
+[node name="Shoved" type="Node" parent="StateMachine"]
+script = ExtResource("15_fbl4h")
 
 [connection signal="tree_exited" from="." to="." method="OnTreeExited"]
 [connection signal="tree_exiting" from="StateMachine" to="StateMachine" method="Unload"]
