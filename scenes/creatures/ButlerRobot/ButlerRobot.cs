@@ -2,16 +2,18 @@ using Godot;
 
 public partial class ButlerRobot : StaticBody2D, ITakeDamage
 {
-    public const float Speed = 0.842f;
-
-    public const float ShovePower = 2.0f;
+    private const float Speed = 0.842f;
+    private const float ShovePower = 2.0f;
+    private const ulong PassThroughFrames = 30; // 0.5 seconds at 60 FPS
+    private const int KeenCollisionLayer = 2;
 
     private int direction = 1;
     private AnimatedSprite2D animatedSprite2D;
     private RayCast2D rayCastLeft;
     private RayCast2D rayCastRight;
-
     private Timer hitTimer;
+    private bool isPassingThrough;
+    private ulong passThroughEndFrame;
 
     public override void _Ready()
     {
@@ -38,6 +40,12 @@ public partial class ButlerRobot : StaticBody2D, ITakeDamage
             animatedSprite2D.Play(direction > 0 ? "right" : "left");
         }
 
+        // Check if pass-through has expired
+        if (isPassingThrough && Engine.GetPhysicsFrames() >= passThroughEndFrame)
+        {
+            EndPassThrough();
+        }
+        
         // Store Y position before any movement to prevent vertical displacement
         var lockedY = this.GlobalPosition.Y;
         
@@ -45,43 +53,79 @@ public partial class ButlerRobot : StaticBody2D, ITakeDamage
         var velocity = new Vector2(direction * Speed, 0);
 
         var result = MoveAndCollide(velocity);
+        
         if (result?.GetCollider() is Keen player)
         {
-            // Determine push direction based on relative positions
-            float pushDirection = Mathf.Sign(player.GlobalPosition.X - this.GlobalPosition.X);
-            if (pushDirection == 0) pushDirection = direction;
-            
-            // Test if Keen can actually move in the push direction
-            var testParams = new PhysicsTestMotionParameters2D
-            {
-                From = player.GlobalTransform,
-                Motion = new Vector2(pushDirection * 2.0f, 0)
-            };
-            var testResult = new PhysicsTestMotionResult2D();
-            
-            // If the push direction is blocked, reverse it
-            if (PhysicsServer2D.BodyTestMotion(player.GetRid(), testParams, testResult))
-            {
-                // Check if there's ANY space in the natural direction
-                float travelDistance = testResult.GetTravel().Length();
-                
-                // Only reverse if there's very little space (less than 1 pixel)
-                if (travelDistance < 1.0f)
-                {
-                    pushDirection = -pushDirection;
-                }
-            }
-            
-            player.Shove(ShovePower * pushDirection, (float)delta);
+            HandleKeenCollision(player, delta);
         }
-        else if (result?.GetCollider() is TileMapLayer wall)
+        else if (result?.GetCollider() is TileMapLayer)
         {
-            direction *= -1;
-            animatedSprite2D.Play("turn");
+            HandleWallCollision();
         }
         
         // Force Y position to remain constant - cannot be pushed vertically
         this.GlobalPosition = new Vector2(this.GlobalPosition.X, lockedY);
+    }
+
+    private void HandleKeenCollision(Keen player, double delta)
+    {
+        if (isPassingThrough)
+        {
+            return;
+        }
+
+        // Check for deadlock (two bots pushing from opposite sides)
+        if (player.IsBeingPushedOppositeDirection(direction))
+        {
+            StartPassThrough();
+            return;
+        }
+
+        // Test if Keen can be pushed forward
+        if (CanPushKeen(player, direction))
+        {
+            player.Shove(ShovePower * direction, (float)delta);
+        }
+        else
+        {
+            // Keen is blocked - pass through
+            StartPassThrough();
+        }
+    }
+
+    private void HandleWallCollision()
+    {
+        direction *= -1;
+        animatedSprite2D.Play("turn");
+        
+        if (isPassingThrough)
+        {
+            EndPassThrough();
+        }
+    }
+
+    private bool CanPushKeen(Keen keen, float pushDirection)
+    {
+        var testParams = new PhysicsTestMotionParameters2D
+        {
+            From = keen.GlobalTransform,
+            Motion = new Vector2(pushDirection * ShovePower, 0)
+        };
+        var testResult = new PhysicsTestMotionResult2D();
+        return !PhysicsServer2D.BodyTestMotion(keen.GetRid(), testParams, testResult);
+    }
+
+    private void StartPassThrough()
+    {
+        SetCollisionMaskValue(KeenCollisionLayer, false);
+        isPassingThrough = true;
+        passThroughEndFrame = Engine.GetPhysicsFrames() + PassThroughFrames;
+    }
+
+    private void EndPassThrough()
+    {
+        SetCollisionMaskValue(KeenCollisionLayer, true);
+        isPassingThrough = false;
     }
 
     public void TakeDamage()

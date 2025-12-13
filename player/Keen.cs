@@ -19,6 +19,10 @@ public partial class Keen : CharacterBody2D, ITakeDamage
     public float gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
 
     private StateMachine stateMachine;
+    
+    // Track push state for deadlock detection
+    public float LastPushDirection { get; private set; } = 0;
+    public ulong LastPushFrame { get; private set; } = 0;
 
     public override void _Ready()
     {
@@ -76,6 +80,10 @@ public partial class Keen : CharacterBody2D, ITakeDamage
 
     public void Shove(float direction, float delta)
     {
+        // Track push for deadlock detection
+        LastPushDirection = Mathf.Sign(direction);
+        LastPushFrame = Engine.GetPhysicsFrames();
+        
         // Apply a force to the player.
         var velocity = Velocity;
         if (!IsOnFloor())
@@ -108,6 +116,20 @@ public partial class Keen : CharacterBody2D, ITakeDamage
         return keyCards.HasFlag(key);
     }
 
+    public bool IsBeingPushedOppositeDirection(float newPushDirection)
+    {
+        // Check if being pushed from opposite direction within last 6 physics frames (deadlock)
+        // At 60 FPS physics, 6 frames = 0.1 seconds
+        ulong currentFrame = Engine.GetPhysicsFrames();
+        if (currentFrame - LastPushFrame > 6)
+        {
+            return false; // Not recently pushed
+        }
+        
+        float newDir = Mathf.Sign(newPushDirection);
+        return newDir != 0 && LastPushDirection != 0 && newDir != LastPushDirection;
+    }
+    
     private void Cheat()
     {
         GiveKey(game_stats.KeyCards.Blue);
