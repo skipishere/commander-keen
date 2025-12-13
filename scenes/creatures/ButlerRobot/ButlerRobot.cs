@@ -4,8 +4,8 @@ public partial class ButlerRobot : StaticBody2D, ITakeDamage
 {
     private const float Speed = 0.842f;
     private const float ShovePower = 2.0f;
-    private const ulong PassThroughFrames = 30; // 0.5 seconds at 60 FPS
     private const int KeenCollisionLayer = 2;
+    private const float PassThroughDistance = 24f; // Distance to move past Keen
 
     private int direction = 1;
     private AnimatedSprite2D animatedSprite2D;
@@ -13,7 +13,8 @@ public partial class ButlerRobot : StaticBody2D, ITakeDamage
     private RayCast2D rayCastRight;
     private Timer hitTimer;
     private bool isPassingThrough;
-    private ulong passThroughEndFrame;
+    private float passThroughStartX;
+    private ulong lastTurnFrame;
 
     public override void _Ready()
     {
@@ -25,59 +26,81 @@ public partial class ButlerRobot : StaticBody2D, ITakeDamage
 
     public override void _PhysicsProcess(double delta)
     {
-        if (animatedSprite2D.IsPlaying() && animatedSprite2D.Animation == "turn")
-        {
-            return;
-        }
-
+        // Update animation based on ledge detection
         if (!rayCastRight.IsColliding() && !rayCastLeft.IsColliding())
         {
             direction *= -1;
             animatedSprite2D.Play("turn");
+            lastTurnFrame = Engine.GetPhysicsFrames();
+            
+            // End pass-through when turning at ledge
+            if (isPassingThrough)
+            {
+                EndPassThrough();
+            }
         }
-        else if (!animatedSprite2D.IsPlaying())
+        else if (!animatedSprite2D.IsPlaying() || animatedSprite2D.Animation == "turn")
         {
             animatedSprite2D.Play(direction > 0 ? "right" : "left");
         }
 
-        // Check if pass-through has expired
-        if (isPassingThrough && Engine.GetPhysicsFrames() >= passThroughEndFrame)
+        // Check if pass-through has expired (moved past Keen)
+        if (isPassingThrough)
         {
-            EndPassThrough();
+            float distanceMoved = Mathf.Abs(GlobalPosition.X - passThroughStartX);
+            if (distanceMoved >= PassThroughDistance)
+            {
+                EndPassThrough();
+            }
         }
         
-        // Store Y position before any movement to prevent vertical displacement
+        // Store Y position to prevent vertical displacement
         var lockedY = this.GlobalPosition.Y;
+        var currentX = this.GlobalPosition.X;
         
         // ButlerBot moves horizontally only, no gravity
         var velocity = new Vector2(direction * Speed, 0);
 
-        var result = MoveAndCollide(velocity);
-        
-        if (result?.GetCollider() is Keen player)
+        // Test for collisions without actually moving
+        var testParams = new PhysicsTestMotionParameters2D
         {
-            HandleKeenCollision(player, delta);
-        }
-        else if (result?.GetCollider() is TileMapLayer)
+            From = this.GlobalTransform,
+            Motion = velocity
+        };
+        var testResult = new PhysicsTestMotionResult2D();
+        
+        if (PhysicsServer2D.BodyTestMotion(this.GetRid(), testParams, testResult))
         {
-            HandleWallCollision();
+            var collider = testResult.GetCollider();
+            if (collider != null)
+            {
+                var colliderId = testResult.GetColliderId();
+                var colliderObject = GodotObject.InstanceFromId(colliderId);
+                
+                if (colliderObject is Keen player)
+                {
+                    HandleKeenCollision(player, delta);
+                }
+                else if (colliderObject is TileMapLayer)
+                {
+                    // Only process wall collision if not recently turned (prevent rapid turn loop)
+                    ulong currentFrame = Engine.GetPhysicsFrames();
+                    if (currentFrame - lastTurnFrame >= 5)
+                    {
+                        HandleWallCollision();
+                    }
+                }
+            }
         }
         
-        // Force Y position to remain constant - cannot be pushed vertically
-        this.GlobalPosition = new Vector2(this.GlobalPosition.X, lockedY);
+        // Move by setting position directly - StaticBody2D cannot be pushed
+        this.GlobalPosition = new Vector2(currentX + velocity.X, lockedY);
     }
 
     private void HandleKeenCollision(Keen player, double delta)
     {
         if (isPassingThrough)
         {
-            return;
-        }
-
-        // Check for deadlock (two bots pushing from opposite sides)
-        if (player.IsBeingPushedOppositeDirection(direction))
-        {
-            StartPassThrough();
             return;
         }
 
@@ -88,7 +111,7 @@ public partial class ButlerRobot : StaticBody2D, ITakeDamage
         }
         else
         {
-            // Keen is blocked - pass through
+            // Keen is blocked by a wall - pass through
             StartPassThrough();
         }
     }
@@ -97,7 +120,9 @@ public partial class ButlerRobot : StaticBody2D, ITakeDamage
     {
         direction *= -1;
         animatedSprite2D.Play("turn");
+        lastTurnFrame = Engine.GetPhysicsFrames();
         
+        // End pass-through immediately when hitting wall and turning around
         if (isPassingThrough)
         {
             EndPassThrough();
@@ -119,7 +144,7 @@ public partial class ButlerRobot : StaticBody2D, ITakeDamage
     {
         SetCollisionMaskValue(KeenCollisionLayer, false);
         isPassingThrough = true;
-        passThroughEndFrame = Engine.GetPhysicsFrames() + PassThroughFrames;
+        passThroughStartX = GlobalPosition.X;
     }
 
     private void EndPassThrough()
