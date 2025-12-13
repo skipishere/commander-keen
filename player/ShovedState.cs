@@ -12,8 +12,8 @@ public partial class ShovedState : State
         var distanceTraveled = Mathf.Abs(Character.GlobalPosition.X - shoveStartX);
         // TODO play around with the /2 logic, it should be 1x tile on ground but this feels better,
         // more testing is needed, once the Butler Bots are no longer pushable by Keen.
-        var targetDistance = Character.IsOnFloor() ? TileSize / 2: TileSize * 2;
-        
+        var targetDistance = Character.IsOnFloor() ? TileSize / 2 : TileSize * 2;
+
         if (Character.IsOnWall() || distanceTraveled >= targetDistance)
         {
             Character.Velocity = Character.Velocity with { X = 0 };
