@@ -39,7 +39,6 @@ public partial class StateMachine : Node
             state.Character = character;
             state.AnimationTree = animationTree;
             states.Add(state.StateType, state);
-            //Debug.Print("Keen Added state: " + state.StateType);
         }
 
         Current = states.First().Value;
