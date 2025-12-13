@@ -111,12 +111,11 @@ public partial class StateMachine : Node
         return Current.StateType == KeenStates.Pogo;
     }
     
-    public void OnShoved()
+    public void Shove(float direction)
     {
-        // Transition to ground state with walking animation when shoved
-        if (Current.StateType != KeenStates.Ground)
+        if (Current is State state)
         {
-            ChangeState(KeenStates.Ground);
+            state.Shove(direction);
         }
     }
 }

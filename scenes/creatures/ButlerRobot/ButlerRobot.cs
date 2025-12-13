@@ -107,7 +107,7 @@ public partial class ButlerRobot : StaticBody2D, ITakeDamage
         // Test if Keen can be pushed forward
         if (CanPushKeen(player, direction))
         {
-            player.Shove(ShovePower * direction, (float)delta);
+            player.Shove(ShovePower * direction);
         }
         else
         {

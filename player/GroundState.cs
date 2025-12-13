@@ -53,8 +53,7 @@ public partial class GroundState : State
         // TODO Statemachine for Ice and Slippery should be used.
         var movement = Input.GetAxis("move_left", "move_right");
         
-        // Don't override velocity when being shoved, but allow animation code to run
-        if (!(Character is Keen keen && keen.IsBeingShoved))
+        if (!IsBeingShoved)
         {
             if (movement != 0 && groundType != GroundType.Slippery)
             {
@@ -90,7 +89,10 @@ public partial class GroundState : State
                 Character.Velocity = Character.Velocity with { X = Mathf.MoveToward(Character.Velocity.X, toSpeed, Speed) };
             }
         }
-
+        else
+        {
+            ProcessShove();
+        }
 
         if ((Character.Velocity.X == 0 && !wasIdle) || groundType == GroundType.Ice)
         {
