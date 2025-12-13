@@ -15,6 +15,7 @@ public partial class Keen : CharacterBody2D, ITakeDamage
     private game_stats.KeyCards keyCards = 0;
 
     public float lastMovementX = Vector2.Right.X;
+    public bool WasRecentlyShoved { get; set; } = false;
 
     public float gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
 

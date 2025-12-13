@@ -24,10 +24,20 @@ public partial class AirState : State
         AnimationTree.Set("parameters/Fall/blend_position", lastMovementX);
         AnimationTree.Set("parameters/Jump/blend_position", lastMovementX);
 
-        var movement = Input.GetAxis("move_left", "move_right");
-        Character.Velocity = new Vector2(
-            movement * Speed,
-            Character.Velocity.Y + gravity * (float)delta);
+        if (!IsBeingShoved)
+        {
+            var movement = Input.GetAxis("move_left", "move_right");
+            Character.Velocity = new Vector2(
+                movement * Speed,
+                Character.Velocity.Y + gravity * (float)delta);
+        }
+        else
+        {
+            ProcessShove();
+            Character.Velocity = new Vector2(
+                Character.Velocity.X,
+                Character.Velocity.Y + gravity * (float)delta);
+        }
 
         fallSpeed = Mathf.Abs(Character.Velocity.Y);
     }
@@ -35,6 +45,12 @@ public partial class AirState : State
     public override void Enter()
     {
         fallSpeed = 0f;
+        
+        if (WasRecentlyShoved)
+        {
+            // Extend shove by 1 tile since we went off a ledge
+            ExtendShove();
+        }
 
         if (Input.IsActionPressed("move_jump") && Character.IsOnFloor())
         {

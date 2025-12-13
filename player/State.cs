@@ -9,11 +9,10 @@ public abstract partial class State : Node, IState<StateMachine.KeenStates>
     
     private Vector2 shoveVelocity = Vector2.Zero;
     private float shoveStartX = 0f;
-    private bool shovedOffLedge = false;
-    
-    protected bool IsBeingShoved => shoveVelocity != Vector2.Zero;
 
     public AnimationTree AnimationTree { get; set; }
+	protected bool IsBeingShoved => shoveVelocity != Vector2.Zero;
+	protected bool WasRecentlyShoved => (Character as Keen)?.WasRecentlyShoved ?? false;
 
     public abstract StateMachine.KeenStates StateType { get; }
 
@@ -45,8 +44,18 @@ public abstract partial class State : Node, IState<StateMachine.KeenStates>
         {
             shoveVelocity = new Vector2(Mathf.Sign(direction) * Speed, 0);
             shoveStartX = Character.GlobalPosition.X;
-            shovedOffLedge = false;
+            if (Character is Keen keen) keen.WasRecentlyShoved = true;
         }
+    }
+    
+    public void ExtendShove()
+    {
+        // Restart the shove with the current direction for 1 more tile
+        float direction = Mathf.Sign(Character.Velocity.X);
+        if (direction == 0) direction = 1; // Fallback if velocity is zero
+        shoveVelocity = new Vector2(direction * Speed, 0);
+        shoveStartX = Character.GlobalPosition.X;
+        if (Character is Keen keen) keen.WasRecentlyShoved = false;
     }
     
     protected void ProcessShove()
@@ -54,15 +63,9 @@ public abstract partial class State : Node, IState<StateMachine.KeenStates>
         if (!IsBeingShoved) return;
         
         float distanceTraveled = Mathf.Abs(Character.GlobalPosition.X - shoveStartX);
+        float targetDistance = (StateType == StateMachine.KeenStates.Air) ? (TileSize * 2) : TileSize;
         
-        if (!Character.IsOnFloor() && !shovedOffLedge)
-        {
-            shovedOffLedge = true;
-        }
-        
-        float targetDistance = shovedOffLedge ? (TileSize * 2) : TileSize;
-        
-        if (distanceTraveled >= targetDistance || Character.IsOnWall())
+        if (Character.IsOnWall() || distanceTraveled >= targetDistance)
         {
             shoveVelocity = Vector2.Zero;
             Character.Velocity = Character.Velocity with { X = 0 };
