@@ -3,7 +3,7 @@ using Godot;
 public partial class ButlerRobot : StaticBody2D, ITakeDamage
 {
     private const float Speed = 0.842f;
-    private const float ShovePower = 2.0f;
+    private const float ShovePower = 3.0f;
     private const int KeenCollisionLayer = 2;
     private const float PassThroughDistance = 24f; // Distance to move past Keen
 

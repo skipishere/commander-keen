@@ -19,6 +19,16 @@ public partial class Keen : CharacterBody2D, ITakeDamage
     public float gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
 
     private StateMachine stateMachine;
+    
+    // Shove mechanics
+    private const float TileSize = 16f;
+    private bool isBeingShoved = false;
+    private float shoveStartX = 0f;
+    private float shoveDirection = 0f;
+    private const float ShoveSpeed = 180f;
+    private bool shovedOffLedge = false;
+    
+    public bool IsBeingShoved => isBeingShoved;
 
     public override void _Ready()
     {
@@ -55,6 +65,13 @@ public partial class Keen : CharacterBody2D, ITakeDamage
         }
 
         stateMachine.PhysicsProcess(delta, lastMovementX);
+        
+        // Handle shove movement after state machine to override its velocity changes
+        if (isBeingShoved)
+        {
+            ProcessShove();
+        }
+        
         MoveAndSlide();
 
         // Clamp the player position to the camera limits.
@@ -76,16 +93,42 @@ public partial class Keen : CharacterBody2D, ITakeDamage
 
     public void Shove(float direction, float delta)
     {
-        // Apply a force to the player.
-        var velocity = Velocity;
-        if (!IsOnFloor())
+        if (isBeingShoved)
         {
-            velocity.Y += gravity * delta;
+            return; // Already being shoved
         }
-        velocity.X = direction * Speed;
-
-        Velocity = velocity;
-        MoveAndSlide();
+        
+        // Update facing direction
+        shoveDirection = Mathf.Sign(direction);
+        lastMovementX = shoveDirection;
+        shoveStartX = GlobalPosition.X;
+        shovedOffLedge = false;
+        isBeingShoved = true;
+    }
+    
+    private void ProcessShove()
+    {
+        float currentX = GlobalPosition.X;
+        float distanceTraveled = Mathf.Abs(currentX - shoveStartX);
+        
+        // Determine target distance: 1 tile on ground, 2 tiles if went airborne
+        if (!IsOnFloor() && !shovedOffLedge)
+        {
+            shovedOffLedge = true; // Mark that we went airborne
+        }
+        
+        float targetDistance = shovedOffLedge ? (TileSize * 2) : TileSize;
+        
+        // Check if reached target distance or hit a wall
+        if (distanceTraveled >= targetDistance || IsOnWall())
+        {
+            isBeingShoved = false;
+            Velocity = Velocity with { X = 0 };
+            return;
+        }
+        
+        // Apply velocity in shove direction
+        Velocity = Velocity with { X = shoveDirection * ShoveSpeed };
     }
 
     public void TakeDamage()
@@ -104,7 +147,6 @@ public partial class Keen : CharacterBody2D, ITakeDamage
         return keyCards.HasFlag(key);
     }
 
-    
     private void Cheat()
     {
         GiveKey(game_stats.KeyCards.Blue);

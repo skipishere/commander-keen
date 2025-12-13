@@ -52,38 +52,43 @@ public partial class GroundState : State
         // Get the input direction and handle the movement/deceleration.
         // TODO Statemachine for Ice and Slippery should be used.
         var movement = Input.GetAxis("move_left", "move_right");
-        if (movement != 0 && groundType != GroundType.Slippery)
+        
+        // Don't override velocity when being shoved, but allow animation code to run
+        if (!(Character is Keen keen && keen.IsBeingShoved))
         {
-            if (groundType != GroundType.Ice)
+            if (movement != 0 && groundType != GroundType.Slippery)
             {
-                // Closer to the small movements players could make in the original game.
-                var toSpeed = Mathf.Clamp(Character.Velocity.X + (movement * Speed * 0.1f), -Speed, Speed);
+                if (groundType != GroundType.Ice)
+                {
+                    // Closer to the small movements players could make in the original game.
+                    var toSpeed = Mathf.Clamp(Character.Velocity.X + (movement * Speed * 0.1f), -Speed, Speed);
+                    Character.Velocity = Character.Velocity with { X = Mathf.MoveToward(Character.Velocity.X, toSpeed, Speed) };
+                }
+            }
+            else
+            {
+                var toSpeed = 0f;
+                if (groundType == GroundType.Ice)
+                {
+                    toSpeed = lastMovementX * Speed;
+                }
+                else if (groundType == GroundType.Slippery)
+                {
+                    // TODO deal with falling from an ice ledge onto ice, as the velocity should not just hit 0.
+                    if (movement == 0)
+                    {
+                        // With no player input, the player will slow down to 1/2 max speed or slower.
+                        toSpeed = Mathf.Clamp(Character.Velocity.X, -Speed / 2, Speed / 2);
+                    }
+                    else
+                    {
+                        // this is a bit more interesting, changing direction can additively slow the player down to 0.
+                        toSpeed = Mathf.Clamp(Character.Velocity.X + (movement * Speed * 0.05f), -Speed, Speed);
+                    }
+                }
+
                 Character.Velocity = Character.Velocity with { X = Mathf.MoveToward(Character.Velocity.X, toSpeed, Speed) };
             }
-        }
-        else
-        {
-            var toSpeed = 0f;
-            if (groundType == GroundType.Ice)
-            {
-                toSpeed = lastMovementX * Speed;
-            }
-            else if (groundType == GroundType.Slippery)
-            {
-                // TODO deal with falling from an ice ledge onto ice, as the velocity should not just hit 0.
-                if (movement == 0)
-                {
-                    // With no player input, the player will slow down to 1/2 max speed or slower.
-                    toSpeed = Mathf.Clamp(Character.Velocity.X, -Speed / 2, Speed / 2);
-                }
-                else
-                {
-                    // this is a bit more interesting, changing direction can additively slow the player down to 0.
-                    toSpeed = Mathf.Clamp(Character.Velocity.X + (movement * Speed * 0.05f), -Speed, Speed);
-                }
-            }
-
-            Character.Velocity = Character.Velocity with { X = Mathf.MoveToward(Character.Velocity.X, toSpeed, Speed) };
         }
 
 
