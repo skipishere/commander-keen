@@ -57,7 +57,8 @@ public partial class PogoState : State
             Character.Velocity = Character.Velocity with { Y = Character.Velocity.Y + gravity * (float)delta };
         }
 
-        Character.Velocity = Character.Velocity with { X = Mathf.MoveToward(Character.Velocity.X, toSpeed, Speed) };
+        Character.Velocity = Character.Velocity with { X = Mathf.MoveToward(Character.Velocity.X, toSpeed, Speed) } + shoveVelocity;
+        shoveVelocity = Vector2.Zero;
     }
 
     public override void Enter()

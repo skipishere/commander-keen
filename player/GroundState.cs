@@ -53,45 +53,38 @@ public partial class GroundState : State
         // TODO Statemachine for Ice and Slippery should be used.
         var movement = Input.GetAxis("move_left", "move_right");
         
-        if (!IsBeingShoved)
+        if ((movement != 0 || shoveVelocity != Vector2.Zero) && groundType != GroundType.Slippery)
         {
-            if (movement != 0 && groundType != GroundType.Slippery)
+            if (groundType != GroundType.Ice)
             {
-                if (groundType != GroundType.Ice)
-                {
-                    // Closer to the small movements players could make in the original game.
-                    var toSpeed = Mathf.Clamp(Character.Velocity.X + (movement * Speed * 0.1f), -Speed, Speed);
-                    Character.Velocity = Character.Velocity with { X = Mathf.MoveToward(Character.Velocity.X, toSpeed, Speed) };
-                }
-            }
-            else
-            {
-                var toSpeed = 0f;
-                if (groundType == GroundType.Ice)
-                {
-                    toSpeed = lastMovementX * Speed;
-                }
-                else if (groundType == GroundType.Slippery)
-                {
-                    // TODO deal with falling from an ice ledge onto ice, as the velocity should not just hit 0.
-                    if (movement == 0)
-                    {
-                        // With no player input, the player will slow down to 1/2 max speed or slower.
-                        toSpeed = Mathf.Clamp(Character.Velocity.X, -Speed / 2, Speed / 2);
-                    }
-                    else
-                    {
-                        // this is a bit more interesting, changing direction can additively slow the player down to 0.
-                        toSpeed = Mathf.Clamp(Character.Velocity.X + (movement * Speed * 0.05f), -Speed, Speed);
-                    }
-                }
-
-                Character.Velocity = Character.Velocity with { X = Mathf.MoveToward(Character.Velocity.X, toSpeed, Speed) };
+                // Closer to the small movements players could make in the original game.
+                var toSpeed = Mathf.Clamp(Character.Velocity.X + (movement * Speed * 0.1f), -Speed, Speed);
+                Character.Velocity = Character.Velocity with { X = Mathf.MoveToward(Character.Velocity.X, toSpeed, Speed) } + shoveVelocity;
             }
         }
         else
         {
-            ProcessShove();
+            var toSpeed = 0f;
+            if (groundType == GroundType.Ice)
+            {
+                toSpeed = lastMovementX * Speed;
+            }
+            else if (groundType == GroundType.Slippery)
+            {
+                // TODO deal with falling from an ice ledge onto ice, as the velocity should not just hit 0.
+                if (movement == 0)
+                {
+                    // With no player input, the player will slow down to 1/2 max speed or slower.
+                    toSpeed = Mathf.Clamp(Character.Velocity.X, -Speed / 2, Speed / 2);
+                }
+                else
+                {
+                    // this is a bit more interesting, changing direction can additively slow the player down to 0.
+                    toSpeed = Mathf.Clamp(Character.Velocity.X + (movement * Speed * 0.05f), -Speed, Speed);
+                }
+            }
+
+            Character.Velocity = Character.Velocity with { X = Mathf.MoveToward(Character.Velocity.X, toSpeed, Speed) } + shoveVelocity;
         }
 
         if ((Character.Velocity.X == 0 && !wasIdle) || groundType == GroundType.Ice)
@@ -104,6 +97,8 @@ public partial class GroundState : State
             playback.Travel("Walk");
             wasIdle = false;
         }
+
+        shoveVelocity = new Vector2(Mathf.MoveToward(shoveVelocity.X, 0f, Speed / 2), 0);
     }
 
     public override void Enter()

@@ -40,7 +40,7 @@ public partial class ShootState : State
             stopSpeed = Speed / 30;
         }
 
-        Character.Velocity = Character.Velocity with { X = Mathf.MoveToward(Character.Velocity.X, 0, stopSpeed) };
+        Character.Velocity = Character.Velocity with { X = Mathf.MoveToward(Character.Velocity.X, 0, stopSpeed) } + shoveVelocity;
 
         if (Input.IsActionJustReleased("move_shoot"))
         {
@@ -55,6 +55,8 @@ public partial class ShootState : State
 
             return;
         }
+
+        shoveVelocity = Vector2.Zero;
     }
 
     public override void Enter()

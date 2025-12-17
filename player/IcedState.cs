@@ -29,8 +29,9 @@ public partial class IcedState : State
         {
             Character.Velocity = new Vector2(
                 Character.Velocity.X,
-                Character.Velocity.Y + gravity * (float)delta);
+                Character.Velocity.Y + gravity * (float)delta) + shoveVelocity;
         }
+        shoveVelocity = Vector2.Zero;
     }
 
     public void Thaw()
