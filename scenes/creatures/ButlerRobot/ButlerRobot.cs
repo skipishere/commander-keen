@@ -5,7 +5,7 @@ public partial class ButlerRobot : StaticBody2D, ITakeDamage
     private const float Speed = 0.842f;
     private const float ShovePower = 3.0f;
     private const int KeenCollisionLayer = 2;
-    private const float PassThroughDistance = 24f; // Distance to move past Keen
+    private const float PassThroughDistance = 25f; // Distance to move past Keen
 
     private int direction = 1;
     private AnimatedSprite2D animatedSprite2D;
@@ -44,16 +44,6 @@ public partial class ButlerRobot : StaticBody2D, ITakeDamage
             animatedSprite2D.Play(direction > 0 ? "right" : "left");
         }
 
-        // Check if pass-through has expired (moved past Keen)
-        if (isPassingThrough)
-        {
-            float distanceMoved = Mathf.Abs(GlobalPosition.X - passThroughStartX);
-            if (distanceMoved >= PassThroughDistance)
-            {
-                EndPassThrough();
-            }
-        }
-        
         // Store Y position to prevent vertical displacement
         var lockedY = this.GlobalPosition.Y;
         var currentX = this.GlobalPosition.X;
@@ -85,7 +75,7 @@ public partial class ButlerRobot : StaticBody2D, ITakeDamage
                 {
                     // Only process wall collision if not recently turned (prevent rapid turn loop)
                     ulong currentFrame = Engine.GetPhysicsFrames();
-                    if (currentFrame - lastTurnFrame >= 5)
+                    if (currentFrame - lastTurnFrame >= 10)
                     {
                         HandleWallCollision();
                     }
@@ -93,6 +83,16 @@ public partial class ButlerRobot : StaticBody2D, ITakeDamage
             }
         }
         
+        // Check if pass-through has expired (moved past Keen)
+        if (isPassingThrough)
+        {
+            float distanceMoved = Mathf.Abs(GlobalPosition.X - passThroughStartX);
+            if (distanceMoved >= PassThroughDistance)
+            {
+                EndPassThrough();
+            }
+        }
+
         // Move by setting position directly - StaticBody2D cannot be pushed
         this.GlobalPosition = new Vector2(currentX + velocity.X, lockedY);
     }
