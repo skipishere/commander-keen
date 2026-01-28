@@ -14,8 +14,7 @@ public partial class StateMachine : Node
         Pogo,
         Dead,
         Iced,
-        Hidden,
-        Shoved
+        Hidden
     }
 
     private readonly Dictionary<KeenStates, IState<KeenStates>> states = new();
@@ -110,10 +109,5 @@ public partial class StateMachine : Node
     public bool IsPogoing()
     {
         return Current.StateType == KeenStates.Pogo;
-    }
-
-    public void Shove()
-    {
-        ChangeState(KeenStates.Shoved);
     }
 }
