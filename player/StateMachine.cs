@@ -31,6 +31,8 @@ public partial class StateMachine : Node
 
     private SignalManager signalManager;
 
+    private Vector2 shoveVelocity = Vector2.Zero;
+
     public override void _Ready()
     {
         foreach (State state in GetChildren().OfType<State>())
@@ -109,5 +111,11 @@ public partial class StateMachine : Node
     public bool IsPogoing()
     {
         return Current.StateType == KeenStates.Pogo;
+    }
+
+    public void Shove(float direction)
+    {
+        shoveVelocity = new Vector2(Mathf.Sign(direction) * Keen.Speed, 0);
+        (Current as State).shoveVelocity = shoveVelocity;
     }
 }

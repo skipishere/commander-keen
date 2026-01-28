@@ -74,22 +74,10 @@ public partial class Keen : CharacterBody2D, ITakeDamage
         }
     }
 
-    public void Shove(float direction, float delta)
+    public void Shove(float direction)
     {
-        // Apply a force to the player.
-        var velocity = Velocity;
-        if (!IsOnFloor())
-        {
-            velocity.Y += gravity * delta;
-        }
-        velocity.X = direction * Speed;
-
-        Velocity = velocity;
-        MoveAndSlide();
-        if (IsOnWall())
-        {
-            Debug.WriteLine("Shove hit wall");
-        }
+        lastMovementX = Mathf.Sign(direction);
+        stateMachine.Shove(direction);
     }
 
     public void TakeDamage()

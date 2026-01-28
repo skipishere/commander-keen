@@ -52,13 +52,14 @@ public partial class GroundState : State
         // Get the input direction and handle the movement/deceleration.
         // TODO Statemachine for Ice and Slippery should be used.
         var movement = Input.GetAxis("move_left", "move_right");
-        if (movement != 0 && groundType != GroundType.Slippery)
+
+        if ((movement != 0 || shoveVelocity != Vector2.Zero) && groundType != GroundType.Slippery)
         {
             if (groundType != GroundType.Ice)
             {
                 // Closer to the small movements players could make in the original game.
                 var toSpeed = Mathf.Clamp(Character.Velocity.X + (movement * Speed * 0.1f), -Speed, Speed);
-                Character.Velocity = Character.Velocity with { X = Mathf.MoveToward(Character.Velocity.X, toSpeed, Speed) };
+                Character.Velocity = Character.Velocity with { X = Mathf.MoveToward(Character.Velocity.X, toSpeed, Speed) } + shoveVelocity;
             }
         }
         else
@@ -83,9 +84,8 @@ public partial class GroundState : State
                 }
             }
 
-            Character.Velocity = Character.Velocity with { X = Mathf.MoveToward(Character.Velocity.X, toSpeed, Speed) };
+            Character.Velocity = Character.Velocity with { X = Mathf.MoveToward(Character.Velocity.X, toSpeed, Speed) } + shoveVelocity;
         }
-
 
         if ((Character.Velocity.X == 0 && !wasIdle) || groundType == GroundType.Ice)
         {
@@ -97,6 +97,8 @@ public partial class GroundState : State
             playback.Travel("Walk");
             wasIdle = false;
         }
+
+        shoveVelocity = new Vector2(Mathf.MoveToward(shoveVelocity.X, 0f, Speed / 2), 0);
     }
 
     public override void Enter()

@@ -27,9 +27,10 @@ public partial class AirState : State
         var movement = Input.GetAxis("move_left", "move_right");
         Character.Velocity = new Vector2(
             movement * Speed,
-            Character.Velocity.Y + gravity * (float)delta);
+            Character.Velocity.Y + gravity * (float)delta) + shoveVelocity;
 
         fallSpeed = Mathf.Abs(Character.Velocity.Y);
+        shoveVelocity = Vector2.Zero;
     }
 
     public override void Enter()
