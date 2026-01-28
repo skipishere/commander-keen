@@ -14,7 +14,7 @@ jobs:
       contents: write
     steps:
     - name: Checkout code
-      uses: actions/checkout@v5
+      uses: actions/checkout@v6
       with:
         fetch-depth: 0  # Fetch all history for tags
 
@@ -168,7 +168,7 @@ jobs:
       contents: write
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v5
+      uses: actions/checkout@v6
 
     - name: Set up tag name
       id: tag

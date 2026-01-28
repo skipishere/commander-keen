@@ -13,7 +13,7 @@ jobs:
     outputs:
       has-cs-changes: ${{ steps.changes.outputs.has-cs-changes }}
     steps:
-    - uses: actions/checkout@v5
+    - uses: actions/checkout@v6
       with:
         fetch-depth: 0
     
@@ -44,7 +44,7 @@ jobs:
     if: needs.check-changes.outputs.has-cs-changes == 'true'
     
     steps:
-    - uses: actions/checkout@v5
+    - uses: actions/checkout@v6
     - uses: actions/setup-dotnet@v5
     - name: Restore dependencies
       run: dotnet restore
