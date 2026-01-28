@@ -1,4 +1,4 @@
-[gd_scene load_steps=77 format=3 uid="uid://dqlj2tioeqgqw"]
+[gd_scene load_steps=76 format=3 uid="uid://dqlj2tioeqgqw"]
 
 [ext_resource type="Script" uid="uid://dwsb1uqt14rki" path="res://player/Keen.cs" id="1_othw7"]
 [ext_resource type="PackedScene" uid="uid://bgl2fe5um74f0" path="res://scenes/raygun/raygunShot.tscn" id="2_eenmn"]
@@ -14,7 +14,6 @@
 [ext_resource type="PackedScene" uid="uid://b0mxidil3h22p" path="res://player/DeadKeen.tscn" id="10_sb2rb"]
 [ext_resource type="Script" uid="uid://ciqrr5i88y6c0" path="res://player/PogoState.cs" id="12_tvnsi"]
 [ext_resource type="Script" uid="uid://cs8sv6cmto71p" path="res://player/IcedState.cs" id="13_xq2mm"]
-[ext_resource type="Script" uid="uid://cad6q7ut4o05t" path="res://player/ShovedState.cs" id="15_fbl4h"]
 
 [sub_resource type="Animation" id="Animation_uybu3"]
 length = 0.001
@@ -705,9 +704,6 @@ IcedLength = NodePath("Timer")
 [node name="Timer" type="Timer" parent="StateMachine/Iced"]
 wait_time = 5.0
 one_shot = true
-
-[node name="Shoved" type="Node" parent="StateMachine"]
-script = ExtResource("15_fbl4h")
 
 [connection signal="tree_exited" from="." to="." method="OnTreeExited"]
 [connection signal="tree_exiting" from="StateMachine" to="StateMachine" method="Unload"]

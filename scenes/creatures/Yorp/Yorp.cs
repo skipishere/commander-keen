@@ -39,7 +39,7 @@ public partial class Yorp : CharacterBody2D, ITakeDamage
                 if (collision.GetCollider() is Keen keen)
                 {
                     Debug.WriteLine($"Collided with Player - Yorp last x: {lastMovementX}");
-                    keen.Shove(lastMovementX);
+                    keen.Shove(ShovePower * lastMovementX, (float)delta);
                 }
             }
         }
