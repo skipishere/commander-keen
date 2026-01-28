@@ -30,7 +30,7 @@ public partial class ButlerRobot : StaticBody2D, ITakeDamage
             direction *= -1;
             animatedSprite2D.Play("turn");
             lastTurnFrame = Engine.GetPhysicsFrames();
-            
+
             if (isPassingThrough)
             {
                 EndPassThrough();
@@ -52,7 +52,7 @@ public partial class ButlerRobot : StaticBody2D, ITakeDamage
             Motion = velocity
         };
         var testResult = new PhysicsTestMotionResult2D();
-        
+
         if (PhysicsServer2D.BodyTestMotion(this.GetRid(), testParams, testResult))
         {
             var collider = testResult.GetCollider();
@@ -60,7 +60,7 @@ public partial class ButlerRobot : StaticBody2D, ITakeDamage
             {
                 var colliderId = testResult.GetColliderId();
                 var colliderObject = InstanceFromId(colliderId);
-                
+
                 if (colliderObject is Keen player)
                 {
                     HandleKeenCollision(player, delta);
@@ -76,7 +76,7 @@ public partial class ButlerRobot : StaticBody2D, ITakeDamage
                 }
             }
         }
-        
+
         if (isPassingThrough)
         {
             var distanceMoved = Mathf.Abs(GlobalPosition.X - passThroughStartX);
@@ -111,7 +111,7 @@ public partial class ButlerRobot : StaticBody2D, ITakeDamage
         direction *= -1;
         animatedSprite2D.Play("turn");
         lastTurnFrame = Engine.GetPhysicsFrames();
-        
+
         if (isPassingThrough)
         {
             EndPassThrough();

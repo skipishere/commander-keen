@@ -112,10 +112,10 @@ public partial class StateMachine : Node
     {
         return Current.StateType == KeenStates.Pogo;
     }
-    
+
     public void Shove(float direction)
     {
-         shoveVelocity = new Vector2(Mathf.Sign(direction) * Keen.Speed, 0);
-         (Current as State).shoveVelocity = shoveVelocity;
+        shoveVelocity = new Vector2(Mathf.Sign(direction) * Keen.Speed, 0);
+        (Current as State).shoveVelocity = shoveVelocity;
     }
 }

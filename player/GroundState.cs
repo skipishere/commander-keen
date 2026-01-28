@@ -52,7 +52,7 @@ public partial class GroundState : State
         // Get the input direction and handle the movement/deceleration.
         // TODO Statemachine for Ice and Slippery should be used.
         var movement = Input.GetAxis("move_left", "move_right");
-        
+
         if ((movement != 0 || shoveVelocity != Vector2.Zero) && groundType != GroundType.Slippery)
         {
             if (groundType != GroundType.Ice)
