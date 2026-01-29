@@ -1,6 +1,7 @@
 using Godot;
 
 namespace CommanderKeen.Scenes.Creatures.Yorp;
+
 public partial class ThinkingState : YorpBaseState
 {
     public override YorpStateMachine.YorpStates StateType => YorpStateMachine.YorpStates.Thinking;

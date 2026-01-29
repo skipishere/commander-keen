@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 
-
 namespace CommanderKeen.Scenes.Creatures.Vorticon;
+
 public partial class VorticonStateMachine : Node
 {
     public enum VorticonStates

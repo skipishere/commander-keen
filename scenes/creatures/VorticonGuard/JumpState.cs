@@ -2,6 +2,7 @@ using System.Diagnostics;
 using Godot;
 
 namespace CommanderKeen.Scenes.Creatures.Vorticon;
+
 public partial class JumpState : VorticonBaseState
 {
     private const float JumpMultiple = -74;

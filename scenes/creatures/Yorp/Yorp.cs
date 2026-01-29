@@ -1,8 +1,8 @@
 using Godot;
-using System;
 using System.Diagnostics;
 
 namespace CommanderKeen.Scenes.Creatures.Yorp;
+
 public partial class Yorp : CharacterBody2D, ITakeDamage
 {
     public const float ShovePower = 3.0f;

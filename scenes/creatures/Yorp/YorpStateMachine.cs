@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 
-
 namespace CommanderKeen.Scenes.Creatures.Yorp;
+
 public partial class YorpStateMachine : Node
 {
     public enum YorpStates

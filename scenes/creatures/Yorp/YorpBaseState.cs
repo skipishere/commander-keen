@@ -1,6 +1,7 @@
 using Godot;
 
 namespace CommanderKeen.Scenes.Creatures.Yorp;
+
 public abstract partial class YorpBaseState : Node, IState<YorpStateMachine.YorpStates>
 {
     internal const float Speed = 25.0f;

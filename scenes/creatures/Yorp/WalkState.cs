@@ -1,7 +1,7 @@
-using System;
 using Godot;
 
 namespace CommanderKeen.Scenes.Creatures.Yorp;
+
 public partial class WalkState : YorpBaseState
 {
     [Export]
