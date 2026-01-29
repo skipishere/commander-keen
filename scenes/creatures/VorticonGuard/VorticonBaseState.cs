@@ -1,6 +1,7 @@
 using Godot;
 
 namespace CommanderKeen.Scenes.Creatures.Vorticon;
+
 public abstract partial class VorticonBaseState : Node, IState<VorticonStateMachine.VorticonStates>
 {
     internal const float Speed = 45.0f;

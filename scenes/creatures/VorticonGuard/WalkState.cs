@@ -1,6 +1,7 @@
 using Godot;
 
 namespace CommanderKeen.Scenes.Creatures.Vorticon;
+
 public partial class WalkState : VorticonBaseState
 {
     public override VorticonStateMachine.VorticonStates StateType => VorticonStateMachine.VorticonStates.Walk;

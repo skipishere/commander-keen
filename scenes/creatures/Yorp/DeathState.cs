@@ -1,6 +1,7 @@
 using Godot;
 
 namespace CommanderKeen.Scenes.Creatures.Yorp;
+
 public partial class DeathState : YorpBaseState
 {
     public override YorpStateMachine.YorpStates StateType => YorpStateMachine.YorpStates.Dead;

@@ -1,8 +1,8 @@
 using Godot;
-using System;
 using System.Diagnostics;
 
 namespace CommanderKeen.Scenes.Creatures.Vorticon;
+
 public partial class vorticon_guard : CharacterBody2D, ITakeDamage
 {
     [Export]
