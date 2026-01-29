@@ -1,5 +1,5 @@
 # Use Microsoft's official .NET image as base which includes .NET 9.0
-FROM mcr.microsoft.com/dotnet/sdk:9.0
+FROM mcr.microsoft.com/dotnet/sdk:10.0
 
 # Avoid prompts from apt
 ENV DEBIAN_FRONTEND=noninteractive
