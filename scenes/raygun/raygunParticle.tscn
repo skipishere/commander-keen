@@ -4,6 +4,7 @@
 
 [sub_resource type="CanvasItemMaterial" id="1"]
 blend_mode = 1
+light_mode = 1
 
 [sub_resource type="Curve" id="2"]
 _limits = [-360.0, 360.0, 0.0, 1.0]
