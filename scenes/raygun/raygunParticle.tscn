@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://c1ejkq43c2j4t"]
+[gd_scene format=3 uid="uid://c1ejkq43c2j4t"]
 
 [ext_resource type="Texture2D" uid="uid://bxqongktwvy1n" path="res://sprites/laser.png" id="1_iah7o"]
 
@@ -44,7 +44,8 @@ hue_variation_max = 0.2
 sub_emitter_mode = 3
 sub_emitter_amount_at_collision = 1
 
-[node name="Fire" type="GPUParticles2D" groups=["trailable_particles"]]
+[node name="Fire" type="GPUParticles2D" unique_id=163252841 groups=["trailable_particles"]]
+modulate = Color(1.0153453, 1.0153453, 1.0153453, 1)
 texture_filter = 4
 material = SubResource("1")
 position = Vector2(1, -1)
