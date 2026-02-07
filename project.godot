@@ -22,6 +22,10 @@ boot_splash/image="uid://hg4u1v1vf4rb"
 config/icon="uid://8dyr5s2erno1"
 boot_splash/minimum_display_time=4000
 
+[audio]
+
+buses/default_bus_layout="uid://bgs0hqkhanh82"
+
 [autoload]
 
 SignalManager="*res://shared/SignalManager.cs"
@@ -160,3 +164,4 @@ dialog_accept={
 textures/canvas_textures/default_texture_filter=0
 renderer/rendering_method="mobile"
 textures/vram_compression/import_etc2_astc=true
+viewport/hdr_2d=true
