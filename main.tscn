@@ -10,6 +10,7 @@
 background_mode = 3
 glow_enabled = true
 glow_intensity = 0.8
+glow_blend_mode = 0
 
 [node name="Main" type="Node" unique_id=1970093959]
 process_mode = 3
