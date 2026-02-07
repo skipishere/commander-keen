@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://l3fxye0kbuqx"]
+[gd_scene format=3 uid="uid://l3fxye0kbuqx"]
 
 [ext_resource type="Texture2D" uid="uid://tuk22x5t53fw" path="res://sprites/garg.png" id="1_74ann"]
 [ext_resource type="Script" uid="uid://c2jsg72t1ka8u" path="res://scenes/creatures/Garg/Garg.cs" id="1_q1igm"]
@@ -545,7 +545,7 @@ transitions = ["Start", "Thinking", SubResource("AnimationNodeStateMachineTransi
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xnrog"]
 size = Vector2(3, 0.75)
 
-[node name="Garg" type="CharacterBody2D"]
+[node name="Garg" type="CharacterBody2D" unique_id=2094195009]
 process_mode = 1
 light_mask = 0
 position = Vector2(0, -8)
@@ -553,105 +553,105 @@ collision_layer = 64
 collision_mask = 33
 script = ExtResource("1_q1igm")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1395476844]
 texture = ExtResource("1_74ann")
 hframes = 10
 frame = 2
 region_enabled = true
 region_rect = Rect2(0, 0, 250, 32)
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_flmgh")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1385144908]
+libraries/ = SubResource("AnimationLibrary_flmgh")
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="Area2D" type="Area2D" parent="." unique_id=1922338109]
 collision_layer = 0
 collision_mask = 2
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D" unique_id=484053165]
 polygon = PackedVector2Array(-12, 5, -12, 16, 12, 16, 12, 5, 5, -13, -5, -13)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=206391256]
 position = Vector2(0, 1)
 shape = SubResource("CapsuleShape2D_ducee")
 metadata/_edit_lock_ = true
 
-[node name="AnimationTree" type="AnimationTree" parent="."]
+[node name="AnimationTree" type="AnimationTree" parent="." unique_id=1382155746]
 tree_root = SubResource("AnimationNodeStateMachine_syip4")
 anim_player = NodePath("../AnimationPlayer")
 parameters/Walk/blend_position = -0.992874
 
-[node name="VisibleOnScreen" type="VisibleOnScreenNotifier2D" parent="."]
+[node name="VisibleOnScreen" type="VisibleOnScreenNotifier2D" parent="." unique_id=1622124244]
 position = Vector2(-1.43051e-06, 1)
 scale = Vector2(2.6, 2.3)
 rect = Rect2(-50, -25, 100, 50)
 metadata/_edit_lock_ = true
 
-[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("character", "animationTree")]
+[node name="StateMachine" type="Node" parent="." unique_id=800433246 node_paths=PackedStringArray("character", "animationTree")]
 script = ExtResource("3_wfv53")
 character = NodePath("..")
 animationTree = NodePath("../AnimationTree")
 
-[node name="Thinking" type="Node" parent="StateMachine" node_paths=PackedStringArray("left", "right", "leftCheck", "rightCheck")]
+[node name="Thinking" type="Node" parent="StateMachine" unique_id=608375943 node_paths=PackedStringArray("left", "right", "leftCheck", "rightCheck")]
 script = ExtResource("4_3i2uo")
 left = NodePath("../../RayCastLeft")
 right = NodePath("../../RayCastRight")
 leftCheck = NodePath("../../RayCastCheckLeft")
 rightCheck = NodePath("../../RayCastCheckRight")
 
-[node name="Walk" type="Node" parent="StateMachine"]
+[node name="Walk" type="Node" parent="StateMachine" unique_id=367029936]
 script = ExtResource("4_cj2lk")
 
-[node name="Timer" type="Timer" parent="StateMachine/Walk"]
+[node name="Timer" type="Timer" parent="StateMachine/Walk" unique_id=1685206291]
 process_callback = 0
 one_shot = true
 
-[node name="Agro" type="Node" parent="StateMachine"]
+[node name="Agro" type="Node" parent="StateMachine" unique_id=1972392325]
 script = ExtResource("5_ghshb")
 
-[node name="Death" type="Node" parent="StateMachine"]
+[node name="Death" type="Node" parent="StateMachine" unique_id=1558300799]
 script = ExtResource("7_onamg")
 
-[node name="RayCastLeft" type="RayCast2D" parent="."]
+[node name="RayCastLeft" type="RayCast2D" parent="." unique_id=1664954240]
 position = Vector2(0, -5)
 enabled = false
 target_position = Vector2(-310, 0)
 collision_mask = 2
 
-[node name="RayCastRight" type="RayCast2D" parent="."]
+[node name="RayCastRight" type="RayCast2D" parent="." unique_id=1706022094]
 position = Vector2(0, -5)
 enabled = false
 target_position = Vector2(310, 0)
 collision_mask = 2
 
-[node name="RayCastCheckLeft" type="RayCast2D" parent="."]
+[node name="RayCastCheckLeft" type="RayCast2D" parent="." unique_id=845779795]
 position = Vector2(0, 7)
 enabled = false
 target_position = Vector2(-310, 0)
 collision_mask = 2
 
-[node name="RayCastCheckRight" type="RayCast2D" parent="."]
+[node name="RayCastCheckRight" type="RayCast2D" parent="." unique_id=1320120556]
 position = Vector2(0, 7)
 enabled = false
 target_position = Vector2(310, 0)
 collision_mask = 2
 
-[node name="PointLight2D" type="PointLight2D" parent="."]
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=366724567]
+visible = false
 position = Vector2(6, -12.4375)
 scale = Vector2(0.0625, 0.0761719)
 color = Color(1, 0, 0, 1)
 energy = 2.0
 texture = ExtResource("8_gk5mj")
 
-[node name="PointLight2D2" type="PointLight2D" parent="."]
+[node name="PointLight2D2" type="PointLight2D" parent="." unique_id=219624179]
+visible = false
 position = Vector2(-4, -7)
 scale = Vector2(0.0625, 0.0761719)
 color = Color(1, 0, 0.501961, 1)
 energy = 2.0
 texture = ExtResource("8_gk5mj")
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="." unique_id=2039648753]
 position = Vector2(-10, 7)
 rotation = 1.5708
 shape = SubResource("RectangleShape2D_xnrog")
