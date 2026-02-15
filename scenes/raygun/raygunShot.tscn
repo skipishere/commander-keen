@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://bgl2fe5um74f0"]
+[gd_scene format=3 uid="uid://bgl2fe5um74f0"]
 
 [ext_resource type="Script" uid="uid://cqratwb24y0xu" path="res://scenes/raygun/raygunShot.cs" id="1_3kfvr"]
 [ext_resource type="PackedScene" uid="uid://c1ejkq43c2j4t" path="res://scenes/raygun/raygunParticle.tscn" id="2_c8nn3"]
@@ -9,34 +9,38 @@
 radius = 2.0
 height = 4.0
 
-[node name="RaygunShot" type="StaticBody2D"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_1pkog"]
+light_mode = 1
+
+[node name="RaygunShot" type="StaticBody2D" unique_id=1289746409]
 position = Vector2(-1, 1)
 collision_layer = 16
 collision_mask = 211
 script = ExtResource("1_3kfvr")
 
-[node name="Fire" parent="." instance=ExtResource("2_c8nn3")]
+[node name="Fire" parent="." unique_id=1485636992 instance=ExtResource("2_c8nn3")]
 amount = 64
 lifetime = 0.1
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1273000873]
 position = Vector2(7, -1)
 rotation = -1.5708
 shape = SubResource("CapsuleShape2D_umtd2")
 one_way_collision = true
 
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1897862482]
 position = Vector2(0.999999, -1)
 scale = Vector2(0.8, 0.4)
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=858338863]
 stream = ExtResource("3_ejal4")
 volume_db = -12.0
 autoplay = true
 bus = &"Sound Effects"
 
-[node name="Zap" type="Sprite2D" parent="."]
+[node name="Zap" type="Sprite2D" parent="." unique_id=497047053]
 visible = false
+material = SubResource("CanvasItemMaterial_1pkog")
 texture = ExtResource("3_73o7a")
 
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="ScreenExited"]

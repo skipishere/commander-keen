@@ -1,13 +1,16 @@
-[gd_scene load_steps=27 format=3 uid="uid://l3fxye0kbuqx"]
+[gd_scene format=3 uid="uid://l3fxye0kbuqx"]
 
 [ext_resource type="Texture2D" uid="uid://tuk22x5t53fw" path="res://sprites/garg.png" id="1_74ann"]
 [ext_resource type="Script" uid="uid://c2jsg72t1ka8u" path="res://scenes/creatures/Garg/Garg.cs" id="1_q1igm"]
+[ext_resource type="Texture2D" uid="uid://dmlpww60g7rok" path="res://sprites/garg-glow.png" id="3_w6tx1"]
 [ext_resource type="Script" uid="uid://0f7geg8eeyaj" path="res://scenes/creatures/Garg/GargStateMachine.cs" id="3_wfv53"]
 [ext_resource type="Script" uid="uid://dj20rc1f11nb0" path="res://scenes/creatures/Garg/ThinkingState.cs" id="4_3i2uo"]
 [ext_resource type="Script" uid="uid://cbn5jftouvx5u" path="res://scenes/creatures/Garg/WalkState.cs" id="4_cj2lk"]
 [ext_resource type="Script" uid="uid://ccrknln147as8" path="res://scenes/creatures/Garg/AgroState.cs" id="5_ghshb"]
 [ext_resource type="Script" uid="uid://b1dnpcxytgsq8" path="res://scenes/creatures/Garg/DeathState.cs" id="7_onamg"]
-[ext_resource type="Texture2D" uid="uid://53qawylv4smy" path="res://textures/fire_particle.png" id="8_gk5mj"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_ex7uw"]
+light_mode = 1
 
 [sub_resource type="Animation" id="Animation_q1qt8"]
 length = 0.001
@@ -98,86 +101,62 @@ tracks/6/keys = {
 tracks/7/type = "value"
 tracks/7/imported = false
 tracks/7/enabled = true
-tracks/7/path = NodePath("PointLight2D:position")
+tracks/7/path = NodePath("Area2D:monitoring")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(6, -12.4375)]
+"update": 1,
+"values": [true]
 }
 tracks/8/type = "value"
 tracks/8/imported = false
 tracks/8/enabled = true
-tracks/8/path = NodePath("PointLight2D2:position")
+tracks/8/path = NodePath("CollisionShape2D2:position")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(-4, -7)]
+"values": [Vector2(-10, 7)]
 }
 tracks/9/type = "value"
 tracks/9/imported = false
 tracks/9/enabled = true
-tracks/9/path = NodePath("PointLight2D:energy")
+tracks/9/path = NodePath("CollisionShape2D2:rotation")
 tracks/9/interp = 1
 tracks/9/loop_wrap = true
 tracks/9/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [2.0]
+"values": [1.5708]
 }
 tracks/10/type = "value"
 tracks/10/imported = false
 tracks/10/enabled = true
-tracks/10/path = NodePath("PointLight2D2:energy")
+tracks/10/path = NodePath("Glowsprite:frame")
 tracks/10/interp = 1
 tracks/10/loop_wrap = true
 tracks/10/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [2.0]
+"update": 1,
+"values": [2]
 }
 tracks/11/type = "value"
 tracks/11/imported = false
 tracks/11/enabled = true
-tracks/11/path = NodePath("Area2D:monitoring")
+tracks/11/path = NodePath("Glowsprite:modulate")
 tracks/11/interp = 1
 tracks/11/loop_wrap = true
 tracks/11/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-tracks/12/type = "value"
-tracks/12/imported = false
-tracks/12/enabled = true
-tracks/12/path = NodePath("CollisionShape2D2:position")
-tracks/12/interp = 1
-tracks/12/loop_wrap = true
-tracks/12/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(-10, 7)]
-}
-tracks/13/type = "value"
-tracks/13/imported = false
-tracks/13/enabled = true
-tracks/13/path = NodePath("CollisionShape2D2:rotation")
-tracks/13/interp = 1
-tracks/13/loop_wrap = true
-tracks/13/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [1.5708]
+"values": [Color(1.5720325, 1.5720325, 1.5720325, 1)]
 }
 
 [sub_resource type="Animation" id="Animation_rcubb"]
@@ -223,62 +202,38 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("PointLight2D:position")
+tracks/3/path = NodePath("Area2D:monitoring")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.3),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [Vector2(8, -13), Vector2(7, 5)]
+"values": [false]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("PointLight2D2:position")
+tracks/4/path = NodePath("Glowsprite:frame")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
 "times": PackedFloat32Array(0, 0.3),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [Vector2(-8, -12), Vector2(-9, 3)]
+"values": [6, 7]
 }
 tracks/5/type = "value"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("PointLight2D:energy")
+tracks/5/path = NodePath("Glowsprite:modulate")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
 "times": PackedFloat32Array(0.3, 5),
-"transitions": PackedFloat32Array(1, 1),
+"transitions": PackedFloat32Array(1, -2),
 "update": 0,
-"values": [2.0, 0.2]
-}
-tracks/6/type = "value"
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/path = NodePath("PointLight2D2:energy")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/keys = {
-"times": PackedFloat32Array(0.3, 5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [2.0, 0.2]
-}
-tracks/7/type = "value"
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/path = NodePath("Area2D:monitoring")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
+"values": [Color(1.5720325, 1.5720325, 1.5720325, 1), Color(1, 1, 1, 0.05882353)]
 }
 
 [sub_resource type="Animation" id="Animation_78mbt"]
@@ -300,26 +255,14 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("PointLight2D:position")
+tracks/1/path = NodePath("Glowsprite:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.12),
+"transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [Vector2(-3, -6)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("PointLight2D2:position")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [Vector2(-10, -9)]
+"values": [8, 9]
 }
 
 [sub_resource type="Animation" id="Animation_oce1e"]
@@ -341,50 +284,38 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("PointLight2D:position")
+tracks/1/path = NodePath("CollisionShape2D2:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(9, -9)]
+"values": [Vector2(10, 7)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("PointLight2D2:position")
+tracks/2/path = NodePath("CollisionShape2D2:rotation")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(2, -6)]
+"values": [-1.5708]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("CollisionShape2D2:position")
+tracks/3/path = NodePath("Glowsprite:frame")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(10, 7)]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("CollisionShape2D2:rotation")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [-1.5708]
+"times": PackedFloat32Array(0, 0.12),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
 }
 
 [sub_resource type="Animation" id="Animation_ht1gw"]
@@ -468,26 +399,14 @@ tracks/5/keys = {
 tracks/6/type = "value"
 tracks/6/imported = false
 tracks/6/enabled = true
-tracks/6/path = NodePath("PointLight2D:position")
+tracks/6/path = NodePath("Glowsprite:frame")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
 "times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
-"values": [Vector2(8, -9), Vector2(6, -5), Vector2(4, -7), Vector2(5, -12)]
-}
-tracks/7/type = "value"
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/path = NodePath("PointLight2D2:position")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 1,
-"values": [Vector2(-7, -9), Vector2(-4, -11), Vector2(-1, -6), Vector2(-4, -7)]
+"values": [3, 4, 5, 2]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_flmgh"]
@@ -545,7 +464,7 @@ transitions = ["Start", "Thinking", SubResource("AnimationNodeStateMachineTransi
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xnrog"]
 size = Vector2(3, 0.75)
 
-[node name="Garg" type="CharacterBody2D"]
+[node name="Garg" type="CharacterBody2D" unique_id=2094195009]
 process_mode = 1
 light_mask = 0
 position = Vector2(0, -8)
@@ -553,105 +472,98 @@ collision_layer = 64
 collision_mask = 33
 script = ExtResource("1_q1igm")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1395476844]
 texture = ExtResource("1_74ann")
 hframes = 10
 frame = 2
 region_enabled = true
 region_rect = Rect2(0, 0, 250, 32)
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_flmgh")
-}
+[node name="Glowsprite" type="Sprite2D" parent="." unique_id=1202067456]
+modulate = Color(1.5720325, 1.5720325, 1.5720325, 1)
+material = SubResource("CanvasItemMaterial_ex7uw")
+texture = ExtResource("3_w6tx1")
+hframes = 10
+frame = 2
+region_enabled = true
+region_rect = Rect2(0, 0, 250, 32)
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1385144908]
+libraries/ = SubResource("AnimationLibrary_flmgh")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1922338109]
 collision_layer = 0
 collision_mask = 2
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D" unique_id=484053165]
 polygon = PackedVector2Array(-12, 5, -12, 16, 12, 16, 12, 5, 5, -13, -5, -13)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=206391256]
 position = Vector2(0, 1)
 shape = SubResource("CapsuleShape2D_ducee")
 metadata/_edit_lock_ = true
 
-[node name="AnimationTree" type="AnimationTree" parent="."]
+[node name="AnimationTree" type="AnimationTree" parent="." unique_id=1382155746]
 tree_root = SubResource("AnimationNodeStateMachine_syip4")
 anim_player = NodePath("../AnimationPlayer")
 parameters/Walk/blend_position = -0.992874
 
-[node name="VisibleOnScreen" type="VisibleOnScreenNotifier2D" parent="."]
+[node name="VisibleOnScreen" type="VisibleOnScreenNotifier2D" parent="." unique_id=1622124244]
 position = Vector2(-1.43051e-06, 1)
 scale = Vector2(2.6, 2.3)
 rect = Rect2(-50, -25, 100, 50)
 metadata/_edit_lock_ = true
 
-[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("character", "animationTree")]
+[node name="StateMachine" type="Node" parent="." unique_id=800433246 node_paths=PackedStringArray("character", "animationTree")]
 script = ExtResource("3_wfv53")
 character = NodePath("..")
 animationTree = NodePath("../AnimationTree")
 
-[node name="Thinking" type="Node" parent="StateMachine" node_paths=PackedStringArray("left", "right", "leftCheck", "rightCheck")]
+[node name="Thinking" type="Node" parent="StateMachine" unique_id=608375943 node_paths=PackedStringArray("left", "right", "leftCheck", "rightCheck")]
 script = ExtResource("4_3i2uo")
 left = NodePath("../../RayCastLeft")
 right = NodePath("../../RayCastRight")
 leftCheck = NodePath("../../RayCastCheckLeft")
 rightCheck = NodePath("../../RayCastCheckRight")
 
-[node name="Walk" type="Node" parent="StateMachine"]
+[node name="Walk" type="Node" parent="StateMachine" unique_id=367029936]
 script = ExtResource("4_cj2lk")
 
-[node name="Timer" type="Timer" parent="StateMachine/Walk"]
+[node name="Timer" type="Timer" parent="StateMachine/Walk" unique_id=1685206291]
 process_callback = 0
 one_shot = true
 
-[node name="Agro" type="Node" parent="StateMachine"]
+[node name="Agro" type="Node" parent="StateMachine" unique_id=1972392325]
 script = ExtResource("5_ghshb")
 
-[node name="Death" type="Node" parent="StateMachine"]
+[node name="Death" type="Node" parent="StateMachine" unique_id=1558300799]
 script = ExtResource("7_onamg")
 
-[node name="RayCastLeft" type="RayCast2D" parent="."]
+[node name="RayCastLeft" type="RayCast2D" parent="." unique_id=1664954240]
 position = Vector2(0, -5)
 enabled = false
 target_position = Vector2(-310, 0)
 collision_mask = 2
 
-[node name="RayCastRight" type="RayCast2D" parent="."]
+[node name="RayCastRight" type="RayCast2D" parent="." unique_id=1706022094]
 position = Vector2(0, -5)
 enabled = false
 target_position = Vector2(310, 0)
 collision_mask = 2
 
-[node name="RayCastCheckLeft" type="RayCast2D" parent="."]
+[node name="RayCastCheckLeft" type="RayCast2D" parent="." unique_id=845779795]
 position = Vector2(0, 7)
 enabled = false
 target_position = Vector2(-310, 0)
 collision_mask = 2
 
-[node name="RayCastCheckRight" type="RayCast2D" parent="."]
+[node name="RayCastCheckRight" type="RayCast2D" parent="." unique_id=1320120556]
 position = Vector2(0, 7)
 enabled = false
 target_position = Vector2(310, 0)
 collision_mask = 2
 
-[node name="PointLight2D" type="PointLight2D" parent="."]
-position = Vector2(6, -12.4375)
-scale = Vector2(0.0625, 0.0761719)
-color = Color(1, 0, 0, 1)
-energy = 2.0
-texture = ExtResource("8_gk5mj")
-
-[node name="PointLight2D2" type="PointLight2D" parent="."]
-position = Vector2(-4, -7)
-scale = Vector2(0.0625, 0.0761719)
-color = Color(1, 0, 0.501961, 1)
-energy = 2.0
-texture = ExtResource("8_gk5mj")
-
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="." unique_id=2039648753]
 position = Vector2(-10, 7)
 rotation = 1.5708
 shape = SubResource("RectangleShape2D_xnrog")

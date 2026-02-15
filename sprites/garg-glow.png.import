@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://daoeamcib3t14"
-path="res://.godot/imported/keen-level.png-8b0868ab081c87d95d8ed23a3df62e06.ctex"
+uid="uid://dmlpww60g7rok"
+path="res://.godot/imported/garg-glow.png-5b471835189a7dd543130bc22d32d939.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/keen-level.png"
-dest_files=["res://.godot/imported/keen-level.png-8b0868ab081c87d95d8ed23a3df62e06.ctex"]
+source_file="res://sprites/garg-glow.png"
+dest_files=["res://.godot/imported/garg-glow.png-5b471835189a7dd543130bc22d32d939.ctex"]
 
 [params]
 
