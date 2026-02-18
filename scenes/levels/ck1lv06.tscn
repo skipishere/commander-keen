@@ -35,11 +35,9 @@ position = Vector2(6, -12)
 [node name="DirectionalLight2D" type="DirectionalLight2D" parent="." unique_id=1016732131]
 rotation = -0.324631
 color = Color(0.470076, 0.470076, 0.470076, 1)
-energy = 1.25
+energy = 1.69
 shadow_enabled = true
-shadow_color = Color(0, 0.129412, 0.6, 0)
 shadow_filter = 2
-shadow_filter_smooth = 4.7
 
 [node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=464141342]
 color = Color(0, 0, 0, 1)
@@ -60,3 +58,5 @@ occluder = SubResource("OccluderPolygon2D_jhabg")
 visible = false
 position = Vector2(376, -133)
 occluder = SubResource("OccluderPolygon2D_jhabg")
+
+[connection signal="body_entered" from="TileMap/Foreground/LevelExit" to="TileMap/Foreground/LevelExit" method="OnBodyEntered"]
