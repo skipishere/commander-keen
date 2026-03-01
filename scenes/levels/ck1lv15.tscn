@@ -1,24 +1,138 @@
 [gd_scene format=4 uid="uid://cdeop7s030h42"]
 
 [ext_resource type="TileSet" uid="uid://w7k5amqxc3ac" path="res://scenes/tile_platform.tres" id="1_7p8qp"]
+[ext_resource type="Texture2D" uid="uid://th8raajm1xdm" path="res://backgrounds/Mountains 4.png" id="1_da0v4"]
 [ext_resource type="PackedScene" uid="uid://dqlj2tioeqgqw" path="res://player/keen.tscn" id="2_yl1ar"]
 [ext_resource type="PackedScene" uid="uid://cxi7xre6i724l" path="res://scenes/creatures/Yorp/Yorp.tscn" id="4_joecf"]
 [ext_resource type="AudioStream" uid="uid://du4dvuk7gjjbq" path="res://music/music_jewels.ogg" id="4_yoakq"]
 [ext_resource type="PackedScene" uid="uid://bckllpjewggoc" path="res://scenes/creatures/ButlerRobot/ButlerRobot.tscn" id="5_da0v4"]
 [ext_resource type="PackedScene" uid="uid://cl5vownp8h5px" path="res://scenes/creatures/TankRobot/TankRobot.tscn" id="6_g4mv5"]
 
+[sub_resource type="Gradient" id="Gradient_da0v4"]
+colors = PackedColorArray(0, 0.05490196, 0.9882353, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_g4mv5"]
+gradient = SubResource("Gradient_da0v4")
+height = 128
+fill_from = Vector2(0.5, 1)
+fill_to = Vector2(0.5, 0.029)
+
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_jhabg"]
 polygon = PackedVector2Array(-215, -471, 44, -471, 42, -442, -215, -442)
+
+[sub_resource type="Animation" id="Animation_joecf"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AudioStreamPlayer:volume_db")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Parallax2D:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("TileMap:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_da0v4"]
+resource_name = "level_exit"
+length = 2.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AudioStreamPlayer:volume_db")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, -80.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Parallax2D:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.033333335, 1.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(0, 0, 0, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("TileMap:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.06666667, 1.7333333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(0, 0, 0, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_g4mv5"]
+_data = {
+&"RESET": SubResource("Animation_joecf"),
+&"level_exit": SubResource("Animation_da0v4")
+}
 
 [node name="Level" type="Node2D" unique_id=1237469573]
 metadata/_edit_vertical_guides_ = [-647.0]
 metadata/_edit_horizontal_guides_ = [-390.0]
 
+[node name="Parallax2D" type="Parallax2D" parent="." unique_id=176662573]
+scroll_scale = Vector2(0.25, 0.6)
+repeat_size = Vector2(192, 0)
+repeat_times = 11
+
+[node name="Sprite2D" type="Sprite2D" parent="Parallax2D" unique_id=1052019677]
+modulate = Color(0.13333334, 0.2784314, 1, 1)
+z_index = -1
+position = Vector2(136, -6)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("1_da0v4")
+
+[node name="Sky" type="Sprite2D" parent="Parallax2D" unique_id=1351430944]
+z_index = -2
+position = Vector2(153, 61.249992)
+scale = Vector2(7.8281245, 6.7578125)
+texture = SubResource("GradientTexture2D_g4mv5")
+
 [node name="TileMap" type="Node2D" parent="." unique_id=1103537703]
 
 [node name="Background" type="TileMapLayer" parent="TileMap" unique_id=9427370]
-modulate = Color(1, 1, 1, 0.164706)
+modulate = Color(0.7514611, 0.751461, 0.751461, 1)
 use_parent_material = true
+tile_map_data = PackedByteArray("AAB2AP7/AgAAAAEAAAB2AP//AgAAAAIAAAB2AAAAAgAAAAMAAAB3AP3/AgABAAAAAAB3AP7/AgABAAEAAAB3AP//AgABAAIAAAB3AAAAAgABAAMAAAB4AP3/AgACAAAAAAB4AP7/AgACAAEAAAB4AP//AgACAAIAAAB4AAAAAgACAAMAAAB5AP3/AgADAAAAAAB5AP7/AgADAAEAAAB5AP//AgADAAIAAAB5AAAAAgADAAMAAAB6AP3/AgAAAAAAAAB6AP7/AgAAAAEAAAB6AP//AgAAAAIAAAB6AAAAAgAAAAMAAAB7AP3/AgABAAAAAAB7AP7/AgABAAEAAAB7AP//AgABAAIAAAB7AAAAAgABAAMAAAB8AP3/AgACAAAAAAB8AP7/AgACAAEAAAB8AP//AgACAAIAAAB8AAAAAgACAAMAAAB9AP3/AgADAAAAAAB9AP7/AgADAAEAAAB9AP//AgADAAIAAAB9AAAAAgADAAMAAAB+AP3/AgAAAAAAAAB+AP7/AgAAAAEAAAB+AP//AgAAAAIAAAB+AAAAAgAAAAMAAAB/AP3/AgABAAAAAAB/AP7/AgABAAEAAAB/AP//AgABAAIAAAB/AAAAAgABAAMAAACAAP3/AgACAAAAAACAAP7/AgACAAEAAACAAP//AgACAAIAAACAAAAAAgACAAMAAACBAP3/AgADAAAAAACBAP7/AgADAAEAAACBAP//AgADAAIAAACBAAAAAgADAAMAAACCAP3/AgAAAAAAAACCAP7/AgAAAAEAAACCAP//AgAAAAIAAACCAAAAAgAAAAMAAACDAP3/AgABAAAAAACDAP7/AgABAAEAAACDAP//AgABAAIAAACDAAAAAgABAAMAAACEAP3/AgACAAAAAACEAP7/AgACAAEAAACEAP//AgACAAIAAACEAAAAAgACAAMAAACFAP3/AgADAAAAAACFAP7/AgADAAEAAACFAP//AgADAAIAAACFAAAAAgADAAMAAACGAP3/AgAAAAAAAACGAP7/AgAAAAEAAACGAP//AgAAAAIAAACGAAAAAgAAAAMAAACHAP3/AgABAAAAAACHAP7/AgABAAEAAACHAP//AgABAAIAAACHAAAAAgABAAMAAACIAP3/AgACAAAAAACIAP7/AgACAAEAAACIAP//AgACAAIAAACIAAAAAgACAAMAAACJAP3/AgADAAAAAACJAP7/AgADAAEAAACJAP//AgADAAIAAACJAAAAAgADAAMAAACGAPn/AgAAAAAAAACGAPr/AgAAAAEAAACGAPv/AgAAAAIAAACGAPz/AgAAAAMAAACHAPn/AgABAAAAAACHAPr/AgABAAEAAACHAPv/AgABAAIAAACHAPz/AgABAAMAAACIAPn/AgACAAAAAACIAPr/AgACAAEAAACIAPv/AgACAAIAAACIAPz/AgACAAMAAACJAPn/AgADAAAAAACJAPr/AgADAAEAAACJAPv/AgADAAIAAACJAPz/AgADAAMAAACCAPn/AgAAAAAAAACCAPr/AgAAAAEAAACCAPv/AgAAAAIAAACCAPz/AgAAAAMAAACDAPn/AgABAAAAAACDAPr/AgABAAEAAACDAPv/AgABAAIAAACDAPz/AgABAAMAAACEAPn/AgACAAAAAACEAPr/AgACAAEAAACEAPv/AgACAAIAAACEAPz/AgACAAMAAACFAPn/AgADAAAAAACFAPr/AgADAAEAAACFAPv/AgADAAIAAACFAPz/AgADAAMAAAB+APn/AgAAAAAAAAB+APr/AgAAAAEAAAB+APv/AgAAAAIAAAB+APz/AgAAAAMAAAB/APn/AgABAAAAAAB/APr/AgABAAEAAAB/APv/AgABAAIAAAB/APz/AgABAAMAAACAAPn/AgACAAAAAACAAPr/AgACAAEAAACAAPv/AgACAAIAAACAAPz/AgACAAMAAACBAPn/AgADAAAAAACBAPr/AgADAAEAAACBAPv/AgADAAIAAACBAPz/AgADAAMAAAB6APn/AgAAAAAAAAB6APr/AgAAAAEAAAB6APv/AgAAAAIAAAB6APz/AgAAAAMAAAB7APn/AgABAAAAAAB7APr/AgABAAEAAAB7APv/AgABAAIAAAB7APz/AgABAAMAAAB8APn/AgACAAAAAAB8APr/AgACAAEAAAB8APv/AgACAAIAAAB8APz/AgACAAMAAAB9APn/AgADAAAAAAB9APr/AgADAAEAAAB9APv/AgADAAIAAAB9APz/AgADAAMAAAB3APn/AgABAAAAAAB3APr/AgABAAEAAAB3APv/AgABAAIAAAB3APz/AgABAAMAAAB4APn/AgACAAAAAAB4APr/AgACAAEAAAB4APv/AgACAAIAAAB4APz/AgACAAMAAAB5APn/AgADAAAAAAB5APr/AgADAAEAAAB5APv/AgADAAIAAAB5APz/AgADAAMAAAB3APX/AgABAAAAAAB3APb/AgABAAEAAAB3APf/AgABAAIAAAB3APj/AgABAAMAAAB4APX/AgACAAAAAAB4APb/AgACAAEAAAB4APf/AgACAAIAAAB4APj/AgACAAMAAAB5APX/AgADAAAAAAB5APb/AgADAAEAAAB5APf/AgADAAIAAAB5APj/AgADAAMAAAB6APX/AgAAAAAAAAB6APb/AgAAAAEAAAB6APf/AgAAAAIAAAB6APj/AgAAAAMAAAB7APX/AgABAAAAAAB7APb/AgABAAEAAAB7APf/AgABAAIAAAB7APj/AgABAAMAAAB8APX/AgACAAAAAAB8APb/AgACAAEAAAB8APf/AgACAAIAAAB8APj/AgACAAMAAAB9APX/AgADAAAAAAB9APb/AgADAAEAAAB9APf/AgADAAIAAAB9APj/AgADAAMAAAB+APX/AgAAAAAAAAB+APb/AgAAAAEAAAB+APf/AgAAAAIAAAB+APj/AgAAAAMAAAB/APX/AgABAAAAAAB/APb/AgABAAEAAAB/APf/AgABAAIAAAB/APj/AgABAAMAAACAAPX/AgACAAAAAACAAPb/AgACAAEAAACAAPf/AgACAAIAAACAAPj/AgACAAMAAACBAPX/AgADAAAAAACBAPb/AgADAAEAAACBAPf/AgADAAIAAACBAPj/AgADAAMAAACCAPX/AgAAAAAAAACCAPb/AgAAAAEAAACCAPf/AgAAAAIAAACCAPj/AgAAAAMAAACDAPX/AgABAAAAAACDAPb/AgABAAEAAACDAPf/AgABAAIAAACDAPj/AgABAAMAAACEAPX/AgACAAAAAACEAPb/AgACAAEAAACEAPf/AgACAAIAAACEAPj/AgACAAMAAACFAPX/AgADAAAAAACFAPb/AgADAAEAAACFAPf/AgADAAIAAACFAPj/AgADAAMAAACGAPX/AgAAAAAAAACGAPb/AgAAAAEAAACGAPf/AgAAAAIAAACGAPj/AgAAAAMAAACHAPX/AgABAAAAAACHAPb/AgABAAEAAACHAPf/AgABAAIAAACHAPj/AgABAAMAAACIAPX/AgACAAAAAACIAPb/AgACAAEAAACIAPf/AgACAAIAAACIAPj/AgACAAMAAACJAPX/AgADAAAAAACJAPb/AgADAAEAAACJAPf/AgADAAIAAACJAPj/AgADAAMAAAB2APP/AgAAAAIAAAB3APH/AgABAAAAAAB3APL/AgABAAEAAAB3APP/AgABAAIAAAB3APT/AgABAAMAAAB4APH/AgACAAAAAAB4APL/AgACAAEAAAB4APP/AgACAAIAAAB4APT/AgACAAMAAAB5APH/AgADAAAAAAB5APL/AgADAAEAAAB5APP/AgADAAIAAAB5APT/AgADAAMAAAB3AO7/AgABAAEAAAB3AO//AgABAAIAAAB3APD/AgABAAMAAAB4AO7/AgACAAEAAAB4AO//AgACAAIAAAB4APD/AgACAAMAAAB5AO7/AgADAAEAAAB5AO//AgADAAIAAAB5APD/AgADAAMAAAB6AO7/AgAAAAEAAAB6AO//AgAAAAIAAAB6APD/AgAAAAMAAAB7AO7/AgABAAEAAAB7AO//AgABAAIAAAB7APD/AgABAAMAAAB8AO7/AgACAAEAAAB8AO//AgACAAIAAAB8APD/AgACAAMAAAB9AO7/AgADAAEAAAB9AO//AgADAAIAAAB9APD/AgADAAMAAAB6APH/AgAAAAAAAAB6APL/AgAAAAEAAAB6APP/AgAAAAIAAAB6APT/AgAAAAMAAAB7APH/AgABAAAAAAB7APL/AgABAAEAAAB7APP/AgABAAIAAAB7APT/AgABAAMAAAB8APH/AgACAAAAAAB8APL/AgACAAEAAAB8APP/AgACAAIAAAB8APT/AgACAAMAAAB9APH/AgADAAAAAAB9APL/AgADAAEAAAB9APP/AgADAAIAAAB9APT/AgADAAMAAAB+APH/AgAAAAAAAAB+APL/AgAAAAEAAAB+APP/AgAAAAIAAAB+APT/AgAAAAMAAAB/APH/AgABAAAAAAB/APL/AgABAAEAAAB/APP/AgABAAIAAAB/APT/AgABAAMAAACAAPH/AgACAAAAAACAAPL/AgACAAEAAACAAPP/AgACAAIAAACAAPT/AgACAAMAAACBAPH/AgADAAAAAACBAPL/AgADAAEAAACBAPP/AgADAAIAAACBAPT/AgADAAMAAAB+AO7/AgAAAAEAAAB+AO//AgAAAAIAAAB+APD/AgAAAAMAAAB/AO7/AgABAAEAAAB/AO//AgABAAIAAAB/APD/AgABAAMAAACAAO7/AgACAAEAAACAAO//AgACAAIAAACAAPD/AgACAAMAAACBAO7/AgADAAEAAACBAO//AgADAAIAAACBAPD/AgADAAMAAACCAO7/AgAAAAEAAACCAO//AgAAAAIAAACCAPD/AgAAAAMAAACDAO7/AgABAAEAAACDAO//AgABAAIAAACDAPD/AgABAAMAAACEAO7/AgACAAEAAACEAO//AgACAAIAAACEAPD/AgACAAMAAACFAO7/AgADAAEAAACFAO//AgADAAIAAACFAPD/AgADAAMAAACCAPH/AgAAAAAAAACCAPL/AgAAAAEAAACCAPP/AgAAAAIAAACCAPT/AgAAAAMAAACDAPH/AgABAAAAAACDAPL/AgABAAEAAACDAPP/AgABAAIAAACDAPT/AgABAAMAAACEAPH/AgACAAAAAACEAPL/AgACAAEAAACEAPP/AgACAAIAAACEAPT/AgACAAMAAACFAPH/AgADAAAAAACFAPL/AgADAAEAAACFAPP/AgADAAIAAACFAPT/AgADAAMAAACGAPH/AgAAAAAAAACGAPL/AgAAAAEAAACGAPP/AgAAAAIAAACGAPT/AgAAAAMAAACHAPH/AgABAAAAAACHAPL/AgABAAEAAACHAPP/AgABAAIAAACHAPT/AgABAAMAAACIAPH/AgACAAAAAACIAPL/AgACAAEAAACIAPP/AgACAAIAAACIAPT/AgACAAMAAACJAPH/AgADAAAAAACJAPL/AgADAAEAAACJAPP/AgADAAIAAACJAPT/AgADAAMAAACGAO7/AgAAAAEAAACGAO//AgAAAAIAAACGAPD/AgAAAAMAAACHAO7/AgABAAEAAACHAO//AgABAAIAAACHAPD/AgABAAMAAACIAO7/AgACAAEAAACIAO//AgACAAIAAACIAPD/AgACAAMAAACJAO7/AgADAAEAAACJAO//AgADAAIAAACJAPD/AgADAAMAAAA=")
 tile_set = ExtResource("1_7p8qp")
 
 [node name="Foreground" type="TileMapLayer" parent="TileMap" unique_id=228119189 groups=["LevelLayers"]]
@@ -40,6 +154,7 @@ tile_set = ExtResource("1_7p8qp")
 position = Vector2(40, -188)
 
 [node name="DirectionalLight2D" type="DirectionalLight2D" parent="." unique_id=1094776721]
+visible = false
 rotation = -0.324631
 color = Color(0.470076, 0.470076, 0.470076, 1)
 energy = 1.89
@@ -88,3 +203,8 @@ position = Vector2(984, -184)
 [node name="TankRobot" parent="Creatures" unique_id=1859099974 instance=ExtResource("6_g4mv5")]
 position = Vector2(713, -172)
 
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1507183885]
+libraries/ = SubResource("AnimationLibrary_g4mv5")
+
+[connection signal="body_entered" from="TileMap/Foreground/Raygun-item" to="TileMap/Foreground/Raygun-item" method="OnBodyEntered"]
+[connection signal="body_entered" from="TileMap/Foreground/LevelExit" to="TileMap/Foreground/LevelExit" method="OnBodyEntered"]
