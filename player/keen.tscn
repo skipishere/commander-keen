@@ -1,4 +1,4 @@
-[gd_scene load_steps=76 format=3 uid="uid://dqlj2tioeqgqw"]
+[gd_scene format=3 uid="uid://dqlj2tioeqgqw"]
 
 [ext_resource type="Script" uid="uid://dwsb1uqt14rki" path="res://player/Keen.cs" id="1_othw7"]
 [ext_resource type="PackedScene" uid="uid://bgl2fe5um74f0" path="res://scenes/raygun/raygunShot.tscn" id="2_eenmn"]
@@ -610,7 +610,7 @@ graph_offset = Vector2(-323, -203)
 radius = 6.5
 height = 24.0
 
-[node name="Keen" type="CharacterBody2D" groups=["Player"]]
+[node name="Keen" type="CharacterBody2D" unique_id=2004968412 groups=["Player"]]
 process_mode = 1
 z_index = 1
 position = Vector2(0, -12)
@@ -619,19 +619,17 @@ collision_mask = 429
 slide_on_ceiling = false
 script = ExtResource("1_othw7")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_el04f")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=163105792]
+libraries/ = SubResource("AnimationLibrary_el04f")
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1517277124]
 offset = Vector2(0, -16)
 script = ExtResource("3_6odgb")
 
-[node name="RayCast2D" type="RayCast2D" parent="."]
+[node name="RayCast2D" type="RayCast2D" parent="." unique_id=418229749]
 target_position = Vector2(0, 16)
 
-[node name="AnimationTree" type="AnimationTree" parent="."]
+[node name="AnimationTree" type="AnimationTree" parent="." unique_id=822747986]
 tree_root = SubResource("AnimationNodeStateMachine_np7so")
 advance_expression_base_node = NodePath("..")
 anim_player = NodePath("../AnimationPlayer")
@@ -644,64 +642,64 @@ parameters/Pogo-Ground/blend_position = 0.0
 parameters/Shoot/blend_position = 0.0
 parameters/Walk/blend_position = 0.0
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=683258169]
 position = Vector2(-9, -13)
 texture = ExtResource("4_6f3kv")
 centered = false
 hframes = 31
 region_rect = Rect2(0, 0, 527, 25)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=655718881]
 position = Vector2(-1, 0)
 shape = SubResource("CapsuleShape2D_1a8jn")
 
-[node name="ShotEmiterLeft" type="Node2D" parent="."]
-position = Vector2(-16, 2)
+[node name="ShotEmiterLeft" type="Node2D" parent="." unique_id=457134994]
+position = Vector2(-5, 2)
 
-[node name="ShotEmiterRight" type="Node2D" parent="."]
-position = Vector2(15, 2)
+[node name="ShotEmiterRight" type="Node2D" parent="." unique_id=1129537048]
+position = Vector2(4, 2)
 
-[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("character", "animationTree")]
+[node name="StateMachine" type="Node" parent="." unique_id=1339155195 node_paths=PackedStringArray("character", "animationTree")]
 script = ExtResource("6_orb7g")
 character = NodePath("..")
 animationTree = NodePath("../AnimationTree")
 
-[node name="StartLevel" type="Node" parent="StateMachine"]
+[node name="StartLevel" type="Node" parent="StateMachine" unique_id=33490985]
 script = ExtResource("5_5qh44")
 
-[node name="Timer" type="Timer" parent="StateMachine/StartLevel"]
+[node name="Timer" type="Timer" parent="StateMachine/StartLevel" unique_id=117388524]
 wait_time = 0.25
 one_shot = true
 autostart = true
 
-[node name="Ground" type="Node" parent="StateMachine" node_paths=PackedStringArray("rayCast")]
+[node name="Ground" type="Node" parent="StateMachine" unique_id=643649451 node_paths=PackedStringArray("rayCast")]
 script = ExtResource("7_kbmoq")
 rayCast = NodePath("../../RayCast2D")
 
-[node name="Air" type="Node" parent="StateMachine"]
+[node name="Air" type="Node" parent="StateMachine" unique_id=1688409976]
 script = ExtResource("6_01e1i")
 
-[node name="Shoot" type="Node" parent="StateMachine" node_paths=PackedStringArray("emitShotLeft", "emitShotRight")]
+[node name="Shoot" type="Node" parent="StateMachine" unique_id=159129519 node_paths=PackedStringArray("emitShotLeft", "emitShotRight")]
 script = ExtResource("7_82reb")
 raygun = ExtResource("2_eenmn")
 emitShotLeft = NodePath("../../ShotEmiterLeft")
 emitShotRight = NodePath("../../ShotEmiterRight")
 
-[node name="Dead" type="Node" parent="StateMachine"]
+[node name="Dead" type="Node" parent="StateMachine" unique_id=1249002999]
 script = ExtResource("9_qmxlx")
 deadKeen = ExtResource("10_sb2rb")
 
-[node name="Hidden" type="Node" parent="StateMachine"]
+[node name="Hidden" type="Node" parent="StateMachine" unique_id=1100637359]
 script = ExtResource("10_366wu")
 
-[node name="Pogo" type="Node" parent="StateMachine"]
+[node name="Pogo" type="Node" parent="StateMachine" unique_id=630336283]
 script = ExtResource("12_tvnsi")
 
-[node name="Iced" type="Node" parent="StateMachine" node_paths=PackedStringArray("IcedLength")]
+[node name="Iced" type="Node" parent="StateMachine" unique_id=469774062 node_paths=PackedStringArray("IcedLength")]
 script = ExtResource("13_xq2mm")
 IcedLength = NodePath("Timer")
 
-[node name="Timer" type="Timer" parent="StateMachine/Iced"]
+[node name="Timer" type="Timer" parent="StateMachine/Iced" unique_id=559490743]
 wait_time = 5.0
 one_shot = true
 

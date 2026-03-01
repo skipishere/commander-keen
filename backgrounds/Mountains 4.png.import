@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cqgyahlpnxrxl"
-path="res://.godot/imported/mars.png-aef4b3b9a23650027b42e1658e8ba59c.ctex"
+uid="uid://th8raajm1xdm"
+path="res://.godot/imported/Mountains 4.png-00e7ce7a081b87a09c078b9e016afaad.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/mars.png"
-dest_files=["res://.godot/imported/mars.png-aef4b3b9a23650027b42e1658e8ba59c.ctex"]
+source_file="res://backgrounds/Mountains 4.png"
+dest_files=["res://.godot/imported/Mountains 4.png-00e7ce7a081b87a09c078b9e016afaad.ctex"]
 
 [params]
 

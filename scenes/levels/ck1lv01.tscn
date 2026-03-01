@@ -135,6 +135,7 @@ pitch_scale = 0.91
 autoplay = true
 max_distance = 1000.0
 attenuation = 0.450626
+panning_strength = 0.0
 
 [node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=405563930]
 color = Color(0.625597, 0.625597, 0.625597, 1)

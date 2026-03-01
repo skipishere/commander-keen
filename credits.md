@@ -29,3 +29,6 @@
 
 # Fonts:
 - "Press Start 2P" - https://fonts.google.com/specimen/Press+Start+2P
+
+# Backgrounds:
+- Mountain Tileset - https://karsiori.itch.io/free-pixel-art-mountains-tileset-and-backgrounds
