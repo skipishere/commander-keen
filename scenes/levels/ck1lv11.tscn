@@ -5,7 +5,167 @@
 [ext_resource type="AudioStream" uid="uid://du4dvuk7gjjbq" path="res://music/music_jewels.ogg" id="4_aeeew"]
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_jhabg"]
-polygon = PackedVector2Array(-216, -682, 146, -682, 146, -440, -216, -440)
+polygon = PackedVector2Array(507, -709, 239, -525, -216, -440)
+
+[sub_resource type="Animation" id="Animation_bt81w"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AudioStreamPlayer:volume_db")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("DirectionalLight2D:energy")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [2.52]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("DirectionalLight2D2:energy")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.8]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("TileMap:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("TileMap/Background:self_modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("TileMap/Background:modulate")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.298039)]
+}
+
+[sub_resource type="Animation" id="Animation_aaham"]
+resource_name = "level_exit"
+length = 2.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AudioStreamPlayer:volume_db")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, -80.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("DirectionalLight2D:energy")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [2.52, 0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("DirectionalLight2D2:energy")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.8, 2.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("TileMap:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 2.0666666),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(0, 0, 0, 1)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("TileMap/Background:self_modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 1.5666667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(0, 0, 0, 1)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("TileMap/Background:modulate")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 1.5333333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.298039), Color(0, 0, 0, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_kl2q2"]
+_data = {
+&"RESET": SubResource("Animation_bt81w"),
+&"level_exit": SubResource("Animation_aaham")
+}
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_bt81w"]
+polygon = PackedVector2Array(637, -565, 651, 5, 812, -456)
 
 [node name="Level" type="Node2D" unique_id=1827031451]
 metadata/_edit_vertical_guides_ = [-647.0]
@@ -48,7 +208,6 @@ energy = 2.52
 shadow_enabled = true
 shadow_color = Color(0, 0.129412, 0.6, 0)
 shadow_filter = 2
-shadow_filter_smooth = 0.5
 height = 0.5
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=456925635]
@@ -69,9 +228,14 @@ shadow_enabled = true
 shadow_color = Color(0.12156863, 0.12941177, 0.11764706, 1)
 
 [node name="ShadowLight" type="DirectionalLight2D" parent="." unique_id=138099012]
-energy = 0.8
+energy = 0.74
 blend_mode = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1909552969]
+libraries/ = SubResource("AnimationLibrary_kl2q2")
+
+[node name="LightOccluder2D2" type="LightOccluder2D" parent="." unique_id=1222676443]
+occluder = SubResource("OccluderPolygon2D_bt81w")
 
 [connection signal="body_entered" from="TileMap/Foreground/LevelExit" to="TileMap/Foreground/LevelExit" method="OnBodyEntered"]
 [connection signal="body_entered" from="TileMap/Items/Item" to="TileMap/Items/Item" method="OnBodyEntered"]
-[connection signal="body_entered" from="TileMap/Items/@Area2D@38387" to="TileMap/Items/@Area2D@38387" method="OnBodyEntered"]
