@@ -5,20 +5,169 @@
 [ext_resource type="AudioStream" uid="uid://b86d3x50rh5x3" path="res://music/awake10_megaWall.mp3" id="4_fd84n"]
 [ext_resource type="Script" uid="uid://dnhhh5annvxc7" path="res://scripts/DeathZone.cs" id="4_jbh20"]
 [ext_resource type="PackedScene" uid="uid://cxi7xre6i724l" path="res://scenes/creatures/Yorp/Yorp.tscn" id="5_yjrwu"]
+[ext_resource type="Texture2D" uid="uid://th8raajm1xdm" path="res://backgrounds/Mountains 4.png" id="6_1n3xd"]
+[ext_resource type="Texture2D" uid="uid://nq3v5tladn3y" path="res://backgrounds/Mountains 3.png" id="7_78uls"]
+[ext_resource type="Texture2D" uid="uid://cpkasu2p1kcd8" path="res://backgrounds/Mountains 2.png" id="8_a8xya"]
+[ext_resource type="Texture2D" uid="uid://dqj3v831mikyt" path="res://backgrounds/Mountains 1.png" id="9_3cde0"]
+
+[sub_resource type="Gradient" id="Gradient_1n3xd"]
+offsets = PackedFloat32Array(0.00443787, 0.99852073)
+colors = PackedColorArray(1, 0.37629107, 0.3052458, 1, 1.353256, 0.7408001, 0.65181077, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_78uls"]
+gradient = SubResource("Gradient_1n3xd")
+fill_from = Vector2(0.548718, 0.8803419)
+fill_to = Vector2(0.51111114, 0.11111111)
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_ax8pd"]
 distance = -9.0
+
+[sub_resource type="Animation" id="Animation_78uls"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AudioStreamPlayer:volume_db")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TileMap:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Background:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_1n3xd"]
+resource_name = "level_exit"
+length = 2.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AudioStreamPlayer:volume_db")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, -80.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TileMap:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.033333335, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(0, 0, 0, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Background:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.033333335, 1.4),
+"transitions": PackedFloat32Array(1, 0.09807298),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(0, 0, 0, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_78uls"]
+_data = {
+&"RESET": SubResource("Animation_78uls"),
+&"level_exit": SubResource("Animation_1n3xd")
+}
 
 [node name="Level" type="Node2D" unique_id=228818568]
 metadata/_edit_vertical_guides_ = [-647.0]
 metadata/_edit_horizontal_guides_ = [-390.0]
 
-[node name="TileMap" type="Node2D" parent="." unique_id=1117936247]
+[node name="Background" type="Node2D" parent="." unique_id=960238887]
 
-[node name="Background" type="TileMapLayer" parent="TileMap" unique_id=1872500504]
-modulate = Color(1, 1, 1, 0.164706)
-use_parent_material = true
-tile_set = ExtResource("2_d3iqb")
+[node name="Parallax2D" type="Parallax2D" parent="Background" unique_id=873059610]
+scroll_scale = Vector2(0.1, 0.06)
+scroll_offset = Vector2(0, 100)
+repeat_size = Vector2(192, 0)
+repeat_times = 5
+
+[node name="Sprite2D" type="Sprite2D" parent="Background/Parallax2D" unique_id=1299308898]
+light_mask = 0
+z_index = -2
+position = Vector2(0, -70)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("6_1n3xd")
+
+[node name="Parallax2D4" type="Parallax2D" parent="Background" unique_id=2124985542]
+scroll_scale = Vector2(0.2, 0.1)
+repeat_size = Vector2(192, 0)
+repeat_times = 5
+
+[node name="Sprite2D2" type="Sprite2D" parent="Background/Parallax2D4" unique_id=1005726419]
+light_mask = 0
+z_index = -2
+position = Vector2(0, 110)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("7_78uls")
+
+[node name="Parallax2D3" type="Parallax2D" parent="Background" unique_id=496526045]
+scroll_scale = Vector2(0.3, 0.15)
+repeat_size = Vector2(192, 0)
+repeat_times = 5
+
+[node name="Sprite2D3" type="Sprite2D" parent="Background/Parallax2D3" unique_id=1301884176]
+z_index = -2
+position = Vector2(0, 96)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("8_a8xya")
+
+[node name="Parallax2D2" type="Parallax2D" parent="Background" unique_id=1850058821]
+scroll_scale = Vector2(0.4, 0.3)
+repeat_size = Vector2(192, 0)
+repeat_times = 5
+
+[node name="Sprite2D4" type="Sprite2D" parent="Background/Parallax2D2" unique_id=1677907995]
+z_index = -2
+position = Vector2(0, 60)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("9_3cde0")
+
+[node name="Sky" type="Sprite2D" parent="Background" unique_id=1353286619]
+light_mask = 0
+z_index = -5
+position = Vector2(625.00006, -881.5)
+scale = Vector2(20.531252, 10.640625)
+texture = SubResource("GradientTexture2D_78uls")
+
+[node name="TileMap" type="Node2D" parent="." unique_id=1117936247]
 
 [node name="Foreground" type="TileMapLayer" parent="TileMap" unique_id=1401534266 groups=["LevelLayers"]]
 use_parent_material = true
@@ -39,18 +188,12 @@ tile_set = ExtResource("2_d3iqb")
 position = Vector2(24, -12)
 
 [node name="DirectionalLight2D" type="DirectionalLight2D" parent="." unique_id=1501543231]
-visible = false
-rotation = -0.324631
+rotation = -0.30543262
 color = Color(0.470076, 0.470076, 0.470076, 1)
 energy = 1.89
 shadow_enabled = true
 shadow_color = Color(0, 0.129412, 0.6, 0)
-shadow_filter = 2
-shadow_filter_smooth = 4.3
-
-[node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=1648379871]
-visible = false
-color = Color(0, 0, 0, 1)
+shadow_filter_smooth = 4.5
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1731624110]
 stream = ExtResource("4_fd84n")
@@ -143,4 +286,8 @@ position = Vector2(73, -1132)
 [node name="Yorp24" parent="Creatures/Yorps" unique_id=591082101 instance=ExtResource("5_yjrwu")]
 position = Vector2(361, -1132)
 
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=325080871]
+libraries/ = SubResource("AnimationLibrary_78uls")
+
+[connection signal="body_entered" from="TileMap/Foreground/LevelExit" to="TileMap/Foreground/LevelExit" method="OnBodyEntered"]
 [connection signal="body_entered" from="Area2D" to="Area2D" method="OnDeathZoneBodyEntered"]
