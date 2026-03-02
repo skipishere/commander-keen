@@ -1,10 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://cl5vownp8h5px"]
+[gd_scene format=3 uid="uid://cl5vownp8h5px"]
 
 [ext_resource type="Texture2D" uid="uid://xv7sw4to0vc1" path="res://sprites/tank-robot.png" id="1_me2wh"]
-
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_tic67"]
-radius = 7.0
-height = 24.0
+[ext_resource type="Script" uid="uid://wn0hjkvsxfot" path="res://scenes/creatures/TankRobot/TankRobot.cs" id="1_uhbvp"]
 
 [sub_resource type="Animation" id="Animation_6ajg5"]
 length = 0.001
@@ -83,20 +80,35 @@ _data = {
 &"turn": SubResource("Animation_8gndq")
 }
 
-[node name="TankRobot" type="CharacterBody2D"]
+[node name="TankRobot" type="StaticBody2D" unique_id=1628499222]
 process_mode = 1
-position = Vector2(0, -4)
+collision_layer = 1040
+collision_mask = 3
+script = ExtResource("1_uhbvp")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=686505151]
 texture = ExtResource("1_me2wh")
 hframes = 10
 region_enabled = true
 region_rect = Rect2(1, 0, 169, 26)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CapsuleShape2D_tic67")
+[node name="CollisionShape2D" type="CollisionPolygon2D" parent="." unique_id=518041146]
+position = Vector2(0, -2)
+polygon = PackedVector2Array(0, -10, 7, 0, 8, 11, -8, 11, -7, 0)
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_ay7k2")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1589280363]
+libraries/ = SubResource("AnimationLibrary_ay7k2")
+
+[node name="RayCastLeft" type="RayCast2D" parent="." unique_id=644885004]
+position = Vector2(9, 0)
+target_position = Vector2(0, 16)
+
+[node name="RayCastRight" type="RayCast2D" parent="." unique_id=1069089936]
+position = Vector2(-9, 0)
+target_position = Vector2(0, 16)
+
+[node name="VisibleOnScreen" type="VisibleOnScreenEnabler2D" parent="." unique_id=2033401882]
+position = Vector2(-1.43051e-06, 1)
+scale = Vector2(2.6, 2.3)
+rect = Rect2(-50, -25, 100, 50)
+metadata/_edit_lock_ = true
