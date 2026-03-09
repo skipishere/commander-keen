@@ -2,7 +2,7 @@ using Godot;
 
 namespace CommanderKeen.Scenes.Creatures.Vorticon;
 
-public abstract partial class VorticonBaseState : Node, IState<VorticonStateMachine.VorticonStates>
+public abstract partial class VorticonBaseState : Node, IState<VorticonStateMachine.VorticonStates, CharacterBody2D>
 {
     internal const float Speed = 45.0f;
     public CharacterBody2D Character { get; set; }

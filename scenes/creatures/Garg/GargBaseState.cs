@@ -1,6 +1,6 @@
 using Godot;
 
-public abstract partial class GargBaseState : Node, IState<GargStateMachine.GargStates>
+public abstract partial class GargBaseState : Node, IState<GargStateMachine.GargStates, CharacterBody2D>
 {
     public CharacterBody2D Character { get; set; }
 

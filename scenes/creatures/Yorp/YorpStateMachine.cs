@@ -15,9 +15,9 @@ public partial class YorpStateMachine : Node
         Dead
     }
 
-    private readonly Dictionary<YorpStates, IState<YorpStates>> states = [];
+    private readonly Dictionary<YorpStates, IState<YorpStates, CharacterBody2D>> states = [];
 
-    private IState<YorpStates> Current { get; set; }
+    private IState<YorpStates, CharacterBody2D> Current { get; set; }
 
     [Export]
     private Yorp character;

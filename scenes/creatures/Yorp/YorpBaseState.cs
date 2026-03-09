@@ -2,7 +2,7 @@ using Godot;
 
 namespace CommanderKeen.Scenes.Creatures.Yorp;
 
-public abstract partial class YorpBaseState : Node, IState<YorpStateMachine.YorpStates>
+public abstract partial class YorpBaseState : Node, IState<YorpStateMachine.YorpStates, CharacterBody2D>
 {
     internal const float Speed = 25.0f;
     public CharacterBody2D Character { get; set; }

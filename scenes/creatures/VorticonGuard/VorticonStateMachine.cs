@@ -15,9 +15,9 @@ public partial class VorticonStateMachine : Node
         Dead
     }
 
-    private readonly Dictionary<VorticonStates, IState<VorticonStates>> states = [];
+    private readonly Dictionary<VorticonStates, IState<VorticonStates, CharacterBody2D>> states = [];
 
-    private IState<VorticonStates> Current { get; set; }
+    private IState<VorticonStates, CharacterBody2D> Current { get; set; }
 
     [Export]
     private vorticon_guard character;

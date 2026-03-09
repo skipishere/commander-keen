@@ -17,9 +17,9 @@ public partial class StateMachine : Node
         Hidden
     }
 
-    private readonly Dictionary<KeenStates, IState<KeenStates>> states = new();
+    private readonly Dictionary<KeenStates, IState<KeenStates, CharacterBody2D>> states = new();
 
-    private IState<KeenStates> Current { get; set; }
+    private IState<KeenStates, CharacterBody2D> Current { get; set; }
 
     [Export]
     private Keen character;

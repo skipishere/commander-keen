@@ -13,9 +13,9 @@ public partial class GargStateMachine : Node
         TurnAround
     }
 
-    private readonly Dictionary<GargStates, IState<GargStates>> states = new();
+    private readonly Dictionary<GargStates, IState<GargStates, CharacterBody2D>> states = new();
 
-    private IState<GargStates> Current { get; set; }
+    private IState<GargStates, CharacterBody2D> Current { get; set; }
 
     [Export]
     private Garg character;
