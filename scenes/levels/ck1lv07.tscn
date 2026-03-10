@@ -95,6 +95,12 @@ _data = {
 &"level_exit": SubResource("Animation_0l2dq")
 }
 
+[sub_resource type="Curve2D" id="Curve2D_mk1vm"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -177, 0, 0, 0, 0, 0, 220, 0)
+}
+point_count = 2
+
 [node name="Level" type="Node2D" unique_id=29855978]
 
 [node name="Parallax2D" type="Parallax2D" parent="." unique_id=340693180]
@@ -157,5 +163,7 @@ color = Color(0.625597, 0.625597, 0.625597, 1)
 
 [node name="TankRobot" parent="." unique_id=1628499222 instance=ExtResource("6_mk1vm")]
 position = Vector2(1433, -44)
+curve = SubResource("Curve2D_mk1vm")
+StartPosition = 0.5
 
 [connection signal="body_entered" from="Area2D" to="Area2D" method="OnDeathZoneBodyEntered"]
