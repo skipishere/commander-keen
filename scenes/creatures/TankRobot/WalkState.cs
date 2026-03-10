@@ -32,23 +32,23 @@ public partial class WalkState : TankRobotBaseState
         }
 
         pathFollow2D.Progress += Speed * (float)delta * Character.Direction;
-        
+
         if (pathFollow2D.ProgressRatio >= 1 || pathFollow2D.ProgressRatio <= 0)
         {
             Character.Direction *= -1;
             playback.Travel("Turn");
             moveTimer.Paused = true;
         }
-        
+
         var velocityX = Character.Direction * Speed * (float)delta;
-        
+
         // Test for collisions without actually moving
         var testParams = new PhysicsTestMotionParameters2D
         {
             From = Character.GlobalTransform,
             Motion = new Vector2(velocityX, 0)
         };
-        
+
         var testResult = new PhysicsTestMotionResult2D();
         if (PhysicsServer2D.BodyTestMotion(Character.GetRid(), testParams, testResult))
         {

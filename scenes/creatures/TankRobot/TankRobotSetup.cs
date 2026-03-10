@@ -17,12 +17,4 @@ public partial class TankRobotSetup : Path2D
             this.QueueRedraw();
         }
     }
-
-    public override void _EnterTree()
-    {
-        //var pathFollow2D = GetNode<PathFollow2D>("PathFollow2D");
-        //pathFollow2D.Progress = startPosition * this.Curve.GetBakedLength();
-   
-        base._EnterTree();
-    }
 }

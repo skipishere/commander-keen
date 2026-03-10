@@ -1,6 +1,7 @@
 using Godot;
 
 namespace CommanderKeen.Scenes.Creatures.TankRobot;
+
 public partial class ThinkingState : TankRobotBaseState
 {
     public override TankRobotStateMachine.TankRobotStates StateType => TankRobotStateMachine.TankRobotStates.Thinking;

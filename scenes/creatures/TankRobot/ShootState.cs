@@ -2,6 +2,7 @@ using System;
 using Godot;
 
 namespace CommanderKeen.Scenes.Creatures.TankRobot;
+
 public partial class ShootState : TankRobotBaseState
 {
     public override TankRobotStateMachine.TankRobotStates StateType => TankRobotStateMachine.TankRobotStates.Shoot;
