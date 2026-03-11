@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using Godot;
 
 public partial class TankRobot : AnimatableBody2D
@@ -14,5 +15,14 @@ public partial class TankRobot : AnimatableBody2D
     public override void _PhysicsProcess(double delta)
     {
         stateMachine.PhysicsProcess(delta, lastMovementX, true);
+    }
+
+    public void BodyEntered(Node2D body)
+    {
+        if (body is raygunShot shot)
+        {
+            Debug.Print($"TankRobot collided with {body.Name}");
+            shot.TakeDamage();
+        }
     }
 }
