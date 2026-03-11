@@ -152,16 +152,7 @@ jobs:
           artifact/commander-keen-macos.zip
         )
         
-        # Check if release already exists
-        if gh release view "$TAG_NAME" >/dev/null 2>&1; then
-          echo "Release $TAG_NAME already exists, uploading assets..."
-          gh release upload "$TAG_NAME" "${ASSETS[@]}"
-        else
-          echo "Creating new release $TAG_NAME..."
-          gh release create "$TAG_NAME" \
-            --title "Release $TAG_NAME" \
-            --notes "Automated release build for $TAG_NAME" \
-            "${ASSETS[@]}"
-        fi
+        gh release upload "$TAG_NAME" "${ASSETS[@]}"
+        
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
