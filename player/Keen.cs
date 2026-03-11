@@ -6,7 +6,7 @@ public partial class Keen : CharacterBody2D, ITakeDamage
     public const float Speed = 180.0f;
 
     public bool IsPogoing => stateMachine.IsPogoing();
-
+    private SignalManager signalManager;
     public AnimationTree animationTree;
     private Camera2D camera;
     private int width;
@@ -25,6 +25,7 @@ public partial class Keen : CharacterBody2D, ITakeDamage
         camera = GetNode<Camera2D>("Camera2D");
         animationTree = GetNode<AnimationTree>("AnimationTree");
         stateMachine = GetNode<StateMachine>("StateMachine");
+        signalManager = GetNode<SignalManager>("/root/SignalManager");
 
         var collisionShape = GetNode<CollisionShape2D>("CollisionShape2D").Shape.GetRect().Size;
         width = (int)collisionShape.X / 2;
@@ -83,6 +84,7 @@ public partial class Keen : CharacterBody2D, ITakeDamage
     public void TakeDamage()
     {
         Debug.WriteLine("Keen hit!");
+        signalManager.EmitSignal(nameof(SignalManager.KeenDead));
     }
 
     public void GiveKey(game_stats.KeyCards key)
