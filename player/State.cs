@@ -1,6 +1,6 @@
 using Godot;
 
-public abstract partial class State : Node, IState<StateMachine.KeenStates>
+public abstract partial class State : Node, IState<StateMachine.KeenStates, CharacterBody2D>
 {
     public const float Speed = 180.0f;
     public CharacterBody2D Character { get; set; }
@@ -33,5 +33,10 @@ public abstract partial class State : Node, IState<StateMachine.KeenStates>
     public void Shove(float direction)
     {
         shoveVelocity = new Vector2(Mathf.Sign(direction) * Speed, 0);
+    }
+
+    public virtual bool HitByShotKills()
+    {
+        return true;
     }
 }

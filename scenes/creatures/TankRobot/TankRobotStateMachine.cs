@@ -1,24 +1,23 @@
 using Godot;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
-public partial class GargStateMachine : Node
+public partial class TankRobotStateMachine : Node
 {
-    public enum GargStates
+    public enum TankRobotStates
     {
-        Walk,
-        Agro,
-        Thinking,
-        Dead,
-        TurnAround
+        Move,
+        Shoot,
+        Thinking
     }
 
-    private readonly Dictionary<GargStates, IState<GargStates, CharacterBody2D>> states = new();
+    private readonly Dictionary<TankRobotStates, IState<TankRobotStates, TankRobot>> states = [];
 
-    private IState<GargStates, CharacterBody2D> Current { get; set; }
+    private IState<TankRobotStates, TankRobot> Current { get; set; }
 
     [Export]
-    private Garg character;
+    private TankRobot character;
 
     [Export]
     private AnimationTree animationTree;
@@ -27,24 +26,20 @@ public partial class GargStateMachine : Node
 
     public override void _Ready()
     {
-        foreach (GargBaseState state in GetChildren().OfType<GargBaseState>())
+        foreach (TankRobotBaseState state in GetChildren().OfType<TankRobotBaseState>())
         {
             state.Character = character;
             state.AnimationTree = animationTree;
             states.Add(state.StateType, state);
+            Debug.WriteLine("TankRobot Added state: " + state.StateType);
         }
 
         Current = states.First().Value;
+        Current.Enter();
     }
 
     public void PhysicsProcess(double delta, float lastMovementX, bool isActivated)
     {
-        if (!isActivated
-            && Current.StateType != GargStates.Agro)
-        {
-            return;
-        }
-
         Current.PhysicsProcess(delta, lastMovementX);
 
         if (Current.NextState.HasValue)
@@ -53,20 +48,15 @@ public partial class GargStateMachine : Node
         }
     }
 
-    private void ChangeState(GargStates newState)
+    private void ChangeState(TankRobotStates newState)
     {
         if (Current.StateType == newState)
         {
             return;
         }
-
+        Debug.WriteLine($"TankRobot: Changing state from {Current.StateType} to {newState}");
         Current.Exit();
         Current = states[newState];
         Current.Enter();
-    }
-
-    public void TakeDamage()
-    {
-        CallDeferred(nameof(ChangeState), (int)GargStates.Dead);
     }
 }

@@ -17,9 +17,9 @@ public partial class StateMachine : Node
         Hidden
     }
 
-    private readonly Dictionary<KeenStates, IState<KeenStates>> states = new();
+    private readonly Dictionary<KeenStates, IState<KeenStates, CharacterBody2D>> states = new();
 
-    private IState<KeenStates> Current { get; set; }
+    private IState<KeenStates, CharacterBody2D> Current { get; set; }
 
     [Export]
     private Keen character;
@@ -117,5 +117,13 @@ public partial class StateMachine : Node
     {
         shoveVelocity = new Vector2(Mathf.Sign(direction) * Keen.Speed, 0);
         (Current as State).shoveVelocity = shoveVelocity;
+    }
+
+    public void KeenShot()
+    {
+        if ((Current as State).HitByShotKills())
+        {
+            signalManager.EmitSignal(nameof(SignalManager.KeenDead));
+        }
     }
 }

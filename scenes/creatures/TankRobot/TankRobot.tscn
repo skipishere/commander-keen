@@ -1,20 +1,71 @@
-[gd_scene load_steps=8 format=3 uid="uid://cl5vownp8h5px"]
+[gd_scene format=3 uid="uid://cl5vownp8h5px"]
 
+[ext_resource type="Script" uid="uid://x7k6hsqgnayr" path="res://scenes/creatures/TankRobot/TankRobotSetup.cs" id="1_lnomg"]
 [ext_resource type="Texture2D" uid="uid://xv7sw4to0vc1" path="res://sprites/tank-robot.png" id="1_me2wh"]
-
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_tic67"]
-radius = 7.0
-height = 24.0
+[ext_resource type="Script" uid="uid://wn0hjkvsxfot" path="res://scenes/creatures/TankRobot/TankRobot.cs" id="1_uhbvp"]
+[ext_resource type="Script" uid="uid://cykjbupwjkn7b" path="res://scenes/creatures/TankRobot/WalkState.cs" id="3_2tv2b"]
+[ext_resource type="Script" uid="uid://du4y10s5ohysh" path="res://scenes/creatures/TankRobot/ThinkingState.cs" id="3_s3v3c"]
+[ext_resource type="Script" uid="uid://b8l00vvb06o8a" path="res://scenes/creatures/TankRobot/TankRobotStateMachine.cs" id="3_uxd2c"]
+[ext_resource type="Script" uid="uid://ljanmyqsr2ei" path="res://scenes/creatures/TankRobot/ShootState.cs" id="5_46y8d"]
+[ext_resource type="PackedScene" uid="uid://bgl2fe5um74f0" path="res://scenes/raygun/raygunShot.tscn" id="8_qod7y"]
 
 [sub_resource type="Animation" id="Animation_6ajg5"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/path = NodePath("LeftKeenPush:disabled")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("RightKeenPush:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("LeftSlide:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("RightSlide:disabled")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Sprite2D:frame")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
@@ -38,6 +89,30 @@ tracks/0/keys = {
 "update": 1,
 "values": [6, 6, 7, 8, 9]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("LeftKeenPush:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("LeftSlide:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="Animation" id="Animation_wnjr7"]
 resource_name = "right"
@@ -56,11 +131,34 @@ tracks/0/keys = {
 "update": 1,
 "values": [6, 0, 1, 2, 3]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("RightKeenPush:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("RightSlide:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
-[sub_resource type="Animation" id="Animation_8gndq"]
-resource_name = "turn"
-length = 0.2
-loop_mode = 1
+[sub_resource type="Animation" id="Animation_uxd2c"]
+resource_name = "thinking"
+length = 0.4
 step = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -69,10 +167,103 @@ tracks/0/path = NodePath("Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.0001, 0.1),
-"transitions": PackedFloat32Array(1, 1, 1),
+"times": PackedFloat32Array(0, 0.0001, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 1,
-"values": [6, 4, 5]
+"values": [6, 4, 5, 4, 5]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("StateMachine/Thinking")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.4),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"ThinkingFinished"
+}]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("LeftKeenPush:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("RightKeenPush:disabled")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_8gndq"]
+resource_name = "turn"
+length = 0.4
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0001, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [6, 4, 5, 4, 5]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("StateMachine/Walk")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.4),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"FinishedTurning"
+}]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("LeftKeenPush:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("RightKeenPush:disabled")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ay7k2"]
@@ -80,23 +271,171 @@ _data = {
 &"RESET": SubResource("Animation_6ajg5"),
 &"left": SubResource("Animation_jajbl"),
 &"right": SubResource("Animation_wnjr7"),
+&"thinking": SubResource("Animation_uxd2c"),
 &"turn": SubResource("Animation_8gndq")
 }
 
-[node name="TankRobot" type="CharacterBody2D"]
-process_mode = 1
-position = Vector2(0, -4)
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_qod7y"]
+animation = &"thinking"
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_lnomg"]
+animation = &"turn"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_uhbvp"]
+animation = &"left"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_2tv2b"]
+animation = &"right"
+
+[sub_resource type="AnimationNodeBlendSpace1D" id="AnimationNodeBlendSpace1D_s3v3c"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_uhbvp")
+blend_point_0/pos = -1.0
+blend_point_1/node = SubResource("AnimationNodeAnimation_2tv2b")
+blend_point_1/pos = 1.0
+value_label = "0"
+blend_mode = 1
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_dlt3l"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_w2pib"]
+switch_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_eqj1u"]
+switch_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_uxd2c"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_qod7y"]
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_46y8d"]
+states/Start/position = Vector2(928.8, 14.719994)
+states/Thinking/node = SubResource("AnimationNodeAnimation_qod7y")
+states/Thinking/position = Vector2(669.36, 13.468798)
+states/Turn/node = SubResource("AnimationNodeAnimation_lnomg")
+states/Turn/position = Vector2(670.128, 182.74559)
+states/Walk/node = SubResource("AnimationNodeBlendSpace1D_s3v3c")
+states/Walk/position = Vector2(393.04, 183.07199)
+transitions = ["Walk", "Turn", SubResource("AnimationNodeStateMachineTransition_dlt3l"), "Turn", "Walk", SubResource("AnimationNodeStateMachineTransition_w2pib"), "Thinking", "Walk", SubResource("AnimationNodeStateMachineTransition_eqj1u"), "Start", "Thinking", SubResource("AnimationNodeStateMachineTransition_uxd2c"), "Walk", "Thinking", SubResource("AnimationNodeStateMachineTransition_qod7y")]
+graph_offset = Vector2(-24, -26)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_46y8d"]
+a = Vector2(21, 0)
+b = Vector2(31, -13)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_qod7y"]
+a = Vector2(21, -13)
+b = Vector2(31, 0)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_uxd2c"]
+a = Vector2(7.1525574e-07, -13)
+b = Vector2(-7.9999995, -13)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_lnomg"]
+a = Vector2(7.1525574e-07, -13)
+b = Vector2(-7.9999995, -13)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_qod7y"]
+radius = 6.0
+height = 20.0
+
+[node name="Path2D" type="Path2D" unique_id=1120959727]
+script = ExtResource("1_lnomg")
+
+[node name="TankRobot" type="AnimatableBody2D" parent="." unique_id=1844115741]
+process_mode = 1
+collision_layer = 48
+collision_mask = 2
+script = ExtResource("1_uhbvp")
+
+[node name="Sprite2D" type="Sprite2D" parent="TankRobot" unique_id=686505151]
 texture = ExtResource("1_me2wh")
 hframes = 10
 region_enabled = true
 region_rect = Rect2(1, 0, 169, 26)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CapsuleShape2D_tic67")
+[node name="AnimationPlayer" type="AnimationPlayer" parent="TankRobot" unique_id=1589280363]
+libraries/ = SubResource("AnimationLibrary_ay7k2")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_ay7k2")
-}
+[node name="VisibleOnScreen" type="VisibleOnScreenEnabler2D" parent="TankRobot" unique_id=2033401882]
+position = Vector2(-1.43051e-06, 1)
+scale = Vector2(2.6, 2.3)
+rect = Rect2(-50, -25, 100, 50)
+metadata/_edit_lock_ = true
+
+[node name="AnimationTree" type="AnimationTree" parent="TankRobot" unique_id=948273592]
+tree_root = SubResource("AnimationNodeStateMachine_46y8d")
+anim_player = NodePath("../AnimationPlayer")
+parameters/Walk/blend_position = 0.0
+
+[node name="LeftSlide" type="CollisionShape2D" parent="TankRobot" unique_id=1797051778]
+position = Vector2(-27, 3)
+shape = SubResource("SegmentShape2D_46y8d")
+disabled = true
+one_way_collision = true
+
+[node name="RightSlide" type="CollisionShape2D" parent="TankRobot" unique_id=372328346]
+position = Vector2(-27, 3)
+shape = SubResource("SegmentShape2D_qod7y")
+disabled = true
+one_way_collision = true
+
+[node name="LeftKeenPush" type="CollisionShape2D" parent="TankRobot" unique_id=714484460]
+position = Vector2(10, 3)
+rotation = -1.5707964
+shape = SubResource("SegmentShape2D_uxd2c")
+disabled = true
+one_way_collision = true
+
+[node name="RightKeenPush" type="CollisionShape2D" parent="TankRobot" unique_id=898703133]
+position = Vector2(-10, 11)
+rotation = 1.5707964
+shape = SubResource("SegmentShape2D_lnomg")
+disabled = true
+one_way_collision = true
+
+[node name="StateMachine" type="Node" parent="TankRobot" unique_id=1388881663 node_paths=PackedStringArray("character", "animationTree")]
+script = ExtResource("3_uxd2c")
+character = NodePath("..")
+animationTree = NodePath("../AnimationTree")
+
+[node name="Thinking" type="Node" parent="TankRobot/StateMachine" unique_id=1226618446]
+script = ExtResource("3_s3v3c")
+
+[node name="Walk" type="Node" parent="TankRobot/StateMachine" unique_id=1749978349 node_paths=PackedStringArray("pathFollow2D")]
+script = ExtResource("3_2tv2b")
+pathFollow2D = NodePath("../../../PathFollow2D")
+
+[node name="Timer" type="Timer" parent="TankRobot/StateMachine/Walk" unique_id=1084024615]
+process_callback = 0
+one_shot = true
+
+[node name="Shooting" type="Node" parent="TankRobot/StateMachine" unique_id=1695640581]
+script = ExtResource("5_46y8d")
+raygun = ExtResource("8_qod7y")
+raygunColor = Color(0.2354497, 1.5720325, 0.19916238, 1)
+
+[node name="WaitTimer" type="Timer" parent="TankRobot/StateMachine/Shooting" unique_id=1989664569]
+wait_time = 2.0
+one_shot = true
+
+[node name="Area2D" type="Area2D" parent="TankRobot" unique_id=1673394352]
+collision_layer = 0
+collision_mask = 16
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TankRobot/Area2D" unique_id=236224809]
+shape = SubResource("CapsuleShape2D_qod7y")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="." unique_id=1996709981]
+rotates = false
+cubic_interp = false
+loop = false
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="PathFollow2D" unique_id=84329493]
+remote_path = NodePath("../../TankRobot")
+update_rotation = false
+update_scale = false
+
+[connection signal="timeout" from="TankRobot/StateMachine/Walk/Timer" to="TankRobot/StateMachine/Walk" method="OnTimerTimeout"]
+[connection signal="timeout" from="TankRobot/StateMachine/Shooting/WaitTimer" to="TankRobot/StateMachine/Shooting" method="ShootFinished"]
+[connection signal="body_entered" from="TankRobot/Area2D" to="TankRobot" method="BodyEntered"]

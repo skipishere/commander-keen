@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://bckllpjewggoc"]
+[gd_scene format=3 uid="uid://bckllpjewggoc"]
 
 [ext_resource type="Script" uid="uid://drosb0a4h648v" path="res://scenes/creatures/ButlerRobot/ButlerRobot.cs" id="1_8yhg0"]
 [ext_resource type="Shader" uid="uid://r0x30fkd2lv0" path="res://shaders/flash.gdshader" id="2_cebvp"]
@@ -98,29 +98,29 @@ animations = [{
 "speed": 8.0
 }]
 
-[node name="ButlerRobot" type="StaticBody2D"]
+[node name="ButlerRobot" type="StaticBody2D" unique_id=1975665336]
 process_mode = 1
 collision_layer = 1040
 collision_mask = 3
 script = ExtResource("1_8yhg0")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1594899260]
 material = SubResource("ShaderMaterial_b8rg5")
 sprite_frames = SubResource("SpriteFrames_2w6hr")
 animation = &"left"
 
-[node name="RayCastRight" type="RayCast2D" parent="."]
+[node name="RayCastRight" type="RayCast2D" parent="." unique_id=1265693755]
 position = Vector2(-5, 0)
 target_position = Vector2(0, 16)
 
-[node name="RayCastLeft" type="RayCast2D" parent="."]
+[node name="RayCastLeft" type="RayCast2D" parent="." unique_id=911342164]
 position = Vector2(5, 0)
 target_position = Vector2(0, 16)
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
-polygon = PackedVector2Array(0, -7, 4, 2, 5, 8, -5, 8, -4, 2)
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=1873509003]
+polygon = PackedVector2Array(0, -7, 4, 2, 5, 7, -5, 7, -4, 2)
 
-[node name="HitTimer" type="Timer" parent="."]
+[node name="HitTimer" type="Timer" parent="." unique_id=525835050]
 wait_time = 0.5
 one_shot = true
 

@@ -1,13 +1,13 @@
 using System;
 using Godot;
 
-public interface IState<T> where T : struct, Enum
+public interface IState<T, Body> where T : struct, Enum where Body : PhysicsBody2D
 {
     public T StateType { get; }
 
     public bool CanMove { get; }
 
-    public CharacterBody2D Character { get; set; }
+    public Body Character { get; set; }
     public T? NextState { get; }
 
     void StateInput(InputEvent inputEvent);

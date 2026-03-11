@@ -6,7 +6,6 @@ public partial class Keen : CharacterBody2D, ITakeDamage
     public const float Speed = 180.0f;
 
     public bool IsPogoing => stateMachine.IsPogoing();
-
     public AnimationTree animationTree;
     private Camera2D camera;
     private int width;
@@ -83,6 +82,7 @@ public partial class Keen : CharacterBody2D, ITakeDamage
     public void TakeDamage()
     {
         Debug.WriteLine("Keen hit!");
+        stateMachine.KeenShot();
     }
 
     public void GiveKey(game_stats.KeyCards key)

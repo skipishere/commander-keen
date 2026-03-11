@@ -36,6 +36,12 @@ color_ramp = SubResource("Gradient_yer88")
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_gvmf3"]
 distance = -9.0
 
+[sub_resource type="Curve2D" id="Curve2D_yer88"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -65, 0, 0, 0, 0, 0, 92, 0)
+}
+point_count = 2
+
 [sub_resource type="Animation" id="Animation_yer88"]
 length = 0.001
 tracks/0/type = "value"
@@ -204,6 +210,8 @@ position = Vector2(120, -328)
 
 [node name="TankRobot" parent="Creatures" unique_id=893326924 instance=ExtResource("6_ioybh")]
 position = Vector2(185, -428)
+curve = SubResource("Curve2D_yer88")
+StartPosition = 0.5
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=164750019]
 libraries/ = SubResource("AnimationLibrary_hntkv")

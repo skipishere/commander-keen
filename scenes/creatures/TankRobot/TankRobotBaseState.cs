@@ -1,19 +1,17 @@
 using Godot;
 
-public abstract partial class GargBaseState : Node, IState<GargStateMachine.GargStates, CharacterBody2D>
+public abstract partial class TankRobotBaseState : Node, IState<TankRobotStateMachine.TankRobotStates, TankRobot>
 {
-    public CharacterBody2D Character { get; set; }
+    public TankRobot Character { get; set; }
 
     public AnimationTree AnimationTree { get; set; }
 
-    public abstract GargStateMachine.GargStates StateType { get; }
+    public abstract TankRobotStateMachine.TankRobotStates StateType { get; }
 
     public virtual bool CanMove => true;
-    public GargStateMachine.GargStates? NextState { get; set; }
+    public TankRobotStateMachine.TankRobotStates? NextState { get; set; }
 
     internal AnimationNodeStateMachinePlayback playback { get => (AnimationNodeStateMachinePlayback)AnimationTree.Get("parameters/playback"); }
-
-    internal float gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle() / 2;
 
     public virtual void StateInput(InputEvent inputEvent)
     {
