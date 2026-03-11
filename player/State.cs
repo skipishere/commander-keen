@@ -34,4 +34,9 @@ public abstract partial class State : Node, IState<StateMachine.KeenStates, Char
     {
         shoveVelocity = new Vector2(Mathf.Sign(direction) * Speed, 0);
     }
+
+    public virtual bool HitByShotKills()
+    {
+        return true;
+    }
 }

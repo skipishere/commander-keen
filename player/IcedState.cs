@@ -50,4 +50,16 @@ public partial class IcedState : State
         Character.Velocity = new Vector2(HitByLeftIceChunk ? -200 : 200, -200);
         IcedLength.Start();
     }
+
+    public override bool HitByShotKills()
+    {
+        if (playback.GetCurrentNode() != "thaw")
+        {
+            IcedLength.Stop();
+            Thaw();
+        }
+
+        return false;
+    }
+
 }

@@ -118,4 +118,12 @@ public partial class StateMachine : Node
         shoveVelocity = new Vector2(Mathf.Sign(direction) * Keen.Speed, 0);
         (Current as State).shoveVelocity = shoveVelocity;
     }
+
+    public void KeenShot()
+    {
+        if ((Current as State).HitByShotKills())
+        {
+            signalManager.EmitSignal(nameof(SignalManager.KeenDead));
+        }
+    }
 }
