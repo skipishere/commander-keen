@@ -95,8 +95,7 @@ jobs:
         fi
         echo "Linux build successful:"
         ls -la artifact/commander-keen-linux.x86_64
-        chmod +x artifact/commander-keen-linux.x86_64
-
+        
     - name: Build macOS platform
       run: |
         echo "Building macOS platform..."
@@ -120,6 +119,7 @@ jobs:
       run: |
         sudo chown -R $USER:$USER artifact/
         sudo chmod -R 755 artifact/
+        sudo chmod +x artifact/commander-keen-linux.x86_64
 
     - name: Upload Windows artifact
       uses: actions/upload-artifact@v7
