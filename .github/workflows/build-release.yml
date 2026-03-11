@@ -95,6 +95,7 @@ jobs:
         fi
         echo "Linux build successful:"
         ls -la artifact/commander-keen-linux.x86_64
+        chmod +x artifact/commander-keen-linux.x86_64
 
     - name: Build macOS platform
       run: |
@@ -120,95 +121,47 @@ jobs:
         sudo chown -R $USER:$USER artifact/
         sudo chmod -R 755 artifact/
 
-    - name: Package all builds
-      run: |
-        cd artifact
-        TAG_NAME="${{ steps.tag.outputs.tag }}"
-        
-        # Package Windows
-        echo "Packaging Windows build..."
-        zip -r commander-keen-windows-${TAG_NAME}.zip commander-keen-windows.exe
-        
-        # Package Linux
-        echo "Packaging Linux build..."
-        chmod +x commander-keen-linux.x86_64
-        zip -r commander-keen-linux-${TAG_NAME}.zip commander-keen-linux.x86_64
-        
-        # Package macOS (already zipped by Godot)
-        echo "Packaging macOS build..."
-        mv commander-keen-macos.zip commander-keen-macos-${TAG_NAME}.zip
-        
-        echo "All packages created:"
-        ls -la *.zip
-
     - name: Upload Windows artifact
       uses: actions/upload-artifact@v7
       with:
         name: commander-keen-windows-${{ steps.tag.outputs.tag }}
-        path: artifact/commander-keen-windows-${{ steps.tag.outputs.tag }}.zip
+        path: artifact/commander-keen-windows.exe
+        archive: false
 
     - name: Upload Linux artifact
       uses: actions/upload-artifact@v7
       with:
         name: commander-keen-linux-${{ steps.tag.outputs.tag }}
-        path: artifact/commander-keen-linux-${{ steps.tag.outputs.tag }}.zip
+        path: artifact/commander-keen-linux.x86_64
+        archive: false
 
     - name: Upload macOS artifact
       uses: actions/upload-artifact@v7
       with:
         name: commander-keen-macos-${{ steps.tag.outputs.tag }}
-        path: artifact/commander-keen-macos-${{ steps.tag.outputs.tag }}.zip
+        path: artifact/commander-keen-macos.zip
+        archive: false
 
-  # Final job to create the release with all artifacts
-  release:
-    needs: build-all-platforms
-    runs-on: ubuntu-latest
-    if: github.event_name == 'release'
-    permissions:
-      contents: write
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v6
-
-    - name: Set up tag name
-      id: tag
-      run: |
-        if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ -n "${{ github.event.inputs.tag }}" ]; then
-          echo "tag=${{ github.event.inputs.tag }}" >> $GITHUB_OUTPUT
-        elif [ "${{ github.event_name }}" = "push" ]; then
-          echo "tag=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
-        elif [ "${{ github.event_name }}" = "release" ]; then
-          echo "tag=${{ github.event.release.tag_name }}" >> $GITHUB_OUTPUT
-        else
-          echo "tag=dev-$(date +%Y%m%d-%H%M%S)" >> $GITHUB_OUTPUT
-        fi
-
-    - name: Download all artifacts
-      uses: actions/download-artifact@v8
-      with:
-        path: artifacts/
-
-    - name: List downloaded artifacts
-      run: |
-        echo "Downloaded artifacts:"
-        find artifacts/ -type f -name "*.zip" | sort
-
-    - name: Create or update release
+    - name: Upload release assets
+      if: github.event_name == 'release'
       run: |
         TAG_NAME="${{ steps.tag.outputs.tag }}"
+        ASSETS=(
+          artifact/commander-keen-windows.exe
+          artifact/commander-keen-linux.x86_64
+          artifact/commander-keen-macos.zip
+        )
         
         # Check if release already exists
         if gh release view "$TAG_NAME" >/dev/null 2>&1; then
           echo "Release $TAG_NAME already exists, uploading assets..."
-          # Upload all artifacts to existing release
-          find artifacts/ -type f -name "*.zip" -exec gh release upload "$TAG_NAME" {} \;
+          gh release upload "$TAG_NAME" "${ASSETS[@]}"
         else
           echo "Creating new release $TAG_NAME..."
-          # Create new release with all artifacts
           gh release create "$TAG_NAME" \
             --title "Release $TAG_NAME" \
             --notes "Automated release build for $TAG_NAME" \
-            artifacts/*/*.zip
+            "${ASSETS[@]}"
         fi
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
