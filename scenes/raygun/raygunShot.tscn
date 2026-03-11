@@ -6,8 +6,8 @@
 [ext_resource type="AudioStream" uid="uid://c3hy7x0tffyqb" path="res://sfx/28912__junggle__btn102.wav" id="3_ejal4"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_umtd2"]
-radius = 2.0
-height = 4.0
+radius = 3.0
+height = 6.0
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_1pkog"]
 light_mode = 1
@@ -24,7 +24,7 @@ lifetime = 0.1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1273000873]
 position = Vector2(7, -1)
-rotation = -1.5708
+rotation = 1.5707964
 shape = SubResource("CapsuleShape2D_umtd2")
 one_way_collision = true
 
