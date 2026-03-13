@@ -340,6 +340,7 @@ radius = 6.0
 height = 20.0
 
 [node name="Path2D" type="Path2D" unique_id=1120959727]
+process_mode = 1
 script = ExtResource("1_lnomg")
 
 [node name="TankRobot" type="AnimatableBody2D" parent="." unique_id=1844115741]
