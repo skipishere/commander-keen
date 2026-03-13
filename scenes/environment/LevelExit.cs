@@ -8,6 +8,7 @@ public partial class LevelExit : Area2D
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
+        BodyEntered += OnBodyEntered;
         animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
         signalManager = GetNode<SignalManager>("/root/SignalManager");
     }

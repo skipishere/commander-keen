@@ -8,6 +8,7 @@ public partial class PogoStick : Area2D
 
     public override void _Ready()
     {
+        BodyEntered += OnBodyEntered;
         audioStreamPlayer = GetNode<AudioStreamPlayer2D>("AudioStreamPlayer2D");
         signalManager = GetNode<SignalManager>("/root/SignalManager");
     }
