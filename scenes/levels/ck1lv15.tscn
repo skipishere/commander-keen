@@ -216,6 +216,3 @@ position = Vector2(1239, -184)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1507183885]
 libraries/ = SubResource("AnimationLibrary_g4mv5")
-
-[connection signal="body_entered" from="TileMap/Foreground/Raygun-item" to="TileMap/Foreground/Raygun-item" method="OnBodyEntered"]
-[connection signal="body_entered" from="TileMap/Foreground/LevelExit" to="TileMap/Foreground/LevelExit" method="OnBodyEntered"]

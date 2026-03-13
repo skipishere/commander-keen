@@ -289,5 +289,4 @@ position = Vector2(361, -1132)
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=325080871]
 libraries/ = SubResource("AnimationLibrary_78uls")
 
-[connection signal="body_entered" from="TileMap/Foreground/LevelExit" to="TileMap/Foreground/LevelExit" method="OnBodyEntered"]
 [connection signal="body_entered" from="Area2D" to="Area2D" method="OnDeathZoneBodyEntered"]

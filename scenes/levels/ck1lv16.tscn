@@ -204,4 +204,3 @@ position = Vector2(1520, -896)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1733820371]
 libraries/ = SubResource("AnimationLibrary_n6xnt")
-
