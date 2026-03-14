@@ -13,6 +13,7 @@ public partial class KeyCard : Area2D
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
+        BodyEntered += OnBodyEntered;
         audioStreamPlayer = GetNode<AudioStreamPlayer2D>("AudioStreamPlayer2D");
         signalManager = GetNode<SignalManager>("/root/SignalManager");
     }

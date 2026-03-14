@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://bigipns5vtp2o"]
+[gd_scene format=3 uid="uid://bigipns5vtp2o"]
 
 [ext_resource type="Script" uid="uid://dtqyvbda5enx4" path="res://scenes/items/RaygunItem.cs" id="1_lmjrk"]
 [ext_resource type="Texture2D" uid="uid://b74gl7bkvx1fg" path="res://sprites/rayguns.png" id="1_yy8ep"]
@@ -7,22 +7,20 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_n8xch"]
 size = Vector2(16, 10)
 
-[node name="Raygun-item" type="Area2D"]
+[node name="Raygun-item" type="Area2D" unique_id=478060804]
 collision_layer = 4
 collision_mask = 2
 script = ExtResource("1_lmjrk")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=153117458]
 texture = ExtResource("1_yy8ep")
 region_enabled = true
 region_rect = Rect2(0, 0, 16, 16)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1367963018]
 position = Vector2(0, 1)
 shape = SubResource("RectangleShape2D_n8xch")
 
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=1196168704]
 stream = ExtResource("3_d4yj2")
 pitch_scale = 0.75
-
-[connection signal="body_entered" from="." to="." method="OnBodyEntered"]

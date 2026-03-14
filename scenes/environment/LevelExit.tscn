@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bacl3fbjkgx8e"]
+[gd_scene format=3 uid="uid://bacl3fbjkgx8e"]
 
 [ext_resource type="Script" uid="uid://0lurwrh5xrdd" path="res://scenes/environment/LevelExit.cs" id="1_51t3q"]
 [ext_resource type="Texture2D" uid="uid://bu88vy4djst64" path="res://sprites/Door.png" id="2_n4jso"]
@@ -134,36 +134,34 @@ _data = {
 &"exiting": SubResource("Animation_m03n0")
 }
 
-[node name="LevelExit" type="Area2D"]
+[node name="LevelExit" type="Area2D" unique_id=1373832932]
 z_index = -1
 position = Vector2(-13, -3)
 collision_mask = 2
 script = ExtResource("1_51t3q")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=906062779]
 position = Vector2(8, -8)
 texture = ExtResource("2_n4jso")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=471890880]
 position = Vector2(7.5, -5)
 shape = SubResource("RectangleShape2D_2ulyt")
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=655528444]
 stream = ExtResource("3_m42mm")
 pitch_scale = 0.85
 bus = &"Music"
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_ooaop")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=761795971]
+libraries/ = SubResource("AnimationLibrary_ooaop")
 
-[node name="Polygon2D" type="Polygon2D" parent="."]
+[node name="Polygon2D" type="Polygon2D" parent="." unique_id=397467219]
 clip_children = 1
 color = Color(1, 0, 0, 1)
 polygon = PackedVector2Array(-11, 12, -11, -21, 21, -21, 21, 12)
 
-[node name="ExitingKeen" type="Sprite2D" parent="Polygon2D"]
+[node name="ExitingKeen" type="Sprite2D" parent="Polygon2D" unique_id=182609934]
 visible = false
 position = Vector2(-1, 0)
 texture = ExtResource("4_g5lts")
@@ -171,5 +169,3 @@ hframes = 3
 frame = 1
 region_enabled = true
 region_rect = Rect2(17, 1, 51, 24)
-
-[connection signal="body_entered" from="." to="." method="OnBodyEntered"]

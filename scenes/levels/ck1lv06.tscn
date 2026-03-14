@@ -193,5 +193,3 @@ occluder = SubResource("OccluderPolygon2D_jhabg")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=854782540]
 libraries/ = SubResource("AnimationLibrary_alb2u")
-
-[connection signal="body_entered" from="TileMap/Foreground/LevelExit" to="TileMap/Foreground/LevelExit" method="OnBodyEntered"]

@@ -14,6 +14,7 @@ public partial class HazardBase : Area2D
 
     public override void _Ready()
     {
+        BodyEntered += OnBodyEntered;
         signalManager = GetNode<SignalManager>("/root/SignalManager");
 
         if (RandomStartFrame)

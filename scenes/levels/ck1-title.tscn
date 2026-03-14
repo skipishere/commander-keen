@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=4 uid="uid://s8g3ow2cg7re"]
+[gd_scene format=4 uid="uid://s8g3ow2cg7re"]
 
 [ext_resource type="TileSet" uid="uid://w7k5amqxc3ac" path="res://scenes/tile_platform.tres" id="1_2bvxc"]
 [ext_resource type="Script" uid="uid://b8gaipyy7tvxb" path="res://scenes/levels/Ck1Title.cs" id="1_fv4rj"]
@@ -9,30 +9,30 @@
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_7clat"]
 
-[node name="Ck1-title" type="Node2D" node_paths=PackedStringArray("DefaultButton")]
+[node name="Ck1-title" type="Node2D" unique_id=1982914991 node_paths=PackedStringArray("DefaultButton")]
 script = ExtResource("1_fv4rj")
 DefaultButton = NodePath("CanvasLayer/PanelContainer/VBoxContainer/New")
 
-[node name="Sprite2D2" type="Sprite2D" parent="."]
+[node name="Sprite2D2" type="Sprite2D" parent="." unique_id=99956390]
 position = Vector2(160, 91)
 scale = Vector2(0.1, 0.1)
 texture = ExtResource("2_hmspx")
 
-[node name="TileMapLayer" type="TileMapLayer" parent="."]
+[node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=1078465852]
 position = Vector2(0, 6)
 tile_map_data = PackedByteArray("AAAAAAoAAAAHAAAAAAABAAoAAAAHAAAAAAACAAoAAAAIAAAAAAACAAsAAAAIAAEAAAABAAsAAAAHAAEAAAAAAAsAAAAHAAEAAAAAAAkAAAADAAoAAAAAAAgAAAADAAkAAAADAAsAAwAAAAAAAQAEAAsAAwAAAAAAAQAFAAsAAAAGAAEAAAAGAAoAAAAHAAAAAAAGAAsAAAAHAAEAAAAHAAkAAAADAAAAAAAHAAoAAAAHAAAAAAAHAAsAAAAHAAEAAAAIAAkAAAABAAAAAAAIAAoAAAAHAAAAAAAIAAsAAAAHAAEAAAAJAAoAAAAHAAAAAAAJAAsAAAAHAAEAAAAKAAoAAAAHAAEAAAAKAAsAAAAHAAEAAAALAAcAAAAHAAAAAAALAAgAAAAIAAEAAAALAAkAAAAIAAEAAAALAAoAAAAIAAEAAAALAAsAAAAIAAEAAAAMAAcAAQAAAAEAAAAMAAkABAAEAAAAAAAMAAoAAAACAAAAAAAMAAsAAQAEAAAAAAANAAcAAQAEAAEAAAANAAsAAQAEAAAAAAAOAAcAAQAEAAEAAAAOAAsAAQAEAAAAAAAPAAcAAQAEAAEAAAAPAAsAAAAGAAAAAAAQAAcAAQAEAAEAAAAQAAsAAAAHAAAAAAARAAcAAQAIAAEAAAARAAoAAAAEAAQAAAARAAsAAAAHAAAAAAASAAcAAAAHAAAAAAASAAsAAAAHAAAAAAATAAcAAAAHAAAAAAATAAgAAAAHAAIAAAATAAsAAAAHAAAAAAAFAAoAAAAGAAAAAAAGAAkAAAABAAAAAAAHAAgAAAAEAAAAAAAKAAcAAAAGAAAAAAAKAAgAAAAGAAEAAAAKAAkAAAAGAAEAAAAQAAoAAQAAAAAAAAASAAgAAAAGAAIAAAATAAkAAAAGAAQAAAA=")
 tile_set = ExtResource("1_2bvxc")
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="Camera2D" type="Camera2D" parent="." unique_id=721347623]
 position = Vector2(160, 92)
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1395756148]
 position = Vector2(164, 49)
 texture = ExtResource("2_2jvqq")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=478911159]
 
-[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer"]
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer" unique_id=684212946]
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
@@ -45,35 +45,35 @@ offset_bottom = -4.0
 grow_horizontal = 2
 grow_vertical = 0
 
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/PanelContainer"]
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/PanelContainer" unique_id=40186826]
 layout_mode = 2
 texture = SubResource("CanvasTexture_7clat")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/PanelContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/PanelContainer" unique_id=1712244033]
 layout_mode = 2
 
-[node name="New" type="Button" parent="CanvasLayer/PanelContainer/VBoxContainer"]
+[node name="New" type="Button" parent="CanvasLayer/PanelContainer/VBoxContainer" unique_id=1411860420]
 layout_mode = 2
 theme_override_font_sizes/font_size = 8
 text = "New Game"
 
-[node name="Continue" type="Button" parent="CanvasLayer/PanelContainer/VBoxContainer"]
+[node name="Continue" type="Button" parent="CanvasLayer/PanelContainer/VBoxContainer" unique_id=1626243426]
 layout_mode = 2
 theme_override_font_sizes/font_size = 8
 text = "Continue"
 
-[node name="Quit" type="Button" parent="CanvasLayer/PanelContainer/VBoxContainer"]
+[node name="Quit" type="Button" parent="CanvasLayer/PanelContainer/VBoxContainer" unique_id=196866791]
 layout_mode = 2
 theme_override_font_sizes/font_size = 8
 text = "Quit"
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=2019468994]
 stream = ExtResource("5_vgkha")
 volume_db = -6.0
 autoplay = true
 bus = &"Music"
 
-[node name="Label" type="Label" parent="."]
+[node name="Label" type="Label" parent="." unique_id=558604521]
 offset_left = 243.0
 offset_top = 186.0
 offset_right = 319.0

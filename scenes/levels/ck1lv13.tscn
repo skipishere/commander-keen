@@ -197,5 +197,4 @@ position = Vector2(1741, -12)
 curve = SubResource("Curve2D_upfyf")
 StartPosition = 0.46
 
-[connection signal="body_entered" from="TileMap/Foreground/LevelExit" to="TileMap/Foreground/LevelExit" method="OnBodyEntered"]
 [connection signal="body_entered" from="Area2D" to="Area2D" method="OnDeathZoneBodyEntered"]

@@ -211,8 +211,8 @@ position = Vector2(713, -172)
 curve = SubResource("Curve2D_da0v4")
 StartPosition = 0.43
 
+[node name="ButlerRobot2" parent="Creatures" unique_id=1975665336 instance=ExtResource("5_da0v4")]
+position = Vector2(1239, -184)
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1507183885]
 libraries/ = SubResource("AnimationLibrary_g4mv5")
-
-[connection signal="body_entered" from="TileMap/Foreground/Raygun-item" to="TileMap/Foreground/Raygun-item" method="OnBodyEntered"]
-[connection signal="body_entered" from="TileMap/Foreground/LevelExit" to="TileMap/Foreground/LevelExit" method="OnBodyEntered"]

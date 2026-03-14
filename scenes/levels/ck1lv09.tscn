@@ -220,5 +220,3 @@ texture = SubResource("GradientTexture2D_flawm")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1218056339]
 libraries/ = SubResource("AnimationLibrary_tftmt")
-
-[connection signal="body_entered" from="TileMap/Foreground/LevelExit" to="TileMap/Foreground/LevelExit" method="OnBodyEntered"]

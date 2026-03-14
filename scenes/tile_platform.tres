@@ -26,7 +26,6 @@
 [ext_resource type="PackedScene" uid="uid://cqkfb4objin22" path="res://scenes/environment/YorpStatue.tscn" id="16_wnxjs"]
 [ext_resource type="PackedScene" uid="uid://c1afdec3i8igq" path="res://scenes/environment/GargStatue.tscn" id="17_00mca"]
 [ext_resource type="PackedScene" uid="uid://cr1yntpct72je" path="res://scenes/items/PogoStick.tscn" id="18_nw05o"]
-[ext_resource type="PackedScene" uid="uid://xi5w2wacxuql" path="res://scenes/hazards/fire2.tscn" id="19_rgiqo"]
 [ext_resource type="PackedScene" uid="uid://datlcif8t71fa" path="res://scenes/environment/HiddenBlock.tscn" id="19_w2rmp"]
 [ext_resource type="PackedScene" uid="uid://t7mowemw43uw" path="res://scenes/doors/DoorA.tscn" id="20_62ska"]
 [ext_resource type="PackedScene" uid="uid://sx1koyrggqtd" path="res://scenes/doors/DoorB.tscn" id="21_bouc3"]
@@ -704,7 +703,6 @@ scenes/19/scene = ExtResource("14_o787x")
 scenes/20/scene = ExtResource("16_wnxjs")
 scenes/21/scene = ExtResource("17_00mca")
 scenes/22/scene = ExtResource("18_nw05o")
-scenes/23/scene = ExtResource("19_rgiqo")
 scenes/24/scene = ExtResource("19_w2rmp")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_aaikf"]

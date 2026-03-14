@@ -14,6 +14,8 @@ public partial class ItemBase : Area2D
 
     public override void _Ready()
     {
+        BodyEntered += OnBodyEntered;
+
         audioStreamPlayer = GetNode<AudioStreamPlayer2D>("AudioStreamPlayer2D");
         label = GetNode<Label>("Label");
         label.Visible = false;
