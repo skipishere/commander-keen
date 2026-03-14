@@ -65,11 +65,6 @@ public partial class raygunShot : StaticBody2D, ITakeDamage
         }
     }
 
-    public void ShotHit()
-    {
-        hasCollided = true;
-    }
-
     private void ScreenExited()
     {
         hasCollided = true;
@@ -77,7 +72,6 @@ public partial class raygunShot : StaticBody2D, ITakeDamage
 
     public void TakeDamage()
     {
-        hasCollided = true;
         ShowZap();
     }
 
