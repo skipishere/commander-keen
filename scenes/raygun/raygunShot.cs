@@ -3,12 +3,11 @@ using System.Diagnostics;
 
 public partial class raygunShot : StaticBody2D, ITakeDamage
 {
+    [Export]
+    private PackedScene zapScene;
     const int SPEED = 300;
     private Vector2 direction;
-
-    private Sprite2D zap;
     private GpuParticles2D fireParticles;
-
     private CollisionShape2D collisionShape;
     private GodotObject origin;
     private AudioStreamPlayer2D audioStreamPlayer2D;
@@ -20,7 +19,6 @@ public partial class raygunShot : StaticBody2D, ITakeDamage
     {
         fireParticles = GetNode<GpuParticles2D>("Fire");
         fireParticles.Modulate = ShotColor;
-        zap = GetNode<Sprite2D>("Zap");
         collisionShape = GetNode<CollisionShape2D>("CollisionShape2D");
         audioStreamPlayer2D = GetNode<AudioStreamPlayer2D>("AudioStreamPlayer");
     }
@@ -46,12 +44,10 @@ public partial class raygunShot : StaticBody2D, ITakeDamage
             return;
         }
 
-        var modifier = this.zap.Visible ? 0.1f : 1.0f;
-        var shot = MoveAndCollide(direction * SPEED * modifier * (float)delta);
+        var shot = MoveAndCollide(direction * SPEED * (float)delta);
 
         if (shot != null && shot.GetCollider() != origin)
         {
-            zap.FlipH = direction.X < 0;
             collisionShape.Disabled = true;
             fireParticles.Emitting = false;
 
@@ -87,10 +83,10 @@ public partial class raygunShot : StaticBody2D, ITakeDamage
 
     private void ShowZap()
     {
-        zap.Visible = true;
-        var tween = GetTree().CreateTween();
-        tween.Parallel().TweenProperty(this, "scale", new Vector2(0, 0), 0.5f);
-        tween.Parallel().TweenProperty(this, "modulate:a", 0, 0.5f);
-        tween.TweenCallback(Callable.From(ShotHit));
+        var zapInstance = zapScene.Instantiate() as Zap;
+        zapInstance.GlobalPosition = this.GlobalPosition;
+
+        hasCollided = true;
+        GetTree().Root.AddChild(zapInstance);
     }
 }
