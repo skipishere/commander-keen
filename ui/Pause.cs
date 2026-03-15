@@ -39,7 +39,14 @@ public partial class Pause : PanelContainer
         };
         signalManager.ExitingLevel += () =>
         {
-            disablePauseMenu = false;
+            if (!game_stats.GameOver)
+            {
+                disablePauseMenu = false;
+            }
+        };
+        signalManager.GameOver += () =>
+        {
+            disablePauseMenu = true;
         };
 
         settingsMenu.Visible = false;
@@ -79,7 +86,7 @@ public partial class Pause : PanelContainer
     public void ShowSettings()
     {
         mainMenuContainer.Visible = false;
-        
+
         settingsMenu.Visible = true;
         settingsMenu.OnVisibilityChanged();
     }
