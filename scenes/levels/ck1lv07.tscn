@@ -138,7 +138,7 @@ tile_map_data = PackedByteArray("AABOAMr/BgAAAAAAAwBPAMr/BgAAAAAABABQAMr/BgAAAAA
 tile_set = ExtResource("2_1kbew")
 
 [node name="Keen" parent="." unique_id=1440464278 instance=ExtResource("3_gn5p7")]
-position = Vector2(40, -172)
+position = Vector2(48, -172)
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=771299457]
 stream = ExtResource("5_ldof7")
