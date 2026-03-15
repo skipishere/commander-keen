@@ -45,6 +45,7 @@ public partial class game_stats : Resource
     public static PogoStickState HasPogoStick = PogoStickState.No;
 
     public static int Lives = 5;
+    public static bool GameOver => Lives < 0;
 
     public enum PogoStickState
     {
