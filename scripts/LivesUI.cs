@@ -34,6 +34,7 @@ public partial class LivesUI : HBoxContainer
 
     private void OnLivesChanged()
     {
-        lives.Text = game_stats.Lives.ToString("00");
+        var livesToShow = game_stats.Lives > 0 ? game_stats.Lives : 0;
+        lives.Text = livesToShow.ToString("00");
     }
 }

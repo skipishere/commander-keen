@@ -62,6 +62,12 @@ public partial class GameLogic : Node
     {
         game_stats.Lives--;
 
+        if (game_stats.GameOver)
+        {
+            signalManager.EmitSignal(nameof(SignalManager.GameOver));
+            return;
+        }
+
         // Reset collected parts if Keen dies.
         game_stats.CollectedParts = partsGained;
         signalManager.EmitSignal(nameof(SignalManager.ShipPart));
