@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://cmo2vsvbaqlgn"
+path="res://.godot/imported/No Hope.mp3-198ba141a8c6a56fef132823ea27fdd9.mp3str"
+
+[deps]
+
+source_file="res://music/No Hope.mp3"
+dest_files=["res://.godot/imported/No Hope.mp3-198ba141a8c6a56fef132823ea27fdd9.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
