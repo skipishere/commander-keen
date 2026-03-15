@@ -4,6 +4,7 @@ public partial class Main : Node
 {
     private SignalManager signalManager;
     private CanvasLayer pauseMenu;
+    private UiPanel uiPanel;
 
     public override void _Ready()
     {
@@ -11,9 +12,12 @@ public partial class Main : Node
         VersionInfo.LogVersionInfo();
 
         pauseMenu = GetNode<CanvasLayer>("Pause Menu");
+        uiPanel = GetNode<UiPanel>("UI/UiPanel");
+
         signalManager = GetNode<SignalManager>("/root/SignalManager");
         signalManager.ExitingLevel += OnExitingLevel;
         signalManager.EnteringLevel += OnEnteringLevel;
+        signalManager.GameOver += OnGameOver;
 
         signalManager.EmitSignal(nameof(SignalManager.ResetUi));
     }
@@ -23,6 +27,7 @@ public partial class Main : Node
         base._ExitTree();
         signalManager.ExitingLevel -= OnExitingLevel;
         signalManager.EnteringLevel -= OnEnteringLevel;
+        signalManager.GameOver -= OnGameOver;
     }
 
     public override void _Process(double delta)
@@ -43,8 +48,32 @@ public partial class Main : Node
 
     private void OnExitingLevel()
     {
-        var level = GetNode<Node2D>("Level");
-        this.AddChild(ResourceLoader.Load<PackedScene>("res://scenes/levels/ck1-overworld.tscn").Instantiate());
-        level.QueueFree();
+        var level = GetNodeOrNull<Node2D>("Level");
+
+        if (game_stats.GameOver)
+        {
+            GameOver();
+        }
+        else
+        {
+            this.AddChild(ResourceLoader.Load<PackedScene>("res://scenes/levels/ck1-overworld.tscn").Instantiate());
+        }
+
+        level?.QueueFree();
+    }
+
+    private void GameOver()
+    {
+        var screenshot = this.GetViewport().GetTexture().GetImage();
+        var gameOverScreen = ResourceLoader.Load<PackedScene>("res://ui/GameOver.tscn").Instantiate() as GameOver;
+        gameOverScreen.FinalScreenshot = screenshot;
+        uiPanel.RestoreUiVisibility();
+
+        this.AddChild(gameOverScreen);
+    }
+
+    private void OnGameOver()
+    {
+        uiPanel.OverrideUiVisibility(false);
     }
 }
