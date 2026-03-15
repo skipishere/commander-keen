@@ -9,4 +9,9 @@ public partial class GameOver : Node2D
         var textureRect = GetNode<TextureRect>("TextureRect");
         textureRect.Texture = ImageTexture.CreateFromImage(FinalScreenshot);
     }
+
+    public void ReturnToMainMenu()
+    {
+        GetTree().ChangeSceneToFile("res://scenes/levels/ck1-title.tscn");
+    }
 }

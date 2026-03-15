@@ -14,6 +14,7 @@ public partial class Pause : PanelContainer
 
     [Export]
     private Settings settingsMenu;
+    private bool disablePauseMenu;
 
     private SignalManager signalManager;
 
@@ -21,11 +22,34 @@ public partial class Pause : PanelContainer
     {
         signalManager = GetNode<SignalManager>("/root/SignalManager");
         signalManager.PauseMenu += OnPauseMenu;
-
-        if (settingsMenu != null)
+        signalManager.TeleportStart += () =>
         {
-            settingsMenu.Visible = false;
-        }
+            disablePauseMenu = true;
+        };
+        signalManager.TeleportComplete += (position, finished) =>
+        {
+            if (finished)
+            {
+                disablePauseMenu = false;
+            }
+        };
+        signalManager.KeenDead += () =>
+        {
+            disablePauseMenu = true;
+        };
+        signalManager.ExitingLevel += () =>
+        {
+            if (!game_stats.GameOver)
+            {
+                disablePauseMenu = false;
+            }
+        };
+        signalManager.GameOver += () =>
+        {
+            disablePauseMenu = true;
+        };
+
+        settingsMenu.Visible = false;
     }
 
     public override void _ExitTree()
@@ -36,6 +60,11 @@ public partial class Pause : PanelContainer
 
     private void OnPauseMenu(bool paused, bool showSaveButton)
     {
+        if (disablePauseMenu)
+        {
+            return;
+        }
+
         saveButton.Visible = showSaveButton;
         GetTree().Paused = paused;
         Visible = paused;
@@ -49,31 +78,17 @@ public partial class Pause : PanelContainer
 
     public void ShowMainMenu()
     {
-        if (mainMenuContainer != null)
-        {
-            mainMenuContainer.Visible = true;
-        }
-        if (settingsMenu != null)
-        {
-            settingsMenu.Visible = false;
-        }
-        if (DefaultButton != null)
-        {
-            DefaultButton.GrabFocus();
-        }
+        mainMenuContainer.Visible = true;
+        settingsMenu.Visible = false;
+        DefaultButton.GrabFocus();
     }
 
     public void ShowSettings()
     {
-        if (mainMenuContainer != null)
-        {
-            mainMenuContainer.Visible = false;
-        }
-        if (settingsMenu != null)
-        {
-            settingsMenu.Visible = true;
-            settingsMenu.OnVisibilityChanged();
-        }
+        mainMenuContainer.Visible = false;
+
+        settingsMenu.Visible = true;
+        settingsMenu.OnVisibilityChanged();
     }
 
     public void SaveFile()
