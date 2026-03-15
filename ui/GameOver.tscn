@@ -1,0 +1,125 @@
+[gd_scene format=3 uid="uid://dhf1cmit3wb8l"]
+
+[ext_resource type="Texture2D" uid="uid://ddbxn7mc3ktyx" path="res://sprites/game-over.png" id="1_cvna2"]
+[ext_resource type="Script" uid="uid://d8y0wwr8rhep" path="res://ui/GameOver.cs" id="1_s2b5w"]
+[ext_resource type="Shader" uid="uid://d2ta05xufhs73" path="res://shaders/desaturate.gdshader" id="2_rik4a"]
+[ext_resource type="AudioStream" uid="uid://cmo2vsvbaqlgn" path="res://music/No Hope.mp3" id="3_xrird"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dpy0x"]
+shader = ExtResource("2_rik4a")
+shader_parameter/desaturate = 0.0
+shader_parameter/black_fade = 0.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rik4a"]
+shader = ExtResource("2_rik4a")
+shader_parameter/desaturate = 0.0
+shader_parameter/black_fade = 0.0
+
+[sub_resource type="Animation" id="Animation_dpy0x"]
+resource_name = "Fade"
+length = 10.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AudioStreamPlayer:playing")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TextureRect:material:shader_parameter/desaturate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 7.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("TextureRect:material:shader_parameter/black_fade")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(7.5, 10),
+"transitions": PackedFloat32Array(1, 3.2490108),
+"update": 0,
+"values": [0.0, 1.0]
+}
+
+[sub_resource type="Animation" id="Animation_s2b5w"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AudioStreamPlayer:playing")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TextureRect:material:shader_parameter/desaturate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("TextureRect:material:shader_parameter/black_fade")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_0m856"]
+_data = {
+&"Fade": SubResource("Animation_dpy0x"),
+&"RESET": SubResource("Animation_s2b5w")
+}
+
+[node name="GameOver" type="Node2D" unique_id=802424998]
+script = ExtResource("1_s2b5w")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1417169492]
+material = SubResource("ShaderMaterial_dpy0x")
+offset_right = 320.0
+offset_bottom = 201.0
+expand_mode = 1
+stretch_mode = 4
+
+[node name="Text" type="Sprite2D" parent="." unique_id=1912990900]
+material = SubResource("ShaderMaterial_rik4a")
+position = Vector2(162, 94)
+texture = ExtResource("1_cvna2")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=397851053]
+libraries/ = SubResource("AnimationLibrary_0m856")
+autoplay = &"Fade"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=384720407]
+stream = ExtResource("3_xrird")
+pitch_scale = 1.5
+bus = &"Music"
