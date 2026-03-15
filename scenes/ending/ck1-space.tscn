@@ -1,0 +1,208 @@
+[gd_scene format=3 uid="uid://dkybgtfrjp7ue"]
+
+[ext_resource type="PackedScene" uid="uid://c85ufn8742tq3" path="res://scenes/levels/ck1-overworld.tscn" id="1_gicfh"]
+[ext_resource type="Shader" uid="uid://d2ta05xufhs73" path="res://shaders/desaturate.gdshader" id="1_ullle"]
+[ext_resource type="Texture2D" uid="uid://bn1w6l5w3clpu" path="res://sprites/keen-rocket.png" id="2_xkdjr"]
+[ext_resource type="Texture2D" uid="uid://53qawylv4smy" path="res://textures/fire_particle.png" id="3_ullle"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_12a3f"]
+shader = ExtResource("1_ullle")
+shader_parameter/desaturate = 1.0
+shader_parameter/black_fade = 0.9200000437
+
+[sub_resource type="Gradient" id="Gradient_8wlk7"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_ullle"]
+gradient = SubResource("Gradient_8wlk7")
+
+[sub_resource type="Animation" id="Animation_xkdjr"]
+resource_name = "Fly"
+length = 15.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SubViewport/Map:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 11.433333),
+"transitions": PackedFloat32Array(1, 3.2490103),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0.01, 0.01)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SubViewport/Map:position:x")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 9),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [626.0, 175.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SubViewport/Map:position:y")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 9),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [51.0, 450.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Mars:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(11.4, 13),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_8wlk7"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SubViewport/Map:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SubViewport/Map:position:x")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [581.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SubViewport/Map:position:y")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [96.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Mars:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ullle"]
+_data = {
+&"Fly": SubResource("Animation_xkdjr"),
+&"RESET": SubResource("Animation_8wlk7")
+}
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_xkdjr"]
+viewport_path = NodePath("SubViewport")
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_api7x"]
+blend_mode = 1
+
+[sub_resource type="Curve" id="Curve_12a3f"]
+_limits = [-360.0, 360.0, 0.0, 1.0]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 85.078), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_o4iok"]
+curve = SubResource("Curve_12a3f")
+
+[sub_resource type="Gradient" id="Gradient_80y0d"]
+offsets = PackedFloat32Array(0.04952077, 0.43290734, 0.8865815, 0.961)
+colors = PackedColorArray(0, 0, 0.803922, 1, 0.858824, 0.180392, 0.0470588, 1, 0.788235, 0.294118, 0, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_vyoos"]
+gradient = SubResource("Gradient_80y0d")
+
+[sub_resource type="Curve" id="Curve_wd07e"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.11, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_sl562"]
+curve = SubResource("Curve_wd07e")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_5d6bj"]
+emission_shape = 1
+emission_sphere_radius = 8.0
+angular_velocity_curve = SubResource("CurveTexture_o4iok")
+gravity = Vector3(0, -250, 0)
+scale_curve = SubResource("CurveTexture_sl562")
+color_ramp = SubResource("GradientTexture1D_vyoos")
+
+[node name="Ck1Space" type="Node2D" unique_id=1003398099]
+
+[node name="BlackSpace" type="Sprite2D" parent="." unique_id=1934630905]
+material = SubResource("ShaderMaterial_12a3f")
+position = Vector2(914.0001, 160.00006)
+scale = Vector2(8.00025, 1076.6598)
+texture = SubResource("GradientTexture1D_ullle")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=111342108]
+libraries/ = SubResource("AnimationLibrary_ullle")
+autoplay = &"Fly"
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1712985824]
+anchor_mode = 0
+
+[node name="Mars" type="Sprite2D" parent="." unique_id=53451171]
+position = Vector2(233, 19)
+texture = SubResource("ViewportTexture_xkdjr")
+
+[node name="Ship" type="Sprite2D" parent="." unique_id=660020124]
+position = Vector2(104, 52)
+texture = ExtResource("2_xkdjr")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="Ship" unique_id=1511468551]
+material = SubResource("CanvasItemMaterial_api7x")
+position = Vector2(-46, 1)
+rotation = -1.5646882
+scale = Vector2(0.348112, 0.174777)
+amount = 60
+texture = ExtResource("3_ullle")
+lifetime = 1.32
+preprocess = 1.0
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_5d6bj")
+
+[node name="SubViewport" type="SubViewport" parent="." unique_id=952334585]
+transparent_bg = true
+handle_input_locally = false
+gui_disable_input = true
+size = Vector2i(640, 480)
+render_target_update_mode = 4
+
+[node name="Map" parent="SubViewport" unique_id=1565665389 instance=ExtResource("1_gicfh")]
+position = Vector2(581, 96)
