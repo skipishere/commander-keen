@@ -1,23 +1,27 @@
 using Godot;
-using System;
+using static game_stats;
 
 public partial class Overworld : Node2D
 {
     public override void _Ready()
     {
-        if (game_stats.UsedSecretExit)
+        if (UsedSecretExit)
         {
-            game_stats.UsedSecretExit = false;
+            UsedSecretExit = false;
             var signalManager = GetNode<SignalManager>("/root/SignalManager");
             var secretTeleporter = GetNode<Teleporter>("TeleporterSecret");
             signalManager.EmitSignal(nameof(SignalManager.TeleportComplete), secretTeleporter.Position, false);
             secretTeleporter.Animate();
         }
-    }
 
-    // Called every frame. 'delta' is the elapsed time since the previous frame.
-    public override void _Process(double delta)
-    {
+        if (CollectedParts == (ShipParts)15)
+        {
+            var endgame = GetNode<TileMapLayer>("TileMapLayers/Endgame");
+            endgame.Visible = true;
 
+            var keen = GetNode<OverworldKeen>("Keen-map");
+            keen.Visible = false;
+            keen.ProcessMode = ProcessModeEnum.Disabled;
+        }
     }
 }
