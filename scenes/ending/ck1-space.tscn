@@ -3,6 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://c85ufn8742tq3" path="res://scenes/levels/ck1-overworld.tscn" id="1_gicfh"]
 [ext_resource type="Shader" uid="uid://d2ta05xufhs73" path="res://shaders/desaturate.gdshader" id="1_ullle"]
 [ext_resource type="PackedScene" uid="uid://ylo1n57popel" path="res://scenes/ending/ship.tscn" id="2_8wlk7"]
+[ext_resource type="Shader" uid="uid://ylm2kwq1oj3m" path="res://shaders/hyperspace.gdshader" id="2_ullle"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_12a3f"]
 shader = ExtResource("1_ullle")
@@ -81,6 +82,30 @@ tracks/4/keys = {
 "method": &"HyperJump"
 }]
 }
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Starfield:material:shader_parameter/stretch")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 10, 11),
+"transitions": PackedFloat32Array(1, 1, 17.148357),
+"update": 0,
+"values": [0.0, 0.0, 100.0]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Starfield:emitting")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0.033333335, 8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
 
 [sub_resource type="Animation" id="Animation_8wlk7"]
 length = 0.001
@@ -132,6 +157,30 @@ tracks/3/keys = {
 "update": 0,
 "values": [Color(1, 1, 1, 1)]
 }
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Starfield:material:shader_parameter/stretch")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Starfield:emitting")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ullle"]
 _data = {
@@ -139,8 +188,14 @@ _data = {
 &"RESET": SubResource("Animation_8wlk7")
 }
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_api7x"]
+shader = ExtResource("2_ullle")
+shader_parameter/stretch = 0.0
+shader_parameter/brightness = 1.5
+
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_8wlk7"]
 particle_flag_disable_z = true
+emission_shape_offset = Vector3(100, 0, 0)
 emission_shape = 3
 emission_box_extents = Vector3(1, 100, 1)
 direction = Vector3(-50, 0, 0)
@@ -150,7 +205,7 @@ initial_velocity_max = 167.75
 gravity = Vector3(0, 0, 0)
 linear_accel_min = 2.4799976
 linear_accel_max = 99.99999
-scale_max = 2.0
+scale_min = 0.5
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_xkdjr"]
 viewport_path = NodePath("SubViewport")
@@ -171,9 +226,11 @@ autoplay = &"Fly"
 anchor_mode = 0
 
 [node name="Starfield" type="GPUParticles2D" parent="." unique_id=873513803]
+self_modulate = Color(1, 1, 1, 0)
+material = SubResource("ShaderMaterial_api7x")
 position = Vector2(320, 100)
-amount = 20
-lifetime = 3.0
+amount = 30
+lifetime = 5.0
 process_material = SubResource("ParticleProcessMaterial_8wlk7")
 
 [node name="Mars" type="Sprite2D" parent="." unique_id=53451171]
