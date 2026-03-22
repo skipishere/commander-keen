@@ -1,0 +1,114 @@
+[gd_scene format=3 uid="uid://ylo1n57popel"]
+
+[ext_resource type="Texture2D" uid="uid://bn1w6l5w3clpu" path="res://sprites/keen-rocket.png" id="1_eqmou"]
+[ext_resource type="Script" uid="uid://bs3fxdh7jgre8" path="res://scenes/ending/Ship.cs" id="2_1ei1q"]
+[ext_resource type="Texture2D" uid="uid://53qawylv4smy" path="res://textures/fire_particle.png" id="2_3fmgk"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_api7x"]
+blend_mode = 1
+
+[sub_resource type="Curve" id="Curve_12a3f"]
+_limits = [-360.0, 360.0, 0.0, 1.0]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 85.078), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_o4iok"]
+curve = SubResource("Curve_12a3f")
+
+[sub_resource type="Gradient" id="Gradient_80y0d"]
+offsets = PackedFloat32Array(0.04952077, 0.43290734, 0.8865815, 0.961)
+colors = PackedColorArray(0, 0, 0.803922, 1, 0.858824, 0.180392, 0.0470588, 1, 0.788235, 0.294118, 0, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_vyoos"]
+gradient = SubResource("Gradient_80y0d")
+
+[sub_resource type="Curve" id="Curve_wd07e"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.11, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_sl562"]
+curve = SubResource("Curve_wd07e")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_5d6bj"]
+emission_shape = 1
+emission_sphere_radius = 8.0
+angular_velocity_curve = SubResource("CurveTexture_o4iok")
+gravity = Vector3(0, -250, 0)
+scale_curve = SubResource("CurveTexture_sl562")
+color_ramp = SubResource("GradientTexture1D_vyoos")
+
+[sub_resource type="Gradient" id="Gradient_ullle"]
+offsets = PackedFloat32Array(0, 0.5095109, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0.53150034, 1.3945211, 1.3945211, 1, 0, 0, 1.5720325, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_api7x"]
+gradient = SubResource("Gradient_ullle")
+use_hdr = true
+fill = 1
+fill_from = Vector2(0.50427353, 0.53162396)
+
+[sub_resource type="Animation" id="Animation_12a3f"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PointLight2D:energy")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [4.78]
+}
+
+[sub_resource type="Animation" id="Animation_80y0d"]
+resource_name = "travel"
+length = 3.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PointLight2D:energy")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.46666667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.44, 4.78]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_wd07e"]
+_data = {
+&"RESET": SubResource("Animation_12a3f"),
+&"travel": SubResource("Animation_80y0d")
+}
+
+[node name="Ship" type="Sprite2D" unique_id=1779872372]
+texture = ExtResource("1_eqmou")
+script = ExtResource("2_1ei1q")
+
+[node name="ExhaustParticles" type="GPUParticles2D" parent="." unique_id=158453267]
+material = SubResource("CanvasItemMaterial_api7x")
+position = Vector2(-46, 2)
+rotation = -1.5646882
+scale = Vector2(0.348112, 0.174777)
+amount = 60
+texture = ExtResource("2_3fmgk")
+lifetime = 1.32
+preprocess = 1.0
+local_coords = true
+trail_lifetime = 2.0
+process_material = SubResource("ParticleProcessMaterial_5d6bj")
+
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=269423768]
+position = Vector2(-12.000001, 1)
+scale = Vector2(0.25000003, 0.15625)
+energy = 4.78
+blend_mode = 2
+texture = SubResource("GradientTexture2D_api7x")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=2050530123]
+libraries/ = SubResource("AnimationLibrary_wd07e")
+autoplay = &"travel"
